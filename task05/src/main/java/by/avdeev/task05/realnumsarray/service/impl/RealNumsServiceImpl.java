@@ -7,7 +7,7 @@ public class RealNumsServiceImpl implements RealNumsService {
     public int countZ(double[] array, double Z) {
         int count = 0;
         for (int i = 0; i < array.length; ++i) {
-            if (Z > array[i]) {
+            if (array[i] > Z) {
                 ++count;
                 array[i] = Z;
             }

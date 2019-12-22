@@ -10,8 +10,8 @@ public class Reader {
 
     public int[] readArray() {
         out.println("Заполните массив через запятую: ");
-        String input = scanner.nextLine();
-        String[] array = input.replace(" ", "").split(",");
-        return Arrays.stream(array).mapToInt(Integer::parseInt).toArray();
+        String input = scanner.nextLine().replace(" ", "");
+        String[] array = input.split(",");
+        return array.length != 1 && !array[0].equals("") ? Arrays.stream(array).mapToInt(Integer::parseInt).toArray() : new int[]{};
     }
 }

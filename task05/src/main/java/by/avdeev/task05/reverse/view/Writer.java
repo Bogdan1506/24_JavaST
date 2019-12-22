@@ -4,6 +4,6 @@ import java.util.Arrays;
 
 public class Writer {
     public void show(int[] array) {
-        System.out.println(Arrays.toString(array));
+        System.out.println("Результат: " + Arrays.toString(array));
     }
 }
