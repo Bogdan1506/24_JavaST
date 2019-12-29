@@ -70,4 +70,9 @@ public class Reader {
         }
         return phones;
     }
+
+    public int readLimit() {
+        out.print("Введите лимит городских разговоров: ");
+        return scanner.nextInt();
+    }
 }
