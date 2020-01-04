@@ -37,3 +37,5 @@ v
 Fsrc/main/java/by/avdeev/task08/controller/command/impl/FindSorted.java,b\1\b10bc7e106b18807f8546faeef7f54d9cf6d4c7a
 }
 Msrc/main/java/by/avdeev/task08/controller/command/impl/FindByOutsideLine.java,8\1\8171641cefcdaadcc35900e091cd67fd89149f8f
+x
+Hsrc/main/java/by/avdeev/task08/controller/command/impl/WrongRequest.java,d\c\dc3e97dcebd904a3b1ecd5fec0b84acf19c8f955
