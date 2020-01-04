@@ -1,7 +1,7 @@
 package by.avdeev.task07.matrixblinov.creator;
 
 import by.avdeev.task07.matrixblinov.entity.Matrix;
-import by.avdeev.task07.matrixblinov.exceptions.MatrixException;
+import by.avdeev.task07.matrixblinov.exception.MatrixException;
 
 public class MatrixCreator {
     public static void fillRandomized(Matrix t, int start, int end) {

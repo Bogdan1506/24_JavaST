@@ -1,10 +1,10 @@
 package by.avdeev.task07.matrixblinov.service.impl;
 
 import by.avdeev.task07.matrixblinov.entity.Matrix;
-import by.avdeev.task07.matrixblinov.exceptions.MatrixException;
-import by.avdeev.task07.matrixblinov.service.MultiplicatorService;
+import by.avdeev.task07.matrixblinov.exception.MatrixException;
+import by.avdeev.task07.matrixblinov.service.MatrixService;
 
-public class MultiplicatorServiceImpl implements MultiplicatorService {
+public class MatrixServiceImpl implements MatrixService {
     public Matrix multiply(Matrix p, Matrix q) throws MatrixException {
         int v = p.getVerticalSize();
         int h = q.getHorizontalSize();

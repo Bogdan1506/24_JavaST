@@ -1,4 +1,4 @@
-package by.avdeev.task07.matrixblinov.exceptions;
+package by.avdeev.task07.matrixblinov.exception;
 
 public class MatrixException extends Exception {
     public MatrixException() {

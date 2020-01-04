@@ -1,6 +1,8 @@
 package by.avdeev.task07.matrixblinov.entity;
 
-import by.avdeev.task07.matrixblinov.exceptions.MatrixException;
+import by.avdeev.task07.matrixblinov.exception.MatrixException;
+
+import java.util.Arrays;
 
 public class Matrix {
     private int[][] a;
@@ -52,5 +54,18 @@ public class Matrix {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matrix matrix = (Matrix) o;
+        return Arrays.equals(a, matrix.a);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(a);
     }
 }

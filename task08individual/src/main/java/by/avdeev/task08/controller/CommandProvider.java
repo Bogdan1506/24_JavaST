@@ -9,11 +9,10 @@ import by.avdeev.task08.controller.command.impl.FindByOutsideLine;
 import by.avdeev.task08.controller.command.impl.FindSorted;
 import by.avdeev.task08.controller.command.impl.WrongRequest;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 public class CommandProvider {
-    private Map<CommandName, Command> repository = new HashMap<>();
+    private EnumMap<CommandName, Command> repository = new EnumMap<>(CommandName.class);
 
     public CommandProvider() {
         repository.put(CommandName.ADD_PHONE, new AddPhone());
