@@ -1,16 +1,18 @@
-package by.avdeev.task07.matrixblinov.service;
+package by.avdeev.task07.matrix.service;
 
-import by.avdeev.task07.matrixblinov.entity.Matrix;
-import by.avdeev.task07.matrixblinov.exception.MatrixException;
+import by.avdeev.task07.matrix.entity.Array;
+import by.avdeev.task07.matrix.entity.Matrix;
+import by.avdeev.task07.matrix.entity.exception.MatrixException;
+import by.avdeev.task07.matrix.service.exception.ServiceException;
 
 public interface MatrixService {
-    Matrix multiply(Matrix p, Matrix q) throws MatrixException;
+    Matrix multiply(Matrix p, Matrix q) throws MatrixException, ServiceException;
 
-    Matrix fillMatrix(double[] array);
+    Matrix fillMatrix(Array array) throws ServiceException;
 
-    int calSum(Matrix matrix);
+    int calculateSum(Matrix matrix) throws ServiceException;
 
-    void fillRandomMatrix(Matrix matrix);
+    void fillRandomMatrix(Matrix matrix) throws ServiceException;
 
-    void fillMatrix(Matrix matrix);
+    void fillMatrix(Matrix matrix) throws ServiceException;
 }

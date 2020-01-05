@@ -1,8 +1,8 @@
-package by.avdeev.task07.matrixblinov.service.factory;
+package by.avdeev.task07.matrix.service.factory;
 
 
-import by.avdeev.task07.matrixblinov.service.MatrixService;
-import by.avdeev.task07.matrixblinov.service.impl.MatrixServiceImpl;
+import by.avdeev.task07.matrix.service.MatrixService;
+import by.avdeev.task07.matrix.service.impl.MatrixServiceImpl;
 
 public class ServiceFactory {
     private static ServiceFactory serviceFactory = new ServiceFactory();

@@ -1,17 +1,21 @@
-package by.avdeev.task07.matrixblinov.creator;
+package by.avdeev.task07.matrix.creator;
 
-import by.avdeev.task07.matrixblinov.entity.Matrix;
-import by.avdeev.task07.matrixblinov.exception.MatrixException;
+import by.avdeev.task07.matrix.entity.Matrix;
+import by.avdeev.task07.matrix.entity.exception.MatrixException;
+
+import java.util.Random;
 
 public class MatrixCreator {
-    public static void fillRandomized(Matrix t, int start, int end) {
-        int v = t.getVerticalSize();
-        int h = t.getHorizontalSize();
+    private final Random random = new Random();
+
+    public void fillRandomized(Matrix matrix, int maxValue) {
+        int v = matrix.getVerticalSize();
+        int h = matrix.getHorizontalSize();
         for (int i = 0; i < v; i++) {
             for (int j = 0; j < h; j++) {
                 try {
-                    int value = (int) (Math.random() * (end - start) + start);
-                    t.setElement(i, j, value);
+                    int value = random.nextInt(maxValue) * (random.nextBoolean() ? 1 : -1);
+                    matrix.setElement(i, j, value);
                 } catch (MatrixException e) {
                 }
             }
