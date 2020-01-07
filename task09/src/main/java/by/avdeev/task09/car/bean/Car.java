@@ -15,7 +15,7 @@ public class Car {
 
     public Car(String model, Engine engine, List<Wheel> wheels, double tank) throws CarException {
         if (model == null || engine == null || wheels.size() < 4 || tank <= 0) {
-            throw new CarException();
+            throw new CarException("Such car is impossible");
         }
         this.model = model;
         this.engine = engine;
@@ -62,7 +62,7 @@ public class Car {
 
     public void setFuel(double fuel) throws CarException {
         if (fuel > tank) {
-            throw new CarException();
+            throw new CarException("There is no place for fuel");
         }
         this.fuel = fuel;
     }

@@ -1,0 +1,4 @@
+
+dsquid:S2118"AMake the "java.util.List" class "Serializable" or don't write it.(¿ÙÀêúÿÿÿÿ8ûþ³Ø÷-
+nsquid:S2095"PUse try-with-resources or close this "ObjectOutputStream" in a "finally" clause.(ä­ÿ½8“ú²Ø÷-
+msquid:S2095"OUse try-with-resources or close this "ObjectInputStream" in a "finally" clause.(Ê¦‰‹8ø¸·Ø÷-

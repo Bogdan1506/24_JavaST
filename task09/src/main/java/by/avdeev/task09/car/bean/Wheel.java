@@ -12,8 +12,6 @@ public class Wheel {
         if (checkDifference(disk, tyre)) {
             this.disk = disk;
             this.tyre = tyre;
-        } else {
-            throw new CarException();
         }
     }
 
@@ -24,8 +22,6 @@ public class Wheel {
     public void setDisk(double disk) throws CarException {
         if (checkDifference(disk, this.tyre)) {
             this.disk = disk;
-        } else {
-            throw new CarException();
         }
     }
 
@@ -37,11 +33,14 @@ public class Wheel {
         if (checkDifference(this.disk, tyre)) {
             this.tyre = tyre;
         }
-        throw new CarException();
     }
 
-    private boolean checkDifference(double disk, double tyre) {
-        return tyre > disk;
+    private boolean checkDifference(double disk, double tyre) throws CarException {
+        if (disk > tyre) {
+            throw new CarException("disk is greater than tyre");
+        } else {
+            return disk > tyre;
+        }
     }
 
     @Override

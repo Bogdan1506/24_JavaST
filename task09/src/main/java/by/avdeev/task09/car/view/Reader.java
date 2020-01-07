@@ -57,7 +57,7 @@ public class Reader {
                 "2 - переднее правое\n3 - заднее левое\n4 - заднее правое");
         int wheelNum = scanner.nextInt();
         if (wheelNum < 1 || wheelNum > 4) {
-            throw new CarException();
+            throw new CarException("Car has only four wheels");
         }
         return wheelNum - 1;
     }

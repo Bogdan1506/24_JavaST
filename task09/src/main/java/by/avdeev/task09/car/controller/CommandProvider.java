@@ -11,7 +11,7 @@ import by.avdeev.task09.car.controller.command.impl.WrongRequest;
 import java.util.EnumMap;
 
 public class CommandProvider {
-    EnumMap<CommandName, Command> repository = new EnumMap<>(CommandName.class);
+    private EnumMap<CommandName, Command> repository = new EnumMap<>(CommandName.class);
 
     public CommandProvider() {
         repository.put(CommandName.RIDE, new Ride());

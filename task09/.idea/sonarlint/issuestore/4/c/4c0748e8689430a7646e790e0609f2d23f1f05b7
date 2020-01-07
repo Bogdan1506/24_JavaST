@@ -1,0 +1,8 @@
+
+Tsquid:S1481"6Remove this unused "travelVoucherList" local variable.(ıÜ‘8ÿ·üÙ÷-
+Qsquid:S1481"3Remove this unused "travelVoucher1" local variable.(§şŠÜ8û’÷Ù÷-
+`squid:S1854"BRemove this useless assignment to local variable "travelVoucher1".(§şŠÜ8û’÷Ù÷-
+csquid:S1854"ERemove this useless assignment to local variable "travelVoucherList".(ıÜ‘8ÿ·üÙ÷-
+Vsquid:S1854"8Remove this useless assignment to local variable "days".(é‡¶8ÁÃ‚Ú÷-
+Isquid:S1168"+Return an empty collection instead of null.(¥¹ï8Á×‘Ø÷-
+Gsquid:S1481")Remove this unused "days" local variable.(é‡¶8ÁÃ‚Ú÷-

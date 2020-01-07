@@ -15,7 +15,7 @@ public class CarServiceImpl implements CarService {
             if (car.hasFuel()) {
                 engine.start();
             } else {
-                throw new ServiceException();
+                throw new ServiceException("There is no fuel");
             }
         }
         car.setRiding(true);
@@ -27,7 +27,7 @@ public class CarServiceImpl implements CarService {
             try {
                 car.setFuel(car.getFuel() + liters);
             } catch (CarException e) {
-                throw new ServiceException(new CarException());
+                throw new ServiceException(new CarException("Too much fuel"));
             }
         } else {
             throw new ServiceException();
@@ -37,7 +37,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public void changeWheel(Car car, int oldWheel, Wheel newWheel) throws CarException {
         if (oldWheel <= 0 && oldWheel >= 3 || newWheel == null) {
-            throw new CarException();
+            throw new CarException("Car should have only four wheels");
         }
         if (car.isRiding()) {
             car.stopRiding();
