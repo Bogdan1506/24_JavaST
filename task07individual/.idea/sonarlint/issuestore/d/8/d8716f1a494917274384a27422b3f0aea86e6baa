@@ -1,5 +1,0 @@
-
-usquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(€±Ï€ûÿÿÿÿ8ÃÈÖóó-
-]squid:UselessImportCheck"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8ñ‰²¿ô-
-ssquid:UselessImportCheck"HRemove this unused import 'by.avdeev.task07.controller.CommandProvider'.(ºÆú¬8Šäª¿ô-
-|squid:UselessImportCheck"LRemove this unused import 'by.avdeev.task07.controller.command.CommandName'.(µÜÅÿÿÿÿÿ8ñ‰²¿ô-
