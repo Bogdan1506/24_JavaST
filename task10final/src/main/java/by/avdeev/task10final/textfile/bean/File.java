@@ -1,8 +1,5 @@
 package by.avdeev.task10final.textfile.bean;
 
-import by.avdeev.task10final.textfile.bean.exception.FileException;
-
-import java.io.IOException;
 import java.util.Objects;
 
 public class File {
@@ -18,16 +15,8 @@ public class File {
 
     public boolean rename(String dest) {
         name = dest;
-        java.io.File newFile = new java.io.File(path.toString(), name + ".txt");
+        java.io.File newFile = new java.io.File(path.toString(), name);
         return textFile.renameTo(newFile);
-    }
-
-    public boolean createNewFile() throws FileException {
-        try {
-            return textFile.createNewFile();
-        } catch (IOException e) {
-            throw new FileException();
-        }
     }
 
     public String getName() {

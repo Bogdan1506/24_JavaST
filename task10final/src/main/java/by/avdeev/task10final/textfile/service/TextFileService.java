@@ -13,11 +13,11 @@ public interface TextFileService {
 
     void createFile(TextFile textFile) throws ServiceException;
 
-    void rename(TextFile textFile, String dest);
+    void rename(TextFile textFile, String dest) throws ServiceException;
 
     Stream<String> printConsole(TextFile textFile) throws ServiceException;
 
     void addText(TextFile textFile) throws ServiceException;
 
-    void removeFile(TextFile textFile);
+    void removeFile(TextFile textFile) throws ServiceException;
 }

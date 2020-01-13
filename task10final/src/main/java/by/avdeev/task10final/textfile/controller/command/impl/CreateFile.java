@@ -8,7 +8,6 @@ public class CreateFile implements Command {
     @Override
     public void execute() throws ServiceException {
         TextFile textFile = reader.readFile();
-        System.out.println(textFile);
         service.createFile(textFile);
     }
 }
