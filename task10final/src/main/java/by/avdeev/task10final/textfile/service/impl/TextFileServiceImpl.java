@@ -13,9 +13,11 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class TextFileServiceImpl implements TextFileService {
+    private static final String MESSAGE = "Incorrect extension";
+
     @Override
     public Stream<String> printConsole(TextFile textFile) throws ServiceException {
-        Stream<String> stringStream = null;
+        Stream<String> stringStream;
         if (checkExtension(textFile)) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(textFile.getTextFile()));
@@ -23,6 +25,8 @@ public class TextFileServiceImpl implements TextFileService {
             } catch (FileNotFoundException e) {
                 throw new ServiceException(e);
             }
+        } else {
+            throw new ServiceException(MESSAGE);
         }
         return stringStream;
     }
@@ -38,6 +42,8 @@ public class TextFileServiceImpl implements TextFileService {
             } catch (DAOException e) {
                 throw new ServiceException(e);
             }
+        } else {
+            throw new ServiceException(MESSAGE);
         }
     }
 
@@ -45,6 +51,8 @@ public class TextFileServiceImpl implements TextFileService {
     public void rename(TextFile textFile, String dest) throws ServiceException {
         if (checkExtension(textFile)) {
             textFile.rename(dest);
+        } else {
+            throw new ServiceException(MESSAGE);
         }
     }
 
@@ -56,6 +64,8 @@ public class TextFileServiceImpl implements TextFileService {
             } catch (IOException e) {
                 throw new ServiceException(e);
             }
+        } else {
+            throw new ServiceException(MESSAGE);
         }
     }
 
@@ -63,13 +73,12 @@ public class TextFileServiceImpl implements TextFileService {
     public void removeFile(TextFile textFile) throws ServiceException {
         if (checkExtension(textFile)) {
             dao.removeFile(textFile);
+        } else {
+            throw new ServiceException(MESSAGE);
         }
     }
 
-    private boolean checkExtension(TextFile textFile) throws ServiceException {
-        if (!textFile.getName().endsWith(".txt")) {
-            throw new ServiceException("Incorrect extension");
-        }
-        return true;
+    private boolean checkExtension(TextFile textFile) {
+        return textFile.getName().endsWith(TextFile.Extension.txt.toString());
     }
 }

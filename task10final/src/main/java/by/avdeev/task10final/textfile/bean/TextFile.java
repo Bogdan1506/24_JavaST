@@ -17,6 +17,10 @@ public class TextFile extends File {
         return text;
     }
 
+    public enum Extension {
+        txt
+    }
+
     @Override
     public String toString() {
         return "TextFile{" +
