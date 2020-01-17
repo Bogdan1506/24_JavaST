@@ -1,11 +1,23 @@
 package by.avdeev.task10final.calendar;
 
 import by.avdeev.task10final.calendar.controller.Controller;
-import by.avdeev.task10final.calendar.service.exception.ServiceException;
+
+import java.util.Scanner;
+
+import static java.lang.System.out;
 
 public class Runner {
-    public static void main(String[] args) throws ServiceException {
-        Controller controller = new Controller();
-        controller.executeTask();
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            Controller controller = new Controller();
+            controller.executeTask();
+            out.println("\npress 0 to stop\n1 to continue");
+            String stop = scanner.nextLine();
+            if (stop.equals("0")) {
+                break;
+            }
+        }
     }
 }

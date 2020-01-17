@@ -1,7 +1,7 @@
 package by.avdeev.task10final.calendar.view;
 
 import by.avdeev.task10final.calendar.bean.Calendar;
-import by.avdeev.task10final.calendar.bean.Status;
+import by.avdeev.task10final.calendar.bean.Months;
 
 import java.util.List;
 
@@ -11,40 +11,34 @@ public class Printer {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
 
-    public void showMonth(Calendar calendar) {
+
+    public void showYear(Calendar calendar) {
         List<Calendar.Date> dates = calendar.getDates();
-        out.println(String.format("%10s", calendar.getMonth().toString()));
-        for (int i = 0; i < 7; i++) {
-            String day1 = "";
-            String day2 = "";
-            String day3 = "";
-            String day4 = "";
-            String day5 = "";
-            try {
-                day1 = dates.get(i).getStatus() == Status.WORKDAY ? String.valueOf(dates.get(i).getDay()) :
-                        (ANSI_RED + dates.get(i).getDay());
-
-                day2 = dates.get(i + 7).getStatus() == Status.WORKDAY ? String.valueOf(dates.get(i + 7).getDay()) :
-                        (ANSI_RED + dates.get(i + 7).getDay());
-
-                day3 = dates.get(i + 14).getStatus() == Status.WORKDAY ? String.valueOf(dates.get(i + 14).getDay()) :
-                        (ANSI_RED + dates.get(i + 14).getDay());
-
-                day4 = dates.get(i + 21).getStatus() == Status.WORKDAY ? String.valueOf(dates.get(i + 21).getDay()) :
-                        (ANSI_RED + dates.get(i + 21).getDay());
-
-                day5 = dates.get(i + 28).getStatus() == Status.WORKDAY ? String.valueOf(dates.get(i + 28).getDay()) :
-                        (ANSI_RED + dates.get(i + 28).getDay());
-
-            } catch (IndexOutOfBoundsException e) {
-
+        int year = calendar.getYear();
+        int[] days = {31, calendar.isLeap() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        for (int z = 0; z < 12; ++z) {
+            Months month = Months.values()[z];
+            out.println(month);
+            for (int i = 0; i < 7; ++i) {
+                for (int k = 1 + i, j = 0; j < 5; k += 7, ++j) {
+                    if (k > days[z]) {
+                        break;
+                    }
+                    Calendar.Date date = new Calendar().new Date(k, month.getNum(), year);
+                    if (dates.contains(date)) {
+                        out.print(ANSI_RED + k + ANSI_RESET);
+                    } else {
+                        out.print(k);
+                    }
+                    out.print(" ");
+                }
+                out.println();
             }
-            out.println(day1 + ANSI_RESET + " " + day2 + ANSI_RESET + " " + day3 + ANSI_RESET +
-                    " " + day4 + ANSI_RESET + " " + day5 + ANSI_RESET);
         }
     }
 
-    public void showDate(Calendar.Date date) {
-        out.println(date);
+    public void showDates(List<Calendar.Date> dates) {
+        out.println("Dates: ");
+        dates.forEach(System.out::println);
     }
 }

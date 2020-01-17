@@ -1,16 +1,19 @@
 package by.avdeev.task10final.gift;
 
-import by.avdeev.task10final.gift.controller.Controller;
+import by.avdeev.task10final.calendar.controller.Controller;
 
 import java.util.Scanner;
 
+import static java.lang.System.out;
+
 public class Runner {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Controller controller = new Controller();
         while (true) {
+            by.avdeev.task10final.calendar.controller.Controller controller = new Controller();
             controller.executeTask();
-            System.out.println("\nprint 0 to stop the program. 1 - to continue");
+            out.println("\npress 0 to stop\n1 to continue");
             String stop = scanner.nextLine();
             if (stop.equals("0")) {
                 break;

@@ -1,19 +1,20 @@
 package by.avdeev.task10final.calendar.bean;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Calendar {
     private List<Date> dates = new ArrayList<>();
-    private Months month;
+    private int year;
 
-    public Months getMonth() {
-        return month;
+    public int getYear() {
+        return year;
     }
 
-    public void setMonth(Months month) {
-        this.month = month;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public List<Date> getDates() {
@@ -24,11 +25,19 @@ public class Calendar {
         this.dates = dates;
     }
 
+    public boolean isLeap() {
+        if (this.year % 4 == 0) {
+            return this.year % 100 != 0 || this.year % 400 == 0;
+        }
+        return false;
+    }
+
     public class Date {
         private int day;
         private int month;
         private int year;
         private Status status;
+        private String name;
 
         public Date(int day, int month, int year) {
             this.day = day;
@@ -37,11 +46,20 @@ public class Calendar {
             this.status = Status.WORKDAY;
         }
 
-        public Date(int day, int month, int year, Status status) {
+        public Date(int day, int month, int year, Status status, String name) {
             this.day = day;
             this.month = month;
             this.year = year;
             this.status = status;
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public Status getStatus() {
@@ -76,16 +94,9 @@ public class Calendar {
             this.year = year;
         }
 
-        public boolean isLeap() {
-            if (this.year % 4 == 0) {
-                return this.year % 100 != 0 || this.year % 400 == 0;
-            }
-            return false;
-        }
-
         @Override
         public String toString() {
-            return day + " " + month + " " + year + " " + status;
+            return day + " " + month + " " + year + " " + status + " " + name;
         }
 
         @Override
@@ -109,17 +120,21 @@ public class Calendar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Calendar calendar = (Calendar) o;
-        return Objects.equals(dates, calendar.dates) &&
-                month == calendar.month;
+        return year == calendar.year &&
+                Objects.equals(dates, calendar.dates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dates, month);
+        return Objects.hash(dates, year);
     }
 
     @Override
     public String toString() {
         return dates.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDate.now());
     }
 }

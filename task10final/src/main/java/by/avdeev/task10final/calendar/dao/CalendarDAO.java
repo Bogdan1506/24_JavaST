@@ -3,11 +3,10 @@ package by.avdeev.task10final.calendar.dao;
 import by.avdeev.task10final.calendar.bean.Calendar;
 import by.avdeev.task10final.calendar.dao.exception.DAOException;
 
-import java.io.File;
-import java.util.Set;
+import java.util.List;
 
 public interface CalendarDAO {
-    File findFile() throws DAOException;
+    List<String> findDates(String pathname) throws DAOException;
 
-    void addDay(Set<Calendar.Date> dates) throws DAOException;
+    void addDays(List<Calendar.Date> dates, String pathname) throws DAOException;
 }

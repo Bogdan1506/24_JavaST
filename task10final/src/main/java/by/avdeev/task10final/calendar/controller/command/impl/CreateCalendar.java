@@ -8,15 +8,16 @@ import by.avdeev.task10final.calendar.service.factory.ServiceFactory;
 import by.avdeev.task10final.calendar.view.Printer;
 import by.avdeev.task10final.calendar.view.Reader;
 
-public class Today implements Command {
+public class CreateCalendar implements Command {
     @Override
     public void execute() throws ServiceException {
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        CalendarService service = serviceFactory.getCalendarService();
+        ServiceFactory factory = ServiceFactory.getInstance();
+        CalendarService service = factory.getCalendarService();
         Reader reader = new Reader();
         Printer printer = new Printer();
-        Calendar.Date date = reader.readDate();
-        service.today(date);
-        printer.showDate(date);
+        String pathname = reader.readPath();
+        String year = reader.readYear();
+        Calendar calendar = service.createCalendar(year, pathname);
+        printer.showYear(calendar);
     }
 }
