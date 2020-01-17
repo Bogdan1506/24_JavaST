@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TextFileDAOImpl implements TextFileDAO {
     @Override
     public void addText(TextFile textFile) throws DAOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(textFile.getTextFile(), true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(textFile.getFile(), true))) {
             writer.write(textFile.getText());
             writer.newLine();
         } catch (IOException e) {
@@ -21,13 +21,7 @@ public class TextFileDAOImpl implements TextFileDAO {
     }
 
     @Override
-    public File findFile(TextFile textFile) {
-        return new File(textFile.getPath().toString(), textFile.getName());
-    }
-
-    @Override
-    public void removeFile(TextFile textFile) {
-        File file = findFile(textFile);
-        file.delete();
+    public File findFile(String pathname) {
+        return new File(pathname);
     }
 }

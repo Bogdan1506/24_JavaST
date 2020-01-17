@@ -149,3 +149,5 @@ i
 9src/main/java/by/avdeev/task10final/gift/dao/GiftDAO.java,6\0\60a475b7458b5fa39869e4daaa69baa28ea6f153
 u
 Esrc/main/java/by/avdeev/task10final/gift/service/GiftServiceImpl.java,2\f\2f0f8c08c9961c6650cb0adbe551f8a7948f9b69
+j
+:src/main/java/by/avdeev/task10final/gift/view/Printer.java,f\f\ff5dcdb8dd26ebdb574fb637859dd68f604ea839

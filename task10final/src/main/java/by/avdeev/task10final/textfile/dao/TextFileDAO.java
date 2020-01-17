@@ -6,9 +6,7 @@ import by.avdeev.task10final.textfile.dao.exception.DAOException;
 import java.io.File;
 
 public interface TextFileDAO {
-    File findFile(TextFile textFile) throws DAOException;
-
     void addText(TextFile textFile) throws DAOException;
 
-    void removeFile(TextFile textFile);
+    File findFile(String pathname);
 }

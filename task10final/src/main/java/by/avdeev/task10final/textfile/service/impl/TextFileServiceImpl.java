@@ -1,84 +1,74 @@
 package by.avdeev.task10final.textfile.service.impl;
 
+import by.avdeev.task10final.textfile.bean.Directory;
 import by.avdeev.task10final.textfile.bean.TextFile;
+import by.avdeev.task10final.textfile.dao.TextFileDAO;
 import by.avdeev.task10final.textfile.dao.exception.DAOException;
+import by.avdeev.task10final.textfile.dao.factory.DAOFactory;
+import by.avdeev.task10final.textfile.service.TextFileCreator;
 import by.avdeev.task10final.textfile.service.TextFileService;
+import by.avdeev.task10final.textfile.service.Validator;
 import by.avdeev.task10final.textfile.service.exception.ServiceException;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class TextFileServiceImpl implements TextFileService {
-    private static final String MESSAGE = "Incorrect extension";
 
     @Override
-    public Stream<String> printConsole(TextFile textFile) throws ServiceException {
-        Stream<String> stringStream;
-        if (checkExtension(textFile)) {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(textFile.getTextFile()));
-                stringStream = reader.lines();
-            } catch (FileNotFoundException e) {
-                throw new ServiceException(e);
-            }
+    public TextFile findTextFile(String pathname) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        TextFileDAO dao = factory.getTextFileDAO();
+        File file = dao.findFile(pathname);
+        TextFileCreator creator = new TextFileCreator();
+        TextFile textFile = creator.createTextFile(file);
+        Validator validator = new Validator();
+        if (validator.checkExtension(textFile)) {
+            return textFile;
         } else {
-            throw new ServiceException(MESSAGE);
-        }
-        return stringStream;
-    }
-
-    @Override
-    public void addText(TextFile textFile) throws ServiceException {
-        if (checkExtension(textFile)) {
-            Scanner scanner = new Scanner(System.in);
-            String text = scanner.nextLine();
-            textFile.setText(text);
-            try {
-                dao.addText(textFile);
-            } catch (DAOException e) {
-                throw new ServiceException(e);
-            }
-        } else {
-            throw new ServiceException(MESSAGE);
+            throw new ServiceException("Incorrect extension");
         }
     }
 
     @Override
-    public void rename(TextFile textFile, String dest) throws ServiceException {
-        if (checkExtension(textFile)) {
-            textFile.rename(dest);
-        } else {
-            throw new ServiceException(MESSAGE);
+    public void addText(String pathname, String text) throws ServiceException {
+        TextFile textFile = findTextFile(pathname);
+        textFile.setText(text);
+        DAOFactory factory = DAOFactory.getInstance();
+        TextFileDAO dao = factory.getTextFileDAO();
+        try {
+            dao.addText(textFile);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
     @Override
-    public void createFile(TextFile textFile) throws ServiceException {
-        if (checkExtension(textFile)) {
+    public boolean rename(String pathname, String newName) throws ServiceException {
+        TextFile textFile = findTextFile(pathname);
+        Directory parent = textFile.getParent();
+        File file = new File(parent.toString(), newName + ".txt");
+        return textFile.getFile().renameTo(file);
+    }
+
+    public boolean createTextFile(String pathname) throws ServiceException {
+        TextFileCreator creator = new TextFileCreator();
+        TextFile textFile = creator.createTextFile(pathname);
+        Validator validator = new Validator();
+        if (validator.checkExtension(textFile)) {
             try {
-                textFile.getTextFile().createNewFile();
+                return textFile.getFile().createNewFile();
             } catch (IOException e) {
                 throw new ServiceException(e);
             }
         } else {
-            throw new ServiceException(MESSAGE);
+            throw new ServiceException("Incorrect extension");
         }
     }
 
     @Override
-    public void removeFile(TextFile textFile) throws ServiceException {
-        if (checkExtension(textFile)) {
-            dao.removeFile(textFile);
-        } else {
-            throw new ServiceException(MESSAGE);
-        }
-    }
-
-    private boolean checkExtension(TextFile textFile) {
-        return textFile.getName().endsWith(TextFile.Extension.txt.toString());
+    public boolean removeFile(String pathname) throws ServiceException {
+        TextFile textFile = findTextFile(pathname);
+        return textFile.getFile().delete();
     }
 }

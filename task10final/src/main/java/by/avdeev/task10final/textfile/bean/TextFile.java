@@ -2,8 +2,9 @@ package by.avdeev.task10final.textfile.bean;
 
 import java.util.Objects;
 
-public class TextFile extends File {
+public class TextFile extends OwnFile {
     private String text;
+
 
     public TextFile(Directory directory, String name) {
         super(directory, name);
@@ -17,8 +18,8 @@ public class TextFile extends File {
         return text;
     }
 
-    public enum Extension {
-        txt
+    public enum Extensions {
+        TXT
     }
 
     @Override

@@ -1,11 +1,9 @@
 package by.avdeev.task10final.textfile.view;
 
-import java.util.stream.Stream;
-
-import static java.lang.System.out;
+import by.avdeev.task10final.textfile.bean.TextFile;
 
 public class Printer {
-    public void printFile(Stream<String> stream) {
-        stream.forEach(System.out::println);
+    public void printFile(TextFile textFile) {
+        System.out.println(textFile);
     }
 }

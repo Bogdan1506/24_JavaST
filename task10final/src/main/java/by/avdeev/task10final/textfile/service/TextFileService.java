@@ -1,23 +1,17 @@
 package by.avdeev.task10final.textfile.service;
 
 import by.avdeev.task10final.textfile.bean.TextFile;
-import by.avdeev.task10final.textfile.dao.TextFileDAO;
-import by.avdeev.task10final.textfile.dao.factory.DAOFactory;
 import by.avdeev.task10final.textfile.service.exception.ServiceException;
 
-import java.util.stream.Stream;
-
 public interface TextFileService {
-    DAOFactory factory = DAOFactory.getInstance();
-    TextFileDAO dao = factory.getTextFileDAO();
 
-    void createFile(TextFile textFile) throws ServiceException;
+    TextFile findTextFile(String pathname) throws ServiceException;
 
-    void rename(TextFile textFile, String dest) throws ServiceException;
+    void addText(String pathname, String text) throws ServiceException;
 
-    Stream<String> printConsole(TextFile textFile) throws ServiceException;
+    boolean createTextFile(String pathname) throws ServiceException;
 
-    void addText(TextFile textFile) throws ServiceException;
+    boolean removeFile(String pathname) throws ServiceException;
 
-    void removeFile(TextFile textFile) throws ServiceException;
+    boolean rename(String pathname, String newName) throws ServiceException;
 }

@@ -1,7 +1,5 @@
 package by.avdeev.task10final.textfile.view;
 
-import by.avdeev.task10final.textfile.bean.Directory;
-import by.avdeev.task10final.textfile.bean.TextFile;
 import by.avdeev.task10final.textfile.controller.command.CommandName;
 
 import java.util.Arrays;
@@ -23,11 +21,13 @@ public class Reader {
         return scanner.nextLine();
     }
 
-    public TextFile readFile() {
-        out.print("Print directory: ");
-        Directory directory = new Directory(scanner.nextLine());
-        out.print("Print filename: ");
-        String filename = scanner.nextLine();
-        return new TextFile(directory, filename);
+    public String readPathname() {
+        out.print("Print path to the file: ");
+        return scanner.nextLine();
+    }
+
+    public String readText() {
+        out.println("Print text: ");
+        return scanner.nextLine();
     }
 }
