@@ -11,4 +11,8 @@ public class Printer {
         out.println("List of gifts: ");
         giftList.forEach(System.out::println);
     }
+
+    public void printError() {
+        out.println("The command is incorrect. Please, choose another");
+    }
 }

@@ -1,6 +1,5 @@
 package by.avdeev.task10final.textfile.controller.command.impl;
 
-import by.avdeev.task10final.textfile.bean.TextFile;
 import by.avdeev.task10final.textfile.controller.command.Command;
 import by.avdeev.task10final.textfile.service.TextFileService;
 import by.avdeev.task10final.textfile.service.exception.ServiceException;

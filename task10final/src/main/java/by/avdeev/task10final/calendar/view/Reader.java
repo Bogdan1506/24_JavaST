@@ -25,6 +25,9 @@ public class Reader {
 
     public String readClient() {
         out.println(Arrays.toString(Arrays.stream(CommandName.values()).filter(a -> a != CommandName.WRONG_REQUEST).toArray()));
+        out.println("CREATE_CALENDAR - GET CALENDAR WITH MARKED HOLIDAYS");
+        out.println("SHOW - GET HOLIDAYS ACCORDING TO YOUR INPUT DATA");
+        out.println("ADD - ADD NEW HOLIDAY TO THE FILE");
         out.print("Select command: ");
         return scanner.nextLine();
     }

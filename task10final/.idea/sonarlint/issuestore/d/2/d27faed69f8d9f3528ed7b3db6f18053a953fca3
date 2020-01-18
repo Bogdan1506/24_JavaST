@@ -1,7 +1,0 @@
-
-nsquid:CommentedOutCodeLinez"<This block of commented-out lines of code should be removed.(ðÕÜ¹üÿÿÿÿ8±ö‘žû-
-Ó%squid:RedundantThrowsDeclarationCheckx"šRemove the declaration of thrown exception 'by.avdeev.task10final.calendar.service.exception.ServiceException', as it cannot be thrown from method's body.(ú™–þ8±ö‘žû-
-€squid:S1488y"]Immediately return this expression instead of assigning it to the temporary variable "dates".(”¿Š—ûÿÿÿÿ8èäøžû-
-e$squid:AssignmentInSubExpressionCheck[".Extract the assignment out of this expression.(Éë‡õ8£´”Óù-
-isquid:CommentedOutCodeLine4"<This block of commented-out lines of code should be removed.(®ÿøˆ8¹Üžû-
-Isquid:S1172x"+Remove this unused method parameter "file".(ú™–þ8±ö‘žû-

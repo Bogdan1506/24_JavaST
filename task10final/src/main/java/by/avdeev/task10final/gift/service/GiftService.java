@@ -6,9 +6,9 @@ import by.avdeev.task10final.gift.service.exception.ServiceException;
 import java.util.List;
 
 public interface GiftService {
-    List<Gift> create(List<List<String>> strTubList, List<List<String>> strSweetList) throws ServiceException;
+    List<Gift> create(List<String> strGiftList) throws ServiceException;
 
-    void add(List<List<String>> list, String pathname) throws ServiceException;
+    void add(List<String> strGiftList, String pathname) throws ServiceException;
 
     List<Gift> findAll(String pathname) throws ServiceException;
 }

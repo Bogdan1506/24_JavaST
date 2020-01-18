@@ -13,7 +13,7 @@ public class Runner {
         while (true) {
             Controller controller = new Controller();
             controller.executeTask();
-            out.println("\npress 0 to stop\n1 to continue");
+            out.println("\npress 0 to finish the program. 1 - to continue");
             String stop = scanner.nextLine();
             if (stop.equals("0")) {
                 break;

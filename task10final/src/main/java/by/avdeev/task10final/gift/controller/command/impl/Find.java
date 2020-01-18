@@ -13,12 +13,12 @@ import java.util.List;
 public class Find implements Command {
     @Override
     public void execute() throws ServiceException {
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        GiftService service = serviceFactory.getGiftService();
+        ServiceFactory factory = ServiceFactory.getInstance();
+        GiftService service = factory.getGiftService();
         Reader reader = new Reader();
+        Printer printer = new Printer();
         String pathname = reader.readPath();
         List<Gift> giftList = service.findAll(pathname);
-        Printer printer = new Printer();
         printer.printGiftList(giftList);
     }
 }

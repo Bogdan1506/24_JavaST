@@ -7,7 +7,6 @@ import by.avdeev.task10final.textfile.service.factory.ServiceFactory;
 import by.avdeev.task10final.textfile.view.Reader;
 
 public class RemoveFile implements Command {
-
     @Override
     public void execute() throws ServiceException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();

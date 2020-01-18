@@ -13,13 +13,12 @@ import java.util.List;
 public class Create implements Command {
     @Override
     public void execute() throws ServiceException {
+        ServiceFactory factory = ServiceFactory.getInstance();
+        GiftService service = factory.getGiftService();
         Reader reader = new Reader();
-        List<List<String>> tubList = reader.readTub();
-        List<List<String>> sweetList = reader.readSweets();
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        GiftService service = serviceFactory.getGiftService();
-        List<Gift> gift = service.create(tubList, sweetList);
         Printer printer = new Printer();
-        printer.printGiftList(gift);
+        List<String> list = reader.readGift();
+        List<Gift> giftList = service.create(list);
+        printer.printGiftList(giftList);
     }
 }

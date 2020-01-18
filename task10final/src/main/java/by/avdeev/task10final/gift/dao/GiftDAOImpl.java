@@ -9,20 +9,18 @@ import java.util.List;
 
 public class GiftDAOImpl implements GiftDAO {
     @Override
-    public List<List<String>> findAll(String pathname) throws DAOException {
+    public List<String> findAll(String pathname) throws DAOException {
         ReaderDAO readerDAO = new ReaderDAO();
         return readerDAO.readFile(pathname);
     }
 
     @Override
-    public void add(List<String> s, String pathname) throws DAOException {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(pathname, true));
-            writer.write(s.get(0));
-            writer.newLine();
-            writer.write(s.get(1));
-            writer.newLine();
-            writer.close();
+    public void add(List<String> strGiftList, String pathname) throws DAOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathname, true))) {
+            for (String tempStrGift : strGiftList) {
+                writer.write(tempStrGift);
+                writer.newLine();
+            }
         } catch (IOException e) {
             throw new DAOException(e);
         }

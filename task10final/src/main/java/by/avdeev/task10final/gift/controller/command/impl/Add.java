@@ -6,20 +6,17 @@ import by.avdeev.task10final.gift.service.GiftService;
 import by.avdeev.task10final.gift.service.exception.ServiceException;
 import by.avdeev.task10final.gift.view.Reader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Add implements Command {
 
     @Override
     public void execute() throws ServiceException {
+        ServiceFactory factory = ServiceFactory.getInstance();
+        GiftService service = factory.getGiftService();
         Reader reader = new Reader();
-        List<List<String>> listRes = new ArrayList<>();
-        listRes.add(reader.readTub().get(0));
-        listRes.add(reader.readSweets().get(0));
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        GiftService service = serviceFactory.getGiftService();
         String pathname = reader.readPath();
-        service.add(listRes, pathname);
+        List<String> list = reader.readGift();
+        service.add(list, pathname);
     }
 }

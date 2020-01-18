@@ -1,12 +1,11 @@
 package by.avdeev.task10final.gift.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Gift {
     private Tub tub;
-    private List<Sweets> sweetsList = new ArrayList<>();
+    private List<Sweets> sweetsList;
 
     public Gift(Tub tub, List<Sweets> sweetsList) {
         this.tub = tub;

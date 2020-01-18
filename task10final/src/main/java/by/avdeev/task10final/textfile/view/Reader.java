@@ -17,6 +17,11 @@ public class Reader {
 
     public String readClient() {
         out.println(Arrays.toString(Arrays.stream(CommandName.values()).filter(a -> a != CommandName.WRONG_REQUEST).toArray()));
+        out.println("CREATE - CREATE NEW FILE");
+        out.println("RENAME - RENAME FILE");
+        out.println("PRINT - PRINT TEXT FROM THE FILE");
+        out.println("ADD_TEXT - ADD SOME TEXT TO THE FILE (UPDATE)");
+        out.println("REMOVE - DELETE FILE");
         out.print("Select command: ");
         return scanner.nextLine();
     }
