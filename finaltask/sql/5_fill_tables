@@ -1,0 +1,41 @@
+INSERT INTO `users` (`identity`,
+                     `login`,
+                     `password`,
+                     `role`)
+VALUES (2,
+        'user1',
+        'EE11CBB19052E40B07AAC0CA060C23EE',
+        1),
+       (3,
+        'user2',
+        'EE11CBB19052E40B07AAC0CA060C23EE',
+        2);
+
+INSERT INTO `pizza` (codename, name)
+VALUES (1, 'Margherita'),
+       (2, 'Pepperoni'),
+       (3, 'Greek');
+
+INSERT INTO `dough` (codename, name)
+VALUES (1, 'Thin'),
+       (2, 'Traditional'),
+       (3, 'Thick');
+
+INSERT INTO `order` (order_code, pizza, size, dough)
+VALUES (1, 1, 'S', 2),
+       (2, 2, 'M', 3),
+       (3, 3, 'L', 1);
+
+INSERT INTO `method` (codename, name)
+VALUES (1, 'Delivery'),
+       (2, 'Carryout');
+
+INSERT INTO `basket` (basket_code, order_code, method)
+VALUES (1, 1, 1),
+       (2, 2, 2),
+       (3, 3, 2);
+
+INSERT INTO `delivery` (delivery_code, basket_code, address, delivery_date)
+VALUES (1, 1, 'Nemiga 40 - 60', '2020-03-03'),
+       (2, 1, 'Nemiga 41 - 60', '2020-03-03'),
+       (3, 1, 'Nemiga 42 - 60', '2020-03-03');

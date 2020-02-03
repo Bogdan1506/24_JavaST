@@ -1,0 +1,11 @@
+CREATE DATABASE `pizzeria` DEFAULT CHARACTER SET utf8;
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+    ON `pizzeria`.*
+    TO pizzeria_user@localhost
+    IDENTIFIED BY 'pizzeria_password';
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+    ON `pizzeria`.*
+    TO pizzeria_user@'%'
+    IDENTIFIED BY 'pizzeria_password';
