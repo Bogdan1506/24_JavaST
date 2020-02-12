@@ -27,11 +27,12 @@ public class SentenceParser implements Handler {
         List<String> parsed = splitService.split(component, type);
         List<Component> components = new ArrayList<>();
         for (String s : parsed) {
-            Component temp = new Composite(type);
+            Composite temp = new Composite(type);
             temp.setContent(s);
             components.add(temp);
         }
-        component.setComponents(components);
+        ((Composite) component).setComponents(components);
+        ((Composite) component).setContent(null);
         if (root != null) {
             for (Component tempComponent : components) {
                 root.handleSplit(tempComponent);

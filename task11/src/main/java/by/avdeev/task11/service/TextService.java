@@ -11,10 +11,4 @@ public interface TextService {
     Component createTree(String pathname) throws ServiceException;
 
     String joinTree(String key);
-
-    List<Component> sortParagraphs(Component component);
-
-    List<String> sortWords(String sentence);
-
-    List<Component> sortLexemes(Component component, String symbol);
 }

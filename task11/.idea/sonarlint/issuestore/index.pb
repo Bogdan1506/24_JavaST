@@ -1,8 +1,6 @@
 
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-G
-src/main/java/Test.java,b\6\b660a5f333c00ef78dec1d85c727eb000157c1f3
 Z
 *src/main/java/by/avdeev/task11/Runner.java,5\1\516d123716af1156df078098eeb4bd5b980b5828
 ]
@@ -17,8 +15,6 @@ j
 :src/main/java/by/avdeev/task11/parser/ParagraphParser.java,f\4\f4054d4c42781b23cd48b6cff886c31430293615
 g
 7src/main/java/by/avdeev/task11/parser/LexemeParser.java,6\8\68abab5816d66a77cab36a1f40a9336759cb8a69
-h
-8src/main/java/by/avdeev/task11/parser/ParserFactory.java,1\c\1c9a42584a86296ad093085bc5e2d6e5724889d8
 i
 9src/main/java/by/avdeev/task11/parser/SentenceParser.java,b\2\b27d2711e77c582e8b54a96e3a2418f8776d484f
 b
@@ -67,3 +63,9 @@ p
 @src/main/java/by/avdeev/task11/service/impl/TextServiceImpl.java,1\1\11c3e39e340a8bdb0b4cd5834c1ead70b63f9887
 q
 Asrc/main/java/by/avdeev/task11/service/impl/SplitServiceImpl.java,7\8\7805ffb76882d1a07511e82a5898357a46473892
+z
+Jsrc/main/java/by/avdeev/task11/controller/command/impl/SortParagraphs.java,b\7\b7fbd879c31b67142d0c67487288dc00536551f5
+w
+Gsrc/main/java/by/avdeev/task11/controller/command/impl/SortLexemes.java,2\0\20dad1dcaa8ed80d4866140ef5610fec45624100
+u
+Esrc/main/java/by/avdeev/task11/controller/command/impl/SortWords.java,4\5\453fc152b56bc9ef44e18429048737f2e8bf55a6

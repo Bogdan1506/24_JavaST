@@ -1,6 +1,7 @@
 package by.avdeev.task11.service.impl;
 
 import by.avdeev.task11.bean.Component;
+import by.avdeev.task11.bean.Composite;
 import by.avdeev.task11.bean.Type;
 import by.avdeev.task11.service.SplitService;
 
@@ -22,7 +23,8 @@ public class SplitServiceImpl implements SplitService {
 
     @Override
     public List<String> split(Component component, Type dest) {
-        String content = String.valueOf(component.getContent());
+        Composite composite = (Composite) component;
+        String content = String.valueOf(composite.getContent());
         return Arrays.asList(content.split(repository.get(dest)));
     }
 }

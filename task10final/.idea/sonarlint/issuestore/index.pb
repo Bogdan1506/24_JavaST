@@ -113,14 +113,8 @@ l
 <src/main/java/by/avdeev/task10final/gift/service/Parser.java,5\b\5b509ebaf26c4bb886adac8d19d0b1b79b630c2f
 k
 ;src/main/java/by/avdeev/task10final/gift/dao/ReaderDAO.java,1\4\145079a65a1051d2699fb668e82c8d5096f68f4a
-{
-Ksrc/main/java/by/avdeev/task10final/gift/service/creator/SweetsCreator.java,f\0\f040a42b051f602e89c8a95a748fd267719f669a
-x
-Hsrc/main/java/by/avdeev/task10final/gift/service/creator/TubCreator.java,0\7\077e736520bc163d44624cdf4b4f071fe7b81019
 o
 ?src/main/java/by/avdeev/task10final/gift/service/Validator.java,c\a\caebc98220d6c7016856c5074f77e8dc6313a507
-y
-Isrc/main/java/by/avdeev/task10final/gift/service/creator/GiftCreator.java,7\b\7b25633bbe9af6dc1d5dc88f69592749e5d1a22f
 |
 Lsrc/main/java/by/avdeev/task10final/gift/controller/command/CommandName.java,c\1\c1eb92702a6113b5ca4b596219a26a3dc83870f2
 |
@@ -161,3 +155,7 @@ Xsrc/main/java/by/avdeev/task10final/calendar/controller/command/impl/CreateCale
 Ssrc/main/java/by/avdeev/task10final/calendar/controller/command/impl/ShowDates.java,8\d\8d6a73c246b24660ad35864624d92e7994fb80b6
 s
 Csrc/main/java/by/avdeev/task10final/calendar/service/Validator.java,a\c\acfbaa903dafbedc7e86fee09d3818f633aace38
+q
+Asrc/main/java/by/avdeev/task10final/gift/service/GiftCreator.java,d\5\d5ff990b3562ef645c0391265b5f5b037c2d4313
+G
+src/main/java/Test.java,b\6\b660a5f333c00ef78dec1d85c727eb000157c1f3

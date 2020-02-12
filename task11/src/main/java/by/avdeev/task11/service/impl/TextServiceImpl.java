@@ -30,51 +30,12 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public List<String> sortWords(String sentence) {
-        String regex = ",?\\s";
-        List<String> words = Arrays.asList(sentence.split(regex));
-        Comparator<String> comparator = Comparator.comparingInt(String::length);
-        words.sort(comparator);
-        return words;
-    }
-
-    @Override
-    public List<Component> sortLexemes(Component component, String symbol) {
-        if (symbol.length() > 1 || symbol == null) {
-            //todo
-        }
-        List<Component> components = component.getByType(Type.LEXEME);
-        Comparator<Component> comparator = (o1, o2) -> {
-            String strO1 = String.valueOf(o1.getContent());
-            String strO2 = String.valueOf(o2.getContent());
-            long countO1 = strO1.chars().filter(c -> c == symbol.charAt(0)).count();
-            long countO2 = strO2.chars().filter(c -> c == symbol.charAt(0)).count();
-            int difference = (int) (countO2 - countO1);
-            if (difference == 0) {
-                return strO1.length() - strO2.length();
-            } else {
-                return difference;
-            }
-        };
-        components.sort(comparator);
-        return components;
-    }
-
-    @Override
-    public List<Component> sortParagraphs(Component component) {
-        List<Component> components = component.getByType(Type.PARAGRAPH);
-        Comparator<Component> comparator = Comparator.comparingInt(o -> o.getComponents().size());
-        components.sort(comparator);
-        return components;
-    }
-
-    @Override
     public String joinTree(String key) {
         int intKey = Integer.parseInt(key);
         DAOFactory factory = DAOFactory.getFactory();
         TextDAO textDAO = factory.getTextDAO();
         Component text = textDAO.readElement(intKey);
-        return text.join();
+        return text.collect();
     }
 
     @Override
@@ -87,7 +48,7 @@ public class TextServiceImpl implements TextService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        Component text = new Composite(Type.TEXT);
+        Composite text = new Composite(Type.TEXT);
 
         StringBuilder stringBuilder = new StringBuilder();
         for (String string : strings) {

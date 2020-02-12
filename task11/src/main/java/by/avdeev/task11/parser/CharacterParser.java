@@ -1,5 +1,6 @@
 package by.avdeev.task11.parser;
 
+import by.avdeev.task11.bean.Composite;
 import by.avdeev.task11.bean.Type;
 import by.avdeev.task11.bean.Character;
 import by.avdeev.task11.bean.Component;
@@ -27,11 +28,14 @@ public class CharacterParser implements Handler {
         List<String> parsed = splitService.split(component, type);
         List<Component> components = new ArrayList<>();
         for (String s : parsed) {
-            Component temp = new Character();
-            temp.setContent(s);
+            Character temp = new Character();
+            if (!s.equals("")) {
+                temp.setSymbol(s.charAt(0));
+            }
             components.add(temp);
         }
-        component.addAll(components);
+        ((Composite) component).addAll(components);
+        ((Composite) component).setContent(null);
         if (root != null) {
             for (Component tempComponent : components) {
                 root.handleSplit(tempComponent);

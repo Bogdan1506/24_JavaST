@@ -4,6 +4,7 @@ import by.avdeev.task11.bean.Component;
 import by.avdeev.task11.controller.command.Command;
 import by.avdeev.task11.service.ServiceException;
 import by.avdeev.task11.service.ServiceFactory;
+import by.avdeev.task11.service.SortService;
 import by.avdeev.task11.service.TextService;
 import by.avdeev.task11.view.Printer;
 import by.avdeev.task11.view.Reader;
@@ -14,13 +15,14 @@ public class SortLexemes implements Command {
     @Override
     public void execute() throws ServiceException {
         ServiceFactory factory = ServiceFactory.getFactory();
-        TextService service = factory.getTextService();
+        SortService sortService = factory.getSortService();
+        TextService textService = factory.getTextService();
         Reader reader = new Reader();
         Printer printer = new Printer();
         String name = reader.readPathname();
-        Component text = service.createTree(name);
+        Component text = textService.createTree(name);
         String symbol = reader.readContent();
-        List<Component> components = service.sortLexemes(text, symbol);
+        List<Component> components = sortService.sortLexemes(text, symbol);
         printer.printCollection(components);
     }
 }

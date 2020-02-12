@@ -16,7 +16,7 @@ public class LexemeParser implements Handler {
 
     public LexemeParser(Handler rootWord) {
         this.rootWord = rootWord;
-    }
+    }  //todo
 
     public LexemeParser(Handler rootWord, Handler rootMark) {
         this.rootWord = rootWord;
@@ -33,11 +33,12 @@ public class LexemeParser implements Handler {
         List<String> parsed = splitService.split(component, type);
         List<Component> components = new ArrayList<>();
         for (String s : parsed) {
-            Component temp = new Composite(type);
+            Composite temp = new Composite(type);
             temp.setContent(s);
             components.add(temp);
         }
-        component.setComponents(components);
+        ((Composite) component).setComponents(components);
+        ((Composite) component).setContent(null);
         if (rootWord != null) {
             for (Component tempComponent : components) {
                 rootWord.handleSplit(tempComponent);

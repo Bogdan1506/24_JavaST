@@ -28,11 +28,12 @@ public class MarkParser implements Handler {
         List<Component> components = new ArrayList<>();
         for (String s : parsed) {
             if (s.equals("")) continue;
-            Component temp = new Composite(type);
+            Composite temp = new Composite(type);
             temp.setContent(s);
             components.add(temp);
         }
-        component.addAll(components);
+        ((Composite) component).addAll(components);
+        ((Composite) component).setContent(null);
         if (root != null) {
             for (Component tempComponent : components) {
                 root.handleSplit(tempComponent);
