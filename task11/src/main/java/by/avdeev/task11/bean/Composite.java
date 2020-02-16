@@ -6,15 +6,6 @@ import java.util.Objects;
 
 public class Composite implements Component {
     private final Type type;
-    private String content;
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public Composite(Type type) {
         this.type = type;
@@ -39,10 +30,6 @@ public class Composite implements Component {
             }
         }
         return result;
-    }
-
-    public void addAll(List<Component> components) {
-        this.components.addAll(components);
     }
 
     public void delete(Component component) {

@@ -2,7 +2,6 @@ package by.avdeev.task11.service;
 
 import by.avdeev.task11.bean.Component;
 
-import java.util.List;
 import java.util.Map;
 
 public interface TextService {
@@ -10,5 +9,7 @@ public interface TextService {
 
     Component createTree(String pathname) throws ServiceException;
 
-    String joinTree(String key);
+    String joinTree(Component component);
+
+    Component findComponent(String key);
 }

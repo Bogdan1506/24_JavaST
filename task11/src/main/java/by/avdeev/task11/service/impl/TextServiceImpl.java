@@ -15,34 +15,55 @@ import by.avdeev.task11.parser.SentenceParser;
 import by.avdeev.task11.parser.WordParser;
 import by.avdeev.task11.service.ServiceException;
 import by.avdeev.task11.service.TextService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 public class TextServiceImpl implements TextService {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
+    private final static String PARAM = "parameter is {}";
+    private final static String RESULT = "return value is {}";
+
     @Override
     public Map<Integer, Component> receiveTextCollection() {
+        logger.debug(START);
         DAOFactory factory = DAOFactory.getFactory();
         TextDAO textDAO = factory.getTextDAO();
-        return textDAO.receiveTextCollection();
+        Map<Integer, Component> result = textDAO.receiveTextCollection();
+        logger.debug(RESULT, result);
+        return result;
     }
 
     @Override
-    public String joinTree(String key) {
+    public String joinTree(Component component) {
+        logger.debug(START);
+        logger.debug(PARAM, component);
+        String result = component.collect();
+        logger.debug(RESULT, result);
+        return result;
+    }
+
+    public Component findComponent(String key) {
+        logger.debug(START);
+        logger.debug(PARAM, key);
         int intKey = Integer.parseInt(key);
         DAOFactory factory = DAOFactory.getFactory();
         TextDAO textDAO = factory.getTextDAO();
-        Component text = textDAO.readElement(intKey);
-        return text.collect();
+        Component result = textDAO.readElement(intKey);
+        logger.debug(RESULT, result);
+        return result;
     }
 
     @Override
     public Component createTree(String pathname) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, pathname);
         DAOFactory factory = DAOFactory.getFactory();
         TextDAO textDAO = factory.getTextDAO();
-        List<String> strings = null;
+        List<String> strings;
         try {
             strings = textDAO.readFile(pathname);
         } catch (DAOException e) {
@@ -55,17 +76,16 @@ public class TextServiceImpl implements TextService {
             stringBuilder.append(string).append("\n");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        String content = stringBuilder.toString();  //todo
-
-        text.setContent(content);
+        String content = stringBuilder.toString();
         Handler parser6 = new CharacterParser();
         Handler parser5 = new MarkParser(parser6);
         Handler parser4 = new WordParser(parser6);
         Handler parser3 = new LexemeParser(parser4, parser5);
         Handler parser2 = new SentenceParser(parser3);
         Handler parser = new ParagraphParser(parser2);
-        parser.handleSplit(text);
+        parser.handleSplit(text, content);
         textDAO.addTextObject(text);
+        logger.debug(RESULT, text);
         return text;
     }
 }
