@@ -69,8 +69,6 @@ w
 Gsrc/main/java/by/avdeev/task11/controller/command/impl/SortLexemes.java,2\0\20dad1dcaa8ed80d4866140ef5610fec45624100
 u
 Esrc/main/java/by/avdeev/task11/controller/command/impl/SortWords.java,4\5\453fc152b56bc9ef44e18429048737f2e8bf55a6
-G
-src/main/java/Test.java,b\6\b660a5f333c00ef78dec1d85c727eb000157c1f3
 :
 
 task11.iml,1\0\106bbe7484f8f4b452a148a7cf3738b78beef04c

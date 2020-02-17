@@ -52,6 +52,9 @@ public class TextDAOImpl implements TextDAO {
         List<String> strings = new ArrayList<>();
         try (FileInputStream fileInputStream = new FileInputStream(pathname);
              BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream))) {
+            if (fileInputStream.available() == 0) {
+                throw new DAOException("File is empty");
+            }
             while (reader.ready()) {
                 strings.add(reader.readLine());
             }
