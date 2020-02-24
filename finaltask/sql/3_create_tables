@@ -1,73 +1,77 @@
 USE `pizzeria`;
 
-CREATE TABLE `users`
+CREATE TABLE user
 (
-    `identity` INTEGER      NOT NULL AUTO_INCREMENT,
+    `id`       INTEGER      NOT NULL AUTO_INCREMENT,
     `login`    VARCHAR(255) NOT NULL UNIQUE,
     `password` CHAR(32)     NOT NULL,
     /*
      * 0 - администратор (Role.ADMINISTRATOR)
      * 1 - регистратор (Role.REGISTRAR)
-     * 2 - клиент (Role.CLIENT)
+     * 2 - создатель (Role.CREATOR)
      */
     `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)),
-    CONSTRAINT PRIMARY KEY (`identity`)
+    CONSTRAINT PRIMARY KEY (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
-CREATE TABLE `pizza`
+CREATE TABLE `goods`
 (
-    `codename` TINYINT     NOT NULL,
-    `name`     VARCHAR(25) NOT NULL UNIQUE,
-    CONSTRAINT PRIMARY KEY (`codename`)
+    `id`          INT          NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(25)  NOT NULL UNIQUE,
+    `description` VARCHAR(255) NOT NULL,
+    `price`       DOUBLE          NOT NULL,
+    `picture`     VARCHAR(350) NOT NULL,
+    CONSTRAINT PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `dough`
 (
-    `codename` TINYINT     NOT NULL,
-    `name`     VARCHAR(25) NOT NULL UNIQUE,
-    CONSTRAINT PRIMARY KEY (`codename`)
+    `id`   INT         NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(25) NOT NULL UNIQUE,
+    CONSTRAINT PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `size`
+(
+    `id`          INT         NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(25) NOT NULL UNIQUE,
+    `coefficient` DOUBLE      NOT NULL UNIQUE,
+    CONSTRAINT PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `pizza`
+(
+    `id`       INT NOT NULL AUTO_INCREMENT,
+    `goods_id` INT NOT NULL,
+    `size_id`  INT NOT NULL,
+    `dough_id` INT NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
+    FOREIGN KEY `FK_pizza_goods` (`goods_id`)
+        REFERENCES `goods` (`id`),
+    FOREIGN KEY `FK_pizza_dough` (`dough_id`)
+        REFERENCES `dough` (`id`)
 );
 
 CREATE TABLE `order`
 (
-    `order_code` INT     NOT NULL,
-    `pizza`      TINYINT NOT NULL,
-    `size`       CHAR(1) NOT NULL CHECK ( `size` IN ('S', 'M', 'L')),
-    `dough`      TINYINT NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_order` (`order_code`),
-    FOREIGN KEY `FK_order_pizza` (`pizza`)
-        REFERENCES `pizza` (`codename`),
-    FOREIGN KEY `FK_order_dough` (`dough`)
-        REFERENCES `dough` (`codename`)
+    `id`      INT  NOT NULL AUTO_INCREMENT,
+    `user_id` INT  NOT NULL,
+    `date`    DATE NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
+    FOREIGN KEY `FK_order_user` (`id`)
+        REFERENCES `user` (`id`)
 );
 
-CREATE TABLE `method`
+CREATE TABLE `order_position`
 (
-    `codename` TINYINT     NOT NULL CHECK ( codename IN (1, 2) ),
-    `name`     VARCHAR(10) NOT NULL UNIQUE,
-    CONSTRAINT PRIMARY KEY `PK_method` (`codename`)
-);
-
-CREATE TABLE `basket`
-(
-    `basket_code` INT     NOT NULL,
-    `order_code`  INT     NOT NULL,
-    `method`      TINYINT NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_basket` (`basket_code`),
-    FOREIGN KEY `FK_basket_order` (`order_code`)
-        REFERENCES `order` (`order_code`),
-    FOREIGN KEY `FK_basket_method` (`method`)
-        REFERENCES `method` (`codename`)
-);
-
-CREATE TABLE `delivery`
-(
-    `delivery_code` INT         NOT NULL,
-    `basket_code`   INT         NOT NULL,
-    `address`       VARCHAR(25) NOT NULL,
-    `delivery_date` DATE        NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_delivery` (`delivery_code`),
-    FOREIGN KEY `FK_delivery_basket` (`basket_code`)
-        REFERENCES `basket` (`basket_code`)
+    `id`       INT NOT NULL AUTO_INCREMENT,
+    `pizza_id` INT NOT NULL,
+    `order_id` INT NOT NULL,
+    `price`    INT NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
+    FOREIGN KEY `FK_order_position_pizza` (`pizza_id`)
+        REFERENCES `pizza` (`id`),
+    FOREIGN KEY `FK_order_position_order` (`order_id`)
+        REFERENCES `order` (`id`)
 );

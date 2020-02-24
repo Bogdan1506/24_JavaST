@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c94579cb-947b-46a7-86dd-4876c8e656a6" name="Default Changelist" comment="" />
+    <list default="true" id="c94579cb-947b-46a7-86dd-4876c8e656a6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/1/1/11c3e39e340a8bdb0b4cd5834c1ead70b63f9887" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/1/1/11c3e39e340a8bdb0b4cd5834c1ead70b63f9887" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/6/8/68abab5816d66a77cab36a1f40a9336759cb8a69" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/6/8/68abab5816d66a77cab36a1f40a9336759cb8a69" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/a/e/aeb5efa9c016e5ae422acb411779da539a51fb29" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/a/e/aeb5efa9c016e5ae422acb411779da539a51fb29" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/bean/Composite.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/bean/Composite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/controller/command/impl/Join.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/controller/command/impl/Join.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/CharacterParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/CharacterParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/LexemeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/LexemeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/MarkParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/MarkParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/ParagraphParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/ParagraphParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/SentenceParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/SentenceParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/WordParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/parser/WordParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/SplitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/SplitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/TextService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/TextService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/SortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/SortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/SplitServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/SplitServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/TextServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/src/main/java/by/avdeev/task11/service/impl/TextServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/Runner.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/Runner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/bean/Composite.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/bean/Composite.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/controller/command/impl/Join.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/controller/command/impl/Join.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/CharacterParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/CharacterParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/Handler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/LexemeParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/LexemeParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/MarkParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/MarkParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/ParagraphParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/ParagraphParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/SentenceParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/SentenceParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/WordParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/parser/WordParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/SplitService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/SplitService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/TextService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/TextService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/SortServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/SortServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/SplitServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/SplitServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/TextServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../task11/target/classes/by/avdeev/task11/service/impl/TextServiceImpl.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -16,14 +67,22 @@
     </option>
   </component>
   <component name="ProjectId" id="1V42KZeITz9lh3UC0cuv8y85wV3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../task04" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\24_JavaST\task03\src\main\resources" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -37,7 +96,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Log">
     <configuration name="Controller" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="by.avdeev.task03.fourdigit.controller.Controller" />
       <module name="task03" />
@@ -51,8 +110,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Log" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Log" />
+      <module name="task03" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Log" />
         <item itemvalue="Application.Controller" />
       </list>
     </recent_temporary>
@@ -69,10 +136,22 @@
       <updated>1576497983307</updated>
       <workItem from="1576497985635" duration="266000" />
       <workItem from="1576498523086" duration="189000" />
+      <workItem from="1581792855137" duration="136000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

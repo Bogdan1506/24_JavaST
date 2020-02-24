@@ -1,3 +1,23 @@
 
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+s
+Csrc/main/java/by/avdeev/task01/trapezoid/controller/Controller.java,e\0\e04a5066ade564471e03c6cb9b4686977f059e88
+k
+;src/main/java/by/avdeev/task01/rectangle/reader/Reader.java,4\f\4f85e3cc9b7094ce46c996db3e189f85d3bce02f
+s
+Csrc/main/java/by/avdeev/task01/twodigits/controller/Controller.java,5\e\5ecf300bc4fff3f2df86b4be3ba5743c81ae68e2
+s
+Csrc/main/java/by/avdeev/task01/rectangle/controller/Controller.java,6\b\6b5a4bdc43ba9b204b4923cc3975e6b588ac7c2a
+v
+Fsrc/main/java/by/avdeev/task01/twodigits/service/TwoDigitsService.java,9\2\92dd7f4ced8411186daa029f31c95a4ea03e197c
+k
+;src/main/java/by/avdeev/task01/twodigits/reader/Reader.java,2\3\2354c34000981b83d6acae5a4a1bc63c96c9068f
+l
+<src/main/java/by/avdeev/task01/trapezoid/bean/Trapezoid.java,7\a\7a4f34e5220e12c1132fa0c67558d99606e7df62
+k
+;src/main/java/by/avdeev/task01/trapezoid/reader/Reader.java,7\a\7ab41d60b21db1115378f15244370eeaa11bd843
+g
+7src/main/java/by/avdeev/task01/bytes/reader/Reader.java,d\c\dcdccc2806f9285cd416c4f59d7b060e46e3d616
+o
+?src/main/java/by/avdeev/task01/bytes/controller/Controller.java,8\7\87e3d23d1814d18106f227c34641c15a57a2f462

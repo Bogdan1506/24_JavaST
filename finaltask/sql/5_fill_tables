@@ -1,41 +1,42 @@
-INSERT INTO `users` (`identity`,
-                     `login`,
-                     `password`,
-                     `role`)
-VALUES (2,
-        'user1',
+INSERT INTO `user` (`login`,
+                    `password`,
+                    `role`)
+VALUES ('registrar',
         'EE11CBB19052E40B07AAC0CA060C23EE',
         1),
-       (3,
-        'user2',
+       ('creator',
         'EE11CBB19052E40B07AAC0CA060C23EE',
         2);
 
-INSERT INTO `pizza` (codename, name)
-VALUES (1, 'Margherita'),
-       (2, 'Pepperoni'),
-       (3, 'Greek');
+INSERT INTO `goods` (name, description, price, picture)
+VALUES ('Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.realsimple.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmarquee_large_2x%2Fpublic%2F1554827484%2Fneapolitan-pizza-0519foo.jpg%3Fitok%3DquMKXMo5'),
+       ('Pepperoni', 'Tomato pizza sauce, pepperoni, mozzarella', 6.9,
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2Frecipes%2Fck%2Fgluten-free-cookbook%2Fpepperoni-pizza-ck-x.jpg%3Fitok%3DNWreajsZ&w=450&c=sc&poi=face&q=85'),
+       ('Greek', 'Tomato pizza sauce, black olives, onion, mozzarella, tomatoes, feta cheese, jalapeno pepper, oregano',
+        9.9,
+        'https://d1doqjmisr497k.cloudfront.net/-/media/mccormick-us/recipes/grill-mates/g/800/grilled-chicken-greek-pizza.jpg');
 
-INSERT INTO `dough` (codename, name)
-VALUES (1, 'Thin'),
-       (2, 'Traditional'),
-       (3, 'Thick');
+INSERT INTO `dough` (name)
+VALUES ('Thin'),
+       ('Thick');
 
-INSERT INTO `order` (order_code, pizza, size, dough)
-VALUES (1, 1, 'S', 2),
-       (2, 2, 'M', 3),
-       (3, 3, 'L', 1);
+INSERT INTO `size` (name, coefficient)
+VALUES ('Small', 1.0),
+       ('Medium', 1.5),
+       ('Large', 2.0);
 
-INSERT INTO `method` (codename, name)
-VALUES (1, 'Delivery'),
-       (2, 'Carryout');
-
-INSERT INTO `basket` (basket_code, order_code, method)
+/*INSERT INTO `pizza` (goods_id, size_id, dough_id)
 VALUES (1, 1, 1),
        (2, 2, 2),
-       (3, 3, 2);
+       (3, 3, 3);
 
-INSERT INTO `delivery` (delivery_code, basket_code, address, delivery_date)
-VALUES (1, 1, 'Nemiga 40 - 60', '2020-03-03'),
-       (2, 1, 'Nemiga 41 - 60', '2020-03-03'),
-       (3, 1, 'Nemiga 42 - 60', '2020-03-03');
+INSERT INTO `order` (user_id, date)
+VALUES (1, '2020-02-24'),
+       (1, '2020-02-25'),
+       (1, '2020-02-26');
+
+INSERT INTO `order_position` (pizza_id, order_id, price)
+VALUES (1, 1, 6.9),
+       (2, 1, 10.35),
+       (3, 1, 19.8);*/
