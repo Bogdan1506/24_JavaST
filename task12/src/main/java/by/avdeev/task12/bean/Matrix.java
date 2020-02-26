@@ -27,7 +27,7 @@ public class Matrix {
         if (checkRange(i, j)) {
             a[i][j] = value;
         } else {
-            throw new MatrixException();
+            throw new MatrixException();  //todo write description
         }
     }
 

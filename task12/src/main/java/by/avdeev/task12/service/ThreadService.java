@@ -8,4 +8,6 @@ public interface ThreadService {
     void doCountDownLatch(Matrix matrix) throws ServiceException;
 
     void doCallable(Matrix matrix) throws ServiceException;
+
+    void doExecutorService(Matrix matrix);
 }

@@ -3,6 +3,7 @@ package by.avdeev.task12.service;
 import by.avdeev.task12.bean.CycleBarrierMatrix;
 import by.avdeev.task12.bean.CountDownLatchMatrix;
 import by.avdeev.task12.bean.CallableMatrix;
+import by.avdeev.task12.bean.Executor;
 import by.avdeev.task12.bean.Matrix;
 import by.avdeev.task12.bean.MatrixException;
 import by.avdeev.task12.dao.DAOException;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +50,25 @@ public class ThreadServiceImpl implements ThreadService {
         setIntegers(integers);
     }
 
+    @Override
+    public void doExecutorService(Matrix matrix) {
+        TimeUnit timeUnit = TimeUnit.SECONDS;
+        int size = matrix.getSize();
+        counter = Math.min(size, 8);
+        ExecutorService executorService = Executors.newFixedThreadPool(8);
+        for (int i = 0; i < size; i++) {
+            int temp = integers.get(0);
+            Executor executor = new Executor(temp, executorService, matrix);
+            integers.remove(0);
+            executorService.execute(executor);
+        }
+        try {
+            timeUnit.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executorService.shutdown();
+    }
 
     @Override
     public void doCallable(Matrix matrix) throws ServiceException {
