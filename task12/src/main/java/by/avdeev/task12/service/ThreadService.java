@@ -6,8 +6,6 @@ public interface ThreadService {
     void doCycleBarrier(Matrix matrix) throws ServiceException;
 
     void doCountDownLatch(Matrix matrix) throws ServiceException;
-//
-//    void doSemaphore(Matrix matrix, String pathnameToDigits) throws ServiceException;
 
-//    void fillCollection(String pathname) throws ServiceException;
+    void doCallable(Matrix matrix) throws ServiceException;
 }
