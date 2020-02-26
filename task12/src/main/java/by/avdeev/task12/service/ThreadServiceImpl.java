@@ -3,7 +3,7 @@ package by.avdeev.task12.service;
 import by.avdeev.task12.bean.CycleBarrierMatrix;
 import by.avdeev.task12.bean.CountDownLatchMatrix;
 import by.avdeev.task12.bean.CallableMatrix;
-import by.avdeev.task12.bean.Executor;
+import by.avdeev.task12.bean.ExecutorServiceMatrix;
 import by.avdeev.task12.bean.Matrix;
 import by.avdeev.task12.bean.MatrixException;
 import by.avdeev.task12.dao.DAOException;
@@ -58,9 +58,9 @@ public class ThreadServiceImpl implements ThreadService {
         ExecutorService executorService = Executors.newFixedThreadPool(8);
         for (int i = 0; i < size; i++) {
             int temp = integers.get(0);
-            Executor executor = new Executor(temp, executorService, matrix);
+            ExecutorServiceMatrix executorServiceMatrix = new ExecutorServiceMatrix(temp, executorService, matrix);
             integers.remove(0);
-            executorService.execute(executor);
+            executorService.execute(executorServiceMatrix);
         }
         try {
             timeUnit.sleep(3);
