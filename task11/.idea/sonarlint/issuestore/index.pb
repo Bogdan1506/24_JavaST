@@ -78,3 +78,5 @@ g
 7src/main/java/by/avdeev/task11/service/SortService.java,7\3\738e488d289cf215972efb2fbd631e8e876ebfab
 =
 logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2
+\
+,src/main/java/by/avdeev/task11/file/text.txt,c\4\c472473e61ba76b77f095679582621e665da9c75

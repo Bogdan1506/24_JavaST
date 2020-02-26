@@ -41,14 +41,17 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public void doCycleBarrier(Matrix matrix) throws ServiceException {
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(matrix.getSize(), new Runnable() {
+        counter = Math.min(matrix.getSize(), 8);
+        List<Thread> threads = new ArrayList<>();
+        while (isRunning) {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(counter, new Runnable() {
             @Override
             public void run() {
+                counter = 0;
                 for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
                     try {
                         if (matrix.getElement(i, j) == 0) {
-                            for (int k = 0, z = 0; k < matrix.getSize(); k++) {
-                                counter = 0;
+                            for (int k = 0, z = 0; k < matrix.getSize(); k++, z++) {
                                 if (matrix.getElement(k, z) == 0) {
                                     counter++;
                                 }
@@ -62,9 +65,6 @@ public class ThreadServiceImpl implements ThreadService {
                 isRunning = false;
             }
         });
-        List<Thread> threads = new ArrayList<>();
-        counter = Math.min(matrix.getSize(), 8);
-        while (isRunning) {
             for (int i = 0; i < counter; i++) {
                 CycleBarrierMatrix cycleBarrierMatrix = null;
                 try {
