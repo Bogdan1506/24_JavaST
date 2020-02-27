@@ -6,6 +6,7 @@ import by.avdeev.task12.bean.CallableMatrix;
 import by.avdeev.task12.bean.ExecutorServiceMatrix;
 import by.avdeev.task12.bean.Matrix;
 import by.avdeev.task12.bean.MatrixException;
+import by.avdeev.task12.bean.PhaserMatrix;
 import by.avdeev.task12.dao.DAOException;
 import by.avdeev.task12.dao.DAOFactory;
 import by.avdeev.task12.dao.MatrixDAO;
@@ -18,6 +19,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.Phaser;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -48,6 +50,50 @@ public class ThreadServiceImpl implements ThreadService {
         }
         List<Integer> integers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         setIntegers(integers);
+    }
+
+    @Override
+    public void doPhaser(Matrix matrix) {
+        int size = matrix.getSize();
+        while (isRunning) {
+            counter = Math.min(size, 8);
+            size -= counter;
+            Phaser phaser = new Phaser(counter);
+            Thread checkThread = new Thread(() -> {
+                boolean isCycling = true;
+                while (isCycling) {
+                    isCycling = false;
+                    for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+                        try {
+                            if (matrix.getElement(i, j) == 0) {
+                                isCycling = true;
+                            }
+                        } catch (MatrixException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                isRunning = false;
+            });
+            checkThread.start();
+            for (int i = 0; i < counter; i++) {
+                PhaserMatrix phaserMatrix = null;
+                try {
+                    phaserMatrix = new PhaserMatrix(integers.get(0), matrix, phaser);
+                    integers.remove(0);
+
+                } catch (IndexOutOfBoundsException e) {
+                }
+                Thread thread = new Thread(phaserMatrix);
+                thread.start();
+            }
+            try {
+                TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+                timeUnit.sleep(20);
+            } catch (InterruptedException e) {
+
+            }
+        }
     }
 
     @Override
@@ -178,7 +224,6 @@ public class ThreadServiceImpl implements ThreadService {
     @Override
     public void doCycleBarrier(Matrix matrix) throws ServiceException {
         counter = Math.min(matrix.getSize(), 8);
-        List<Thread> threads = new ArrayList<>();
         while (isRunning) {
             CyclicBarrier cyclicBarrier = new CyclicBarrier(counter, () -> {
                 counter = 0;
@@ -207,7 +252,6 @@ public class ThreadServiceImpl implements ThreadService {
                 } catch (IndexOutOfBoundsException e) {
                 }
                 Thread thread = new Thread(cycleBarrierMatrix);
-                threads.add(thread);
                 thread.start();
             }
             try {

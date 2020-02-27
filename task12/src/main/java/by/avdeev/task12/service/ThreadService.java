@@ -9,5 +9,7 @@ public interface ThreadService {
 
     void doCallable(Matrix matrix) throws ServiceException;
 
+    void doPhaser(Matrix matrix);
+
     void doExecutorService(Matrix matrix);
 }
