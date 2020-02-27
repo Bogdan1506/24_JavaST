@@ -1,4 +1,4 @@
-package by.avdeev.task12.service;
+package by.avdeev.task12.service.impl;
 
 import by.avdeev.task12.bean.CycleBarrierMatrix;
 import by.avdeev.task12.bean.CountDownLatchMatrix;
@@ -10,6 +10,10 @@ import by.avdeev.task12.bean.PhaserMatrix;
 import by.avdeev.task12.dao.DAOException;
 import by.avdeev.task12.dao.DAOFactory;
 import by.avdeev.task12.dao.MatrixDAO;
+import by.avdeev.task12.service.ServiceException;
+import by.avdeev.task12.service.ThreadService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +29,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ThreadServiceImpl implements ThreadService {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
+    private final static String PARAM = "parameter is {}";
+    private final static String RESULT = "return value is {}";
     private List<Integer> integers;
     private boolean isRunning = true;
     private int counter;
     private int i = 0;
     private int j = 0;
 
-    public List<Integer> getIntegers() {
-        return integers;
-    }
-
-    public void setIntegers(List<Integer> integers) {
-        this.integers = integers;
-    }
-
     public void fillCollection(String pathname) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, pathname);
         DAOFactory daoFactory = DAOFactory.getInstance();
         MatrixDAO matrixDAO = daoFactory.getMatrixDAO();
         List<String> strings;
@@ -48,12 +50,13 @@ public class ThreadServiceImpl implements ThreadService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        List<Integer> integers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
-        setIntegers(integers);
+        this.integers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
     }
 
     @Override
     public void doPhaser(Matrix matrix) {
+        logger.debug(START);
+        logger.debug(PARAM, matrix);
         int size = matrix.getSize();
         while (isRunning) {
             counter = Math.min(size, 8);
@@ -98,6 +101,8 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public void doExecutorService(Matrix matrix) {
+        logger.debug(START);
+        logger.debug(PARAM, matrix);
         TimeUnit timeUnit = TimeUnit.SECONDS;
         int size = matrix.getSize();
         counter = Math.min(size, 8);
@@ -118,6 +123,8 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public void doCallable(Matrix matrix) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, matrix);
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
         int size = matrix.getSize();
         counter = Math.min(size, 8);
@@ -180,6 +187,8 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public void doCountDownLatch(Matrix matrix) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, matrix);
         int size = matrix.getSize();
         while (isRunning) {
             counter = Math.min(size, 8);
@@ -223,6 +232,8 @@ public class ThreadServiceImpl implements ThreadService {
 
     @Override
     public void doCycleBarrier(Matrix matrix) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, matrix);
         counter = Math.min(matrix.getSize(), 8);
         while (isRunning) {
             CyclicBarrier cyclicBarrier = new CyclicBarrier(counter, () -> {

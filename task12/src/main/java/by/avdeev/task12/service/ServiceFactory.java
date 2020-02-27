@@ -1,7 +1,10 @@
 package by.avdeev.task12.service;
 
+import by.avdeev.task12.service.impl.MatrixServiceImpl;
+import by.avdeev.task12.service.impl.ThreadServiceImpl;
+
 public class ServiceFactory {
-    private static ServiceFactory serviceFactory = new ServiceFactory();
+    private static ServiceFactory factory;
     private final MatrixService matrixService = new MatrixServiceImpl();
     private final ThreadService threadService = new ThreadServiceImpl();
 
@@ -9,7 +12,14 @@ public class ServiceFactory {
     }
 
     public static ServiceFactory getInstance() {
-        return serviceFactory;
+        if (factory == null) {
+            synchronized (ServiceFactory.class) {
+                if (factory == null) {
+                    factory = new ServiceFactory();
+                }
+            }
+        }
+        return factory;
     }
 
     public MatrixService getMatrixService() {

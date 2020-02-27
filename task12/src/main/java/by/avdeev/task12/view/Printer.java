@@ -15,6 +15,6 @@ public class Printer {
     public void printMatrix(Matrix matrix) {
         logger.debug(START);
         logger.debug(PARAM, matrix);
-        out.println("LOLOLOLOLO\n" + matrix);
+        out.println(matrix);
     }
 }
