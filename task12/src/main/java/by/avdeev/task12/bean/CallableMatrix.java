@@ -1,8 +1,13 @@
 package by.avdeev.task12.bean;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class CallableMatrix implements Runnable {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
     private int number;
     private Matrix matrix;
     private int i;
@@ -49,10 +54,11 @@ public class CallableMatrix implements Runnable {
 
     @Override
     public void run() {
+        logger.debug(START);
         try {
             matrix.setElement(i, j, number);
         } catch (MatrixException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 

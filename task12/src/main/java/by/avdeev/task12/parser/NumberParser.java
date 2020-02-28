@@ -10,7 +10,7 @@ import java.util.List;
 public class NumberParser {
     private final Logger logger = LogManager.getLogger();
     private final static String START = "started";
-    private final static String PARAM = "parameters are {}, {}";
+    private final static String PARAM = "parameters is {}";
     private final static String RESULT = "return value is {}";
 
     public List<List<String>> parse(List<String> strings) {

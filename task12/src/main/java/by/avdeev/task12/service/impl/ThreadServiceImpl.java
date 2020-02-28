@@ -32,7 +32,6 @@ public class ThreadServiceImpl implements ThreadService {
     private final Logger logger = LogManager.getLogger();
     private final static String START = "started";
     private final static String PARAM = "parameter is {}";
-    private final static String RESULT = "return value is {}";
     private List<Integer> integers;
     private boolean isRunning = true;
     private int counter;
@@ -53,6 +52,26 @@ public class ThreadServiceImpl implements ThreadService {
         this.integers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
     }
 
+    private void runCheckThread(Matrix matrix) {
+        Thread checkThread = new Thread(() -> {
+            boolean isCycling = true;
+            while (isCycling) {
+                isCycling = false;
+                for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+                    try {
+                        if (matrix.getElement(i, j) == 0) {
+                            isCycling = true;
+                        }
+                    } catch (MatrixException e) {
+                        logger.error(e);
+                    }
+                }
+            }
+            isRunning = false;
+        });
+        checkThread.start();
+    }
+
     @Override
     public void doPhaser(Matrix matrix) {
         logger.debug(START);
@@ -62,31 +81,11 @@ public class ThreadServiceImpl implements ThreadService {
             counter = Math.min(size, 8);
             size -= counter;
             Phaser phaser = new Phaser(counter);
-            Thread checkThread = new Thread(() -> {
-                boolean isCycling = true;
-                while (isCycling) {
-                    isCycling = false;
-                    for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
-                        try {
-                            if (matrix.getElement(i, j) == 0) {
-                                isCycling = true;
-                            }
-                        } catch (MatrixException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                isRunning = false;
-            });
-            checkThread.start();
+            runCheckThread(matrix);
             for (int i = 0; i < counter; i++) {
-                PhaserMatrix phaserMatrix = null;
-                try {
-                    phaserMatrix = new PhaserMatrix(integers.get(0), matrix, phaser);
-                    integers.remove(0);
-
-                } catch (IndexOutOfBoundsException e) {
-                }
+                PhaserMatrix phaserMatrix;
+                phaserMatrix = new PhaserMatrix(integers.get(0), matrix, phaser);
+                integers.remove(0);
                 Thread thread = new Thread(phaserMatrix);
                 thread.start();
             }
@@ -94,7 +93,7 @@ public class ThreadServiceImpl implements ThreadService {
                 TimeUnit timeUnit = TimeUnit.MILLISECONDS;
                 timeUnit.sleep(20);
             } catch (InterruptedException e) {
-
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -116,7 +115,7 @@ public class ThreadServiceImpl implements ThreadService {
         try {
             timeUnit.sleep(3);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         executorService.shutdown();
     }
@@ -167,26 +166,26 @@ public class ThreadServiceImpl implements ThreadService {
                             counter++;
                         }
                     } catch (MatrixException e) {
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
                 try {
                     timeUnit.sleep(50);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             });
             thread.start();
             try {
                 timeUnit.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
 
     @Override
-    public void doCountDownLatch(Matrix matrix) throws ServiceException {
+    public void doCountDownLatch(Matrix matrix) {
         logger.debug(START);
         logger.debug(PARAM, matrix);
         int size = matrix.getSize();
@@ -194,30 +193,11 @@ public class ThreadServiceImpl implements ThreadService {
             counter = Math.min(size, 8);
             size -= counter;
             CountDownLatch countDownLatch = new CountDownLatch(counter);
-            Thread checkThread = new Thread(() -> {
-                boolean isCycling = true;
-                while (isCycling) {
-                    isCycling = false;
-                    for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
-                        try {
-                            if (matrix.getElement(i, j) == 0) {
-                                isCycling = true;
-                            }
-                        } catch (MatrixException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                isRunning = false;
-            });
-            checkThread.start();
+            runCheckThread(matrix);
             for (int i = 0; i < counter; i++) {
-                CountDownLatchMatrix countDownLatchMatrix = null;
-                try {
-                    countDownLatchMatrix = new CountDownLatchMatrix(integers.get(0), countDownLatch, matrix);
-                    integers.remove(0);
-                } catch (IndexOutOfBoundsException e) {
-                }
+                CountDownLatchMatrix countDownLatchMatrix;
+                countDownLatchMatrix = new CountDownLatchMatrix(integers.get(0), countDownLatch, matrix);
+                integers.remove(0);
                 Thread thread = new Thread(countDownLatchMatrix);
                 thread.start();
             }
@@ -225,13 +205,13 @@ public class ThreadServiceImpl implements ThreadService {
                 TimeUnit timeUnit = TimeUnit.MILLISECONDS;
                 timeUnit.sleep(150);
             } catch (InterruptedException e) {
-                throw new ServiceException(e);
+                Thread.currentThread().interrupt();
             }
         }
     }
 
     @Override
-    public void doCycleBarrier(Matrix matrix) throws ServiceException {
+    public void doCycleBarrier(Matrix matrix) {
         logger.debug(START);
         logger.debug(PARAM, matrix);
         counter = Math.min(matrix.getSize(), 8);
@@ -249,19 +229,15 @@ public class ThreadServiceImpl implements ThreadService {
                             return;
                         }
                     } catch (MatrixException e) {
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
                 isRunning = false;
             });
             for (int i = 0; i < counter; i++) {
-                CycleBarrierMatrix cycleBarrierMatrix = null;
-                try {
-                    cycleBarrierMatrix = new CycleBarrierMatrix(integers.get(0), cyclicBarrier, matrix);
-                    integers.remove(0);
-
-                } catch (IndexOutOfBoundsException e) {
-                }
+                CycleBarrierMatrix cycleBarrierMatrix;
+                cycleBarrierMatrix = new CycleBarrierMatrix(integers.get(0), cyclicBarrier, matrix);
+                integers.remove(0);
                 Thread thread = new Thread(cycleBarrierMatrix);
                 thread.start();
             }
@@ -269,7 +245,7 @@ public class ThreadServiceImpl implements ThreadService {
                 TimeUnit timeUnit = TimeUnit.MILLISECONDS;
                 timeUnit.sleep(20);
             } catch (InterruptedException e) {
-                throw new ServiceException(e);
+                Thread.currentThread().interrupt();
             }
         }
     }

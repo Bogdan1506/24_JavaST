@@ -1,11 +1,16 @@
 package by.avdeev.task12.bean;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CountDownLatchMatrix implements Runnable {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
     private int number;
     private CountDownLatch countDownLatch;
     private Matrix matrix;
@@ -42,6 +47,7 @@ public class CountDownLatchMatrix implements Runnable {
 
     @Override
     public void run() {
+        logger.debug(START);
         Lock lock = new ReentrantLock();
         while (countDownLatch.getCount() != 0) {
             for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
@@ -53,21 +59,12 @@ public class CountDownLatchMatrix implements Runnable {
                         return;
                     }
                 } catch (MatrixException e) {
-                    e.printStackTrace();
+                    logger.debug(e);
                 } finally {
                     lock.unlock();
                 }
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Latch{" +
-                "number=" + number +
-                ", countDownLatch=" + countDownLatch +
-                ", matrix=" + matrix +
-                '}';
     }
 
     @Override
@@ -83,5 +80,14 @@ public class CountDownLatchMatrix implements Runnable {
     @Override
     public int hashCode() {
         return Objects.hash(number, countDownLatch, matrix);
+    }
+
+    @Override
+    public String toString() {
+        return "Latch{" +
+                "number=" + number +
+                ", countDownLatch=" + countDownLatch +
+                ", matrix=" + matrix +
+                '}';
     }
 }

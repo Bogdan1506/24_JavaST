@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.List;
 public class MatrixDAOImpl implements MatrixDAO {
     private final Logger logger = LogManager.getLogger();
     private final static String START = "started";
-    private final static String PARAM = "parameters are {}, {}";
+    private final static String PARAM = "parameter is {}";
     private final static String RESULT = "return value is {}";
 
     @Override

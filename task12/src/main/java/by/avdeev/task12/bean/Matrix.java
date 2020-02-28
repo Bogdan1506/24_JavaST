@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class Matrix {
     private int[][] a;
+    private static final String EX = "Incorrect element";
 
     public Matrix(int n, int m) throws MatrixException {
         if ((n < 1) || (m < 1)) {
@@ -20,14 +21,14 @@ public class Matrix {
         if (checkRange(i, j)) {
             return a[i][j];
         }
-        throw new MatrixException();
+        throw new MatrixException(EX);
     }
 
     public void setElement(int i, int j, int value) throws MatrixException {
         if (checkRange(i, j)) {
             a[i][j] = value;
         } else {
-            throw new MatrixException();  //todo write description
+            throw new MatrixException(EX);
         }
     }
 
@@ -40,7 +41,7 @@ public class Matrix {
         StringBuilder s = new StringBuilder("Matrix : " + a.length + "x" + a[0].length + "\n");
         for (int[] row : a) {
             for (int value : row) {
-                s.append(value + " ");
+                s.append(value).append(" ");
             }
             s.append("\n");
         }

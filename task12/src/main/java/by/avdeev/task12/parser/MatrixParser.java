@@ -10,15 +10,15 @@ import java.util.List;
 public class MatrixParser {
     private final Logger logger = LogManager.getLogger();
     private final static String START = "started";
-    private final static String PARAM = "parameters are {}, {}";
+    private final static String PARAM = "parameter is {}";
     private final static String RESULT = "return value is {}";
-    private String regex = "[^-?\\d]";
 
     public List<List<String>> parse(List<String> strings) {
         logger.debug(START);
         logger.debug(PARAM, strings);
         List<List<String>> parsed = new ArrayList<>();
         for (String tempString : strings) {
+            String regex = "[^-?\\d]";
             List<String> tempList = new ArrayList<>(Arrays.asList(tempString.split(regex)));
             parsed.add(tempList);
         }

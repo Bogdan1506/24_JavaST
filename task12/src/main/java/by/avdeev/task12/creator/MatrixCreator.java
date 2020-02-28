@@ -11,7 +11,7 @@ import java.util.List;
 public class MatrixCreator {
     private final Logger logger = LogManager.getLogger();
     private final static String START = "started";
-    private final static String PARAM = "parameters are {}, {}";
+    private final static String PARAM = "parameters is {}";
     private final static String RESULT = "return value is {}";
 
     public Matrix create(List<List<String>> parsed) throws ServiceException, MatrixException {

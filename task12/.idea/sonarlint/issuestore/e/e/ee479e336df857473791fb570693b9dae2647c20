@@ -1,17 +1,0 @@
-
-esquid:S2142Ø"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8ÛĞØ—ˆ.
-esquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8şøŸ—ˆ.
-Gsquid:S1148˜"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8›™––ˆ.
-Fsquid:S1148{"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¯­¿—ˆ.
-usquid:S3776J"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(´Æ…ôüÿÿÿÿ8ï¥ó–ˆ.
-vsquid:S3776³"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(©á÷êıÿÿÿÿ8›™––ˆ.
-dsquid:S2142z"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8µ¿¾—ˆ.
-qsquid:S3776ˆ"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(éèˆâ8›™––ˆ.
-Fsquid:S1148D"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ñ¦å›ˆ.
-Gsquid:S1148‚"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8şøŸ—ˆ.
-esquid:S2142¬"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8›™––ˆ.
-Fsquid:S1148u"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¯Ş½—ˆ.
-Gsquid:S1148Ä"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8›™––ˆ.
-Nsquid:S00108Ï")Either remove or fill this block of code.(Ñˆ¿‘úÿÿÿÿ8ƒ¬ä—ˆ.
-dsquid:S2142C"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8Ñ¦å›ˆ.
-Nsquid:S00108¤")Either remove or fill this block of code.(Ñˆ¿‘úÿÿÿÿ8›™––ˆ.

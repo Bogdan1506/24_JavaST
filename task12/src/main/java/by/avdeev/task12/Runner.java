@@ -9,10 +9,10 @@ import java.util.Scanner;
 public class Runner {
     public static void main(String[] args) {
         Logger logger = LogManager.getLogger();
-        logger.info("Program has started");
+        logger.info("The program has been started");
         Scanner scanner = new Scanner(System.in);
         Controller controller = new Controller();
         controller.execute();
-        logger.info("Program has finished");
+        logger.info("THe program has been completed");
     }
 }
