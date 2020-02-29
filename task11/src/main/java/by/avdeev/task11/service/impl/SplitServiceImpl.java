@@ -21,8 +21,8 @@ public class SplitServiceImpl implements SplitService {
         repository.put(Type.PARAGRAPH, "\n");
         repository.put(Type.SENTENCE, "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?)\\s");
         repository.put(Type.LEXEME, "\\s");
-        repository.put(Type.WORD, "\\W+");
-        repository.put(Type.MARK, "[^,.!?]+");
+        repository.put(Type.WORD, "[.?!, ']+");
+        repository.put(Type.MARK, "[^,.!?']+");
         repository.put(Type.CHARACTER, "");
     }
 

@@ -41,7 +41,8 @@ public class TextServiceImpl implements TextService {
     public String joinTree(Component component) {
         logger.debug(START);
         logger.debug(PARAM, component);
-        String result = component.collect();
+        String temp = component.collect();
+        String result = temp.substring(0, temp.length() - 1);
         logger.debug(RESULT, result);
         return result;
     }

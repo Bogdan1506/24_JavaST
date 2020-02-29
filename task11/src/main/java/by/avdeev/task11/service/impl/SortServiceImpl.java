@@ -22,8 +22,7 @@ public class SortServiceImpl implements SortService {
     public List<String> sortWords(String sentence) {
         logger.debug(START);
         logger.debug(PARAM, sentence);
-
-        String regex = ",?\\s";
+        String regex = "[.,! '?]+";
         List<String> words = Arrays.asList(sentence.split(regex));
         Comparator<String> comparator = Comparator.comparingInt(String::length);
         words.sort(comparator);

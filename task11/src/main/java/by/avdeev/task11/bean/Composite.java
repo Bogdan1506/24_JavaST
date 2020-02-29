@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public class Composite implements Component {
     private final Type type;
+    private List<Component> components = new ArrayList<>();
 
     public Composite(Type type) {
         this.type = type;
     }
 
-    private List<Component> components = new ArrayList<>();
 
     public void add(Component component) {
         components.add(component);
@@ -23,7 +23,7 @@ public class Composite implements Component {
             if (((Composite) component).getType() == type) {
                 result.add(component);
             } else {
-                List<Component> temp = new ArrayList<>();
+                List<Component> temp;
                 if ((temp = ((Composite) component).getByType(type)) != null) {
                     result.addAll(temp);
                 }
@@ -53,7 +53,7 @@ public class Composite implements Component {
                 stringBuilder.append(" ");
             }
             if (type == Type.TEXT) {
-                stringBuilder.append("\n");
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1).append("\n");
             }
         }
         return stringBuilder.toString();

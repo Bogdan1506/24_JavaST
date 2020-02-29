@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -58,8 +57,6 @@ public class TextDAOImpl implements TextDAO {
             while (reader.ready()) {
                 strings.add(reader.readLine());
             }
-        } catch (FileNotFoundException e) {
-            throw new DAOException(e);
         } catch (IOException e) {
             throw new DAOException(e);
         }

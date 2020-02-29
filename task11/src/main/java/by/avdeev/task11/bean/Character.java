@@ -19,7 +19,7 @@ public class Character implements Component {
 
     @Override
     public String toString() {
-        return "Character{" +
+        return "{" +
                 symbol +
                 '}';
     }

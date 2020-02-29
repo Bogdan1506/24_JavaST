@@ -27,8 +27,6 @@ j
 :src/main/java/by/avdeev/task12/service/ServiceFactory.java,7\3\734910c4de364ed9444c003b358ee067d7651174
 i
 9src/main/java/by/avdeev/task12/service/ThreadService.java,6\a\6afe621fd1bf3c804e1ee6ceb94ec358336113b8
-G
-target/file/numbers.txt,6\2\62d38ed4bb70c3a389340fd2234043ed5e9cad7b
 m
 =src/main/java/by/avdeev/task12/bean/CountDownLatchMatrix.java,0\6\0609f6c09032104a026779d52e007a595c3f0be2
 g
@@ -77,11 +75,3 @@ Bsrc/main/java/by/avdeev/task12/service/impl/ThreadServiceImpl.java,c\d\cdfcbef
 0src/main/java/by/avdeev/task12/view/Printer.java,6\8\6899b287959b2f943ecd0d994117c63c36e8381f
 =
 logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2
-C
-target/file/4x4.txt,c\b\cbca07c6cbbdb5f2f3537df23b7515d7ced8ff52
-C
-target/file/8x8.txt,a\9\a9df4810779eedfd3af5c5aa2c8eeb08c31aa575
-E
-target/file/15x15.txt,4\5\454012b663036f1d3f026fb04027591e811682c2
-E
-target/file/20x20.txt,d\1\d12d4440d88cffc58a671d4eef0cf3643754fde6

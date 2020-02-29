@@ -1,4 +1,0 @@
-01:58:26 INFO  Runner main - Program has started
-01:58:26 DEBUG Controller executeTask - started
-01:58:26 DEBUG Reader readCommand - started
-01:58:32 DEBUG Reader readCommand - return value is phaser

@@ -40,11 +40,20 @@ public class LexemeParser implements Handler {
         for (String element : parsed) {
             Composite lexeme = new Composite(type);
             ((Composite) component).add(lexeme);
-            if (rootWord != null) {
-                rootWord.handleSplit(lexeme, element);
-            }
-            if (rootMark != null) {
-                rootMark.handleSplit(lexeme, element);
+            if (element.startsWith("'")) {
+                if (rootMark != null) {
+                    rootMark.handleSplit(lexeme, element);
+                }
+                if (rootWord != null) {
+                    rootWord.handleSplit(lexeme, element);
+                }
+            } else {
+                if (rootWord != null) {
+                    rootWord.handleSplit(lexeme, element);
+                }
+                if (rootMark != null) {
+                    rootMark.handleSplit(lexeme, element);
+                }
             }
         }
     }
