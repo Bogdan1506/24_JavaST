@@ -49,7 +49,12 @@ public class ThreadServiceImpl implements ThreadService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        this.integers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+            List<Integer> tempIntegers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        if (!tempIntegers.isEmpty()) {
+        this.integers = tempIntegers;
+        } else {
+            throw new ServiceException("File is empty");
+        }
     }
 
     private void runCheckThread(Matrix matrix) {

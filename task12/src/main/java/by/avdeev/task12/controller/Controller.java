@@ -17,7 +17,7 @@ public class Controller {
         String commandName = reader.readCommand();
         Command command = commandProvider.receiveCommand(commandName);
         try {
-            command.execute("E:\\24_JavaST\\task12\\target\\file\\20x20.txt", "E:\\24_JavaST\\task12\\target\\file\\numbers.txt");
+            command.execute("E:\\24_JavaST\\task12\\target\\files\\4x4.txt", "E:\\24_JavaST\\task12\\target\\files\\empty.txt");
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e);
         }

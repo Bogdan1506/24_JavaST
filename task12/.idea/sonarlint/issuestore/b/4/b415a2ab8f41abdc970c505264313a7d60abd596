@@ -1,8 +1,0 @@
-
-Fsquid:S1148L"#Use a logger to log this exception.(А╔╘Е¤    8ыхи╞И.
-Fsquid:S1148P"#Use a logger to log this exception.(А╔╘Е¤    8ыхи╞И.
-gsquid:S2147O"DCombine this catch with the one at line 75, which has the same body.(ЖлФ╧№    8ыхи╞И.
-Fsquid:S1148N"#Use a logger to log this exception.(А╔╘Е¤    8ыхи╞И.
-9squid:S3626I"Remove this redundant jump.(√┴▌Е8ыхи╞И.
-dsquid:S2142M"FEither re-interrupt this method or rethrow the "InterruptedException".(фа╣А8ыхи╞И.
-bsquid:S2147M"DCombine this catch with the one at line 75, which has the same body.(фа╣А8ыхи╞И.
