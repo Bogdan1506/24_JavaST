@@ -78,5 +78,21 @@ g
 7src/main/java/by/avdeev/task11/service/SortService.java,7\3\738e488d289cf215972efb2fbd631e8e876ebfab
 =
 logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2
-D
-target/file/text.txt,c\0\c063f0a41aa256899d349c0456b00d14bcf50673
+M
+src/main/resources/log4j2.xml,3\6\36b9f0d33e4b7e602e3cd701314fae81543db66f
+u
+Esrc/test/java/by/avdeev/task11/service/impl/SplitServiceImplTest.java,4\c\4cf06fa58b313cb4b056030c05e911c13f1084aa
+t
+Dsrc/test/java/by/avdeev/task11/service/impl/TextServiceImplTest.java,e\f\efc99571ca32700f01d2be1850d215f63405ba0d
+I
+target/classes/log4j2.xml,3\5\3505ec16e66091483fa7354502e2a23a445a0392
+M
+target/files/another-test.txt,e\7\e7028077e5371dcc562186081d6a5152e55069b0
+H
+target/files/one-two.txt,6\8\687f46c6a2478b5c74e8e1769665f85d2e595591
+E
+target/files/test.txt,6\f\6fc754cab9732c57a7dfda17e6a990e48d7e3ad5
+E
+target/files/text.txt,2\6\26f1f2ef163391ddb90cc63b756eddb924641199
+t
+Dsrc/test/java/by/avdeev/task11/service/impl/SortServiceImplTest.java,e\b\ebc5177697474794620bd62b7ac2b7cb9969c35f

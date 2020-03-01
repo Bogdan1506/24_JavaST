@@ -7,6 +7,7 @@ import by.avdeev.task11.bean.Type;
 import by.avdeev.task11.service.ServiceException;
 import by.avdeev.task11.service.ServiceFactory;
 import by.avdeev.task11.service.TextService;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.FileOutputStream;
@@ -17,6 +18,13 @@ import java.util.Map;
 import static org.testng.Assert.*;
 
 public class TextServiceImplTest {
+    private TextService textService;
+
+    @BeforeClass
+    public void setUp() {
+        ServiceFactory factory = ServiceFactory.getFactory();
+        textService = factory.getTextService();
+    }
 
     @Test
     public void testJoinTree() {
@@ -31,8 +39,7 @@ public class TextServiceImplTest {
             e.printStackTrace();
         }
         Component component = null;
-        ServiceFactory factory = ServiceFactory.getFactory();
-        TextService textService = factory.getTextService();
+
         try {
             component = textService.createTree(path);
         } catch (ServiceException e) {
@@ -55,8 +62,6 @@ public class TextServiceImplTest {
             e.printStackTrace();
         }
         Component component = null;
-        ServiceFactory factory = ServiceFactory.getFactory();
-        TextService textService = factory.getTextService();
         try {
             component = textService.createTree(path);
         } catch (ServiceException e) {
@@ -146,8 +151,6 @@ public class TextServiceImplTest {
         Character character34 = new Character();
         character34.setSymbol('.');
         charsOfMark3.add(character34);
-        ServiceFactory serviceFactory = ServiceFactory.getFactory();
-        TextService textService = serviceFactory.getTextService();
         Component actual = null;
         try {
             actual = textService.createTree("E:\\24_JavaST\\task11\\target\\files\\another-test.txt");
