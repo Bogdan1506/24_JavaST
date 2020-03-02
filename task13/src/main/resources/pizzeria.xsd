@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.training.by/entities"
+        xmlns:tns="http://www.training.by/entities"
+        elementFormDefault="qualified">
+    <element name="entity" type="tns:Entity" abstract="true"/>
+    <element name="order" type="tns:Order" substitutionGroup="tns:entity"/>
+    <element name="entities">
+        <complexType>
+            <sequence>
+                <element ref="tns:entity" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="Entity">
+        <sequence>
+            <element name="id" type="int"/>
+        </sequence>
+    </complexType>
+    <complexType name="Order">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="pizza" type="tns:Pizza"/>
+                    <element name="orderPosition" type="tns:OrderPosition"/>
+                    <element name="price" type="string"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="Pizza">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="goods" type="tns:Goods"/>
+            <element name="dough" type="tns:Dough"/>
+            <element name="size" type="tns:Size"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Goods">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="name" type="string">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Pepperoni"/>
+                        <enumeration value="Margherita"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="description" type="string"/>
+            <element name="price" type="double"/>
+            <element name="picture" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="Dough">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="name" type="int">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Thick"/>
+                        <enumeration value="Thin"/>
+                    </restriction>
+                </simpleType>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Size">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="name" type="int">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Small"/>
+                        <enumeration value="Medium"/>
+                        <enumeration value="Large"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="coefficient" type="double"/>
+        </sequence>
+    </complexType>
+    <complexType name="OrderPosition">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="date" type="date"/>
+            <element name="user" type="tns:User"/>
+        </sequence>
+    </complexType>
+    <complexType name="User">
+        <sequence>
+            <element name="login" type="string"/>
+            <element name="password" type="string"/>
+        </sequence>
+        <attribute name="role" type="int" use="required">
+            <simpleType>
+                <restriction base="int">
+                    <enumeration value="0"/>
+                    <enumeration value="1"/>
+                    <enumeration value="2"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+</schema>
