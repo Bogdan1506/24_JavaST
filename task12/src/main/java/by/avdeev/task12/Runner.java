@@ -13,6 +13,6 @@ public class Runner {
         Scanner scanner = new Scanner(System.in);
         Controller controller = new Controller();
         controller.execute();
-        logger.info("THe program has been completed");
+        logger.info("The program has been completed");
     }
 }

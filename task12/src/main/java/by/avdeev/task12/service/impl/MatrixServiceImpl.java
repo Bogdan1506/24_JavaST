@@ -42,6 +42,15 @@ public class MatrixServiceImpl implements MatrixService {
             throw new ServiceException(e);
         }
         logger.debug(RESULT, matrix);
+        for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+            try {
+                if (matrix.getElement(i, j) != 0) {
+                    throw new ServiceException("Main diagonal isn't made up of all 0");
+                }
+            } catch (MatrixException e) {
+                throw new ServiceException(e);
+            }
+        }
         return matrix;
     }
 }

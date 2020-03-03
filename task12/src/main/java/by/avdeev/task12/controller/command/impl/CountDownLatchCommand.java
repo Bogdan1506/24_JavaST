@@ -20,7 +20,7 @@ public class CountDownLatchCommand implements Command {
         ThreadService threadService = factory.getThreadService();
         MatrixService matrixService = factory.getMatrixService();
         Matrix matrix = matrixService.createMatrix(pathnameToMatrix);
-        ((ThreadServiceImpl) threadService).fillCollection(pathnameToNumbers);
+        ((ThreadServiceImpl) threadService).fillCollection(matrix, pathnameToNumbers);
         threadService.doCountDownLatch(matrix);
         Printer printer = new Printer();
         printer.printMatrix(matrix);

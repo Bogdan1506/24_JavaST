@@ -45,8 +45,6 @@ r
 Bsrc/main/java/by/avdeev/task12/controller/command/CommandName.java,c\2\c2923e39e7e63b6e6c389f5b3fe3bd579d5cbe8a
 n
 >src/main/java/by/avdeev/task12/controller/CommandProvider.java,3\0\30a29740d69af8346e07d10482671584e8eb83ef
-M
-src/main/resources/log4j2.xml,3\6\36b9f0d33e4b7e602e3cd701314fae81543db66f
 I
 target/classes/log4j2.xml,3\5\3505ec16e66091483fa7354502e2a23a445a0392
 n

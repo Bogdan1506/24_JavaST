@@ -38,7 +38,7 @@ public class ThreadServiceImpl implements ThreadService {
     private int i = 0;
     private int j = 0;
 
-    public void fillCollection(String pathname) throws ServiceException {
+    public void fillCollection(Matrix matrix, String pathname) throws ServiceException {
         logger.debug(START);
         logger.debug(PARAM, pathname);
         DAOFactory daoFactory = DAOFactory.getInstance();
@@ -49,11 +49,14 @@ public class ThreadServiceImpl implements ThreadService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-            List<Integer> tempIntegers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        List<Integer> tempIntegers = strings.stream().mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
         if (!tempIntegers.isEmpty()) {
-        this.integers = tempIntegers;
+            this.integers = tempIntegers;
         } else {
             throw new ServiceException("File is empty");
+        }
+        if (tempIntegers.size() < matrix.getSize()) {
+            throw new ServiceException("Matrix's size and num file's size are not equal");
         }
     }
 

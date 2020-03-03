@@ -20,7 +20,7 @@ public class ExecutorServiceCommand implements Command {
         ThreadService threadService = factory.getThreadService();
         MatrixService matrixService = factory.getMatrixService();
         Matrix matrix = matrixService.createMatrix(pathnameToMatrix);
-        ((ThreadServiceImpl) threadService).fillCollection(pathnameToNumbers);
+        ((ThreadServiceImpl) threadService).fillCollection(matrix, pathnameToNumbers);
         threadService.doExecutorService(matrix);
         Printer printer = new Printer();
         printer.printMatrix(matrix);
