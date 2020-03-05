@@ -36,7 +36,6 @@
             <element name="size" type="tns:Size"/>
         </sequence>
     </complexType>
-
     <complexType name="Goods">
         <sequence>
             <element name="id" type="int"/>

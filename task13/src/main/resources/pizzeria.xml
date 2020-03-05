@@ -1,36 +1,34 @@
-<?xml version ="1.0" encoding = "UTF 8"?>
-<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns="http://www.training.by/entities"
-          xsi:schemaLocation="http://www.training.by/entities  pizzeria.xsd">
-    <order>
+<?xml version ="1.0" encoding = "UTF-8"?>
+<order xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.training.by/entities"
+       xsi:schemaLocation="http://www.training.by/entities  pizzeria.xsd">
+    <id>1</id>
+    <pizza>
         <id>1</id>
-        <pizza>
+        <goods>
+            <id>2</id>
+            <name>Pepperoni</name>
+            <description>Tomato sauce, mozzarella, pepperoni</description>
+            <price>6.9</price>
+            <picture>...</picture>
+        </goods>
+        <dough>
             <id>1</id>
-            <goods>
-                <id>2</id>
-                <name>Pepperoni</name>
-                <description>Tomato sauce, mozzarella, pepperoni</description>
-                <price>6.9</price>
-                <picture>...</picture>
-            </goods>
-            <dough>
-                <id>1</id>
-                <name>Thick</name>
-            </dough>
-            <size>
-                <id>1</id>
-                <name>Large</name>
-                <coefficient>1.0</coefficient>
-            </size>
-        </pizza>
-        <orderPosition>
+            <name>Thick</name>
+        </dough>
+        <size>
             <id>1</id>
-            <date>2020-02-01</date>
-            <user role="0">
-                <login>admin</login>
-                <password>1234</password>
-            </user>
-        </orderPosition>
-        <price>6.9</price>
-    </order>
-</entities>
+            <name>Large</name>
+            <coefficient>1.0</coefficient>
+        </size>
+    </pizza>
+    <orderPosition>
+        <id>1</id>
+        <date>2020-02-01</date>
+        <user role="0">
+            <login>admin</login>
+            <password>1234</password>
+        </user>
+    </orderPosition>
+    <price>6.9</price>
+</order>
