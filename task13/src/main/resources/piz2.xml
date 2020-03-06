@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<order>
+    <id>5</id>
+    <name>Greek</name>
+    <user>
+        <login>admin</login>
+        <password>1234</password>
+    </user>
+</order>

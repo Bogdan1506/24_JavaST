@@ -3,6 +3,7 @@
        xmlns="http://www.training.by/entities"
        xsi:schemaLocation="http://www.training.by/entities  pizzeria.xsd">
     <id>1</id>
+    <price>6.9</price>
     <pizza>
         <id>1</id>
         <goods>
@@ -26,9 +27,9 @@
         <id>1</id>
         <date>2020-02-01</date>
         <user role="0">
+            <id>7</id>
             <login>admin</login>
             <password>1234</password>
         </user>
     </orderPosition>
-    <price>6.9</price>
 </order>

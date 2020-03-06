@@ -11,7 +11,7 @@
                 <element ref="tns:entity" maxOccurs="unbounded"/>
             </sequence>
         </complexType>
-    </element>
+    </element>  <!--TODO delete entity element-->
     <complexType name="Entity">
         <sequence>
             <element name="id" type="int"/>
@@ -21,9 +21,9 @@
         <complexContent>
             <extension base="tns:Entity">
                 <sequence>
+                    <element name="price" type="string"/>
                     <element name="pizza" type="tns:Pizza"/>
                     <element name="orderPosition" type="tns:OrderPosition"/>
-                    <element name="price" type="string"/>
                 </sequence>
             </extension>
         </complexContent>
@@ -89,6 +89,7 @@
     </complexType>
     <complexType name="User">
         <sequence>
+            <element name="id" type="int"/>
             <element name="login" type="string"/>
             <element name="password" type="string"/>
         </sequence>
