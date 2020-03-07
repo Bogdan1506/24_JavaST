@@ -150,13 +150,11 @@ public class OrderHandler extends DefaultHandler {
                 case PRICE:
                     switch (localName) {
                         case ORDER:
-                            current.setPrice(Integer.parseInt(s));
+                            current.setPrice(Double.parseDouble(s));
                             break;
                         case GOODS:
                             current.getPizza().getGoods().setPrice(Double.parseDouble(s));
                             break;
-                        default:
-                            current.setPrice(Double.parseDouble(s));
                     }
                     break;
 

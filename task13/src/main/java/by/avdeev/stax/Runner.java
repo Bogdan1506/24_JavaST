@@ -1,4 +1,4 @@
-package by.avdeev.test;
+package by.avdeev.stax;
 
 public class Runner {
     public static void main(String[] args) {

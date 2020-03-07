@@ -16,5 +16,6 @@ public enum OrderEnum {
     USER,
     GOODS,
     DOUGH,
-    SIZE
+    SIZE,
+    ENTITIES
 }

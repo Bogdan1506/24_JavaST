@@ -1,4 +1,4 @@
-package by.avdeev.test;
+package by.avdeev.stax;
 
 import by.avdeev.entity.User;
 

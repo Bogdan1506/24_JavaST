@@ -1,4 +1,4 @@
-package by.avdeev.test;
+package by.avdeev.stax;
 
 import by.avdeev.entity.Dough;
 import by.avdeev.entity.DoughName;
@@ -54,9 +54,10 @@ public class OrderStAXBuilder {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = reader.getLocalName();
+
                     if (OrderEnum.valueOf(name.toUpperCase()) == OrderEnum.ORDER) {
-                        Order st = buildOrder(reader);
-                        orders.add(st);
+                        Order order = buildOrder(reader);
+                        orders.add(order);
                     }
                 }
             }
@@ -139,11 +140,12 @@ public class OrderStAXBuilder {
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
-                    if (OrderEnum.valueOf(name.toUpperCase()) == OrderEnum.PIZZA) {
+                    if (OrderEnum.valueOf(name.toUpperCase()) == OrderEnum.ORDERPOSITION) {
                         return orderPosition;
                     }
                     break;
                 default:
+
             }
         }
         return orderPosition;

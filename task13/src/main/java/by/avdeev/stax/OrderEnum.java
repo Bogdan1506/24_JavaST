@@ -1,4 +1,4 @@
-package by.avdeev.test;
+package by.avdeev.stax;
 
 public enum OrderEnum {
     ORDER,

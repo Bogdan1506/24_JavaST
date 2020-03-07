@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Set;
 
 public class OrderSAXBuilder {
-    private Set<Order> students;
+    private Set<Order> orders;
     private OrderHandler sh;
     private XMLReader reader;
 
@@ -23,8 +23,8 @@ public class OrderSAXBuilder {
         }
     }
 
-    public Set<Order> getStudents() {
-        return students;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
     public void buildSetStudents(String fileName) {
@@ -35,6 +35,6 @@ public class OrderSAXBuilder {
         } catch (IOException e) {
             System.err.print("ошибка I/О потока: " + e);
         }
-        students = sh.getOrders();
+        orders = sh.getOrders();
     }
 }
