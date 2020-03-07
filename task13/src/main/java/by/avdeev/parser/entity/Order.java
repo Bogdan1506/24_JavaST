@@ -1,6 +1,4 @@
-package by.avdeev.entity;
-
-import javax.xml.stream.XMLStreamReader;
+package by.avdeev.parser.entity;
 
 public class Order {
     private int id;

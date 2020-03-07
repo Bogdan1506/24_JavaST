@@ -1,14 +1,14 @@
-package by.avdeev.stax;
+package by.avdeev.parser.builder;
 
-import by.avdeev.entity.Dough;
-import by.avdeev.entity.DoughName;
-import by.avdeev.entity.Goods;
-import by.avdeev.entity.OrderPosition;
-import by.avdeev.entity.Pizza;
-import by.avdeev.entity.PizzaName;
-import by.avdeev.entity.Size;
-import by.avdeev.entity.SizeName;
-import by.avdeev.entity.User;
+import by.avdeev.parser.entity.Dough;
+import by.avdeev.parser.entity.enumclass.DoughName;
+import by.avdeev.parser.entity.Goods;
+import by.avdeev.parser.entity.OrderPosition;
+import by.avdeev.parser.entity.Pizza;
+import by.avdeev.parser.entity.enumclass.PizzaName;
+import by.avdeev.parser.entity.Size;
+import by.avdeev.parser.entity.enumclass.SizeName;
+import by.avdeev.parser.entity.User;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -24,10 +24,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import by.avdeev.entity.Order;
-import by.avdeev.builder.sax.OrderEnum;
+import by.avdeev.parser.entity.Order;
+import by.avdeev.parser.entity.enumclass.OrderEnum;
 
-public class OrderStAXBuilder {
+public class OrderStAXBuilder extends AbstractOrdersBuilder {
     private HashSet<Order> orders = new HashSet<>();
     private XMLInputFactory inputFactory;
 

@@ -1,4 +1,4 @@
-package by.avdeev.builder.sax;
+package by.avdeev.parser.entity.enumclass;
 
 public enum OrderEnum {
     ID,

@@ -1,4 +1,6 @@
-package by.avdeev.entity;
+package by.avdeev.parser.entity;
+
+import by.avdeev.parser.entity.enumclass.SizeName;
 
 public class Size {
     private int id;

@@ -1,4 +1,6 @@
-package by.avdeev.entity;
+package by.avdeev.parser.entity;
+
+import by.avdeev.parser.entity.enumclass.DoughName;
 
 public class Dough {
     private int id;

@@ -1,4 +1,4 @@
-package by.avdeev.entity;
+package by.avdeev.parser.entity;
 
 import java.util.Date;
 

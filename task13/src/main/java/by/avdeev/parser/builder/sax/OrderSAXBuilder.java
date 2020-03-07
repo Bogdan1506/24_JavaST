@@ -1,6 +1,7 @@
-package by.avdeev.builder.sax;
+package by.avdeev.parser.builder.sax;
 
-import by.avdeev.entity.Order;
+import by.avdeev.parser.builder.AbstractOrdersBuilder;
+import by.avdeev.parser.entity.Order;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -8,7 +9,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import java.io.IOException;
 import java.util.Set;
 
-public class OrderSAXBuilder {
+public class OrderSAXBuilder extends AbstractOrdersBuilder {
     private Set<Order> orders;
     private OrderHandler sh;
     private XMLReader reader;
@@ -27,7 +28,7 @@ public class OrderSAXBuilder {
         return orders;
     }
 
-    public void buildSetStudents(String fileName) {
+    public void buildSetOrders(String fileName) {
         try {
             reader.parse(fileName);
         } catch (SAXException e) {

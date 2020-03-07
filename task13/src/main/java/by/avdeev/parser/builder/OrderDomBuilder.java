@@ -1,4 +1,4 @@
-package by.avdeev.dom;
+package by.avdeev.parser.builder;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -10,23 +10,23 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import by.avdeev.entity.Dough;
-import by.avdeev.entity.DoughName;
-import by.avdeev.entity.Goods;
-import by.avdeev.entity.OrderPosition;
-import by.avdeev.entity.PizzaName;
-import by.avdeev.entity.Size;
-import by.avdeev.entity.SizeName;
-import by.avdeev.entity.User;
-import by.avdeev.entity.Order;
-import by.avdeev.entity.Pizza;
+import by.avdeev.parser.entity.Dough;
+import by.avdeev.parser.entity.enumclass.DoughName;
+import by.avdeev.parser.entity.Goods;
+import by.avdeev.parser.entity.OrderPosition;
+import by.avdeev.parser.entity.enumclass.PizzaName;
+import by.avdeev.parser.entity.Size;
+import by.avdeev.parser.entity.enumclass.SizeName;
+import by.avdeev.parser.entity.User;
+import by.avdeev.parser.entity.Order;
+import by.avdeev.parser.entity.Pizza;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class OrderDomBuilder {
+public class OrderDomBuilder extends AbstractOrdersBuilder {
     private Set<Order> orders;
     private DocumentBuilder docBuilder;
 

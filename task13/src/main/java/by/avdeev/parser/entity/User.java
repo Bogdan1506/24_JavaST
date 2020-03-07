@@ -1,4 +1,4 @@
-package by.avdeev.entity;
+package by.avdeev.parser.entity;
 
 public class User {
     private int id;
