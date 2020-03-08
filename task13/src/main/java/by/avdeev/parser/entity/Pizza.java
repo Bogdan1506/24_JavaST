@@ -10,9 +10,6 @@ public class Pizza {
         return goods;
     }
 
-    public Pizza() {
-    }
-
     public void setGoods(Goods goods) {
         this.goods = goods;
     }

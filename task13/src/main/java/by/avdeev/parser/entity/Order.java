@@ -6,9 +6,6 @@ public class Order {
     private OrderPosition orderPosition;
     private double price;
 
-    public Order() {
-    }
-
     public int getId() {
         return id;
     }

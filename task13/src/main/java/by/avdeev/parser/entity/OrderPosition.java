@@ -7,9 +7,6 @@ public class OrderPosition {
     private Date date;
     private User user;
 
-    public OrderPosition() {
-    }
-
     public int getId() {
         return id;
     }

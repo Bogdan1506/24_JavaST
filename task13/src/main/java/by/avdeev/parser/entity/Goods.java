@@ -9,9 +9,6 @@ public class Goods {
     private String picture;
     private double price;
 
-    public Goods() {
-    }
-
     public int getId() {
         return id;
     }

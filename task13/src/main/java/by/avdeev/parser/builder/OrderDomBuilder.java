@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,6 +19,7 @@ import by.avdeev.parser.entity.enumclass.SizeName;
 import by.avdeev.parser.entity.User;
 import by.avdeev.parser.entity.Order;
 import by.avdeev.parser.entity.Pizza;
+import by.avdeev.parser.service.ServiceException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,7 +27,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class OrderDomBuilder extends AbstractOrdersBuilder {
-    private Set<Order> orders;
     private DocumentBuilder docBuilder;
 
     public OrderDomBuilder() {
@@ -40,11 +39,7 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         }
     }
 
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void buildSetOrders(String fileName) {
+    public void buildSetOrders(String fileName) throws ServiceException {
         Document doc;
         try {
             doc = docBuilder.parse(fileName);
@@ -62,7 +57,7 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         }
     }
 
-    private Order buildOrder(Element orderElement) {
+    private Order buildOrder(Element orderElement) throws ServiceException {
         Order order = new Order();
         order.setId(Integer.parseInt(getElementTextContent(orderElement, "id")));
         order.setPrice(Double.parseDouble(getElementTextContent(orderElement, "price")));
@@ -95,11 +90,11 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         orderPosition.setId(Integer.parseInt(getElementTextContent(orderPositionElement, "id")));
         String strDate = getElementTextContent(orderPositionElement, "date");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = null;
+        Date date;
         try {
             date = simpleDateFormat.parse(strDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new ServiceException(e);
         }
         orderPosition.setDate(date);
         User user = new User();

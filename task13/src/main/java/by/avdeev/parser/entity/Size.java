@@ -7,15 +7,6 @@ public class Size {
     private SizeName name;
     private double coefficient;
 
-    public Size(int id, SizeName name, double coefficient) {
-        this.id = id;
-        this.name = name;
-        this.coefficient = coefficient;
-    }
-
-    public Size() {
-    }
-
     public int getId() {
         return id;
     }

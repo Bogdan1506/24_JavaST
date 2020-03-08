@@ -1,40 +1,32 @@
 package by.avdeev.parser.builder.sax;
 
 import by.avdeev.parser.builder.AbstractOrdersBuilder;
-import by.avdeev.parser.entity.Order;
+import by.avdeev.parser.service.ServiceException;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
-import java.util.Set;
 
 public class OrderSAXBuilder extends AbstractOrdersBuilder {
-    private Set<Order> orders;
     private OrderHandler sh;
     private XMLReader reader;
 
-    public OrderSAXBuilder() {
+    public OrderSAXBuilder() throws ServiceException {
         sh = new OrderHandler();
         try {
             reader = XMLReaderFactory.createXMLReader();
             reader.setContentHandler(sh);
         } catch (SAXException e) {
-            System.err.print("ошибка SAX парсера: " + e);
+            throw new ServiceException(e);
         }
     }
 
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void buildSetOrders(String fileName) {
+    public void buildSetOrders(String fileName) throws ServiceException {
         try {
             reader.parse(fileName);
-        } catch (SAXException e) {
-            System.err.print("ошибка SAX парсера: " + e);
-        } catch (IOException e) {
-            System.err.print("ошибка I/О потока: " + e);
+        } catch (SAXException | IOException e) {
+            throw new ServiceException(e);
         }
         orders = sh.getOrders();
     }

@@ -16,39 +16,26 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import by.avdeev.parser.entity.Order;
 import by.avdeev.parser.entity.enumclass.OrderEnum;
+import by.avdeev.parser.service.ServiceException;
 
 public class OrderStAXBuilder extends AbstractOrdersBuilder {
-    private HashSet<Order> orders = new HashSet<>();
     private XMLInputFactory inputFactory;
 
     public OrderStAXBuilder() {
         inputFactory = XMLInputFactory.newInstance();
     }
 
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public XMLInputFactory getInputFactory() {
-        return inputFactory;
-    }
-
-    public void buildSetOrders(String fileName) {
-        FileInputStream inputStream = null;
-        XMLStreamReader reader = null;
+    public void buildSetOrders(String fileName) throws ServiceException {
+        XMLStreamReader reader;
         String name;
-        try {
-            inputStream = new FileInputStream(new File(fileName));
+        try (FileInputStream inputStream = new FileInputStream(new File(fileName))) {
             reader = inputFactory.createXMLStreamReader(inputStream);
             while (reader.hasNext()) {
                 int type = reader.next();
@@ -61,22 +48,12 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                     }
                 }
             }
-        } catch (XMLStreamException ex) {
-            System.err.println("StAX parsing error! " + ex.getMessage());
-        } catch (FileNotFoundException ex) {
-            System.err.println("File " + fileName + " not found! " + ex);
-        } finally {
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            } catch (IOException e) {
-                System.err.println("Impossible close file " + fileName + " : " + e);
-            }
+        } catch (XMLStreamException | IOException e) {
+            throw new ServiceException(e);
         }
     }
 
-    private Order buildOrder(XMLStreamReader reader) throws XMLStreamException {
+    private Order buildOrder(XMLStreamReader reader) throws XMLStreamException, ServiceException {
         Order order = new Order();
         String name;
         while (reader.hasNext()) {
@@ -110,7 +87,7 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
         return order;
     }
 
-    private OrderPosition getXMLOrderPosition(XMLStreamReader reader) throws XMLStreamException {
+    private OrderPosition getXMLOrderPosition(XMLStreamReader reader) throws XMLStreamException, ServiceException {
         OrderPosition orderPosition = new OrderPosition();
         int type;
         String name;
@@ -125,11 +102,11 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                             break;
                         case DATE:
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                            Date date = null;
+                            Date date;
                             try {
                                 date = simpleDateFormat.parse(getXMLText(reader));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                throw new ServiceException(e);
                             }
                             orderPosition.setDate(date);
                             break;

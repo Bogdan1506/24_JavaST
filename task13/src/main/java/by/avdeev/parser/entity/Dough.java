@@ -6,9 +6,6 @@ public class Dough {
     private int id;
     private DoughName name;
 
-    public Dough() {
-    }
-
     public int getId() {
         return id;
     }

@@ -43,7 +43,7 @@ public class OrderHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
         if (ORDER.equals(localName)) {
-            this.localName = localName;  //TODO replace it to switch
+            this.localName = localName;
             current = new Order();
             return;
         }
@@ -169,7 +169,7 @@ public class OrderHandler extends DefaultHandler {
                     try {
                         date = simpleDateFormat.parse(s);
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        //todo logger
                     }
                     current.getOrderPosition().setDate(date);
                     break;
