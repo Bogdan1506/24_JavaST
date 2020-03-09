@@ -9,6 +9,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletParser</servlet-name>
-        <url-pattern>/parser</url-pattern>  <!--todo rename-->
+        <url-pattern>/parser</url-pattern>
     </servlet-mapping>
 </web-app>

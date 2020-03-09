@@ -11,7 +11,7 @@
                 <element ref="tns:entity" maxOccurs="unbounded"/>
             </sequence>
         </complexType>
-    </element>  <!--TODO delete entity element-->
+    </element>
     <complexType name="Entity">
         <sequence>
             <element name="id" type="int"/>
