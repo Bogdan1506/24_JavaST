@@ -10,6 +10,8 @@ public class ParserServiceImpl implements ParserService {
     @Override
     public Set<Order> parse(String pathname, String typeParser) throws ServiceException {
         OrderBuilderFactory factory = new OrderBuilderFactory();
+        ValidatorSAXXSD validator = new ValidatorSAXXSD();
+        validator.validate(pathname);
         AbstractOrdersBuilder builder = factory.createOrderBuilder(typeParser);
         builder.buildSetOrders(pathname);
         return builder.getOrders();

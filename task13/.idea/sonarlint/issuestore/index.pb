@@ -30,8 +30,6 @@ W
 ,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
 K
 target/classes/pizzeria.xml,b\a\ba5636f097a05e94f4f4e7c262eef8dd854f57e8
-K
-target/classes/pizzeria.xsd,6\4\64455662c8508aaf5c411fbf54f810a8b706642a
 o
 ?src/main/java/by/avdeev/parser/builder/sax/OrderSAXBuilder.java,4\f\4fa5b39490198a0f679f37720d2124258b896b8d
 q
@@ -60,8 +58,6 @@ i
 9src/main/java/by/avdeev/parser/service/ParserService.java,b\1\b19c019eb5ca2679700f40f9ea25a6840b0982ed
 l
 <src/main/java/by/avdeev/parser/service/ServiceException.java,f\d\fd7face8041ab168ea272b46211568be34524e3a
-O
-src/main/resources/pizzeria.xml,0\a\0a2833ad319bad204c5fc4b58f426ed2ca7222ed
 f
 6out/artifacts/task13_war_exploded/META-INF/MANIFEST.MF,9\a\9ad80f1845449d33bd6a15a1e83de16d5f952c8d
 n

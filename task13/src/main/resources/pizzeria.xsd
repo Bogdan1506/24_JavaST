@@ -39,7 +39,7 @@
     <complexType name="Goods">
         <sequence>
             <element name="id" type="int"/>
-            <element name="name" type="string">
+            <element name="name">
                 <simpleType>
                     <restriction base="string">
                         <enumeration value="Pepperoni"/>
@@ -55,7 +55,7 @@
     <complexType name="Dough">
         <sequence>
             <element name="id" type="int"/>
-            <element name="name" type="int">
+            <element name="name">
                 <simpleType>
                     <restriction base="string">
                         <enumeration value="Thick"/>
@@ -68,7 +68,7 @@
     <complexType name="Size">
         <sequence>
             <element name="id" type="int"/>
-            <element name="name" type="int">
+            <element name="name">
                 <simpleType>
                     <restriction base="string">
                         <enumeration value="Small"/>
@@ -93,7 +93,7 @@
             <element name="login" type="string"/>
             <element name="password" type="string"/>
         </sequence>
-        <attribute name="role" type="int" use="required">
+        <attribute name="role" use="required">
             <simpleType>
                 <restriction base="int">
                     <enumeration value="0"/>
