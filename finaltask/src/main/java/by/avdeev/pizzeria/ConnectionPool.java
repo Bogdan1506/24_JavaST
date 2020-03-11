@@ -8,20 +8,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
-    private static final String DATASOURCE_NAME = "jdbc/billingDB";
-    private static DataSource dataSource;
-    static {
+    private static ConnectionPool instance = new ConnectionPool();
+
+    private ConnectionPool() {
+    }
+
+    public static ConnectionPool getInstance() {
+        if (instance == null)
+            instance = new ConnectionPool();
+        return instance;
+    }
+
+    public Connection getConnection() {
+        Context ctx;
+        Connection c = null;
         try {
-            Context initContext = new InitialContext();
-//            Context envContext = (Context) initContext.lookup("java:/comp/env"); //todo
-            dataSource = (DataSource) initContext.lookup(DATASOURCE_NAME);
+            ctx = new InitialContext();
+            DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/myPool");
+            c = ds.getConnection();
         } catch (NamingException e) {
-            e.printStackTrace();  //todo
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return c;
     }
-    private ConnectionPool() { }
-    public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
-    }
-// метод возвращения Connection в пул
 }

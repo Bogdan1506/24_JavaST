@@ -6,7 +6,10 @@ VALUES ('registrar',
         1),
        ('creator',
         'EE11CBB19052E40B07AAC0CA060C23EE',
-        2);
+        2),
+       ('user',
+        'EE11CBB19052E40B07AAC0CA06023EE',
+        3);
 
 INSERT INTO `goods` (name, description, price, picture)
 VALUES ('Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
@@ -25,18 +28,3 @@ INSERT INTO `size` (name, coefficient)
 VALUES ('Small', 1.0),
        ('Medium', 1.5),
        ('Large', 2.0);
-
-/*INSERT INTO `pizza` (goods_id, size_id, dough_id)
-VALUES (1, 1, 1),
-       (2, 2, 2),
-       (3, 3, 3);
-
-INSERT INTO `order` (user_id, date)
-VALUES (1, '2020-02-24'),
-       (1, '2020-02-25'),
-       (1, '2020-02-26');
-
-INSERT INTO `order_position` (pizza_id, order_id, price)
-VALUES (1, 1, 6.9),
-       (2, 1, 10.35),
-       (3, 1, 19.8);*/

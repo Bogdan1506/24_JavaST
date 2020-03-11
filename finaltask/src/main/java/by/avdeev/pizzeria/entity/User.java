@@ -6,9 +6,12 @@ public class User implements Entity {
     private int id;
     private String login;
     private String password;
-    private String role;
+    private int role;
 
-    public User(int id, String login, String password, String role) {
+    public User() {
+    }
+
+    public User(int id, String login, String password, int role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -39,11 +42,11 @@ public class User implements Entity {
         this.password = password;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
@@ -63,9 +66,9 @@ public class User implements Entity {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
+                role == user.role &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role);
+                Objects.equals(password, user.password);
     }
 
     @Override

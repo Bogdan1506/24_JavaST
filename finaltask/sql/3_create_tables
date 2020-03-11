@@ -9,9 +9,10 @@ CREATE TABLE user
      * 0 - администратор (Role.ADMINISTRATOR)
      * 1 - регистратор (Role.REGISTRAR)
      * 2 - создатель (Role.CREATOR)
+     * 3 - пользователь (Role.USER)
      */
-    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)),
-    CONSTRAINT PRIMARY KEY (`id`)
+    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2, 3)),
+    CONSTRAINT PRIMARY KEY `PK_user` (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
@@ -20,16 +21,16 @@ CREATE TABLE `goods`
     `id`          INT          NOT NULL AUTO_INCREMENT,
     `name`        VARCHAR(25)  NOT NULL UNIQUE,
     `description` VARCHAR(255) NOT NULL,
-    `price`       DOUBLE          NOT NULL,
+    `price`       DOUBLE       NOT NULL,
     `picture`     VARCHAR(350) NOT NULL,
-    CONSTRAINT PRIMARY KEY (`id`)
+    CONSTRAINT PRIMARY KEY `PK_goods` (`id`)
 );
 
 CREATE TABLE `dough`
 (
     `id`   INT         NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(25) NOT NULL UNIQUE,
-    CONSTRAINT PRIMARY KEY (`id`)
+    CONSTRAINT PRIMARY KEY `PK_dough` (`id`)
 );
 
 CREATE TABLE `size`
@@ -37,41 +38,41 @@ CREATE TABLE `size`
     `id`          INT         NOT NULL AUTO_INCREMENT,
     `name`        VARCHAR(25) NOT NULL UNIQUE,
     `coefficient` DOUBLE      NOT NULL UNIQUE,
-    CONSTRAINT PRIMARY KEY (`id`)
+    CONSTRAINT PRIMARY KEY `PK_size` (`id`)
 );
 
-CREATE TABLE `pizza`
+CREATE TABLE `item`
 (
     `id`       INT NOT NULL AUTO_INCREMENT,
     `goods_id` INT NOT NULL,
     `size_id`  INT NOT NULL,
-    `dough_id` INT NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
-    FOREIGN KEY `FK_pizza_goods` (`goods_id`)
+    `dough_id` INT,
+    CONSTRAINT PRIMARY KEY `PK_item` (`id`),
+    FOREIGN KEY `FK_item_goods` (`goods_id`)
         REFERENCES `goods` (`id`),
-    FOREIGN KEY `FK_pizza_dough` (`dough_id`)
+    FOREIGN KEY `FK_item_dough` (`dough_id`)
         REFERENCES `dough` (`id`)
-);
-
-CREATE TABLE `order`
-(
-    `id`      INT  NOT NULL AUTO_INCREMENT,
-    `user_id` INT  NOT NULL,
-    `date`    DATE NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
-    FOREIGN KEY `FK_order_user` (`id`)
-        REFERENCES `user` (`id`)
 );
 
 CREATE TABLE `order_position`
 (
-    `id`       INT NOT NULL AUTO_INCREMENT,
-    `pizza_id` INT NOT NULL,
-    `order_id` INT NOT NULL,
-    `price`    INT NOT NULL,
+    `id`      INT  NOT NULL AUTO_INCREMENT,
+    `user_id` INT  NOT NULL,
+    `date`    DATE NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
-    FOREIGN KEY `FK_order_position_pizza` (`pizza_id`)
-        REFERENCES `pizza` (`id`),
-    FOREIGN KEY `FK_order_position_order` (`order_id`)
-        REFERENCES `order` (`id`)
+    FOREIGN KEY `FK_order_position_user` (`id`)
+        REFERENCES `user` (`id`)
+);
+
+CREATE TABLE `order`
+(
+    `id`                INT NOT NULL AUTO_INCREMENT,
+    `item_id`           INT NOT NULL,
+    `order_position_id` INT NOT NULL,
+    `price`             INT NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
+    FOREIGN KEY `FK_order_item` (`item_id`)
+        REFERENCES `item` (`id`),
+    FOREIGN KEY `FK_order_order_position` (`order_position_id`)
+        REFERENCES `order_position` (`id`)
 );

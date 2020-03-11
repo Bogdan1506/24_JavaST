@@ -25,3 +25,23 @@ d
 4src/main/java/by/avdeev/pizzeria/ConnectionPool.java,2\7\27a9e1c7014e885f4da1f3c614d2eb8cab95dc55
 \
 ,src/main/java/by/avdeev/pizzeria/Runner.java,e\0\e01546c49d44e86708131489e4021a785429a763
+C
+web/WEB-INF/web.xml,c\d\cdcc12da5c4054f6995aab32914d7e0243194c05
+H
+web/META-INF/context.xml,0\b\0b5ed5dfc48d40f738ad3c8e8ec06325e849a9f7
+a
+1src/main/java/by/avdeev/pizzeria/BaseServlet.java,f\8\f878dff247e81b9af8be7283bb08a0639fc77414
+=
+web/index.jsp,9\f\9f198ed450f32e45b10ec3c2b1406e609b4a96cd
+f
+6src/main/java/by/avdeev/pizzeria/dao/DAOException.java,3\4\344c41b7cc41c684db4beee7aca04d9612895316
+<
+web/user.jsp,5\4\54191530d1775bb2c7cdd9a2fc3a576776d269cc
+9
+	web/o.jsp,5\6\56732ab7d23debfb257fc3c808a8d8119777c38b
+d
+4src/main/java/by/avdeev/pizzeria/ServletServlet.java,3\9\39154e16833bcaa14404f3da56cc102079eb3201
+=
+web/user.html,2\f\2fee223e3fb12e6d4bcdeb86fd2df623274a6ca4
+>
+web/output.jsp,f\7\f7770801374f30dca6c7873a87b3ea6945969d48

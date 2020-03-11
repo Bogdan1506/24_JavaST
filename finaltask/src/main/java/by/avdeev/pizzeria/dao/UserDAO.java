@@ -3,6 +3,11 @@ package by.avdeev.pizzeria.dao;
 import by.avdeev.pizzeria.entity.User;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
@@ -11,13 +16,43 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public List<User> findAll() {
-        return null;
+    public List<User> findAll() throws DAOException {
+        List<User> users = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * FROM user";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String login = rs.getString("login");
+                String password = rs.getString("password");
+                int role = rs.getInt("role");
+                User user = new User(id, login, password, role);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return users;
     }
 
     @Override
     public User findEntityById(int id) {
-        return null;
+        User user = new User();
+        user.setId(id);
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE id=?"); //todo change on all fields
+            statement.setString(1, String.valueOf(id)); //todo
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                user.setLogin(rs.getString("login"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getInt("role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -37,6 +72,21 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public User update(User entity) {
-        return null;
+        int id = entity.getId();
+        String login = entity.getLogin();
+        String password = entity.getPassword();
+        int role = entity.getRole();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE user SET login=?, password=?, role=? WHERE id=?");
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.setInt(3, role);
+            statement.setInt(4, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return entity; //todo remove return value
     }
 }

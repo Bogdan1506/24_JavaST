@@ -14,7 +14,7 @@ public abstract class AbstractDAO<T extends Entity> {
         this.connection = connection;
     }
 
-    public abstract List<T> findAll();
+    public abstract List<T> findAll() throws DAOException;
 
     public abstract T findEntityById(int id);
 
