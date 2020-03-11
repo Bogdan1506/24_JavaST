@@ -57,6 +57,14 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public boolean delete(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?");
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -67,6 +75,18 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public boolean create(User entity) {
+        String login = entity.getLogin();
+        String password = entity.getPassword();
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password, role) VALUES (?,?,?)");
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.setInt(3, 3);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -76,7 +96,6 @@ public class UserDAO extends AbstractDAO<User> {
         String login = entity.getLogin();
         String password = entity.getPassword();
         int role = entity.getRole();
-
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE user SET login=?, password=?, role=? WHERE id=?");
             statement.setString(1, login);

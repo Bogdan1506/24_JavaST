@@ -9,30 +9,91 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BaseServlet extends HttpServlet {
+    private Connection connection;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
-//        Connection connection = null;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pizzeria?characterEncoding=latin1&useConfigs=maxPerformance&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        connection = connectionPool.getConnection();
+        String command = req.getParameter("command");
+        if (command == null) {
+            command = "list";
+        }
+        switch (command) {
+            case "list":
+                getUserList(req, resp);
+                break;
+            case "update":
+                updateUser(req, resp);
+                break;
+            case "add":
+                signUp(req, resp);
+                break;
+            case "login":
+                signIn(req, resp);
+                break;
+            case "delete":
+                delete(req, resp);
+                break;
+        }
+    }
+
+    public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDAO userDAO = new UserDAO(connection);
+        int id = Integer.parseInt(req.getParameter("id"));
+        userDAO.delete(id);
+        getUserList(req, resp);
+    }
+
+    public void signIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDAO userDAO = new UserDAO(connection);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        List<User> users = null;
+        try {
+            users = userDAO.findAll();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        for (User user : users) {
+            if (login.equals(user.getLogin())) {
+                if (password.equals(user.getPassword())) {
+                    getUserList(req, resp);
+                    return;
+                }
+            }
+        }
+        req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
+    }
+
+    public void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDAO userDAO = new UserDAO(connection);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        User user = new User(login, password, 3);
+        System.out.println(user);
+        userDAO.create(user);
+        getUserList(req, resp);
+    }
+
+    public void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDAO userDAO = new UserDAO(connection);
+        String id = req.getParameter("id").trim();
+        int userId = Integer.parseInt(id);
+        User user = userDAO.findEntityById(userId);
+        System.out.println(user);
+        int role = Integer.parseInt(req.getParameter("role"));
+        user.setRole(role == 1 ? 2 : (role == 2 ? 3 : (role == 3 ? 1 : 0)));
+        System.out.println(user);
+        userDAO.update(user);
+        getUserList(req, resp);
+    }
+
+    public void getUserList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDAO userDAO = new UserDAO(connection);
         List<User> users = null;
         try {
@@ -42,29 +103,5 @@ public class BaseServlet extends HttpServlet {
         }
         req.setAttribute("users", users);  //todo
         req.getRequestDispatcher("user.jsp").forward(req, resp);
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        Connection connection = null;
-//        try {
-//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pizzeria?characterEncoding=latin1&useConfigs=maxPerformance", "root", "root");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-/*        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user");
-            while (resultSet.next()) {
-                pw.println(resultSet.getString("id"));
-                pw.println(resultSet.getString("login"));
-                pw.println(resultSet.getString("password"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
     }
 }

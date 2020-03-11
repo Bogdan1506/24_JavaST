@@ -9,14 +9,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>BaseServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>ButtonServlet</servlet-name>
-        <servlet-class>by.avdeev.pizzeria.ButtonServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ButtonServlet</servlet-name>
         <url-pattern>/bs</url-pattern>
     </servlet-mapping>
 </web-app>

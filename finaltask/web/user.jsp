@@ -1,10 +1,4 @@
-<%@ page import="by.avdeev.pizzeria.entity.User" %><%--
-  Created by IntelliJ IDEA.
-  User: Bogdan
-  Date: 10.03.2020
-  Time: 18:54
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="by.avdeev.pizzeria.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -30,10 +24,16 @@
                 <td><c:out value="${temp.password}"/></td>
                 <td><c:out value="${temp.role}"/></td>
                 <c:url var="tempLink" value="bs">
+                    <c:param name="command" value="update"/>
                     <c:param name="id" value="${temp.id}"/>
                     <c:param name="role" value="${temp.role}"/>
                 </c:url>
+                <c:url var="tempLinkTwo" value="bs">
+                    <c:param name="command" value="delete"/>
+                    <c:param name="id" value="${temp.id}"/>
+                </c:url>
                 <td><a href="${tempLink}">Update</a></td>
+                <td><a href="${tempLinkTwo}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>
