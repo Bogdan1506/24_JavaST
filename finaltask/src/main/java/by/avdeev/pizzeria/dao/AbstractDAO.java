@@ -26,13 +26,13 @@ public abstract class AbstractDAO<T extends Entity> {
 
     public abstract T update(T entity);
 
-    public void close(Statement st) {
+    public void close(Statement st) {   //TODO use it
         try {
             if (st != null) {
                 st.close();
+            System.out.println("WHHHHHHHHHYYYYYYYYYY");
             }
         } catch (SQLException e) {
-// лог о невозможности закрытия Statement
         }
     }
 }

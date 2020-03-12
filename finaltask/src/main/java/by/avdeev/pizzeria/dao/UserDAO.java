@@ -40,8 +40,8 @@ public class UserDAO extends AbstractDAO<User> {
     public User findEntityById(int id) {
         User user = new User();
         user.setId(id);
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE id=?"); //todo change on all fields
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE id=?")) {
+            //todo change on all fields
             statement.setString(1, String.valueOf(id)); //todo
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -57,8 +57,7 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public boolean delete(int id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?");
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
             statement.setInt(1, id);
             statement.executeUpdate();
             return true;
@@ -77,8 +76,7 @@ public class UserDAO extends AbstractDAO<User> {
     public boolean create(User entity) {
         String login = entity.getLogin();
         String password = entity.getPassword();
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password, role) VALUES (?,?,?)");
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password, role) VALUES (?,?,?)")) {
             statement.setString(1, login);
             statement.setString(2, password);
             statement.setInt(3, 3);
@@ -93,18 +91,18 @@ public class UserDAO extends AbstractDAO<User> {
     @Override
     public User update(User entity) {
         int id = entity.getId();
-        String login = entity.getLogin();
         String password = entity.getPassword();
         int role = entity.getRole();
+        PreparedStatement statement = null; //todo try-with-res
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE user SET login=?, password=?, role=? WHERE id=?");
-            statement.setString(1, login);
-            statement.setString(2, password);
-            statement.setInt(3, role);
-            statement.setInt(4, id);
+            statement = connection.prepareStatement("UPDATE user SET password=?, role=? WHERE id=?");
+            statement.setString(1, password);
+            statement.setInt(2, role);
+            statement.setInt(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
         }
         return entity; //todo remove return value
     }

@@ -13,12 +13,15 @@ import java.sql.Connection;
 import java.util.List;
 
 public class BaseServlet extends HttpServlet {
-    private Connection connection;
+    private final Connection connection;
+
+    {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.getConnection();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.getConnection();
         String command = req.getParameter("command");
         if (command == null) {
             command = "list";
@@ -43,7 +46,7 @@ public class BaseServlet extends HttpServlet {
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO userDAO = new UserDAO(connection);
+        UserDAO userDAO = new UserDAO(connection);  //todo move to field
         int id = Integer.parseInt(req.getParameter("id"));
         userDAO.delete(id);
         getUserList(req, resp);
@@ -82,13 +85,11 @@ public class BaseServlet extends HttpServlet {
 
     public void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDAO userDAO = new UserDAO(connection);
-        String id = req.getParameter("id").trim();
+        String id = req.getParameter("id");
         int userId = Integer.parseInt(id);
         User user = userDAO.findEntityById(userId);
-        System.out.println(user);
-        int role = Integer.parseInt(req.getParameter("role"));
-        user.setRole(role == 1 ? 2 : (role == 2 ? 3 : (role == 3 ? 1 : 0)));
-        System.out.println(user);
+        user.setPassword(req.getParameter("password"));
+        user.setRole(Integer.parseInt(req.getParameter("role")));
         userDAO.update(user);
         getUserList(req, resp);
     }
@@ -101,6 +102,7 @@ public class BaseServlet extends HttpServlet {
         } catch (DAOException e) {
             e.printStackTrace();
         }
+        System.out.println(users);
         req.setAttribute("users", users);  //todo
         req.getRequestDispatcher("user.jsp").forward(req, resp);
     }

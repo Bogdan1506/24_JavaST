@@ -1,15 +1,17 @@
 
-]	java:S125-"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8ŸÃ·²Œ.
+a
+java:S3358Z"DExtract this nested ternary operation into an independent statement.( û¹8éùÚŒ.
+h
+java:S1192$"FDefine a constant instead of duplicating this literal "login" 3 times.(Ôüÿÿÿÿ8÷‹‡İŒ.
+L
+java:S1066@"/Merge this if statement with the enclosing one.(†œóø8®Ú’İŒ.
 E
-java:S1148)"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ŸÃ·²Œ.
+java:S1148<"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8’»˜İŒ.
+a
+java:S3358Z"DExtract this nested ternary operation into an independent statement.( û¹8éùÚŒ.
+E
+java:S1148f"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8¿õÚŒ.
+u
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(ÿ›ÅÒ8å¥«ÛŒ.
 O
-java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8ŸÃ·²Œ.
-M
-java:S1128"0Remove this unused import 'java.io.PrintWriter'.(ÓŞÏÛ8ŸÃ·²Œ.
-O
-java:S1135+"2Complete the task associated to this TODO comment.(‘ëîü8ŸÃ·²Œ.
-]	java:S125"<This block of commented-out lines of code should be removed.(ıß³Àûÿÿÿÿ8â×»´Œ.
-ƒ
-java:S1989,"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(É€ò„ıÿÿÿÿ8ŸÃ·²Œ.
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ŸÃ·²Œ.
+java:S1135h"2Complete the task associated to this TODO comment.(‘ëîü8¿õÚŒ.
