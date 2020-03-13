@@ -12,6 +12,13 @@ public class Goods implements Entity {
     public Goods() {
     }
 
+    public Goods(String name, String description, double price, String picture) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.picture = picture;
+    }
+
     public Goods(int id, String name, String description, double price, String picture) {
         this.id = id;
         this.name = name;
@@ -48,7 +55,7 @@ public class Goods implements Entity {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

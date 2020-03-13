@@ -50,6 +50,15 @@ public class BaseServlet extends HttpServlet {
             case "goodsList":
                 goodsServlet.getGoodsList(req, resp);
                 break;
+            case "updateGoods":
+                goodsServlet.update(req, resp);
+                break;
+            case "deleteGoods":
+                goodsServlet.delete(req, resp);
+                break;
+            case "addGoods":
+                goodsServlet.create(req, resp);
+                break;
 
         }
     }

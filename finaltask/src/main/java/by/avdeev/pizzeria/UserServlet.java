@@ -47,7 +47,6 @@ public class UserServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = new User(login, password, 3);
-        System.out.println(user);
         userDAO.create(user);
         getUserList(req, resp);
     }

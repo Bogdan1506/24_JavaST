@@ -8,6 +8,7 @@
 <body>
 <div align="center">
     <h1>Goods list</h1>
+    <a href="add-goods.jsp">create</a>
     <table border="2">
         <thead>
         <th scope="row">id</th>
@@ -26,19 +27,19 @@
                 <td><c:out value="${temp.price}"/></td>
                 <td>
                     <img alt="" src="${temp.picture}"/></td>
-
-                    <%--                <c:url var="UpdateLink" value="update-user.jsp">
-                                        <c:param name="id" value="${temp.id}"/>
-                                        <c:param name="login" value="${temp.login}"/>
-                                        <c:param name="password" value="${temp.password}"/>
-                                        <c:param name="role" value="${temp.role}"/>
-                                    </c:url>
-                                    <c:url var="DeleteLink" value="bs">
-                                        <c:param name="command" value="delete"/>
-                                        <c:param name="id" value="${temp.id}"/>
-                                    </c:url>
-                                    <td><a href="${UpdateLink}">Update</a></td>
-                                    <td><a href="${DeleteLink}">Delete</a></td>--%>
+                <c:url var="UpdateGoodsLink" value="update-goods.jsp">
+                    <c:param name="id" value="${temp.id}"/>
+                    <c:param name="name" value="${temp.name}"/>
+                    <c:param name="description" value="${temp.description}"/>
+                    <c:param name="price" value="${temp.price}"/>
+                    <c:param name="picture" value="${temp.picture}"/>
+                </c:url>
+                <c:url var="DeleteGoodsLink" value="bs">
+                    <c:param name="command" value="deleteGoods"/>
+                    <c:param name="id" value="${temp.id}"/>
+                </c:url>
+                <td><a href="${UpdateGoodsLink}">Update</a></td>
+                <td><a href="${DeleteGoodsLink}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>

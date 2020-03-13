@@ -8,6 +8,7 @@
 <div align="center">
     <h1>Sign up</h1>
     <form action="bs" name="signUp">
+        <input type="hidden" name="command" value="add">
         <table>
             <tbody>
             <tr>
@@ -26,7 +27,6 @@
                     </label>
                 </td>
             </tr>
-            <input type="hidden" name="command" value="add">
             <tr>
                 <td></td>
                 <td>

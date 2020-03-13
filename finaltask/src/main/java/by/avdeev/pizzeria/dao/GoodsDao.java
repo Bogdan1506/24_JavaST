@@ -4,6 +4,7 @@ import by.avdeev.pizzeria.entity.Goods;
 import by.avdeev.pizzeria.entity.User;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,11 +40,33 @@ public class GoodsDao extends AbstractDAO<Goods> {
 
     @Override
     public Goods findEntityById(int id) {
-        return null;
+        Goods goods = new Goods();
+        goods.setId(id);
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM goods WHERE id=?")) {
+            //todo change on all fields
+            statement.setString(1, String.valueOf(id)); //todo
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                goods.setName(rs.getString("name"));
+                goods.setDescription(rs.getString("description"));
+                goods.setPrice(Double.parseDouble(rs.getString("price")));
+                goods.setPicture(rs.getString("picture"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goods;
     }
 
     @Override
     public boolean delete(int id) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM goods WHERE id=?")) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -54,11 +77,43 @@ public class GoodsDao extends AbstractDAO<Goods> {
 
     @Override
     public boolean create(Goods entity) {
+        String name = entity.getName();
+        String description = entity.getDescription();
+        double price = entity.getPrice();
+        String picture = entity.getPicture();
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO goods (name, description, price, picture) VALUES (?,?,?,?)")) {
+            statement.setString(1, name);
+            statement.setString(2, description);
+            statement.setDouble(3, price);
+            statement.setString(4, picture);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public Goods update(Goods entity) {
-        return null;
+        int id = entity.getId();
+        String name = entity.getName();
+        String description = entity.getDescription();
+        double price = entity.getPrice();
+        String picture = entity.getPicture();
+        PreparedStatement statement = null; //todo try-with-res
+        try {
+            statement = connection.prepareStatement("UPDATE goods SET name=?, description=?, price=?, picture=? WHERE id=?");
+            statement.setString(1, name);
+            statement.setString(2, description);
+            statement.setDouble(3, price);
+            statement.setString(4, picture);
+            statement.setInt(5, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return entity; //todo remove return value
     }
 }

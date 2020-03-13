@@ -23,18 +23,18 @@
                 <td><c:out value="${temp.login}"/></td>
                 <td><c:out value="${temp.password}"/></td>
                 <td><c:out value="${temp.role}"/></td>
-                <c:url var="UpdateLink" value="update-user.jsp">
+                <c:url var="UpdateUserLink" value="update-user.jsp">
                     <c:param name="id" value="${temp.id}"/>
                     <c:param name="login" value="${temp.login}"/>
                     <c:param name="password" value="${temp.password}"/>
                     <c:param name="role" value="${temp.role}"/>
                 </c:url>
-                <c:url var="DeleteLink" value="bs">
+                <c:url var="DeleteUserLink" value="bs">
                     <c:param name="command" value="delete"/>
                     <c:param name="id" value="${temp.id}"/>
                 </c:url>
-                <td><a href="${UpdateLink}">Update</a></td>
-                <td><a href="${DeleteLink}">Delete</a></td>
+                <td><a href="${UpdateUserLink}">Update</a></td>
+                <td><a href="${DeleteUserLink}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>
