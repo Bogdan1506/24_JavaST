@@ -3,7 +3,6 @@ package by.avdeev.pizzeria;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.GoodsDao;
 import by.avdeev.pizzeria.entity.Goods;
-import by.avdeev.pizzeria.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

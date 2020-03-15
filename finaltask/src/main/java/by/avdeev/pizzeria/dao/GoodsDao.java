@@ -1,7 +1,6 @@
 package by.avdeev.pizzeria.dao;
 
 import by.avdeev.pizzeria.entity.Goods;
-import by.avdeev.pizzeria.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

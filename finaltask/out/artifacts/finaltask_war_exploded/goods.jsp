@@ -26,7 +26,26 @@
                 <td><c:out value="${temp.description}"/></td>
                 <td><c:out value="${temp.price}"/></td>
                 <td>
-                    <img alt="" src="${temp.picture}"/></td>
+                    <img alt="" src="${temp.picture}"/>
+                </td>
+                <form action="bs">
+                    <td>
+                        <select name="dough">
+                            <option>Thin</option>
+                            <option>Thick</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="size">
+                            <option>Small</option>
+                            <option>Medium</option>
+                            <option>Large</option>
+                        </select>
+                    </td>
+                    <input type="hidden" name="command" value="createItem">
+                    <input type="hidden" name="id" value="${temp.id}">
+                    <td><input type="submit" value="Submit"></td>
+                </form>
                 <c:url var="UpdateGoodsLink" value="update-goods.jsp">
                     <c:param name="id" value="${temp.id}"/>
                     <c:param name="name" value="${temp.name}"/>
@@ -38,8 +57,14 @@
                     <c:param name="command" value="deleteGoods"/>
                     <c:param name="id" value="${temp.id}"/>
                 </c:url>
+                <c:url var="AddGoodsToOrderLink" value="bs">
+                    <c:param name="command" value="addGoodsToOrder"/>
+                    <c:param name="id" value="${temp.id}"/>
+                    <c:param name="dough" value="${dough}"/>
+                </c:url>
                 <td><a href="${UpdateGoodsLink}">Update</a></td>
                 <td><a href="${DeleteGoodsLink}">Delete</a></td>
+                <td><a href="${AddGoodsToOrderLink}">Add to cart</a></td>
             </tr>
         </c:forEach>
         </tbody>

@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria;
 
 import by.avdeev.pizzeria.dao.GoodsDao;
+import by.avdeev.pizzeria.dao.ItemDAO;
 import by.avdeev.pizzeria.dao.UserDAO;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ public class BaseServlet extends HttpServlet {
     private GoodsDao goodsDAO;
     private UserServlet userServlet;
     private GoodsServlet goodsServlet;
+    private ItemServlet itemServlet;
 
     {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -23,6 +25,8 @@ public class BaseServlet extends HttpServlet {
         userServlet = new UserServlet(userDAO);
         goodsDAO = new GoodsDao(connection);
         goodsServlet = new GoodsServlet(goodsDAO);
+        ItemDAO itemDAO = new ItemDAO(connection);
+        itemServlet = new ItemServlet(itemDAO);
     }
 
     @Override
@@ -32,6 +36,15 @@ public class BaseServlet extends HttpServlet {
             command = "list";
         }
         switch (command) {
+            case "getItemList":
+                itemServlet.getItemList(req, resp);
+                break;
+            case "createItem":
+                itemServlet.createItem(req, resp);
+                break;
+            case "deleteItem":
+                itemServlet.deleteItem(req, resp);
+                break;
             case "list":
                 userServlet.getUserList(req, resp);
                 break;
@@ -59,7 +72,6 @@ public class BaseServlet extends HttpServlet {
             case "addGoods":
                 goodsServlet.create(req, resp);
                 break;
-
         }
     }
 

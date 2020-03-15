@@ -1,16 +1,18 @@
 
 u
-java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(´«êé8Å¼“….
-T
-java:S1135C"2Complete the task associated to this TODO comment.(®öí˜úÿÿÿÿ8Î¬ƒ.
-X	java:S125B"<This block of commented-out lines of code should be removed.(­®Î™8ÙóŞ„.
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(®¹ğ8ßÅğ„.
 z
-java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(“Ğø«ûÿÿÿÿ8ÀĞ„.
-O
-java:S1135|"2Complete the task associated to this TODO comment.(‘ëîü8Î¬ƒ.
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(ö¶êÜùÿÿÿÿ8°‚¦Ğ.
 {
-java:S1171"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8…È‚.
-z
-java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(¡âÒşÿÿÿÿ8›òÎ„.
+java:S1171"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8…È‚.
+T
+java:S1135O"2Complete the task associated to this TODO comment.(®öí˜úÿÿÿÿ8Î¬ƒ.
 u
-java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(®¹ğ8ßÅğ„.
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(´«êé8Å¼“….
+z
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(¡âÒşÿÿÿÿ8›òÎ„.
+z
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(“Ğø«ûÿÿÿÿ8ÀĞ„.
+X	java:S125N"<This block of commented-out lines of code should be removed.(­®Î™8ÙóŞ„.
+P
+java:S1135ˆ"2Complete the task associated to this TODO comment.(‘ëîü8Î¬ƒ.
