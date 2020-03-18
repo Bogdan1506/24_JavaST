@@ -63,8 +63,6 @@ Psrc/main/java/by/avdeev/task12/controller/command/impl/CyclicBarrierCommand.jav
 Rsrc/main/java/by/avdeev/task12/controller/command/impl/ExecutorServiceCommand.java,c\2\c28d88b75a808ffe0079606be8ccb21eb34db3ce
 y
 Isrc/main/java/by/avdeev/task12/controller/command/impl/PhaserCommand.java,2\9\29406d19e93109c47054964c5ad35adc1047a02e
-g
-7src/main/java/by/avdeev/task12/parser/NumberParser.java,0\f\0f87329fded4132dd4ca8543b3adb03d99158b0f
 r
 Bsrc/main/java/by/avdeev/task12/service/impl/MatrixServiceImpl.java,c\c\cc98c95676d22070480023feed4ca6b711c05714
 r
@@ -73,3 +71,5 @@ Bsrc/main/java/by/avdeev/task12/service/impl/ThreadServiceImpl.java,c\d\cdfcbef
 0src/main/java/by/avdeev/task12/view/Printer.java,6\8\6899b287959b2f943ecd0d994117c63c36e8381f
 =
 logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2
+M
+src/main/resources/log4j2.xml,3\6\36b9f0d33e4b7e602e3cd701314fae81543db66f
