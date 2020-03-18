@@ -83,7 +83,7 @@ public class TextServiceImpl implements TextService {
         Handler parser4 = new WordParser(parser6);
         Handler parser3 = new LexemeParser(parser4, parser5);
         Handler parser2 = new SentenceParser(parser3);
-        Handler parser = new ParagraphParser(parser2);
+        Handler parser = new ParagraphParser(parser3);
         parser.handleSplit(text, content);
         textDAO.addTextObject(text);
         logger.debug(RESULT, text);

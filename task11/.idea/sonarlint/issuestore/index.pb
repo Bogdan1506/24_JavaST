@@ -92,7 +92,5 @@ H
 target/files/one-two.txt,6\8\687f46c6a2478b5c74e8e1769665f85d2e595591
 E
 target/files/test.txt,6\f\6fc754cab9732c57a7dfda17e6a990e48d7e3ad5
-E
-target/files/text.txt,2\6\26f1f2ef163391ddb90cc63b756eddb924641199
 t
 Dsrc/test/java/by/avdeev/task11/service/impl/SortServiceImplTest.java,e\b\ebc5177697474794620bd62b7ac2b7cb9969c35f
