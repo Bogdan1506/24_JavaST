@@ -18,6 +18,8 @@ import by.avdeev.parser.entity.enumclass.PizzaName;
 import by.avdeev.parser.entity.Size;
 import by.avdeev.parser.entity.enumclass.SizeName;
 import by.avdeev.parser.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -30,6 +32,8 @@ public class OrderHandler extends DefaultHandler {
     private final static String ORDER = "order";
     private final static String GOODS = "goods";
     private final static String DOUGH = "dough";
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
 
     public OrderHandler() {
         orders = new HashSet<>();
@@ -42,6 +46,8 @@ public class OrderHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
+        logger.debug(START);
+        logger.debug("parameters are {}, {}, {}, {}", uri, localName, qName, attrs);
         if (ORDER.equals(localName)) {
             this.localName = localName;
             current = new Order();
@@ -92,6 +98,8 @@ public class OrderHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) {
+        logger.debug(START);
+        logger.debug("parameters are {}, {}, {}", uri, localName, qName);
         if (ORDER.equals(localName)) {
             orders.add(current);
         }
@@ -99,6 +107,10 @@ public class OrderHandler extends DefaultHandler {
 
     @Override
     public void characters(char[] ch, int start, int length) {
+        logger.debug(START);
+        logger.debug(ch);
+        logger.debug(start);
+        logger.debug(length);
         String s = new String(ch, start, length).trim();
         if (currentEnum != null) {
             switch (currentEnum) {
@@ -169,7 +181,7 @@ public class OrderHandler extends DefaultHandler {
                     try {
                         date = simpleDateFormat.parse(s);
                     } catch (ParseException e) {
-                        //todo logger
+                        logger.error(e);
                     }
                     current.getOrderPosition().setDate(date);
                     break;

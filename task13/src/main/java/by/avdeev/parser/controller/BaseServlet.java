@@ -4,6 +4,8 @@ import by.avdeev.parser.entity.Order;
 import by.avdeev.parser.service.ParserService;
 import by.avdeev.parser.service.ServiceException;
 import by.avdeev.parser.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +15,14 @@ import java.io.IOException;
 import java.util.Set;
 
 public class BaseServlet extends HttpServlet {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
+    private final static String PARAM = "parameter are {}, {}";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        logger.debug(START);
+        logger.debug(PARAM, req, resp);
         ServiceFactory factory = ServiceFactory.getFactory();
         ParserService parserService = factory.getParserService();
         String pathname = req.getParameter("filename");
@@ -23,14 +31,14 @@ public class BaseServlet extends HttpServlet {
         try {
             orders = parserService.parse(pathname, typeParser);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         req.setAttribute("type", typeParser);
         req.setAttribute("orders", orders);
         try {
             req.getRequestDispatcher("output.jsp").forward(req, resp);
         } catch (IOException | ServletException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }

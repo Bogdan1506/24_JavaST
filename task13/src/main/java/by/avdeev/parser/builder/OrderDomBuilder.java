@@ -20,6 +20,8 @@ import by.avdeev.parser.entity.User;
 import by.avdeev.parser.entity.Order;
 import by.avdeev.parser.entity.Pizza;
 import by.avdeev.parser.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +30,10 @@ import org.xml.sax.SAXException;
 
 public class OrderDomBuilder extends AbstractOrdersBuilder {
     private DocumentBuilder docBuilder;
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
+    private final static String PARAM = "parameter is {}";
+    private final static String RESULT = "return value is {}";
 
     public OrderDomBuilder() {
         this.orders = new HashSet<>();
@@ -35,11 +41,13 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         try {
             docBuilder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            System.err.println("Ошибка конфигурации парсера: " + e);
+            logger.error(e);
         }
     }
 
     public void buildSetOrders(String fileName) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, fileName);
         Document doc;
         try {
             doc = docBuilder.parse(fileName);
@@ -58,6 +66,8 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
     }
 
     private Order buildOrder(Element orderElement) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, orderElement);
         Order order = new Order();
         order.setId(Integer.parseInt(getElementTextContent(orderElement, "id")));
         order.setPrice(Double.parseDouble(getElementTextContent(orderElement, "price")));
@@ -104,10 +114,13 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         user.setPassword(getElementTextContent(userElement, "password"));
         user.setId(Integer.parseInt(getElementTextContent(userElement, "id")));
         user.setRole(Integer.parseInt(userElement.getAttribute("role")));
+        logger.debug(RESULT, order);
         return order;
     }
 
-    private static String getElementTextContent(Element element, String elementName) {
+    private String getElementTextContent(Element element, String elementName) {
+        logger.debug(START);
+        logger.debug(PARAM, element);
         NodeList nList = element.getElementsByTagName(elementName);
         Node node = nList.item(0);
         return node.getTextContent();

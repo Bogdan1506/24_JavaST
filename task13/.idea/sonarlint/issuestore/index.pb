@@ -58,8 +58,6 @@ i
 9src/main/java/by/avdeev/parser/service/ParserService.java,b\1\b19c019eb5ca2679700f40f9ea25a6840b0982ed
 l
 <src/main/java/by/avdeev/parser/service/ServiceException.java,f\d\fd7face8041ab168ea272b46211568be34524e3a
-f
-6out/artifacts/task13_war_exploded/META-INF/MANIFEST.MF,9\a\9ad80f1845449d33bd6a15a1e83de16d5f952c8d
 n
 >out/artifacts/task13_war_exploded/WEB-INF/classes/pizzeria.xml,8\0\80bd1c1b6320518e3fdb4c609f76565fee621cf0
 n
@@ -72,3 +70,5 @@ a
 ,out/artifacts/task13_war_exploded/output.jsp,b\5\b55cf5b687ba52c129f8d2800dc4280f735268af
 l
 <src/main/java/by/avdeev/parser/builder/sax/OrderHandler.java,7\f\7f29e1375ebb6dd8a3cfdf3c4d6ab87e900d5157
+k
+;src/main/java/by/avdeev/parser/service/ValidatorSAXXSD.java,3\1\31b059ce498c7ffcb66635f81cadd7a20df85171

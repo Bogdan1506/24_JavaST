@@ -24,8 +24,14 @@ import java.util.Date;
 import by.avdeev.parser.entity.Order;
 import by.avdeev.parser.entity.enumclass.OrderEnum;
 import by.avdeev.parser.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OrderStAXBuilder extends AbstractOrdersBuilder {
+    private final Logger logger = LogManager.getLogger();
+    private final static String START = "started";
+    private final static String PARAM = "parameter is {}";
+    private final static String RESULT = "return value is {}";
     private XMLInputFactory inputFactory;
 
     public OrderStAXBuilder() {
@@ -33,6 +39,8 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
     }
 
     public void buildSetOrders(String fileName) throws ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, fileName);
         XMLStreamReader reader;
         String name;
         try (FileInputStream inputStream = new FileInputStream(new File(fileName))) {
@@ -54,6 +62,8 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
     }
 
     private Order buildOrder(XMLStreamReader reader) throws XMLStreamException, ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         Order order = new Order();
         String name;
         while (reader.hasNext()) {
@@ -84,10 +94,13 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                     break;
             }
         }
+        logger.debug(RESULT, order);
         return order;
     }
 
     private OrderPosition getXMLOrderPosition(XMLStreamReader reader) throws XMLStreamException, ServiceException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         OrderPosition orderPosition = new OrderPosition();
         int type;
         String name;
@@ -125,10 +138,13 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
 
             }
         }
+        logger.debug(RESULT, orderPosition);
         return orderPosition;
     }
 
     private Pizza getXMLPizza(XMLStreamReader reader) throws XMLStreamException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         Pizza pizza = new Pizza();
         int type;
         String name;
@@ -160,10 +176,13 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                     break;
             }
         }
+        logger.debug(RESULT, pizza);
         return pizza;
     }
 
     private Goods getXMLGoods(XMLStreamReader reader) throws XMLStreamException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         Goods goods = new Goods();
         int type;
         String name;
@@ -198,10 +217,13 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                     break;
             }
         }
+        logger.debug(RESULT, goods);
         return goods;
     }
 
     private Dough getXMLDough(XMLStreamReader reader) throws XMLStreamException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         Dough dough = new Dough();
         int type;
         String name;
@@ -227,6 +249,7 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                     break;
             }
         }
+        logger.debug(RESULT, dough);
         return dough;
     }
 
@@ -259,10 +282,13 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                 default:
             }
         }
+        logger.debug(RESULT, size);
         return size;
     }
 
     private User getXMLUser(XMLStreamReader reader) throws XMLStreamException {
+        logger.debug(START);
+        logger.debug(PARAM, reader);
         User user = new User();
         int type;
         String name;
@@ -293,6 +319,7 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                 default:
             }
         }
+        logger.debug(RESULT, user);
         return user;
     }
 
@@ -302,6 +329,7 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
             reader.next();
             text = reader.getText();
         }
+        logger.debug(RESULT, text);
         return text;
     }
 }
