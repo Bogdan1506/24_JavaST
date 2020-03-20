@@ -82,3 +82,9 @@ U
 %.idea/libraries/log4j_core_2_13_0.xml,9\c\9cbfc729a0a772d24022444dfd6e0fb9c1c7e902
 =
 logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2
+K
+target/classes/pizzeria.xsd,6\4\64455662c8508aaf5c411fbf54f810a8b706642a
+<
+web/file.jsp,6\4\649459a9801ec767f8dcc5050ca3cb0ef69526b4
+Z
+*src/main/java/by/avdeev/parser/Runner.java,d\b\db123ec5085e604c7acfba48881b0532c77d327f
