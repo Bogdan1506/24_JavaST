@@ -42,11 +42,11 @@ public class ExecutorServiceMatrix implements Runnable {
         logger.debug(START);
         Lock lock = new ReentrantLock();
         while (!executorService.isShutdown()) {
-            for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+            for (int i = 0; i < matrix.getSize(); i++) {
                 lock.lock();
                 try {
-                    if (matrix.getElement(i, j) == 0) {
-                        matrix.setElement(i, j, number);
+                    if (matrix.getElement(i, i) == 0) {
+                        matrix.setElement(i, i, number);
                         return;
                     }
                 } catch (MatrixException e) {

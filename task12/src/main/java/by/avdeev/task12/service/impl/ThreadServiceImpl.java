@@ -36,7 +36,7 @@ public class ThreadServiceImpl implements ThreadService {
     private boolean isRunning = true;
     private int counter;
     private int i = 0;
-    private int j = 0;
+    private static final int COUNT_OF_THREADS = 8;
 
     public void fillCollection(Matrix matrix, String pathname) throws ServiceException {
         logger.debug(START);
@@ -65,9 +65,9 @@ public class ThreadServiceImpl implements ThreadService {
             boolean isCycling = true;
             while (isCycling) {
                 isCycling = false;
-                for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+                for (int i = 0; i < matrix.getSize(); i++) {
                     try {
-                        if (matrix.getElement(i, j) == 0) {
+                        if (matrix.getElement(i, i) == 0) {
                             isCycling = true;
                         }
                     } catch (MatrixException e) {
@@ -86,7 +86,7 @@ public class ThreadServiceImpl implements ThreadService {
         logger.debug(PARAM, matrix);
         int size = matrix.getSize();
         while (isRunning) {
-            counter = Math.min(size, 8);
+            counter = Math.min(size, COUNT_OF_THREADS);
             size -= counter;
             Phaser phaser = new Phaser(counter);
             runCheckThread(matrix);
@@ -112,8 +112,8 @@ public class ThreadServiceImpl implements ThreadService {
         logger.debug(PARAM, matrix);
         TimeUnit timeUnit = TimeUnit.SECONDS;
         int size = matrix.getSize();
-        counter = Math.min(size, 8);
-        ExecutorService executorService = Executors.newFixedThreadPool(8);
+        counter = Math.min(size, COUNT_OF_THREADS);
+        ExecutorService executorService = Executors.newFixedThreadPool(COUNT_OF_THREADS);
         for (int i = 0; i < size; i++) {
             int temp = integers.get(0);
             ExecutorServiceMatrix executorServiceMatrix = new ExecutorServiceMatrix(temp, executorService, matrix);
@@ -134,7 +134,7 @@ public class ThreadServiceImpl implements ThreadService {
         logger.debug(PARAM, matrix);
         TimeUnit timeUnit = TimeUnit.MILLISECONDS;
         int size = matrix.getSize();
-        counter = Math.min(size, 8);
+        counter = Math.min(size, COUNT_OF_THREADS);
         while (counter > 0) {
             Callable<List<Thread>> task = () -> {
                 timeUnit.sleep(50);
@@ -142,10 +142,10 @@ public class ThreadServiceImpl implements ThreadService {
                 List<Thread> threads = new ArrayList<>();
                 try {
                     semaphore.acquire();
-                    for (int k = 0; k < counter; i++, j++, k++) {
+                    for (int k = 0; k < counter; i++, k++) {
                         int temp = integers.get(0);
                         integers.remove(0);
-                        CallableMatrix callableMatrix = new CallableMatrix(temp, matrix, i, j);
+                        CallableMatrix callableMatrix = new CallableMatrix(temp, matrix, i);
                         Thread thread = new Thread(callableMatrix);
                         threads.add(thread);
                     }
@@ -168,9 +168,9 @@ public class ThreadServiceImpl implements ThreadService {
             }
             Thread thread = new Thread(() -> {
                 counter = 0;
-                for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+                for (int i = 0; i < matrix.getSize(); i++) {
                     try {
-                        if (matrix.getElement(i, j) == 0) {
+                        if (matrix.getElement(i, i) == 0) {
                             counter++;
                         }
                     } catch (MatrixException e) {
@@ -198,7 +198,7 @@ public class ThreadServiceImpl implements ThreadService {
         logger.debug(PARAM, matrix);
         int size = matrix.getSize();
         while (isRunning) {
-            counter = Math.min(size, 8);
+            counter = Math.min(size, COUNT_OF_THREADS);
             size -= counter;
             CountDownLatch countDownLatch = new CountDownLatch(counter);
             runCheckThread(matrix);
@@ -222,15 +222,15 @@ public class ThreadServiceImpl implements ThreadService {
     public void doCycleBarrier(Matrix matrix) {
         logger.debug(START);
         logger.debug(PARAM, matrix);
-        counter = Math.min(matrix.getSize(), 8);
+        counter = Math.min(matrix.getSize(), COUNT_OF_THREADS);
         while (isRunning) {
             CyclicBarrier cyclicBarrier = new CyclicBarrier(counter, () -> {
                 counter = 0;
-                for (int i = 0, j = 0; i < matrix.getSize(); i++, j++) {
+                for (int i = 0; i < matrix.getSize(); i++) {
                     try {
-                        if (matrix.getElement(i, j) == 0) {
-                            for (int k = 0, z = 0; k < matrix.getSize(); k++, z++) {
-                                if (matrix.getElement(k, z) == 0) {
+                        if (matrix.getElement(i, i) == 0) {
+                            for (int k = 0; k < matrix.getSize(); k++) {
+                                if (matrix.getElement(k, k) == 0) {
                                     counter++;
                                 }
                             }

@@ -11,13 +11,11 @@ public class CallableMatrix implements Runnable {
     private int number;
     private Matrix matrix;
     private int i;
-    private int j;
 
-    public CallableMatrix(int number, Matrix matrix, int i, int j) {
+    public CallableMatrix(int number, Matrix matrix, int i) {
         this.number = number;
         this.matrix = matrix;
         this.i = i;
-        this.j = j;
     }
 
     public int getNumber() {
@@ -44,19 +42,11 @@ public class CallableMatrix implements Runnable {
         this.i = i;
     }
 
-    public int getJ() {
-        return j;
-    }
-
-    public void setJ(int j) {
-        this.j = j;
-    }
-
     @Override
     public void run() {
         logger.debug(START);
         try {
-            matrix.setElement(i, j, number);
+            matrix.setElement(i, i, number);
         } catch (MatrixException e) {
             logger.error(e);
         }
@@ -69,22 +59,20 @@ public class CallableMatrix implements Runnable {
         CallableMatrix that = (CallableMatrix) o;
         return number == that.number &&
                 i == that.i &&
-                j == that.j &&
                 Objects.equals(matrix, that.matrix);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, matrix, i, j);
+        return Objects.hash(number, matrix, i);
     }
 
     @Override
     public String toString() {
-        return "LockMatrix{" +
+        return "CallableMatrix{" +
                 "number=" + number +
                 ", matrix=" + matrix +
                 ", i=" + i +
-                ", j=" + j +
                 '}';
     }
 }
