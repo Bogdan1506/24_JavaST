@@ -48,7 +48,13 @@
                 </simpleType>
             </element>
             <element name="description" type="string"/>
-            <element name="price" type="double"/>
+            <element name="price">
+                <simpleType>
+                    <restriction base="double">
+                        <minInclusive value="0"/>
+                    </restriction>
+                </simpleType>
+            </element>
             <element name="picture" type="string"/>
         </sequence>
     </complexType>
@@ -96,9 +102,7 @@
         <attribute name="role" use="required">
             <simpleType>
                 <restriction base="int">
-                    <enumeration value="0"/>
-                    <enumeration value="1"/>
-                    <enumeration value="2"/>
+                    <pattern value="[0-2]"/>
                 </restriction>
             </simpleType>
         </attribute>

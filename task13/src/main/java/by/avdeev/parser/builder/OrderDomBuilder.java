@@ -58,10 +58,8 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
                 Order order = buildOrder(orderElement);
                 orders.add(order);
             }
-        } catch (IOException e) {
-            System.err.println("File error or I/O error: " + e);
-        } catch (SAXException e) {
-            System.err.println("Parsing failure: " + e);
+        } catch (IOException | SAXException e) {
+            throw new ServiceException(e);
         }
     }
 
@@ -71,31 +69,54 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
         Order order = new Order();
         order.setId(Integer.parseInt(getElementTextContent(orderElement, "id")));
         order.setPrice(Double.parseDouble(getElementTextContent(orderElement, "price")));
+
+
+        order.setPizza(buildPizza(orderElement));
+        order.setOrderPosition(buildOrderPosition(orderElement));
+        logger.debug(RESULT, order);
+        return order;
+    }
+
+    private Pizza buildPizza(Element orderElement) {
         Pizza pizza = new Pizza();
-        order.setPizza(pizza);
         Element pizzaElement = (Element) orderElement.getElementsByTagName("pizza").item(0);
         pizza.setId(Integer.parseInt(getElementTextContent(pizzaElement, "id")));
+        pizza.setGoods(buildGoods(pizzaElement));
+        pizza.setDough(buildDough(pizzaElement));
+        pizza.setSize(buildSize(pizzaElement));
+        return pizza;
+    }
+
+    private Goods buildGoods(Element pizzaElement) {
         Goods goods = new Goods();
-        pizza.setGoods(goods);
         Element goodsElement = (Element) pizzaElement.getElementsByTagName("goods").item(0);
         goods.setId(Integer.parseInt(getElementTextContent(goodsElement, "id")));
         goods.setPrice(Double.parseDouble(getElementTextContent(goodsElement, "price")));
         goods.setName(PizzaName.valueOf(getElementTextContent(goodsElement, "name")));
         goods.setPicture(getElementTextContent(goodsElement, "picture"));
         goods.setDescription(getElementTextContent(goodsElement, "description"));
+        return goods;
+    }
+
+    private Dough buildDough(Element pizzaElement) {
         Dough dough = new Dough();
-        pizza.setDough(dough);
         Element doughElement = (Element) pizzaElement.getElementsByTagName("dough").item(0);
         dough.setId(Integer.parseInt(getElementTextContent(doughElement, "id")));
         dough.setName(DoughName.valueOf(getElementTextContent(doughElement, "name")));
+        return dough;
+    }
+
+    private Size buildSize(Element pizzaElement) {
         Size size = new Size();
-        pizza.setSize(size);
         Element sizeElement = (Element) pizzaElement.getElementsByTagName("size").item(0);
         size.setId(Integer.parseInt(getElementTextContent(sizeElement, "id")));
         size.setName(SizeName.valueOf(getElementTextContent(sizeElement, "name")));
         size.setCoefficient(Double.parseDouble(getElementTextContent(sizeElement, "coefficient")));
+        return size;
+    }
+
+    private OrderPosition buildOrderPosition(Element orderElement) throws ServiceException {
         OrderPosition orderPosition = new OrderPosition();
-        order.setOrderPosition(orderPosition);
         Element orderPositionElement = (Element) orderElement.getElementsByTagName("orderPosition").item(0);
         orderPosition.setId(Integer.parseInt(getElementTextContent(orderPositionElement, "id")));
         String strDate = getElementTextContent(orderPositionElement, "date");
@@ -107,16 +128,20 @@ public class OrderDomBuilder extends AbstractOrdersBuilder {
             throw new ServiceException(e);
         }
         orderPosition.setDate(date);
+        orderPosition.setUser(buildUser(orderPositionElement));
+        return orderPosition;
+    }
+
+    private User buildUser(Element orderPositionElement) {
         User user = new User();
-        orderPosition.setUser(user);
         Element userElement = (Element) orderPositionElement.getElementsByTagName("user").item(0);
         user.setLogin(getElementTextContent(userElement, "login"));
         user.setPassword(getElementTextContent(userElement, "password"));
         user.setId(Integer.parseInt(getElementTextContent(userElement, "id")));
         user.setRole(Integer.parseInt(userElement.getAttribute("role")));
-        logger.debug(RESULT, order);
-        return order;
+        return user;
     }
+
 
     private String getElementTextContent(Element element, String elementName) {
         logger.debug(START);

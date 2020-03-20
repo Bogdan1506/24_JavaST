@@ -134,8 +134,6 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                         return orderPosition;
                     }
                     break;
-                default:
-
             }
         }
         logger.debug(RESULT, orderPosition);
@@ -279,7 +277,6 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                         return size;
                     }
                     break;
-                default:
             }
         }
         logger.debug(RESULT, size);
@@ -316,7 +313,6 @@ public class OrderStAXBuilder extends AbstractOrdersBuilder {
                         return user;
                     }
                     break;
-                default:
             }
         }
         logger.debug(RESULT, user);

@@ -198,7 +198,6 @@ public class OrderHandler extends DefaultHandler {
                 case COEFFICIENT:
                     current.getPizza().getSize().setCoefficient(Double.parseDouble(s));
                     break;
-
                 default:
                     throw new EnumConstantNotPresentException(
                             currentEnum.getDeclaringClass(), currentEnum.name());

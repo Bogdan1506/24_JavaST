@@ -72,3 +72,13 @@ l
 <src/main/java/by/avdeev/parser/builder/sax/OrderHandler.java,7\f\7f29e1375ebb6dd8a3cfdf3c4d6ab87e900d5157
 k
 ;src/main/java/by/avdeev/parser/service/ValidatorSAXXSD.java,3\1\31b059ce498c7ffcb66635f81cadd7a20df85171
+`
+0.idea/libraries/javax_servlet_jsp_jstl_1_2_1.xml,b\d\bdf227ac9770b5d9d5e7e8654e78b5a82f138ac5
+P
+ .idea/libraries/jstl_api_1_2.xml,1\6\166bcb9d96016afe9f2ec550e19da357726cd32c
+T
+$.idea/libraries/log4j_api_2_13_0.xml,f\2\f23106197b33297bfbf032fd7d98f2acad5b6339
+U
+%.idea/libraries/log4j_core_2_13_0.xml,9\c\9cbfc729a0a772d24022444dfd6e0fb9c1c7e902
+=
+logs/text.log,7\f\7f024d29c972354fed8cfeb8fb31c1df368cdbb2

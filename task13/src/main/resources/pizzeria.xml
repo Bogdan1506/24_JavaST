@@ -27,7 +27,7 @@
         <orderPosition>
             <id>1</id>
             <date>2020-02-01</date>
-            <user role="2">
+            <user role="0">
                 <id>7</id>
                 <login>admin</login>
                 <password>1234</password>
@@ -47,8 +47,8 @@
                 <picture>...</picture>
             </goods>
             <dough>
-                <id>1</id>
-                <name>Thick</name>
+                <id>2</id>
+                <name>Thin</name>
             </dough>
             <size>
                 <id>1</id>
@@ -59,7 +59,7 @@
         <orderPosition>
             <id>1</id>
             <date>2020-02-01</date>
-            <user role="2">
+            <user role="0">
                 <id>7</id>
                 <login>admin</login>
                 <password>1234</password>
@@ -91,7 +91,7 @@
         <orderPosition>
             <id>1</id>
             <date>2020-02-11</date>
-            <user role="2">
+            <user role="0">
                 <id>7</id>
                 <login>admin</login>
                 <password>1234</password>
