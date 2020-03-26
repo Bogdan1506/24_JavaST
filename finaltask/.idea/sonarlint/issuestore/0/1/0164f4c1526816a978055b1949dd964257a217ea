@@ -1,0 +1,21 @@
+
+c
+java:S2142E"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8úŠ»É.
+]	java:S125x"<This block of commented-out lines of code should be removed.(µÇ‚ëÿÿÿÿÿ8ôîç¼.
+E
+java:S1148F"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8úŠ»É.
+X	java:S125"<This block of commented-out lines of code should be removed.(¼•ú8Ş¿ÄÉ.
+>
+java:S1116J"Remove this empty statement.(Åñ­õşÿÿÿÿ8êÚéÈ.
+]	java:S1251"<This block of commented-out lines of code should be removed.(”ÚÒ÷ıÿÿÿÿ8ÊÔ¸É.
+~
+java:S3008"\Rename this field "INITIAL_POOL_SIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ëğüÿÿÿÿ8Ï˜Ø¼.
+X	java:S1254"<This block of commented-out lines of code should be removed.(şä¼›8êıµÉ.
+X	java:S125*"<This block of commented-out lines of code should be removed.(£ñî¨8¼ª³É.
+]	java:S125u"<This block of commented-out lines of code should be removed.(Ç‚‘Òüÿÿÿÿ8ĞÍç¼.
+E
+java:S1148X"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ê·şÈ.
+W	java:S125"<This block of commented-out lines of code should be removed.(Ëàû28¡ñ¦É.
+]	java:S125-"<This block of commented-out lines of code should be removed.(«”Œúüÿÿÿÿ8Êô´É.
+X	java:S125?"<This block of commented-out lines of code should be removed.(«Ø©ê8§Ë¹É.
+]	java:S125{"<This block of commented-out lines of code should be removed.(Çş¥©úÿÿÿÿ8ÚÓ¼É.

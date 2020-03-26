@@ -43,7 +43,7 @@
                         </select>
                     </td>
                     <input type="hidden" name="command" value="createItem">
-                    <input type="hidden" name="id" value="${temp.id}">
+                    <input type="hidden" name="goodsId" value="${temp.id}">
                     <td><input type="submit" value="Submit"></td>
                 </form>
                 <c:url var="UpdateGoodsLink" value="update-goods.jsp">
@@ -57,11 +57,6 @@
                     <c:param name="command" value="deleteGoods"/>
                     <c:param name="id" value="${temp.id}"/>
                 </c:url>
-                <c:url var="AddGoodsToOrderLink" value="bs">
-                    <c:param name="command" value="addGoodsToOrder"/>
-                    <c:param name="id" value="${temp.id}"/>
-                    <c:param name="dough" value="${dough}"/>
-                </c:url>
                 <td><a href="${UpdateGoodsLink}">Update</a></td>
                 <td><a href="${DeleteGoodsLink}">Delete</a></td>
                 <td><a href="${AddGoodsToOrderLink}">Add to cart</a></td>
@@ -69,6 +64,10 @@
         </c:forEach>
         </tbody>
     </table>
+    <form action="bs">
+        <input type="hidden" name="command" value="getSessionItems">
+        <input type="submit" value="Submit">
+    </form>
 </div>
 </body>
 </html>

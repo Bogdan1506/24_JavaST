@@ -7,7 +7,7 @@
               type="javax.sql.DataSource"
               username="root"
               password="root"
-              driverClassName="com.mysql.jdbc.Driver"
+              driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/pizzeria?characterEncoding=latin1&amp;useConfigs=maxPerformance&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;autoReconnect=true"
               maxActive="20"
               maxWait="10000"

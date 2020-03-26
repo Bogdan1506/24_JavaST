@@ -41,8 +41,8 @@ public class GoodsDao extends AbstractDAO<Goods> {
     public Goods findEntityById(int id) {
         Goods goods = new Goods();
         goods.setId(id);
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM goods WHERE id=?")) {
-            //todo change on all fields
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT name, description, price, picture FROM goods WHERE id=?")) {
             statement.setString(1, String.valueOf(id)); //todo
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -80,7 +80,8 @@ public class GoodsDao extends AbstractDAO<Goods> {
         String description = entity.getDescription();
         double price = entity.getPrice();
         String picture = entity.getPicture();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO goods (name, description, price, picture) VALUES (?,?,?,?)")) {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO goods (name, description, price, picture) VALUES (?,?,?,?)")) {
             statement.setString(1, name);
             statement.setString(2, description);
             statement.setDouble(3, price);
@@ -94,15 +95,14 @@ public class GoodsDao extends AbstractDAO<Goods> {
     }
 
     @Override
-    public Goods update(Goods entity) {
+    public void update(Goods entity) {
         int id = entity.getId();
         String name = entity.getName();
         String description = entity.getDescription();
         double price = entity.getPrice();
         String picture = entity.getPicture();
-        PreparedStatement statement = null; //todo try-with-res
-        try {
-            statement = connection.prepareStatement("UPDATE goods SET name=?, description=?, price=?, picture=? WHERE id=?");
+        try (PreparedStatement statement = connection.prepareStatement(
+                "UPDATE goods SET name=?, description=?, price=?, picture=? WHERE id=?");) {
             statement.setString(1, name);
             statement.setString(2, description);
             statement.setDouble(3, price);
@@ -113,6 +113,5 @@ public class GoodsDao extends AbstractDAO<Goods> {
             e.printStackTrace();
         } finally {
         }
-        return entity; //todo remove return value
     }
 }

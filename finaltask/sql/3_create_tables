@@ -7,11 +7,10 @@ CREATE TABLE user
     `password` CHAR(32)     NOT NULL,
     /*
      * 0 - администратор (Role.ADMINISTRATOR)
-     * 1 - регистратор (Role.REGISTRAR)
-     * 2 - создатель (Role.CREATOR)
-     * 3 - пользователь (Role.USER)
+     * 1 - создатель (Role.CREATOR)
+     * 2 - клиент(Role.CLIENT)
      */
-    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2, 3)),
+    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)),
     CONSTRAINT PRIMARY KEY `PK_user` (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;

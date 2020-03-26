@@ -23,16 +23,23 @@ public class ItemDAO extends AbstractDAO<Item> {
         List<Item> items = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT item.id, item.goods_id, dough.name, size.name FROM item JOIN dough ON dough.id = item.dough_id" +
-                    " JOIN size ON size_id = size.id";
+            String sql = "SELECT item.id, item.goods_id, goods.name, goods.picture, goods.price, dough.name, size.name " +
+                    "FROM item JOIN dough ON dough.id = item.dough_id JOIN size ON size_id = size.id JOIN goods ON goods.id = item.goods_id";
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 int id = rs.getInt("item.id");
                 int goodsId = rs.getInt("item.goods_id");
+                String goodsName = rs.getString("goods.name");
+                String goodsPicture = rs.getString("goods.picture");
+                double goodsPrice = rs.getDouble("goods.price");
                 Dough dough = Dough.valueOf(rs.getString("dough.name").toUpperCase());
                 Size size = Size.valueOf(rs.getString("size.name").toUpperCase());
-                Item item = new Item(id, goodsId, dough, size);
-                items.add(item);
+                Goods goods = new Goods();
+                goods.setId(goodsId);
+                goods.setName(goodsName);
+                goods.setPicture(goodsPicture);
+                goods.setPrice(goodsPrice);
+                Item item = new Item(id, goods, dough, size);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,7 +85,7 @@ public class ItemDAO extends AbstractDAO<Item> {
 
     @Override
     public boolean create(Item entity) {
-        int goodsId = entity.getGoodsId();
+        int goodsId = entity.getGoods().getId();
         int doughId = entity.getDough().getDoughId();
         int sizeId = entity.getSize().getSizeId();
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO item (goods_id, dough_id, size_id) VALUES (?,?,?)")) {
@@ -94,23 +101,17 @@ public class ItemDAO extends AbstractDAO<Item> {
     }
 
     @Override
-    public Item update(Item entity) {  //todo remove unnecessary method
+    public void update(Item entity) {  //todo remove unnecessary method
         int id = entity.getId();
-        int goodsId = entity.getGoodsId();
         int doughId = entity.getDough().getDoughId();
         int sizeId = entity.getSize().getSizeId();
-        PreparedStatement statement = null; //todo try-with-res
-        try {
-            statement = connection.prepareStatement("UPDATE item SET goods_id=?, dough_id=?, size_id=? WHERE id=?");
-            statement.setInt(1, goodsId);
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE item SET goods_id=?, dough_id=?, size_id=? WHERE id=?")) {
             statement.setInt(2, doughId);
             statement.setInt(3, sizeId);
             statement.setInt(4, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
         }
-        return entity; //todo remove return value
     }
 }

@@ -1,0 +1,19 @@
+package by.avdeev.pizzeria.service;
+
+import by.avdeev.pizzeria.entity.User;
+
+import java.util.List;
+
+public interface UserService extends TransactionService {
+    void create(User user) throws ServiceException;
+
+    List<User> findAll() throws ServiceException;
+
+    void delete(int id) throws ServiceException;
+
+    void update(User user) throws ServiceException;
+
+    boolean signIn(User user) throws ServiceException;
+
+    boolean signUp(User user) throws ServiceException;
+}

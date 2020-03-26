@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class Item implements Entity {
     private int id;
-    private int goodsId;
+    private Goods goods;
     private Dough dough;
     private Size size;
 
     public Item() {
     }
 
-    public Item(int goodsId, Dough dough, Size size) {
-        this.goodsId = goodsId;
+    public Item(int id, Goods goods, Dough dough, Size size) {
+        this.id = id;
+        this.goods = goods;
         this.dough = dough;
         this.size = size;
     }
 
-    public Item(int id, int goodsId, Dough dough, Size size) {
-        this.id = id;
-        this.goodsId = goodsId;
+    public Item(Goods goods, Dough dough, Size size) {
+        this.goods = goods;
         this.dough = dough;
         this.size = size;
     }
@@ -32,12 +32,12 @@ public class Item implements Entity {
         this.id = id;
     }
 
-    public int getGoodsId() {
-        return goodsId;
+    public Goods getGoods() {
+        return goods;
     }
 
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 
     public Dough getDough() {
@@ -60,7 +60,7 @@ public class Item implements Entity {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", goods_id=" + goodsId +
+                ", goods=" + goods +
                 ", dough=" + dough +
                 ", size=" + size +
                 '}';
@@ -71,14 +71,13 @@ public class Item implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id &&
-                goodsId == item.goodsId &&
+        return Objects.equals(goods, item.goods) &&
                 dough == item.dough &&
                 size == item.size;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, goodsId, dough, size);
+        return Objects.hash(goods, dough, size);
     }
 }
