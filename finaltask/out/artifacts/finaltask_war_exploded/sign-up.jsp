@@ -1,4 +1,3 @@
-<jsp:useBean id="UserCommand" scope="request" type="by.avdeev.pizzeria.controller.command.impl.UserCommand"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +7,8 @@
 <body>
 <div align="center">
     <h1>Sign up</h1>
-    <form action="bs" name="signUp">
-        <input type="hidden" name="command" value="${UserCommand}">
+    <form action="pza" name="signUp">
+        <input type="hidden" name="action" value="userCreate">
         <table>
             <tbody>
             <tr>

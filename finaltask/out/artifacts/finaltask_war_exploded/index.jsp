@@ -5,12 +5,17 @@
     <title>$Title$</title>
 </head>
 <body>
-<c:url var="User" value="cs">
-    <c:param name="method" value="showUserList"/>
-<%--    <jsp:useBean id="showClass" class="by.avdeev.pizzeria.action.UserShowAction"/>
+<c:url var="User" value="pza">
+    <c:param name="action" value="userShowList"/>
+<%--    <jsp:useBean id="showClass" class="by.avdeev.pizzeria.action.user.UserShowAction"/>
     <c:param name="method" value="${showClass}"/>--%>
 </c:url>
+<%--<c:url var="AddUser" value="pza">
+    <c:param name="action" value="userCreate"/>
+</c:url>--%>
 <a href="${User}">User</a>
+<a href="sign-up.jsp">Create User</a>
+<a href="sign-in.jsp">Sign in</a>
 <c:url var="Goods" value="bs">
     <c:param name="command" value="goodsList"/>
 </c:url>

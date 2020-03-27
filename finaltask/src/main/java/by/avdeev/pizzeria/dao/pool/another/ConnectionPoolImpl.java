@@ -1,58 +1,52 @@
 package by.avdeev.pizzeria.dao.pool.another;
 
-import by.avdeev.pizzeria.dao.DAOException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class BasicConnectionPool
+public class ConnectionPoolImpl
         implements ConnectionPool {
 
     //    private List<Connection> connectionPool;
 //    private List<Connection> usedConnections = new ArrayList<>();
     private static int INITIAL_POOL_SIZE = 5;
-    private static BasicConnectionPool basicConnectionPool;
+    private static ConnectionPoolImpl connectionPoolImpl;
     private BlockingQueue<Connection> freeConnections = new LinkedBlockingQueue<>();
     private Set<Connection> usedConnections = new HashSet<>();
 //    private Set<Connection> usedConnections = new ConcurrentSkipListSet<>();
 
-    private BasicConnectionPool() {
+    private ConnectionPoolImpl() {
     }
 
-    public static BasicConnectionPool getBasicConnectionPool() {
-        if (basicConnectionPool == null) {
-            basicConnectionPool = create();
+    public static ConnectionPoolImpl getConnectionPoolImpl() {
+        if (connectionPoolImpl == null) {
+            connectionPoolImpl = create();
         }
-        return basicConnectionPool;
+        return connectionPoolImpl;
     }
 
-    public static BasicConnectionPool create() {
+    public static ConnectionPoolImpl create() {
 //        List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         BlockingQueue<Connection> freeConnections = new LinkedBlockingQueue<>(INITIAL_POOL_SIZE);
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
 //            pool.add(createConnection());
             freeConnections.add(createConnection());
         }
-        return new BasicConnectionPool(freeConnections);
+        return new ConnectionPoolImpl(freeConnections);
 //        return new BasicConnectionPool(pool);
     }
 
     /*public BasicConnectionPool(List<Connection> connectionPool) {
         this.connectionPool = connectionPool;
     }*/
-    public BasicConnectionPool(BlockingQueue<Connection> freeConnections) {
+    public ConnectionPoolImpl(BlockingQueue<Connection> freeConnections) {
         this.freeConnections = freeConnections;
     }
 
@@ -125,4 +119,5 @@ public class BasicConnectionPool
 //    }
 
     // standard getters
+
 }

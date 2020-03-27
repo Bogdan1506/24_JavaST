@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.action;
 
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ abstract public class Action {
 		this.factory = factory;
 	}
 
-	abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response);
+	abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException;
 
 	public static class Forward {
 		private String forward;

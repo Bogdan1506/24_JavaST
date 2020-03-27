@@ -1,17 +1,3 @@
 
 E
-java:S1148!"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8²ºÍ.
-E
-java:S1148%"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Îóäš.
-]	java:S125"<This block of commented-out lines of code should be removed.(·îŒ©úÿÿÿÿ8¾ƒÏ¾.
-W	java:S125"<This block of commented-out lines of code should be removed.(œ”ëP8¼ê„ë.
-E
-java:S1148#"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Îóäš.
-a
-java:S2147""DCombine this catch with the one at line 32, which has the same body.(À–„Å8²ºÍ.
-a
-java:S2147$"DCombine this catch with the one at line 32, which has the same body.(ï­£Ä8Îóäš.
-O
-java:S1135"2Complete the task associated to this TODO comment.(•ª½£8„ØÖ¾.
-]	java:S125"<This block of commented-out lines of code should be removed.(“øçÆøÿÿÿÿ8ÖñÎ¾.
-X	java:S125'"<This block of commented-out lines of code should be removed.(âÒªá8şêÙ».
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ë½«Â‘.

@@ -4,6 +4,7 @@ import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl extends AbstractDAO<User>  {
+public class UserDAOImpl extends AbstractDAO<User> {
+    public UserDAOImpl(Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
+    }
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -75,7 +84,7 @@ public class UserDAOImpl extends AbstractDAO<User>  {
     public boolean create(User user) throws DAOException {
         String login = user.getLogin();
         String password = user.getPassword();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password, role) VALUES (?,?,?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password, role) VALUES (?,?,?)")) {  //todo default value in mysql
             statement.setString(1, login);
             statement.setString(2, password);
             statement.setInt(3, 3);

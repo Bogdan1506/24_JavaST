@@ -1,7 +1,11 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.UserShowAction;
+import by.avdeev.pizzeria.action.user.UserCreateAction;
+import by.avdeev.pizzeria.action.user.UserDeleteAction;
+import by.avdeev.pizzeria.action.user.UserShowAction;
+import by.avdeev.pizzeria.action.user.UserSignInAction;
+import by.avdeev.pizzeria.action.user.UserUpdateAction;
 
 import java.util.HashMap;
 
@@ -9,11 +13,15 @@ public class CommandProvider {
     private final HashMap<String, Action> repository = new HashMap<>();
 
     public CommandProvider() {
-        repository.put("showUserList", new UserShowAction());
+        repository.put("userShowList", new UserShowAction());
+        repository.put("userDelete", new UserDeleteAction());
+        repository.put("userCreate", new UserCreateAction());
+        repository.put("userUpdate", new UserUpdateAction());
+        repository.put("userSignIn", new UserSignInAction());
     }
 
     public Action receiveCommand(String name) {
-        Action action = null;
+        Action action;
         action = repository.get(name);
         return action;
     }

@@ -1,0 +1,28 @@
+package by.avdeev.pizzeria.action.user;
+
+import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+public class UserShowAction extends Action {
+
+    @Override
+    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
+        setName("user");
+        UserService userService = factory.getUserService();
+        List<User> users;
+        try {
+            users = userService.findAll();
+            request.setAttribute("users", users);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+

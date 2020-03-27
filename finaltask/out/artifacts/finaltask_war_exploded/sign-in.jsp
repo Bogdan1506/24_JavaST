@@ -7,7 +7,7 @@
 <body>
 <div align="center">
     <h1>Sign in</h1>
-    <form action="bs" name="signIn">
+    <form action="pza" name="signIn">
         <table>
             <tbody>
             <tr>
@@ -26,7 +26,7 @@
                     </label>
                 </td>
             </tr>
-            <input type="hidden" name="command" value="login">
+            <input type="hidden" name="action" value="userSignIn">
             <tr>
                 <td></td>
                 <td>

@@ -27,10 +27,10 @@
                     <c:param name="id" value="${temp.id}"/>
                     <c:param name="login" value="${temp.login}"/>
                     <c:param name="password" value="${temp.password}"/>
-                    <c:param name="role" value="${temp.role}"/>
+                    <c:param name="role" value="${temp.role.name}"/>
                 </c:url>
-                <c:url var="DeleteUserLink" value="bs">
-                    <c:param name="command" value="delete"/>
+                <c:url var="DeleteUserLink" value="pza">
+                    <c:param name="action" value="userDelete"/>
                     <c:param name="id" value="${temp.id}"/>
                 </c:url>
                 <td><a href="${UpdateUserLink}">Update</a></td>

@@ -1,13 +1,19 @@
 
-X	java:S1253"<This block of commented-out lines of code should be removed.(ˆÜú8à¤İ».
-X	java:S1258"<This block of commented-out lines of code should be removed.(ÁÑ³›8æÛ¹½.
-]	java:S125]"<This block of commented-out lines of code should be removed.(¤Àüüÿÿÿÿ8ùÈ—.
+k
+java:S1192."ODefine a constant instead of duplicating this literal "redirectedData" 3 times.(—˜ŒC8ÅÔœÁ‘.
+]	java:S125$"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8ÅÔœÁ‘.
+X	java:S1258"<This block of commented-out lines of code should be removed.(ˆÜú8ÅÔœÁ‘.
+N
+java:S1135J"2Complete the task associated to this TODO comment.(ªÃ½'8¬³°Æ‘.
 ‰
-java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(±ÓŸƒ8ó”£È.
-T
-java:S1135d"2Complete the task associated to this TODO comment.(Ø›††ùÿÿÿÿ8èş¬ï.
+java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(±ÓŸƒ8ÃÌ©Â‘.
+X	java:S125""<This block of commented-out lines of code should be removed.(…ßÃò8Íñè.
 ”
-java:S1130"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(±ÓŸƒ8ó”£È.
-X	java:S125#"<This block of commented-out lines of code should be removed.(…ßÃò8Íñè.
-O
-java:S1135"2Complete the task associated to this TODO comment.(Â†‘³8Ó’È.
+java:S1130"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(±ÓŸƒ8ÃÌ©Â‘.
+n
+java:S2441A"LMake "Map" and its parameters serializable or don't store it in the session.(™ÑŠÈùÿÿÿÿ8ÅÔœÁ‘.
+T
+java:S1135"2Complete the task associated to this TODO comment.(ŞÜ½³şÿÿÿÿ8Ó’È.
+V
+java:S28640"4Iterate over the "entrySet" instead of the "keySet".(ÅÎŸÜÿÿÿÿÿ8ÅÔœÁ‘.
+]	java:S125G"<This block of commented-out lines of code should be removed.(¡ê›øÿÿÿÿ8ÃÌ©Â‘.
