@@ -1,14 +1,14 @@
 package by.avdeev.pizzeria.entity;
 
 public enum Role {
-    ADMINISTRATOR("Администратор", 0),
+    ADMIN("Администратор", 0),
     CREATOR("Создатель", 1),
     CLIENT("Клиент", 2);
 
     private String name;
     private int id;
 
-    private Role(String name, int id) {
+    Role(String name, int id) {
         this.name = name;
         this.id = id;
     }

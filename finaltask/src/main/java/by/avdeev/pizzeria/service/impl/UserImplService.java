@@ -22,8 +22,9 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
     }
 
     @Override
@@ -36,8 +37,9 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
         return users;
     }
 
@@ -51,8 +53,9 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
         return user;
     }
 
@@ -66,8 +69,9 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
         for (User user : users) {
             if (user.getLogin().equals(login)) {
                 return user;
@@ -85,8 +89,9 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
     }
 
     @Override
@@ -98,17 +103,8 @@ public class UserImplService extends ConnectionService implements UserService {
             connection.commit();
         } catch (DAOException | SQLException e) {
             throw new ServiceException(e);
+        } finally {
+            closeConnection(connection);
         }
-        closeConnection(connection);
-    }
-
-    @Override
-    public boolean signIn(User user) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean signUp(User user) throws ServiceException {
-        return false;
     }
 }

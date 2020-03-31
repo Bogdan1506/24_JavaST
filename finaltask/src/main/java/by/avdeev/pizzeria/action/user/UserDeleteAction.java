@@ -14,6 +14,7 @@ public class UserDeleteAction extends Action {
         UserService userService = factory.getUserService();
         int userId = Integer.parseInt(request.getParameter("id"));
         userService.delete(userId);
+        forward.getAttributes().put("message", "user is deleted");
         return forward;
     }
 }

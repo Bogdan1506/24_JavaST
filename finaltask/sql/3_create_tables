@@ -10,10 +10,24 @@ CREATE TABLE user
      * 1 - создатель (Role.CREATOR)
      * 2 - клиент(Role.CLIENT)
      */
-    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)),
+    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)) default 2,
     CONSTRAINT PRIMARY KEY `PK_user` (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE `profile`
+(
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `user_id` INT         NOT NULL,
+    `name`    VARCHAR(25) NOT NULL,
+    `surname` VARCHAR(25) NOT NULL,
+    `email`   VARCHAR(35),
+    `phone`   VARCHAR(15) NOT NULL,
+    `address` VARCHAR(25) NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_profile` (`id`),
+    FOREIGN KEY FK_profile_user (`user_id`)
+        REFERENCES `user` (`id`)
+);
 
 CREATE TABLE `goods`
 (

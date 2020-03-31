@@ -12,16 +12,11 @@ import java.util.List;
 public class UserShowAction extends Action {
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
-        setName("user");
+    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        setName("user/users");
         UserService userService = factory.getUserService();
-        List<User> users;
-        try {
-            users = userService.findAll();
-            request.setAttribute("users", users);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+        List<User> users = userService.findAll();
+        request.setAttribute("users", users);
         return null;
     }
 }

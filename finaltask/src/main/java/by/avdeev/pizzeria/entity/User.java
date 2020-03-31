@@ -1,14 +1,21 @@
 package by.avdeev.pizzeria.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Entity {
+public class User implements Entity, Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String login;
     private String password;
     private Role role;
 
     public User() {
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 
     public User(int id, String login, String password, Role role) {
@@ -71,14 +78,13 @@ public class User implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                Objects.equals(login, user.login) &&
+        return Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
                 role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role);
+        return Objects.hash(login, password, role);
     }
 }

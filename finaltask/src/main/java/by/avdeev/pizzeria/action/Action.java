@@ -4,6 +4,7 @@ import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
+import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ abstract public class Action {
 		this.factory = factory;
 	}
 
-	abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException;
+	abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
 
 	public static class Forward {
 		private String forward;

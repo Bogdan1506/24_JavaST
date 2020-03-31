@@ -1,15 +1,12 @@
 INSERT INTO `user` (`login`,
                     `password`,
                     `role`)
-VALUES ('registrar',
+VALUES ('creator',
         'EE11CBB19052E40B07AAC0CA060C23EE',
         1),
-       ('creator',
-        'EE11CBB19052E40B07AAC0CA060C23EE',
-        2),
        ('user',
         'EE11CBB19052E40B07AAC0CA06023EE',
-        3);
+        2);
 
 INSERT INTO `goods` (name, description, price, picture)
 VALUES ('Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,

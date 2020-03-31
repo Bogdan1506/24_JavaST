@@ -16,8 +16,4 @@ public interface UserService {
     void delete(int id) throws ServiceException;
 
     void update(User user) throws ServiceException;
-
-    boolean signIn(User user) throws ServiceException;
-
-    boolean signUp(User user) throws ServiceException;
 }

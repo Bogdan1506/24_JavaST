@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--              validationQuery="select 1"-->
-<!--todo rename-->
 <Context>
-    <Resource name="jdbc/myPool"
+    <Resource name="jdbc/pizzeriaPool"
               auth="Container"
               type="javax.sql.DataSource"
               username="root"
