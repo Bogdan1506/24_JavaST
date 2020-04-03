@@ -1,62 +1,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Profile</title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h3>${sessionScope.user.login}'s profile</h3>
-<form action="/pza" method="get">
-    <table>
-        <tbody>
+
+<div class="container">
+    <h2>Create Profile Form</h2>
+    <form action="/pza?action=profileCreate" class="was-validated" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="${profile.name}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="surname">Surname:</label>
+            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" value="${profile.name}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="${profile.email}">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone" value="${profile.phone}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" value="${profile.address}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
         <input type="hidden" name="userId" value="${user.id}">
-        <input type="hidden" name="action" value="profileCreate">
-        <tr>
-            <td>Login</td>
-            <td>
-                <input type="text" name="login" value="${user.login}" readonly>
-            </td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>
-                <input type="text" name="password" value="${user.password}">
-            </td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>
-                <input type="text" name="name" value="${profile.name}" required>
-            </td>
-        </tr>
-        <tr>
-            <td>Surname</td>
-            <td>
-                <input type="text" name="surname" value="${profile.surname}" required>
-            </td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>
-                <input type="text" name="email" value="${profile.email}">
-            </td>
-        </tr>
-        <tr>
-            <td>Phone</td>
-            <td>
-                <input type="text" name="phone" value="${profile.phone}" required>
-            </td>
-        </tr>
-        <tr>
-            <td>Address</td>
-            <td>
-                <input type="text" name="address" value="${profile.address}" required>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <input type="submit" value="Save">
-</form>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
 </body>
 </html>
