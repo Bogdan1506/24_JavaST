@@ -13,7 +13,6 @@ public class UserDeleteAction extends Action {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Forward forward = new Forward("userShowList");
-        System.out.println("request = " + request.getParameter("id"));
         UserService userService = factory.getUserService();
         Action action = new ProfileDeleteAction();
         try {

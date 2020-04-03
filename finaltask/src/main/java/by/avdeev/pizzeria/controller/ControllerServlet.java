@@ -70,10 +70,12 @@ public class ControllerServlet extends HttpServlet {
             if (forward != null) {
                 jspPage = forward.getForward();
             } else {
+//                jspPage = "jsp/time.jsp";
                 jspPage = "jsp/" + action.getName() + ".jsp";
+//                jspPage = "WEB-INF/jsp/" + action.getName() + ".jsp";
             }
 //                logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
-                request.getRequestDispatcher(jspPage).forward(request, response);
+            request.getRequestDispatcher(jspPage).forward(request, response);
            /* request.setAttribute("error", "Ошибка обработки данных");
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);*/
         }
