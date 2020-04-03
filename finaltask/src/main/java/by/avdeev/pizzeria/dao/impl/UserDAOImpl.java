@@ -44,8 +44,9 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public User findEntityById(int id) throws DAOException {
         User user = new User();
         user.setId(id);
-        try (PreparedStatement statement = connection.prepareStatement("SELECT login, password, role FROM user WHERE id=?")) {
-            statement.setString(1, String.valueOf(id)); //todo
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT login, password, role FROM user WHERE id=?")) {
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 user.setLogin(rs.getString("login"));
@@ -72,21 +73,20 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(User user) {
-        return false;
+    public boolean delete(User user) throws DAOException {
+        delete(user.getId());
+        return true;
     }
 
     @Override
-    public boolean create(User user) throws DAOException {
+    public void create(User user) throws DAOException {
         String login = user.getLogin();
         String password = user.getPassword();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user (login, password) VALUES (?,?)")) {
-            //todo default value in mysql
+        try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO user (login, password) VALUES (?,?)")) {
             statement.setString(1, login);
             statement.setString(2, password);
-//            statement.setInt(3, 3);
             statement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             throw new DAOException(e);
         }

@@ -1,6 +1,11 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.action.profile.ProfileCreateAction;
+import by.avdeev.pizzeria.action.profile.ProfileDeleteAction;
+import by.avdeev.pizzeria.action.profile.ProfileShowListAction;
+import by.avdeev.pizzeria.action.profile.ProfileUpdateAction;
+import by.avdeev.pizzeria.action.profile.ProfileUserShowAction;
 import by.avdeev.pizzeria.action.user.UserSignOutAction;
 import by.avdeev.pizzeria.action.user.UserSignUpAction;
 import by.avdeev.pizzeria.action.user.UserDeleteAction;
@@ -20,6 +25,12 @@ public class CommandProvider {
         repository.put("userUpdate", new UserUpdateAction());
         repository.put("userSignIn", new UserSignInAction());
         repository.put("userSignOut", new UserSignOutAction());
+
+        repository.put("profileShowList", new ProfileShowListAction());
+        repository.put("profileUserShow", new ProfileUserShowAction());
+        repository.put("profileCreate", new ProfileCreateAction());
+        repository.put("profileUpdate", new ProfileUpdateAction());
+        repository.put("profileDelete", new ProfileDeleteAction());
     }
 
     public Action receiveCommand(String name) {

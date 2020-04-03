@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 public class UserSignUpAction extends Action {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("userShowList");
         Validator<User> validator = new UserValidator();
         UserService userService = factory.getUserService();
         HttpSession session = request.getSession();
@@ -28,10 +27,14 @@ public class UserSignUpAction extends Action {
             throw new ServiceException(e);
         }
         if (checkUser == null || !checkUser.getLogin().equals(user.getLogin())) {
-            userService.create(user);
+            int id = userService.create(user);
+            user.setId(id);
+//            User userSession = userService.findByLogin(login);
+//            session.setAttribute("user", id);
             session.setAttribute("user", user);
             session.setAttribute("message", "signed up!");
-            return forward;
+//            request.setAttribute("userId", userSession.getId());
+            setName("profile/profile");
         } else {
             request.setAttribute("message", "Such login exists!");
             setName("user/sign-up");

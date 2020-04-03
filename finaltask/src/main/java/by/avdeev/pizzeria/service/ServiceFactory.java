@@ -1,10 +1,12 @@
 package by.avdeev.pizzeria.service;
 
-import by.avdeev.pizzeria.service.impl.UserImplService;
+import by.avdeev.pizzeria.service.impl.ProfileServiceImpl;
+import by.avdeev.pizzeria.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
     private static final ServiceFactory factory = new ServiceFactory();
-    private final UserService userService = new UserImplService();
+    private final UserService userService = new UserServiceImpl();
+    private final ProfileService profileService = new ProfileServiceImpl();
 
     private ServiceFactory() {
     }
@@ -15,5 +17,9 @@ public class ServiceFactory {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public ProfileService getProfileService() {
+        return profileService;
     }
 }

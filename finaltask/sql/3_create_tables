@@ -25,7 +25,7 @@ CREATE TABLE `profile`
     `phone`   VARCHAR(15) NOT NULL,
     `address` VARCHAR(25) NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_profile` (`id`),
-    FOREIGN KEY FK_profile_user (`user_id`)
+    FOREIGN KEY `FK_profile_user` (`user_id`)
         REFERENCES `user` (`id`)
 );
 

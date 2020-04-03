@@ -1,14 +1,16 @@
 
-E
-java:S1148C"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8™ ›.
-E
-java:S11487"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ş úš.
-E	java:S108r")Either remove or fill this block of code.(Úîø›8Ÿ¾‰›.
-E
-java:S1148\"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8–ß‚›.
-E
-java:S1148q"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ÿ¾‰›.
-E
-java:S1148#"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8–ÈŒ….
 T
-java:S1135."2Complete the task associated to this TODO comment.(‘Ğë¯üÿÿÿÿ8ş úš.
+java:S1135."2Complete the task associated to this TODO comment.(ı¿’ßûÿÿÿÿ8ş úš.
+]	java:S125"<This block of commented-out lines of code should be removed.(İ¥£ëıÿÿÿÿ8ÒªŠ½“.
+]	java:S125"<This block of commented-out lines of code should be removed.(ÉÈ£”ıÿÿÿÿ8ÒªŠ½“.
+]	java:S125"<This block of commented-out lines of code should be removed.(ÖÖÄªşÿÿÿÿ8ÒªŠ½“.
+X	java:S125"<This block of commented-out lines of code should be removed.(©É”8ÒªŠ½“.
+]	java:S125)"<This block of commented-out lines of code should be removed.(Ğ’Ñçûÿÿÿÿ8ÒªŠ½“.
+]	java:S125-"<This block of commented-out lines of code should be removed.(ñ´öœøÿÿÿÿ8ÒªŠ½“.
+X	java:S125/"<This block of commented-out lines of code should be removed.(ÇÜø½8ÒªŠ½“.
+X	java:S125="<This block of commented-out lines of code should be removed.(¥ÅÊ8ÒªŠ½“.
+]	java:S125I"<This block of commented-out lines of code should be removed.(„‚¯„ıÿÿÿÿ8ÒªŠ½“.
+W	java:S125N"<This block of commented-out lines of code should be removed.(ƒÍŞY8ÒªŠ½“.
+]	java:S125T"<This block of commented-out lines of code should be removed.(¬âïüûÿÿÿÿ8ÒªŠ½“.
+X	java:S125b"<This block of commented-out lines of code should be removed.(®Â¿³8ÒªŠ½“.
+]	java:S125i"<This block of commented-out lines of code should be removed.(ØØø ÿÿÿÿÿ8ÒªŠ½“.

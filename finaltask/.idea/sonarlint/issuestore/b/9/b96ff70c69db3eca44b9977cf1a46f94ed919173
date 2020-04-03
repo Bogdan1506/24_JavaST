@@ -1,18 +1,16 @@
 
-X	java:S125'"<This block of commented-out lines of code should be removed.(…ßÃò8‘ªŠ’.
-T
-java:S1135P"2Complete the task associated to this TODO comment.(Ì‰Àôüÿÿÿÿ8‘ªŠ’.
-]	java:S125Q"<This block of commented-out lines of code should be removed.(—¿¢õüÿÿÿÿ8‘ªŠ’.
+]	java:S125M"<This block of commented-out lines of code should be removed.(ÆÄö“ûÿÿÿÿ8ÂÓæ³“.
 E
-java:S1148C"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‘ªŠ’.
-k
-java:S11921"ODefine a constant instead of duplicating this literal "redirectedData" 3 times.(—˜ŒC8‘ªŠ’.
-X	java:S125^"<This block of commented-out lines of code should be removed.(ÿöÂó8‘ªŠ’.
+java:S1148:"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Â„†“.
 V
-java:S28643"4Iterate over the "entrySet" instead of the "keySet".(ÅÎŸÜÿÿÿÿÿ8‘ªŠ’.
-N
-java:S1135R"2Complete the task associated to this TODO comment.(ªÃ½'8‘ªŠ’.
+java:S2864,"4Iterate over the "entrySet" instead of the "keySet".(ÅÎŸÜÿÿÿÿÿ8‘ªŠ’.
+k
+java:S1192*"ODefine a constant instead of duplicating this literal "redirectedData" 3 times.(—˜ŒC8‘ªŠ’.
+]	java:S125B"<This block of commented-out lines of code should be removed.(—¿¢õüÿÿÿÿ8‘ªŠ’.
+a
+java:S21479"DCombine this catch with the one at line 55, which has the same body.(»¶›Ç8Â„†“.
+]	java:S125K"<This block of commented-out lines of code should be removed.(Äá»şÿÿÿÿ8äâÇ†“.
+E
+java:S11488"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ìëœ†“.
 n
-java:S2441I"LMake "Map" and its parameters serializable or don't store it in the session.(™ÑŠÈùÿÿÿÿ8‘ªŠ’.
-X	java:S125<"<This block of commented-out lines of code should be removed.(ˆÜú8‘ªŠ’.
-]	java:S125c"<This block of commented-out lines of code should be removed.(ÆÄö“ûÿÿÿÿ8ê¬ í’.
+java:S2441="LMake "Map" and its parameters serializable or don't store it in the session.(™ÑŠÈùÿÿÿÿ8‘ªŠ’.

@@ -23,8 +23,8 @@ public class UserSignInAction extends Action {
             session.setAttribute("user", user);
             return forward;
         } else {
-            setName("user/sign-in");
             request.setAttribute("message", "Incorrect login or password");
+            setName("user/sign-in");
         }
         return null;
     }

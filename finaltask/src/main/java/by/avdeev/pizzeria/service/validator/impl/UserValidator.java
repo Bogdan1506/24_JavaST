@@ -1,5 +1,6 @@
 package by.avdeev.pizzeria.service.validator.impl;
 
+import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;

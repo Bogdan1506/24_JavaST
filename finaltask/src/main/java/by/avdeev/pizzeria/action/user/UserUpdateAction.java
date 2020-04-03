@@ -10,6 +10,7 @@ import by.avdeev.pizzeria.service.validator.impl.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UserUpdateAction extends Action {
     @Override
@@ -19,6 +20,9 @@ public class UserUpdateAction extends Action {
         Validator<User> validator = new UserValidator();
         User user = validator.validate(request);
         userService.update(user);
+        HttpSession session = request.getSession();
+//        User userSession = (User) session.getAttribute("user");
+        session.setAttribute("user", user);
         forward.getAttributes().put("message", "Update is done");
         return forward;
     }
