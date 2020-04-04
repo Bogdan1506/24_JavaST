@@ -20,7 +20,7 @@
     <a class="navbar-brand" href="#">pZa</a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link text-warning" href="#">Menu</a>
+            <a class="nav-link text-warning" href="/pza?action=userShowList">Menu</a>
         </li>
         <c:choose>
             <c:when test="${sessionScope.user != null}">
