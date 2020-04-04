@@ -1,7 +1,9 @@
 package by.avdeev.pizzeria.action.user;
 
 import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 
@@ -19,8 +21,11 @@ public class UserSignInAction extends Action {
         HttpSession session = request.getSession();
         if (user != null && user.getPassword().equals(password)) {
             Forward forward = new Forward("userShowList");
-            forward.getAttributes().put("message", "Authorized user!");
+            forward.getAttributes().put("message", "User is authorized!");
             session.setAttribute("user", user);
+            ProfileService profileService = factory.getProfileService();
+            Profile profile = profileService.findByUserId(user.getId());
+            session.setAttribute("profile", profile);
             return forward;
         } else {
             request.setAttribute("message", "Incorrect login or password");

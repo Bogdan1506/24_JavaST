@@ -6,6 +6,8 @@ import by.avdeev.pizzeria.action.ActionManagerFactory;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
+import by.avdeev.pizzeria.transaction.TransactionFactory;
+import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,7 +49,8 @@ public class ControllerServlet extends HttpServlet {
                 session.removeAttribute("redirectedData");   //получаем кучу атрибутов. их значение по ключу (заранее задаем названия ключей)
             }
         }
-        ServiceFactory serviceFactory = ServiceFactory.getFactory();
+        TransactionFactory transactionFactory = new TransactionFactoryImpl();
+        ServiceFactory serviceFactory = new ServiceFactory(transactionFactory);
         ActionManager actionManager = ActionManagerFactory.getManager(serviceFactory);
         Action.Forward forward = null;
         try {
@@ -57,6 +60,7 @@ public class ControllerServlet extends HttpServlet {
         } catch (IncorrectFormDataException e) {
             e.printStackTrace();
         }
+        actionManager.close();
         if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
             session.setAttribute("redirectedData", forward.getAttributes());
         }

@@ -8,4 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ActionManager {
     Action.Forward execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
+
+    void close();
 }

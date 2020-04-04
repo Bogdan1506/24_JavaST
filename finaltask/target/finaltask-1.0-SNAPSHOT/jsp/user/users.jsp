@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>User List</title>
 </head>
@@ -29,7 +30,7 @@
             <td><c:out value="${temp.password}"/></td>
             <td><c:out value="${temp.role}"/></td>
             <td>
-                <form action="jsp/user/update-user.jsp" method="post">
+                <form action="user-update.jsp" method="post">
                     <input type="hidden" name="id" value="${temp.id}"/>
                     <input type="hidden" name="login" value="${temp.login}"/>
                     <input type="hidden" name="password" value="${temp.password}"/>

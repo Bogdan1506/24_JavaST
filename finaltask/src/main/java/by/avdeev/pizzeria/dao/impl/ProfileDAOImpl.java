@@ -4,8 +4,9 @@ import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileDAOImpl extends AbstractDAO<Profile> {
-
-    public ProfileDAOImpl(Connection connection) {
-        super(connection);
-    }
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public List<Profile> findAll() throws DAOException {
@@ -43,7 +41,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     }
 
     @Override
-    public Profile findEntityById(int id) throws DAOException {
+    public Profile findById(int id) throws DAOException {
         Profile profile = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT user_id, name, surname, email, phone, address FROM profile WHERE id=?")) {
@@ -69,7 +67,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     @Override
     public boolean delete(int id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "DELETE FROM profile WHERE user_id=?")) {
+                "DELETE FROM profile WHERE id=?")) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             return true;
@@ -108,6 +106,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         String email = profile.getEmail();
         String phone = profile.getPhone();
         String address = profile.getAddress();
+        logger.debug(String.format("Connection=%s", connection));
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE profile SET name=?, surname=?, email=?, phone=?, address=? WHERE user_id=?")) {
             statement.setString(1, name);

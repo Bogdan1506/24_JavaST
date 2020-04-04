@@ -6,102 +6,86 @@ import by.avdeev.pizzeria.dao.impl.ProfileDAOImpl;
 import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.TransactionService;
+import by.avdeev.pizzeria.transaction.DAOType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
-public class ProfileServiceImpl extends ConnectionService implements ProfileService {
+public class ProfileServiceImpl extends TransactionService implements ProfileService {
+    private static final DAOType DAO_TYPE = DAOType.PROFILE;
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public int create(Profile profile) throws ServiceException {
-        Connection connection = createConnection();
-        AbstractDAO<Profile> profileDAO = new ProfileDAOImpl(connection);
+        AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
         int lastId;
         try {
             profileDAO.create(profile);
-            connection.commit();
             lastId = profileDAO.findLastInsertId();
-        } catch (SQLException | DAOException e) {
+        } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return lastId;
     }
 
     @Override
     public List<Profile> findAll() throws ServiceException {
-        Connection connection = createConnection();
-        AbstractDAO<Profile> profileDAO = new ProfileDAOImpl(connection);
+        AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
         List<Profile> profiles;
         try {
             profiles = profileDAO.findAll();
-            connection.commit();
-        } catch (DAOException | SQLException e) {
+        } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return profiles;
     }
 
     @Override
     public Profile findById(int id) throws ServiceException {
-        Connection connection = createConnection();
-        AbstractDAO<Profile> profileDAO = new ProfileDAOImpl(connection);
+        AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
         Profile profile;
         try {
-            profile = profileDAO.findEntityById(id);
-            connection.commit();
-        } catch (DAOException | SQLException e) {
+            profile = profileDAO.findById(id);
+        } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return profile;
     }
 
     @Override
-    public void delete(int id) throws ServiceException {
-        Connection connection = createConnection();
-        AbstractDAO<Profile> profileDAO = new ProfileDAOImpl(connection);
+    public boolean delete(int id) throws ServiceException {
+        AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
         try {
             profileDAO.delete(id);
-            connection.commit();
-        } catch (DAOException | SQLException e) {
-            throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
+        } catch (DAOException e) {
+//            throw new ServiceException(e);  //TODO exception throw delete method
+            return false;
         }
+        return true;
     }
 
     @Override
     public void update(Profile profile) throws ServiceException {
-        Connection connection = createConnection();
-        AbstractDAO<Profile> profileDAO = new ProfileDAOImpl(connection);
+        AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
+        logger.debug(String.format("profileDAOe=%s", profileDAO));
         try {
             profileDAO.update(profile);
-            connection.commit();
-        } catch (DAOException | SQLException e) {
+        } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
     @Override
     public Profile findByUserId(int userId) throws ServiceException {
-        Connection connection = createConnection();
-        ProfileDAOImpl profileDAO = new ProfileDAOImpl(connection);
+        AbstractDAO<Profile> abstractDAO = transaction.createDao(DAO_TYPE);
+        ProfileDAOImpl profileDAO1 = (ProfileDAOImpl) abstractDAO;
         Profile profile;
         try {
-            profile = profileDAO.findByUserId(userId);
-            connection.commit();
-        } catch (DAOException | SQLException e) {
+            profile = profileDAO1.findByUserId(userId);
+        } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return profile;
     }

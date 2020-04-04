@@ -10,7 +10,6 @@ import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class ProfileCreateAction extends Action {
     @Override
@@ -19,10 +18,7 @@ public class ProfileCreateAction extends Action {
         Validator<Profile> validator = new ProfileValidator();
         Profile profile = validator.validate(request);
         ProfileService profileService = factory.getProfileService();
-        int id = profileService.create(profile);
-        profile.setId(id);
-        HttpSession session = request.getSession();
-        session.setAttribute("profile", profile);
+        profileService.create(profile);
         return forward;
     }
 }

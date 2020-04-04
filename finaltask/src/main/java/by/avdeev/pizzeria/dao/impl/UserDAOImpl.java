@@ -4,8 +4,9 @@ import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO<User> {
-    public UserDAOImpl(Connection connection) {
-        super(connection);
-    }
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
         try {
+            logger.debug(String.format("Connection=%s", connection));
             Statement statement = connection.createStatement();
             String sql = "SELECT id, login, password, role FROM user";
             ResultSet rs = statement.executeQuery(sql);
@@ -41,7 +41,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public User findEntityById(int id) throws DAOException {
+    public User findById(int id) throws DAOException {
         User user = new User();
         user.setId(id);
         try (PreparedStatement statement = connection.prepareStatement(
@@ -106,5 +106,29 @@ public class UserDAOImpl extends AbstractDAO<User> {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    public User findByLogin(String login) throws DAOException {
+        User user = null;
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT id, login, password, role FROM user WHERE login=?")) {
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                login = rs.getString("login");
+                if (login != null) {
+                    user = new User();
+                    user.setLogin(login);
+                    user.setId(rs.getInt("id"));
+                    user.setPassword(rs.getString("password"));
+                    int roleInt = rs.getInt("role");
+                    Role role = Role.getByIdentity(roleInt);
+                    user.setRole(role);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return user;
     }
 }

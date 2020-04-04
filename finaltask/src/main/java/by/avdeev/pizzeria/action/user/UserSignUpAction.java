@@ -26,14 +26,11 @@ public class UserSignUpAction extends Action {
         } catch (IncorrectFormDataException e) {
             throw new ServiceException(e);
         }
-        if (checkUser == null || !checkUser.getLogin().equals(user.getLogin())) {
+        if (checkUser == null) {
             int id = userService.create(user);
             user.setId(id);
-//            User userSession = userService.findByLogin(login);
-//            session.setAttribute("user", id);
             session.setAttribute("user", user);
-            session.setAttribute("message", "signed up!");
-//            request.setAttribute("userId", userSession.getId());
+            session.setAttribute("message", "Signed up!");
             setName("profile/profile");
         } else {
             request.setAttribute("message", "Such login exists!");

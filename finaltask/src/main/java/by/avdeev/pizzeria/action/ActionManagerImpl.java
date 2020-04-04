@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ActionManagerImpl implements ActionManager {
 	private ServiceFactory factory;
 
+	@Override
+	public void close() {
+		factory.close();
+	}
+
 	public ActionManagerImpl(ServiceFactory factory) {
 		this.factory = factory;
 	}
