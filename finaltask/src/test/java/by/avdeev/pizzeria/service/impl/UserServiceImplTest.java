@@ -1,76 +1,119 @@
 package by.avdeev.pizzeria.service.impl;
 
-import by.avdeev.pizzeria.dao.pool.ConnectionPool;
-import by.avdeev.pizzeria.dao.pool.ConnectionPoolImpl;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.ServiceFactory;
 import by.avdeev.pizzeria.service.UserService;
+import by.avdeev.pizzeria.transaction.Transaction;
+import by.avdeev.pizzeria.transaction.TransactionImpl;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 public class UserServiceImplTest {
+    Connection connection;
+    UserService userService;
+    User user;
 
-    @org.testng.annotations.Test
-    public void testCreate() {
-/*        ConnectionPool connectionPool = ConnectionPoolImpl.getConnectionPoolImpl();
-        Connection connection = connectionPool.getConnection();*/
-        Context ctx = null;
-        Connection connection = null;
+    @BeforeClass
+    public void setUp() {
         try {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pizzeria?characterEncoding=latin1&serverTimezone=UTC", "root","root");
+            user = new User("qwert22y", "123", Role.CLIENT);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pizzeria?characterEncoding=latin1&serverTimezone=UTC", "root", "root");
+            connection.setAutoCommit(false);
+            Transaction transaction = new TransactionImpl(connection);
+            userService = new UserServiceImpl();
+            userService.setTransaction(transaction);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ServiceFactory factory = ServiceFactory.getFactory();
-        UserService userService = factory.getUserService();
-        User user = new User("login", "password", Role.CLIENT);
-        User userFromBD = new User();
+    }
+
+    @AfterClass
+    public void rollbackCon() {
         try {
-            userService.create(user);
-            Statement statement = connection.createStatement();
-            String sql = "SELECT password, role FROM user WHERE login='login'";
-            ResultSet rs = statement.executeQuery(sql);
-            while(rs.next()) {
-                userFromBD.setLogin(rs.getString("login"));
-                userFromBD.setPassword(rs.getString("password"));
-                userFromBD.setRole(Role.getByIdentity(rs.getInt("role")));
-            }
+            connection.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testCreate() {
+        try {
+            user.setId(userService.create(user));
         } catch (ServiceException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
+        }
+    }
+
+    @Test(dependsOnMethods = {"testCreate"})
+    public void testFindAll() {
+        List<User> users = null;
+        try {
+            users = userService.findAll();
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(user, userFromBD);
+        assert users != null;
+        boolean isExisting = users.contains(user);
+        Assert.assertTrue(isExisting);
     }
 
-    @org.testng.annotations.Test
-    public void testFindAll() {
-    }
-
-    @org.testng.annotations.Test
+    @Test(dependsOnMethods = {"testCreate"})
     public void testFindById() {
+        User resUser = null;
+        try {
+            resUser = userService.findById(user.getId());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        Assert.assertNotNull(resUser);
+        Assert.assertEquals(resUser, user);
     }
 
-    @org.testng.annotations.Test
+    @Test(dependsOnMethods = {"testCreate"})
     public void testFindByLogin() {
+        User resUser = null;
+        try {
+            resUser = userService.findByLogin(user.getLogin());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        Assert.assertNotNull(resUser);
+        Assert.assertEquals(resUser, user);
     }
 
-    @org.testng.annotations.Test
+    @Test(dependsOnMethods = {"testCreate", "testFindAll", "testFindById", "testFindByLogin", "testUpdate"})
     public void testDelete() {
+//        User checkUser = null;
+            boolean result = false;
+        try {
+            result = userService.delete(user.getId());
+//            checkUser = userService.findById(user.getId());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+
     }
 
-    @org.testng.annotations.Test
+    @Test(dependsOnMethods = {"testCreate"})
     public void testUpdate() {
+        user.setPassword("456");
+        User resUser = null;
+        try {
+            userService.update(user);
+            resUser = userService.findById(user.getId());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        Assert.assertEquals(resUser, user);
     }
 }
