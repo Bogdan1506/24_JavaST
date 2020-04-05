@@ -54,13 +54,13 @@ public class UserServiceImpl extends TransactionService implements UserService {
     @Override
     public boolean delete(int id) throws ServiceException {
         AbstractDAO<User> userDAO = transaction.createDao(DAO_TYPE);
+        boolean isDeleted;
         try {
-            userDAO.delete(id);
+            isDeleted = userDAO.delete(id);
         } catch (DAOException e) {
-//            throw new ServiceException(e);  //TODO exception throw delete method
-            return false;
+            throw new ServiceException(e);
         }
-        return true;
+        return isDeleted;
     }
 
     @Override

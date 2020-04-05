@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class Item implements Entity {
     private int id;
-    private Goods goods;
+    private Product product;
     private Dough dough;
     private Size size;
 
     public Item() {
     }
 
-    public Item(int id, Goods goods, Dough dough, Size size) {
+    public Item(int id, Product product, Dough dough, Size size) {
         this.id = id;
-        this.goods = goods;
+        this.product = product;
         this.dough = dough;
         this.size = size;
     }
 
-    public Item(Goods goods, Dough dough, Size size) {
-        this.goods = goods;
+    public Item(Product product, Dough dough, Size size) {
+        this.product = product;
         this.dough = dough;
         this.size = size;
     }
@@ -32,12 +32,12 @@ public class Item implements Entity {
         this.id = id;
     }
 
-    public Goods getGoods() {
-        return goods;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setGoods(Goods goods) {
-        this.goods = goods;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Dough getDough() {
@@ -60,7 +60,7 @@ public class Item implements Entity {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", goods=" + goods +
+                ", goods=" + product +
                 ", dough=" + dough +
                 ", size=" + size +
                 '}';
@@ -71,13 +71,13 @@ public class Item implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(goods, item.goods) &&
+        return Objects.equals(product, item.product) &&
                 dough == item.dough &&
                 size == item.size;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(goods, dough, size);
+        return Objects.hash(product, dough, size);
     }
 }

@@ -8,14 +8,34 @@ VALUES ('creator',
         'EE11CBB19052E40B07AAC0CA06023EE',
         2);
 
-INSERT INTO `goods` (name, description, price, picture)
+INSERT INTO `product` (name, description, price, picture)
 VALUES ('Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
-        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.realsimple.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmarquee_large_2x%2Fpublic%2F1554827484%2Fneapolitan-pizza-0519foo.jpg%3Fitok%3DquMKXMo5'),
+        'https://api.papajohns.by//images/catalog/thumbs/full/fe239676da6c27d17d5e64b81f23a1e0.jpg'),
        ('Pepperoni', 'Tomato pizza sauce, pepperoni, mozzarella', 6.9,
-        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2Frecipes%2Fck%2Fgluten-free-cookbook%2Fpepperoni-pizza-ck-x.jpg%3Fitok%3DNWreajsZ&w=450&c=sc&poi=face&q=85'),
+        'https://api.papajohns.by//images/catalog/thumbs/full/20ebe40c3cd391721de15e2df703f83b.jpg'),
        ('Greek', 'Tomato pizza sauce, black olives, onion, mozzarella, tomatoes, feta cheese, jalapeno pepper, oregano',
         9.9,
-        'https://d1doqjmisr497k.cloudfront.net/-/media/mccormick-us/recipes/grill-mates/g/800/grilled-chicken-greek-pizza.jpg');
+        'https://api.papajohns.by//images/catalog/thumbs/full/e89e7886255685e4de87fea5ec5bbd60.png'),
+       ('Hawaiian', 'Tomato pizza sauce, mozzarella, ham, pineapples',
+        9.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/92abaa6fbf6240f53f9ecff2e4813709.png'),
+       ('Vegetarian', 'Tomato pizza sauce, mozzarella, mushrooms, tomatoes, onions, sweet green pepper, black olives',
+        9.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/e6e96cb5447c26324b317b5cd5144e97.jpg'),
+       ('Mustard', 'Mustard sauce, mozzarella, chicken breast, chees feta, tomatoes, onions',
+        10.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/278a8992610d7ba1a8c7d64585634428.jpg'),
+       ('4 Cheese', 'Tomato pizza sauce, feta cheese, parmesan, blue cheese, mozzarella, oregano',
+        9.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/03993f82fb00da9721e741202854a43e.jpg'),
+       ('Sea', 'Ranch sauce base, mozzarella, seafood cocktail, sweet red peppers, sweet green peppers, garlic, Italian seasoning, onions',
+        9.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/589efbfc513ff9a069e4790c2bbcbdf9.png'),
+       ('Mexican', 'Tomato pizza sauce, mozzarella, grilled chicken, onions, sweet green peppers, mushrooms, tomatoes, jalapeno peppers',
+        12.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/4744038fb66aa406a9abadce47756348.png');
+
+
 
 INSERT INTO `dough` (name)
 VALUES ('Thin'),

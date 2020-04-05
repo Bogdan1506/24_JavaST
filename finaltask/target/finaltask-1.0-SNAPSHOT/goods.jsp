@@ -8,7 +8,7 @@
 <body>
 <div align="center">
     <h1>Goods list</h1>
-    <a href="add-goods.jsp">create</a>
+    <a href="add-product.jsp">create</a>
     <table border="2">
         <thead>
         <th scope="row">id</th>
@@ -19,7 +19,7 @@
         <th scope="row">method</th>
         </thead>
         <tbody>
-        <c:forEach var="temp" items="${goods}" varStatus="status">
+        <c:forEach var="temp" items="${product}" varStatus="status">
             <tr>
                 <td><c:out value="${temp.id}"/></td>
                 <td><c:out value="${temp.name}"/></td>
@@ -46,7 +46,7 @@
                     <input type="hidden" name="goodsId" value="${temp.id}">
                     <td><input type="submit" value="Submit"></td>
                 </form>
-                <c:url var="UpdateGoodsLink" value="update-goods.jsp">
+                <c:url var="UpdateGoodsLink" value="update-product.jsp">
                     <c:param name="id" value="${temp.id}"/>
                     <c:param name="name" value="${temp.name}"/>
                     <c:param name="description" value="${temp.description}"/>

@@ -35,7 +35,7 @@ public class ControllerServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("action");
         if (name == null) {
-            name = "userShowList";
+            name = "productShow";
         }
         Action action = commandProvider.receiveCommand(name);
         HttpSession session = request.getSession(false);

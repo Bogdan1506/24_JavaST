@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.action.product.ProductShowListAction;
 import by.avdeev.pizzeria.action.profile.ProfileCreateAction;
 import by.avdeev.pizzeria.action.profile.ProfileDeleteAction;
 import by.avdeev.pizzeria.action.profile.ProfileShowListAction;
@@ -31,6 +32,8 @@ public class CommandProvider {
         repository.put("profileCreate", new ProfileCreateAction());
         repository.put("profileUpdate", new ProfileUpdateAction());
         repository.put("profileDelete", new ProfileDeleteAction());
+
+        repository.put("productShow", new ProductShowListAction());
     }
 
     public Action receiveCommand(String name) {

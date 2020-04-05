@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Update goods</title>
+    <title>Update product</title>
 </head>
 <body>
-<h1>Update goods</h1>
+<h1>Update product</h1>
 <form action="${pageContext.request.contextPath}bs">
     <input type="hidden" name="command" value="updateGoods">
     <input type="hidden" name="id" value="<%=request.getParameter("id")%>">

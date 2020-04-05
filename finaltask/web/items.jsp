@@ -20,23 +20,23 @@
     <tbody>
     <c:forEach var="temp" items="${itemList}" varStatus="status">
         <tr>
-            <td><c:out value="${temp.goods.name}"/></td>
+            <td><c:out value="${temp.product.name}"/></td>
             <td>
-                <img alt="" src="${temp.goods.picture}"/>
+                <img alt="" src="${temp.product.picture}"/>
             </td>
             <td><c:out value="${temp.dough}"/></td>
             <td><c:out value="${temp.size}"/></td>
-            <td><c:out value="${temp.goods.price * temp.size.coefficient}"/></td>
+            <td><c:out value="${temp.product.price * temp.size.coefficient}"/></td>
 
-<%--            <c:set var="result" value="${result * temp.goods.price}"/>--%>
+<%--            <c:set var="result" value="${result * temp.product.price}"/>--%>
 
             <c:url var="DeleteGoodsLink" value="bs">
                 <c:param name="command" value="deleteItemFromList"/>
-                <c:param name="goodsId" value="${temp.goods.id}"/>
-                <c:param name="goodsName" value="${temp.goods.name}"/>
-                <c:param name="goodsPrice" value="${temp.goods.price}"/>
-                <c:param name="goodsPicture" value="${temp.goods.picture}"/>
-                <c:param name="goodsDescription" value="${temp.goods.description}"/>
+                <c:param name="goodsId" value="${temp.product.id}"/>
+                <c:param name="goodsName" value="${temp.product.name}"/>
+                <c:param name="goodsPrice" value="${temp.product.price}"/>
+                <c:param name="goodsPicture" value="${temp.product.picture}"/>
+                <c:param name="goodsDescription" value="${temp.product.description}"/>
                 <c:param name="dough" value="${temp.dough}"/>
                 <c:param name="size" value="${temp.size}"/>
             </c:url>

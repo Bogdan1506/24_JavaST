@@ -11,7 +11,7 @@
     <title>Add Goods</title>
 </head>
 <body>
-<h1>Add goods</h1>
+<h1>Add product</h1>
 <form action="bs">
     <input type="hidden" name="command" value="addGoods"/>
     <table>

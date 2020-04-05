@@ -6,13 +6,13 @@
     <title>User List</title>
 </head>
 <body>
+<jsp:include page="../bar.jsp"/>
 <div class="container mt-3">
-    <jsp:include page="../bar.jsp"/>
     <h1>User list</h1>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
     <br>
     <table class="table table-bordered">
-        <thead>
+        <thead class="thead-light">
         <tr>
             <th scope="row">id</th>
             <th scope="row">login</th>

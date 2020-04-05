@@ -77,8 +77,8 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     }
 
     @Override
-    public boolean delete(Profile entity) throws DAOException {
-        delete(entity.getId());
+    public boolean delete(Profile profile) throws DAOException {
+        delete(profile.getId());
         return true;
     }
 

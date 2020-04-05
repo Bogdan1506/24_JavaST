@@ -97,6 +97,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
         int id = user.getId();
         String password = user.getPassword();
         Role role = user.getRole();
+        logger.debug(String.format("role=%s", role));
         int roleInt = role.getId();
         try (PreparedStatement statement = connection.prepareStatement("UPDATE user SET password=?, role=? WHERE id=?")) {
             statement.setString(1, password);

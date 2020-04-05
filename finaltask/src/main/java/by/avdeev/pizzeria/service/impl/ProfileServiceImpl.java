@@ -57,13 +57,13 @@ public class ProfileServiceImpl extends TransactionService implements ProfileSer
     @Override
     public boolean delete(int id) throws ServiceException {
         AbstractDAO<Profile> profileDAO = transaction.createDao(DAO_TYPE);
+        boolean isDeleted;
         try {
-            profileDAO.delete(id);
+            isDeleted = profileDAO.delete(id);
         } catch (DAOException e) {
-//            throw new ServiceException(e);  //TODO exception throw delete method
-            return false;
+            throw new ServiceException(e);
         }
-        return true;
+        return isDeleted;
     }
 
     @Override

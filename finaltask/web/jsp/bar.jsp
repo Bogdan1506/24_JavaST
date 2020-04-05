@@ -11,12 +11,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container-fluid">
 <div class="jumbotron text-center p-3 my-3 bg-warning text-white" style="margin-bottom:0">
     <h1 class="display-1">Pizza</h1>
     <h6 class="display-6">Dish is for you!</h6>
     <img src="img/pic.jpg" class="rounded-circle" alt="Pizza bar" width="304" height="236">
 </div>
-<nav class="navbar navbar-expand-sm bg-success navbar-dark">
+<nav class="navbar navbar-expand-sm bg-success navbar-dark ">
     <a class="navbar-brand" href="#">pZa</a>
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -52,5 +53,6 @@
     </ul>
 </nav>
 <br>
+</div>
 </body>
 </html>

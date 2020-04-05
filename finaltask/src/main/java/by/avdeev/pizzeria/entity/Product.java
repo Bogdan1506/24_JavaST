@@ -2,24 +2,24 @@ package by.avdeev.pizzeria.entity;
 
 import java.util.Objects;
 
-public class Goods implements Entity {
+public class Product implements Entity {
     private int id;
     private String name;
     private String description;
     private double price;
     private String picture;
 
-    public Goods() {
+    public Product() {
     }
 
-    public Goods(String name, String description, double price, String picture) {
+    public Product(String name, String description, double price, String picture) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.picture = picture;
     }
 
-    public Goods(int id, String name, String description, double price, String picture) {
+    public Product(int id, String name, String description, double price, String picture) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -82,12 +82,12 @@ public class Goods implements Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Goods goods = (Goods) o;
-        return id == goods.id &&
-                price == goods.price &&
-                Objects.equals(name, goods.name) &&
-                Objects.equals(description, goods.description) &&
-                Objects.equals(picture, goods.picture);
+        Product product = (Product) o;
+        return id == product.id &&
+                price == product.price &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(picture, product.picture);
     }
 
     @Override

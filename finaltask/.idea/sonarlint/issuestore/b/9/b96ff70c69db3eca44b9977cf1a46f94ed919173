@@ -1,18 +1,18 @@
 
-]	java:S125I"<This block of commented-out lines of code should be removed.(™œÉúûÿÿÿÿ8Àõ€ƒ”.
-]	java:S125O"<This block of commented-out lines of code should be removed.(ÆÄö“ûÿÿÿÿ8ÂÓæ³“.
-V
-java:S2864,"4Iterate over the "entrySet" instead of the "keySet".(ÅÎŸÜÿÿÿÿÿ8‘ªŠ’.
-k
-java:S1192*"ODefine a constant instead of duplicating this literal "redirectedData" 3 times.(—˜ŒC8‘ªŠ’.
-a
-java:S21479"DCombine this catch with the one at line 55, which has the same body.(»¶›Ç8Â„†“.
-]	java:S125K"<This block of commented-out lines of code should be removed.(Ç¨ûÿÿÿÿ8¾´ƒ”.
-E
-java:S1148:"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Â„†“.
-E
-java:S11488"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ìëœ†“.
-]	java:S125B"<This block of commented-out lines of code should be removed.(—¿¢õüÿÿÿÿ8‘ªŠ’.
 n
-java:S2441="LMake "Map" and its parameters serializable or don't store it in the session.(™ÑŠÈùÿÿÿÿ8‘ªŠ’.
-]	java:S125M"<This block of commented-out lines of code should be removed.(Äá»şÿÿÿÿ8äâÇ†“.
+java:S2441A"LMake "Map" and its parameters serializable or don't store it in the session.(™ÑŠÈùÿÿÿÿ8‘ªŠ’.
+V
+java:S2864."4Iterate over the "entrySet" instead of the "keySet".(ÅÎŸÜÿÿÿÿÿ8‘ªŠ’.
+a
+java:S2147<"DCombine this catch with the one at line 58, which has the same body.(»¶›Ç8Â„†“.
+]	java:S125F"<This block of commented-out lines of code should be removed.(—¿¢õüÿÿÿÿ8‘ªŠ’.
+]	java:S125M"<This block of commented-out lines of code should be removed.(™œÉúûÿÿÿÿ8Àõ€ƒ”.
+]	java:S125Q"<This block of commented-out lines of code should be removed.(Äá»şÿÿÿÿ8äâÇ†“.
+E
+java:S1148;"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ìëœ†“.
+]	java:S125S"<This block of commented-out lines of code should be removed.(ÆÄö“ûÿÿÿÿ8ÂÓæ³“.
+k
+java:S1192,"ODefine a constant instead of duplicating this literal "redirectedData" 3 times.(—˜ŒC8‘ªŠ’.
+]	java:S125O"<This block of commented-out lines of code should be removed.(Ç¨ûÿÿÿÿ8¾´ƒ”.
+E
+java:S1148="#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Â„†“.
