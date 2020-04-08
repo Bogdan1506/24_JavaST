@@ -6,12 +6,12 @@ import by.avdeev.pizzeria.dao.impl.ProfileDAOImpl;
 import by.avdeev.pizzeria.dao.impl.UserDAOImpl;
 import by.avdeev.pizzeria.entity.Entity;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DAOTypeProvider {
     private static DAOTypeProvider daoTypeProvider = new DAOTypeProvider();
-    private final Map<DAOType, AbstractDAO<? extends Entity>> repository = new HashMap<>();
+    private final Map<DAOType, AbstractDAO<? extends Entity>> repository = new ConcurrentHashMap<>();
 
     private DAOTypeProvider() {
         repository.put(DAOType.USER, new UserDAOImpl());

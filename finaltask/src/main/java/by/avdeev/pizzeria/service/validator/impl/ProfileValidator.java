@@ -4,10 +4,15 @@ import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import by.avdeev.pizzeria.service.validator.Validator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class ProfileValidator implements Validator<Profile> {
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public Profile validate(HttpServletRequest request) throws IncorrectFormDataException {
         Profile profile = new Profile();
@@ -19,10 +24,9 @@ public class ProfileValidator implements Validator<Profile> {
                 throw new IncorrectFormDataException("identity", parameter);
             }
         }
-        parameter = request.getParameter("userId");
-        if (parameter != null && !parameter.isEmpty()) {
-            User user = new User();
-            user.setId(Integer.parseInt(parameter));
+        HttpSession session = request.getSession();
+        if (session != null) {
+            User user = (User) session.getAttribute("user");
             profile.setUser(user);
         } else {
             throw new IncorrectFormDataException("userId", parameter);

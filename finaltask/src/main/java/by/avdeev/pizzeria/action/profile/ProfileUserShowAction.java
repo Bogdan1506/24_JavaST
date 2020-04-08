@@ -19,7 +19,6 @@ public class ProfileUserShowAction extends Action {
         User user = (User) session.getAttribute("user");
         profile = profileService.findByUserId(user.getId());
         request.setAttribute("profile", profile);
-        setName("profile/profile-update");
         return null;
     }
 }

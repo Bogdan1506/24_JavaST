@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.action.profile;
 
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.entity.Profile;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
@@ -12,13 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ProfileCreateAction extends Action {
+
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
-        Forward forward = new Forward("userShowList");
+        Forward forward = new Forward("/");
         Validator<Profile> validator = new ProfileValidator();
         Profile profile = validator.validate(request);
         ProfileService profileService = factory.getProfileService();
         profileService.create(profile);
+        forward.getAttributes().put("message", "User is signed up!");
         return forward;
     }
 }

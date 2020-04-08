@@ -13,7 +13,6 @@ public class UserShowAction extends Action {
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        setName("user/users");
         UserService userService = factory.getUserService();
         List<User> users = userService.findAll();
         request.setAttribute("users", users);

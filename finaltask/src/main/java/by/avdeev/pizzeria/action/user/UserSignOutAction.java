@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 
 public class UserSignOutAction extends Action {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("userShowList");
+    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
+        Forward forward = new Forward("/");
         HttpSession session = request.getSession();
         session.invalidate();
         return forward;

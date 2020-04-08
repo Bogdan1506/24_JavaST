@@ -15,11 +15,11 @@ public class UserUpdateAction extends Action {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         String oldPass = request.getParameter("oldPassword");
-        HttpSession session = request.getSession();
         String newPass = request.getParameter("newPassword");
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         UserService userService = factory.getUserService();
-        String msg = null;
+        String msg;
         if (user.getPassword().equals(oldPass) && !newPass.isEmpty()) {
             user.setPassword(newPass);
             userService.update(user);
@@ -29,7 +29,7 @@ public class UserUpdateAction extends Action {
             msg = "Password isn't changed!";
         }
         request.setAttribute("message", msg);
-        setName("profile/profile-update");
+        setName("/profile/user");
         return null;
     }
 /*    @Override

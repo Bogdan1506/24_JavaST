@@ -3,8 +3,6 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Product;
-import by.avdeev.pizzeria.entity.Profile;
-import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -92,11 +90,6 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
 
     @Override
     public void update(Product product) throws DAOException {
-        int id = product.getId();
-        String name = product.getName();
-        String description = product.getDescription();
-        double price = product.getPrice();
-        String picture = product.getPicture();
         logger.debug(String.format("Connection=%s", connection));
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE product SET name=?, description=?, price=?, picture=? WHERE id=?")) {

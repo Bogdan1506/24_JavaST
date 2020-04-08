@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ProfileShowListAction extends Action {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
         return null;
     }
 }

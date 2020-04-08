@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ProfileDeleteAction extends Action {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("userDelete");
+        Forward forward = new Forward("/profile/delete");
         int userId = Integer.parseInt(request.getParameter("id"));
         ProfileService profileService = new ProfileServiceImpl();
         profileService.delete(userId);

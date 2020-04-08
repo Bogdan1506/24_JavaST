@@ -24,10 +24,10 @@ public class ProfileUpdateAction extends Action {
         logger.debug(String.format("Profile=%s", profile));
         ProfileService profileService = factory.getProfileService();
         profileService.update(profile);
-        request.setAttribute("message", "Profile is updated!");
         HttpSession session = request.getSession();
         session.setAttribute("profile", profile);
-        setName("profile/profile-update");
-        return null;
+        Forward forward = new Forward("/profile/user");
+        forward.getAttributes().put("message", "Profile is updated!");
+        return forward;
     }
 }

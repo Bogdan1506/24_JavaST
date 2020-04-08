@@ -23,8 +23,8 @@
             <Appender-ref ref="Console"/>
         </Logger>
         <Root level="debug">
-<!--            <Appender-ref ref="Console" level="trace"/>-->
-            <Appender-ref ref="File1" level="trace"/>
+            <Appender-ref ref="Console" level="trace"/>
+<!--            <Appender-ref ref="File1" level="trace"/>-->
         </Root>
     </Loggers>
 </Configuration>
