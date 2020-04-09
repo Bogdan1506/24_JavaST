@@ -1,20 +1,20 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.client.product.ProductShowListAction;
+import by.avdeev.pizzeria.action.unauthorized.ProductShowListAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateFormAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileDeleteAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileShowListAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileUpdateAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileUserShowAction;
-import by.avdeev.pizzeria.action.client.user.UserCreateAction;
+import by.avdeev.pizzeria.action.unauthorized.UserCreateAction;
 import by.avdeev.pizzeria.action.client.user.UserDeleteAction;
-import by.avdeev.pizzeria.action.client.user.UserLoginAction;
+import by.avdeev.pizzeria.action.unauthorized.UserLoginAction;
 import by.avdeev.pizzeria.action.client.user.UserShowAction;
-import by.avdeev.pizzeria.action.client.user.UserSignInAction;
+import by.avdeev.pizzeria.action.unauthorized.UserSignInAction;
 import by.avdeev.pizzeria.action.client.user.UserSignOutAction;
-import by.avdeev.pizzeria.action.client.user.UserSignUpAction;
+import by.avdeev.pizzeria.action.unauthorized.UserSignUpAction;
 import by.avdeev.pizzeria.action.client.user.UserUpdateAction;
 
 import java.util.Map;

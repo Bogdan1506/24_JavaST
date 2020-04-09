@@ -1,6 +1,5 @@
 package by.avdeev.pizzeria.action.client.user;
 
-import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.client.ClientAction;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;

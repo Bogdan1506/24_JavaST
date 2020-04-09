@@ -1,7 +1,6 @@
-package by.avdeev.pizzeria.action.client.user;
+package by.avdeev.pizzeria.action.unauthorized;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.client.ClientAction;
 import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class UserLoginAction extends ClientAction {
+public class UserLoginAction extends UnauthorizedUserAction {
     @Override
     public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         UserService userService = factory.getUserService();

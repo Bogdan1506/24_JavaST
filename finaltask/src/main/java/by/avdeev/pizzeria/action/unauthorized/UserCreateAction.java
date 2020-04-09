@@ -1,4 +1,4 @@
-package by.avdeev.pizzeria.action.client.user;
+package by.avdeev.pizzeria.action.unauthorized;
 
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.client.ClientAction;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class UserCreateAction extends ClientAction {
+public class UserCreateAction extends UnauthorizedUserAction {
     @Override
     public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Validator<User> validator = new UserValidator();

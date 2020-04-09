@@ -1,6 +1,5 @@
 package by.avdeev.pizzeria.action.client.profile;
 
-import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.client.ClientAction;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
