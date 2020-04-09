@@ -1,21 +1,21 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.product.ProductShowListAction;
-import by.avdeev.pizzeria.action.profile.ProfileCreateAction;
-import by.avdeev.pizzeria.action.profile.ProfileCreateFormAction;
-import by.avdeev.pizzeria.action.profile.ProfileDeleteAction;
-import by.avdeev.pizzeria.action.profile.ProfileShowListAction;
-import by.avdeev.pizzeria.action.profile.ProfileUpdateAction;
-import by.avdeev.pizzeria.action.profile.ProfileUserShowAction;
-import by.avdeev.pizzeria.action.user.UserSignInAction;
-import by.avdeev.pizzeria.action.user.UserSignOutAction;
-import by.avdeev.pizzeria.action.user.UserCreateAction;
-import by.avdeev.pizzeria.action.user.UserDeleteAction;
-import by.avdeev.pizzeria.action.user.UserShowAction;
-import by.avdeev.pizzeria.action.user.UserLoginAction;
-import by.avdeev.pizzeria.action.user.UserSignUpAction;
-import by.avdeev.pizzeria.action.user.UserUpdateAction;
+import by.avdeev.pizzeria.action.client.product.ProductShowListAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileCreateAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileCreateFormAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileDeleteAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileShowListAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileUpdateAction;
+import by.avdeev.pizzeria.action.client.profile.ProfileUserShowAction;
+import by.avdeev.pizzeria.action.client.user.UserCreateAction;
+import by.avdeev.pizzeria.action.client.user.UserDeleteAction;
+import by.avdeev.pizzeria.action.client.user.UserLoginAction;
+import by.avdeev.pizzeria.action.client.user.UserShowAction;
+import by.avdeev.pizzeria.action.client.user.UserSignInAction;
+import by.avdeev.pizzeria.action.client.user.UserSignOutAction;
+import by.avdeev.pizzeria.action.client.user.UserSignUpAction;
+import by.avdeev.pizzeria.action.client.user.UserUpdateAction;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

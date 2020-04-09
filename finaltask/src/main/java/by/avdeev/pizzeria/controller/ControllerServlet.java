@@ -61,19 +61,15 @@ public class ControllerServlet extends HttpServlet {
         if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
             session.setAttribute("redirectedData", forward.getAttributes());
         }
-        if (forward != null && forward.isRedirect()) {
-            String redirectedUri = request.getContextPath() + forward.getForward();
+        if (forward != null) {
+            String redirectedUri = request.getContextPath() + forward.getRedirect();
             logger.debug("redirectedUri={}", redirectedUri);
             response.sendRedirect(redirectedUri);
         } else {
             String jspPage;
-            if (forward != null) {
-                jspPage = forward.getForward();
-            } else {
-                logger.debug("servletContext={}", getServletContext().getContextPath());
-                jspPage = "/WEB-INF/jsp" + action.getName() + ".jsp";
-                logger.debug("jspPage={}", jspPage);
-            }
+            logger.debug("servletContext={}", getServletContext().getContextPath());
+            jspPage = "/WEB-INF/jsp" + action.getName() + ".jsp";
+            logger.debug("jspPage={}", jspPage);
             getServletContext().getRequestDispatcher(jspPage).forward(request, response);
         }
     }

@@ -56,7 +56,7 @@
                     </div>
                     <form action="#" style="vertical-align: bottom">
                         <input type="hidden" name="id" value="${temp.id}">
-                        <button type="button" class="btn btn-danger">Add to cart</button>
+                        <button type="button" class="btn btn-light">Add to cart</button>
                     </form>
                 </div>
             </td>

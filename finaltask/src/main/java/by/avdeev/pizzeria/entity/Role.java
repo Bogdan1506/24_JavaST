@@ -3,7 +3,8 @@ package by.avdeev.pizzeria.entity;
 public enum Role {
     ADMIN("Администратор", 0),
     CREATOR("Создатель", 1),
-    CLIENT("Клиент", 2);
+    CLIENT("Клиент", 2),
+    UNAUTHORIZED("неавторизованный", 3);
 
     private String name;
     private int id;

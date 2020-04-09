@@ -14,69 +14,55 @@ import java.util.Map;
 import java.util.Set;
 
 abstract public class Action {
-	private Set<Role> allowRoles = new HashSet<>();
-	private User authorizedUser;
-	private String name;
-	protected ServiceFactory factory;
+    private Set<Role> roles = new HashSet<>();
+    private User authorizedUser;
+    private String name;
+    protected ServiceFactory factory;
 
-	public Set<Role> getAllowRoles() {
-		return allowRoles;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	public User getAuthorizedUser() {
-		return authorizedUser;
-	}
+    public User getAuthorizedUser() {
+        return authorizedUser;
+    }
 
-	public void setAuthorizedUser(User authorizedUser) {
-		this.authorizedUser = authorizedUser;
-	}
+    public void setAuthorizedUser(User authorizedUser) {
+        this.authorizedUser = authorizedUser;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setFactory(ServiceFactory factory) {
-		this.factory = factory;
-	}
+    public void setFactory(ServiceFactory factory) {
+        this.factory = factory;
+    }
 
-	abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
+    abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
 
-	public static class Forward {
-		private String forward;
-		private boolean redirect;
-		private Map<String, Object> attributes = new HashMap<>();
+    public static class Forward {
+        private String redirect;
+        private Map<String, Object> attributes = new HashMap<>();
 
-		public Forward(String forward, boolean redirect) {
-			this.forward = forward;
+        public Forward(String redirect) {
+            this.redirect = redirect;
+        }
+
+		public void setRedirect(String redirect) {
 			this.redirect = redirect;
 		}
 
-		public Forward(String forward) {
-			this(forward, true);
-		}
+		public String getRedirect() {
+            return redirect;
+        }
 
-		public String getForward() {
-			return forward;
-		}
-
-		public void setForward(String forward) {
-			this.forward = forward;
-		}
-
-		public boolean isRedirect() {
-			return redirect;
-		}
-
-		public void setRedirect(boolean redirect) {
-			this.redirect = redirect;
-		}
-
-		public Map<String, Object> getAttributes() {
-			return attributes;
-		}
-	}
+        public Map<String, Object> getAttributes() {
+            return attributes;
+        }
+    }
 }
