@@ -1,5 +1,6 @@
 package by.avdeev.pizzeria.service;
 
+import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface UserService extends Service {
     void update(User user) throws ServiceException;
 
     User findByLogin(String login) throws ServiceException;
+
+    void changeRole(Role role, int id) throws ServiceException;
 }

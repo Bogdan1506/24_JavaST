@@ -9,7 +9,7 @@
 <link rel="icon" href="data:,">
 
 
-<jsp:include page="../bar.jsp"/>
+<jsp:include page="../../bar.jsp"/>
 <div class="container mt-3">
     <h1>User list</h1>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -33,11 +33,9 @@
             <td><c:out value="${temp.password}"/></td>
             <td><c:out value="${temp.role}"/></td>
             <td>
-                <form action="user-update.jsp" method="post">
+                <c:url value="/user/list/update" var="updateRole"/>
+                <form action="${updateRole}" method="post">
                     <input type="hidden" name="id" value="${temp.id}"/>
-                    <input type="hidden" name="login" value="${temp.login}"/>
-                    <input type="hidden" name="password" value="${temp.password}"/>
-                    <input type="hidden" name="role" value="${temp.role.id}"/>
                     <input type="submit" value="Update">
                 </form>
             </td>
@@ -55,16 +53,16 @@
         </tbody>
     </table>
 </div>
-    <jsp:include page="../footer.jsp"/>
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+<jsp:include page="../../footer.jsp"/>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

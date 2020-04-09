@@ -132,4 +132,15 @@ public class UserDAOImpl extends AbstractDAO<User> {
         }
         return user;
     }
+
+    public void changeRole(Role role, int id) throws DAOException {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "UPDATE user SET role = ? WHERE id=?")) {
+            statement.setInt(1, role.getId());
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
 }

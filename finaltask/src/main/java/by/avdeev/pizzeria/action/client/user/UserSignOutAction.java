@@ -1,7 +1,5 @@
 package by.avdeev.pizzeria.action.client.user;
 
-
-import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.client.ClientAction;
 
 import javax.servlet.http.HttpServletRequest;

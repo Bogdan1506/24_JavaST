@@ -15,7 +15,8 @@
 
 <div class="container">
     <h2>Update User Form</h2>
-    <form action="/pza?action=userUpdate" class="was-validated" name="userUpdate" method="post">
+    <c:url value="/user/list/role" var="changeRole"/>
+    <form action="${changeRole}" class="form-control" name="userUpdate" method="post">
         <label for="sel">Select role:</label>
         <select class="form-control" id="sel" name="role">
             <option>Admin</option>

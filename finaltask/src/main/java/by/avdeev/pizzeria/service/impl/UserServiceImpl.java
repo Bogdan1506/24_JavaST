@@ -3,6 +3,7 @@ package by.avdeev.pizzeria.service.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.impl.UserDAOImpl;
+import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.TransactionService;
@@ -84,5 +85,16 @@ public class UserServiceImpl extends TransactionService implements UserService {
             throw new ServiceException(e);
         }
         return user;
+    }
+
+    @Override
+    public void changeRole(Role role, int id) throws ServiceException {
+        AbstractDAO<User> abstractDAO = transaction.createDao(DAO_TYPE);
+        UserDAOImpl userDAO = (UserDAOImpl) abstractDAO;
+        try {
+            userDAO.changeRole(role, id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }
