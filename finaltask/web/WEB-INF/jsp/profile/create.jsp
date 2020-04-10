@@ -15,7 +15,7 @@
 
 <div class="container">
     <h2>Create Profile Form</h2>
-    <c:url value="/profile/create" var="profileCreate"/>
+    <c:url value="/profile/register" var="profileCreate"/>
     <form action="${profileCreate}" class="was-validated" method="post">
         <div class="form-group">
             <label for="name">Name:</label>

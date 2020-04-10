@@ -1,7 +1,6 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.client.ClientAction;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -33,7 +32,7 @@ public class UserCreateAction extends UnauthorizedUserAction {
             user.setLogin(login);
             user.setId(id);
             user.setRole(Role.CLIENT);
-            Action.Forward forward = new Action.Forward("/profile/create-form");
+            Action.Forward forward = new Action.Forward("/profile/create");
             session.setAttribute("user", user);
             return forward;
         } else {
