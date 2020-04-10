@@ -9,9 +9,10 @@
 <body>
 <link rel="icon" href="data:,">
 
-<jsp:include page="../bar.jsp"/>
+<jsp:include page="../main-bar.jsp"/>
+<jsp:include page="menu-bar.jsp"/>
 <div class="container mt-3">
-    <table class="table table-borderless" style="height: 100%;">
+    <table id="tab" class="table table-borderless" style="height: 100%;">
         <tbody>
         <c:forEach var="temp" items="${products}" begin="0" step="1" varStatus="count">
         <c:if test="${count.index == 0 || count.index % 3 == 0}">
@@ -30,14 +31,16 @@
                         ingredients
                     </button>
                 </p>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-success active">
-                        <input type="radio" name="options" id="dough1" autocomplete="off" checked> Thick
-                    </label>
-                    <label class="btn btn-success">
-                        <input type="radio" name="options" id="dough2" autocomplete="off"> Thin
-                    </label>
-                </div>
+                <c:if test="${temp.type eq 'PIZZA'}">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-success active">
+                            <input type="radio" name="options" id="dough1" autocomplete="off" checked> Thick
+                        </label>
+                        <label class="btn btn-success">
+                            <input type="radio" name="options" id="dough2" autocomplete="off"> Thin
+                        </label>
+                    </div>
+                </c:if>
                 <div style="vertical-align: bottom">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-primary active">
@@ -63,14 +66,13 @@
             </c:forEach>
         </tbody>
     </table>
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
 </div>
 <jsp:include page="../footer.jsp"/>
 </body>
 </html>
-<%--                <script>
-                    $(document).ready(function () {
-                        $("#size2").click(function () {
-                            $("#price").text("Hello world!");
-                        });
-                    });
-                </script>--%>
+

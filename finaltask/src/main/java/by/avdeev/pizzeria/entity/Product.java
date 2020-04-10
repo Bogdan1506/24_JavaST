@@ -4,12 +4,34 @@ import java.util.Objects;
 
 public class Product implements Entity {
     private int id;
+    private Type type;
     private String name;
     private String description;
     private double price;
     private String picture;
 
+    public enum Type {
+        PIZZA, SIDES, DRINK
+    }
+
     public Product() {
+    }
+
+    public Product(int id, Type type, String name, String description, double price, String picture) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.picture = picture;
+    }
+
+    public Product(Type type, String name, String description, double price, String picture) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.picture = picture;
     }
 
     public Product(String name, String description, double price, String picture) {
@@ -65,6 +87,14 @@ public class Product implements Entity {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

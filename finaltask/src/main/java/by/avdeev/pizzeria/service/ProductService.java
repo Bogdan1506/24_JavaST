@@ -14,4 +14,6 @@ public interface ProductService extends Service {
     boolean delete(int id) throws ServiceException;
 
     void update(Product product) throws ServiceException;
+
+    List<Product> findByType(Product.Type type) throws ServiceException;
 }

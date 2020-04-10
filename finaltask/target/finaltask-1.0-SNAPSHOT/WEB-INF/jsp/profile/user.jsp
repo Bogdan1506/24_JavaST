@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../bar.jsp"/>
+<jsp:include page="../main-bar.jsp"/>
 <div class="container">
     <h2>Profile Update Form</h2>
     <c:url value="/profile/update" var="profileUpdate"/>

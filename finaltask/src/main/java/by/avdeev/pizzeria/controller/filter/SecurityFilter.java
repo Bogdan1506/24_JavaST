@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class SecurityFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
 

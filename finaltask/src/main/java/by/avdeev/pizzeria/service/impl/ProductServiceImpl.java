@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.service.impl;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
+import by.avdeev.pizzeria.dao.impl.ProductDAOImpl;
 import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -73,5 +74,18 @@ public class ProductServiceImpl extends TransactionService implements ProductSer
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Product> findByType(Product.Type type) throws ServiceException {
+        AbstractDAO<Product> abstractDAO = transaction.createDao(DAO_TYPE);
+        ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
+        List<Product> products;
+        try {
+            products = productDAO.findByType(type);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return products;
     }
 }

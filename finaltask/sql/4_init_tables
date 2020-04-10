@@ -4,3 +4,5 @@ INSERT INTO `user` (`login`,
 VALUES ('admin',
         '21232A743894A0E4A801FC3',
         0);
+INSERT INTO `profile` (user_id, name, surname, email, phone, address)
+VALUES (LAST_INSERT_ID(), 'admin', 'adminov', 'admin@mail.ru', +375291234567, 'Nemiga 2');

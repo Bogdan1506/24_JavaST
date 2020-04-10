@@ -8,7 +8,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/*"}, servletNames = {"ControllerServlet"})
+//@WebFilter(urlPatterns = {"/*"}, servletNames = {"ControllerServlet"})
 public class EncodingFilter implements Filter {
 
     @Override
