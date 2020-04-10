@@ -3,22 +3,18 @@ package by.avdeev.pizzeria.action.unauthorized;
 import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ProductShowListAction extends UnauthorizedUserAction {
-    private static Logger logger = LogManager.getLogger();
-
+public class DrinkShowListAction extends UnauthorizedUserAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         setName("/product/menu");
         ProductService productService = factory.getProductService();
-        List<Product> products = productService.findAll();
-        logger.debug("products={}", products);
+        List<Product> products = productService.findByType(Product.Type.DRINK);
         request.setAttribute("products", products);
         return null;
     }

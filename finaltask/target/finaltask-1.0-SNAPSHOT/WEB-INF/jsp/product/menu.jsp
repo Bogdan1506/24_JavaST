@@ -31,7 +31,6 @@
                         ingredients
                     </button>
                 </p>
-<%--                <c:set var="pizza" value="${Pizza}"--%>
                 <c:if test="${temp.type eq 'PIZZA'}">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-success active">

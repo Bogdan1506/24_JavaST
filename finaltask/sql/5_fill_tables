@@ -49,8 +49,11 @@ VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregan
         12.9,
         'https://api.papajohns.by//images/catalog/thumbs/full/6fb54e63495bd4e809e056e0528bb178.png'),
        ('drink', 'Coca-Cola', 'Sugar, water, vanilla',
-        12.9,
-        'https://api.papajohns.by//images/catalog/thumbs/full/ca6771f8591fdca829e2753d804dd90d.png');
+        2,
+        'https://api.papajohns.by//images/catalog/thumbs/full/ca6771f8591fdca829e2753d804dd90d.png'),
+       ('sides', 'Onion rings', 'Breaded onion rings',
+        3.5,
+        'https://api.papajohns.by//images/catalog/thumbs/full/23b62cbd29fe78e3eef9129fd1c1ddbb.png');
 
 
 

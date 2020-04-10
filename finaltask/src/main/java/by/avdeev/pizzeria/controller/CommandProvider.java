@@ -3,13 +3,15 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
-import by.avdeev.pizzeria.action.unauthorized.ProductShowListAction;
+import by.avdeev.pizzeria.action.unauthorized.DrinkShowListAction;
+import by.avdeev.pizzeria.action.unauthorized.PizzaShowListAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateFormAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileDeleteAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileShowListAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileUpdateAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileUserShowAction;
+import by.avdeev.pizzeria.action.unauthorized.SidesShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.UserCreateAction;
 import by.avdeev.pizzeria.action.client.user.UserDeleteAction;
 import by.avdeev.pizzeria.action.unauthorized.UserLoginAction;
@@ -26,7 +28,7 @@ public class CommandProvider {
     private final Map<String, Action> repository = new ConcurrentHashMap<>();
 
     public CommandProvider() {
-        repository.put("/", new ProductShowListAction());
+        repository.put("/", new PizzaShowListAction());
 
         repository.put("/user/delete", new UserDeleteAction());
         repository.put("/user/sign-up", new UserSignUpAction());
@@ -47,7 +49,9 @@ public class CommandProvider {
         repository.put("/profile/update", new ProfileUpdateAction());
         repository.put("/profile/delete", new ProfileDeleteAction());
 
-        repository.put("/product/menu", new ProductShowListAction());
+        repository.put("/product/pizzas", new PizzaShowListAction());
+        repository.put("/product/drinks", new DrinkShowListAction());
+        repository.put("/product/sides", new SidesShowListAction());
     }
 
     public Action receiveCommand(String name) {
