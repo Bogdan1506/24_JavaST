@@ -9,7 +9,7 @@
 <link rel="icon" href="data:,">
 
 
-<jsp:include page="../../bar.jsp"/>
+<jsp:include page="../bar.jsp"/>
 <div class="container mt-3">
     <h1>User list</h1>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -53,7 +53,7 @@
         </tbody>
     </table>
 </div>
-<jsp:include page="../../footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 <script>
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {

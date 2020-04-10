@@ -22,13 +22,13 @@
         <a class="navbar-brand" href="#">Pizza</a>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <c:url value="/" var="userList"/>
-                <a class="nav-link text-warning" href="${userList}">Menu</a>
+                <c:url value="/" var="menu"/>
+                <a class="nav-link text-warning" href="${menu}">Menu</a>
             </li>
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
                     <li class="nav-item">
-                        <c:url value="/profile/user" var="profileShow"/>
+                        <c:url value="/profile/update" var="profileShow"/>
                         <a class="nav-link" href="${profileShow}"> ${sessionScope.user.login}</a>
                     </li>
                     <li>

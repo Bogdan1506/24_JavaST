@@ -26,7 +26,7 @@ public class ProfileUpdateAction extends ClientAction {
         profileService.update(profile);
         HttpSession session = request.getSession();
         session.setAttribute("profile", profile);
-        Forward forward = new Forward("/profile/user");
+        Forward forward = new Forward("/profile/update");
         forward.getAttributes().put("message", "Profile is updated!");
         return forward;
     }

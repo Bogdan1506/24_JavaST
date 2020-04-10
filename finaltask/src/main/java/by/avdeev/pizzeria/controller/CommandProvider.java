@@ -36,7 +36,7 @@ public class CommandProvider {
         repository.put("/user/sign-in", new UserSignInAction());
         repository.put("/user/sign-out", new UserSignOutAction());
 
-        repository.put("/user/list/users", new UserShowAction());
+        repository.put("/user/list", new UserShowAction());
         repository.put("/user/list/update", new ChangeRoleFormAction());
         repository.put("/user/list/role", new ChangeRoleAction());
 
@@ -47,7 +47,7 @@ public class CommandProvider {
         repository.put("/profile/update", new ProfileUpdateAction());
         repository.put("/profile/delete", new ProfileDeleteAction());
 
-        repository.put("/product/list", new ProductShowListAction());
+        repository.put("/product/menu", new ProductShowListAction());
     }
 
     public Action receiveCommand(String name) {

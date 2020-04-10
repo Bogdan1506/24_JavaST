@@ -20,7 +20,7 @@ public class ChangeRoleAction extends AdminAction {
         logger.debug("role={}", role);
         UserService userService = factory.getUserService();
         userService.changeRole(role, id);
-        Forward forward = new Forward("/user/list/users");
+        Forward forward = new Forward("/user/list");
         forward.getAttributes().put("message", "Role is changed!");
         return forward;
     }

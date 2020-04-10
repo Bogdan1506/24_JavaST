@@ -16,7 +16,7 @@ public class UserDeleteAction extends ClientAction {
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("/user/list/users");
+        Forward forward = new Forward("/user/list");
         UserService userService = factory.getUserService();
         ProfileService profileService = factory.getProfileService();
         int userId = Integer.parseInt(request.getParameter("id"));

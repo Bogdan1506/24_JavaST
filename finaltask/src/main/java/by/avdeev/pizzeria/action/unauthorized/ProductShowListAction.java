@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductShowListAction extends UnauthorizedUserAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        setName("/product/product");
+        setName("/product/menu");
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findAll();
         request.setAttribute("products", products);

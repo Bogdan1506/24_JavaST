@@ -33,7 +33,10 @@ VALUES ('Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
         'https://api.papajohns.by//images/catalog/thumbs/full/589efbfc513ff9a069e4790c2bbcbdf9.png'),
        ('Mexican', 'Tomato pizza sauce, mozzarella, grilled chicken, onions, sweet green peppers, mushrooms, tomatoes, jalapeno peppers',
         12.9,
-        'https://api.papajohns.by//images/catalog/thumbs/full/4744038fb66aa406a9abadce47756348.png');
+        'https://api.papajohns.by//images/catalog/thumbs/full/4744038fb66aa406a9abadce47756348.png'),
+       ('Alfredo', 'Mozzarella, ham, bacon, mushrooms, onions, alfredo sauce base',
+        12.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/6fb54e63495bd4e809e056e0528bb178.png');
 
 
 
