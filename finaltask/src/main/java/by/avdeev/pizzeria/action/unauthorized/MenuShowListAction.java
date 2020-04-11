@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 public class MenuShowListAction extends UnauthorizedUserAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+        if (request.getAttribute("products") == null) {
+            return new Forward("/product/pizzas");
+        }
         return null;
     }
 }
