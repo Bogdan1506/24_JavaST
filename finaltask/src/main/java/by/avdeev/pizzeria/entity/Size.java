@@ -11,7 +11,7 @@ public enum Size {
         this.coefficient = coefficient;
     }
 
-    public int getSizeId() {
+    public int getId() {
         return sizeId;
     }
 

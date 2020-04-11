@@ -267,3 +267,13 @@ L
 web/WEB-INF/jsp/main-bar.jsp,7\1\7158d6f28ac3f0ae0450c7ca3bfee2d449c519d2
 |
 Lsrc/main/java/by/avdeev/pizzeria/action/unauthorized/MenuShowListAction.java,1\d\1d9e4c1a162de2f551bc20568f7b09434ff10d40
+i
+9src/main/java/by/avdeev/pizzeria/service/ItemService.java,5\d\5df315eb852ff7595653f668d088e31aaaf8cc7d
+r
+Bsrc/main/java/by/avdeev/pizzeria/service/impl/ItemServiceImpl.java,2\b\2b2e42d14d41a2137cc6ef747e00aedb79b7afc7
+M
+web/WEB-INF/jsp/item/list.jsp,8\7\87fa9c4ac3853acdd14985a8eb1c0f0a81b91840
+j
+:src/main/java/by/avdeev/pizzeria/dao/impl/ItemDAOImpl.java,3\4\34129a71e843291010a5015e8c44c815b6737961
+y
+Isrc/main/java/by/avdeev/pizzeria/action/client/item/ItemCreateAction.java,8\b\8be47018889a9dca7633bb45592014c12a636ea0

@@ -9,7 +9,7 @@ public enum Dough {
         this.doughId = doughId;
     }
 
-    public int getDoughId() {
+    public int getId() {
         return doughId;
     }
 

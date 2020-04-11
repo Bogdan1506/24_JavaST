@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/*"}, servletNames = {"ControllerServlet"}, asyncSupported = true)
+@WebFilter(urlPatterns = {"/*"}, servletNames = {"ControllerServlet"})
 public class ActionURIFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
     private final CommandProvider commandProvider = new CommandProvider();

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/controller", "/index.html", "/product/*", "/user/*", "/profile/*"})
+@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger();
 
@@ -37,7 +37,7 @@ public class ControllerServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.debug("started");
         Action action = (Action) request.getAttribute("action");
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if (session != null) {
             @SuppressWarnings("unchecked")
             Map<String, Object> attributes = (Map<String, Object>) session.getAttribute("redirectedData");

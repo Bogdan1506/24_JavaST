@@ -18,11 +18,11 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
         logger.debug("products={}", products);
-        Forward forward = new Forward("/product/menu");
-        forward.getAttributes().put("products", products);
-        return forward;
-//        request.setAttribute("products", products);
-//        setName("/product/menu");
-//        return null;
+//        Forward forward = new Forward("/product/menu");
+//        forward.getAttributes().put("products", products);
+//        return forward;
+        request.setAttribute("products", products);
+        setName("/product/menu");
+        return null;
     }
 }
