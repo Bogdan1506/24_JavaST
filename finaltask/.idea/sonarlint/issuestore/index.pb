@@ -265,3 +265,5 @@ M
 web/WEB-INF/jsp/user/list.jsp,8\b\8be103dfd663725595f96f8e119d914b6ca99a12
 L
 web/WEB-INF/jsp/main-bar.jsp,7\1\7158d6f28ac3f0ae0450c7ca3bfee2d449c519d2
+|
+Lsrc/main/java/by/avdeev/pizzeria/action/unauthorized/MenuShowListAction.java,1\d\1d9e4c1a162de2f551bc20568f7b09434ff10d40

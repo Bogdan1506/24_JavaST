@@ -37,10 +37,11 @@ public class ControllerServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.debug("started");
         Action action = (Action) request.getAttribute("action");
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         if (session != null) {
             @SuppressWarnings("unchecked")
             Map<String, Object> attributes = (Map<String, Object>) session.getAttribute("redirectedData");
+            logger.debug("redirectedData={}", attributes);
             if (attributes != null) {
                 for (String key : attributes.keySet()) {
                     request.setAttribute(key, attributes.get(key));
@@ -70,6 +71,7 @@ public class ControllerServlet extends HttpServlet {
             logger.debug("servletContext={}", getServletContext().getContextPath());
             jspPage = "/WEB-INF/jsp" + action.getName() + ".jsp";
             logger.debug("jspPage={}", jspPage);
+            logger.debug("request products={}", request.getAttribute("products"));
             getServletContext().getRequestDispatcher(jspPage).forward(request, response);
         }
     }

@@ -21,5 +21,8 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
         Forward forward = new Forward("/product/menu");
         forward.getAttributes().put("products", products);
         return forward;
+//        request.setAttribute("products", products);
+//        setName("/product/menu");
+//        return null;
     }
 }
