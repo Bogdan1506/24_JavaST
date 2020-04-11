@@ -1,7 +1,5 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
-import by.avdeev.pizzeria.action.client.ClientAction;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

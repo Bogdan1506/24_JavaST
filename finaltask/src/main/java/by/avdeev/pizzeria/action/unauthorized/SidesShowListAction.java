@@ -12,10 +12,10 @@ import java.util.List;
 public class SidesShowListAction extends UnauthorizedUserAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
-        setName("/product/menu");
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.SIDES);
-        request.setAttribute("products", products);
-        return null;
+        Forward forward = new Forward("/product/menu");
+        forward.getAttributes().put("products", products);
+        return forward;
     }
 }

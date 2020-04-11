@@ -27,9 +27,9 @@ public class UserUpdateAction extends ClientAction {
         } else {
             msg = "Password isn't changed!";
         }
-        request.setAttribute("message", msg);
-        setName("/profile/user");
-        return null;
+        Forward forward = new Forward("/profile/user");
+        forward.getAttributes().put("message", msg);
+        return forward;
     }
 /*    @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

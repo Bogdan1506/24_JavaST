@@ -4,6 +4,7 @@ import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
 import by.avdeev.pizzeria.action.unauthorized.DrinkShowListAction;
+import by.avdeev.pizzeria.action.unauthorized.MenuShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.PizzaShowListAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateAction;
 import by.avdeev.pizzeria.action.client.profile.ProfileCreateFormAction;
@@ -49,6 +50,7 @@ public class CommandProvider {
         repository.put("/profile/update", new ProfileUpdateAction());
         repository.put("/profile/delete", new ProfileDeleteAction());
 
+        repository.put("/product/menu", new MenuShowListAction());
         repository.put("/product/pizzas", new PizzaShowListAction());
         repository.put("/product/drinks", new DrinkShowListAction());
         repository.put("/product/sides", new SidesShowListAction());

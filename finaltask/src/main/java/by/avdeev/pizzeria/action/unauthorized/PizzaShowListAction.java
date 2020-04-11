@@ -15,11 +15,11 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        setName("/product/menu");
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
         logger.debug("products={}", products);
-        request.setAttribute("products", products);
-        return null;
+        Forward forward = new Forward("/product/menu");
+        forward.getAttributes().put("products", products);
+        return forward;
     }
 }
