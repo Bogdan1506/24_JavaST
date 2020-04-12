@@ -4,6 +4,8 @@ import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
 import by.avdeev.pizzeria.action.client.item.ItemCreateAction;
+import by.avdeev.pizzeria.action.client.item.ItemCreateSessionAction;
+import by.avdeev.pizzeria.action.client.item.ItemRemoveAction;
 import by.avdeev.pizzeria.action.unauthorized.DrinkShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.MenuShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.PizzaShowListAction;
@@ -56,7 +58,9 @@ public class CommandProvider {
         repository.put("/product/drinks", new DrinkShowListAction());
         repository.put("/product/sides", new SidesShowListAction());
 
-        repository.put("/item/list", new ItemCreateAction());
+        repository.put("/item/list", new ItemCreateSessionAction());
+        repository.put("/item/list/order", new ItemCreateAction());
+        repository.put("/item/list/remove", new ItemRemoveAction());
     }
 
     public Action receiveCommand(String name) {

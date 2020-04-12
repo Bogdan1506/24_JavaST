@@ -71,14 +71,13 @@ public class Item implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id &&
-                Objects.equals(product, item.product) &&
+        return Objects.equals(product, item.product) &&
                 dough == item.dough &&
                 size == item.size;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, product, dough, size);
+        return Objects.hash(product, dough, size);
     }
 }

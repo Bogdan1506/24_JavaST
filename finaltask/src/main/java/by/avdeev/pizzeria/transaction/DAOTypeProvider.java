@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.transaction;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
+import by.avdeev.pizzeria.dao.impl.ItemDAOImpl;
 import by.avdeev.pizzeria.dao.impl.ProductDAOImpl;
 import by.avdeev.pizzeria.dao.impl.ProfileDAOImpl;
 import by.avdeev.pizzeria.dao.impl.UserDAOImpl;
@@ -17,6 +18,7 @@ public class DAOTypeProvider {
         repository.put(DAOType.USER, new UserDAOImpl());
         repository.put(DAOType.PROFILE, new ProfileDAOImpl());
         repository.put(DAOType.PRODUCT, new ProductDAOImpl());
+        repository.put(DAOType.ITEM, new ItemDAOImpl());
     }
 
     public AbstractDAO<? extends Entity> findDAO(DAOType daoType) {

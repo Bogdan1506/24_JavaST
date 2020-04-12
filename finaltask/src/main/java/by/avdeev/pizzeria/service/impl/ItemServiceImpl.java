@@ -13,12 +13,13 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class ItemServiceImpl extends TransactionService implements ItemService {
-    private static final DAOType DAO_TYPE = DAOType.PRODUCT;
+    private static final DAOType DAO_TYPE = DAOType.ITEM;
     private static Logger logger = LogManager.getLogger();
 
     @Override
     public int create(Item item) throws ServiceException {
         AbstractDAO<Item> itemDAO = transaction.createDao(DAO_TYPE);
+        logger.debug("itemDAO={}", itemDAO);
         int lastId;
         try {
             itemDAO.create(item);

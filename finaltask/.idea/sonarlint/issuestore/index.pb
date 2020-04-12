@@ -277,3 +277,5 @@ j
 :src/main/java/by/avdeev/pizzeria/dao/impl/ItemDAOImpl.java,3\4\34129a71e843291010a5015e8c44c815b6737961
 y
 Isrc/main/java/by/avdeev/pizzeria/action/client/item/ItemCreateAction.java,8\b\8be47018889a9dca7633bb45592014c12a636ea0
+g
+7target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/item/list.jsp,2\8\28f9ca622b6d373ebd0336a3cff8d2278e7963d0
