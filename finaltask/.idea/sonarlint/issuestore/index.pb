@@ -279,3 +279,7 @@ y
 Isrc/main/java/by/avdeev/pizzeria/action/client/item/ItemCreateAction.java,8\b\8be47018889a9dca7633bb45592014c12a636ea0
 g
 7target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/item/list.jsp,2\8\28f9ca622b6d373ebd0336a3cff8d2278e7963d0
+y
+Isrc/main/java/by/avdeev/pizzeria/action/client/item/ItemRemoveAction.java,d\0\d094956cbd1d00884bfff42446e37f10a5afa23a
+€
+Psrc/main/java/by/avdeev/pizzeria/action/client/item/ItemCreateSessionAction.java,9\1\91fafa28c0b1135c6c0ecf01e0c0249b172a3ab3
