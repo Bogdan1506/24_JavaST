@@ -14,7 +14,7 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
         logger.debug("products={}", products);

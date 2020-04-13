@@ -11,11 +11,11 @@ import java.util.List;
 
 public class DrinkShowListAction extends UnauthorizedUserAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.DRINK);
-        Forward forward = new Forward("/product/menu");
-        forward.getAttributes().put("products", products);
-        return forward;
+        ForwardObject forwardObject = new ForwardObject("/product/menu");
+        forwardObject.getAttributes().put("products", products);
+        return forwardObject;
     }
 }

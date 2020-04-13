@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ProfileCreateFormAction extends ClientAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) {
         return null;
     }
 }

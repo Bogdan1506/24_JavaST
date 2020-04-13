@@ -6,7 +6,6 @@ import by.avdeev.pizzeria.action.ActionManagerFactory;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import by.avdeev.pizzeria.transaction.TransactionFactory;
 import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +22,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger();
+    private static final String REDIRECTED_DATA = "redirectedData";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,44 +35,47 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("started");
+        logger.trace("started");
         Action action = (Action) request.getAttribute("action");
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         if (session != null) {
             @SuppressWarnings("unchecked")
-            Map<String, Object> attributes = (Map<String, Object>) session.getAttribute("redirectedData");
+            Map<String, Object> attributes = (Map<String, Object>) session.getAttribute(REDIRECTED_DATA);
             logger.debug("redirectedData={}", attributes);
             if (attributes != null) {
-                for (String key : attributes.keySet()) {
+                for (Map.Entry<String, Object> pair : attributes.entrySet()) {
+                    String key = pair.getKey();
                     request.setAttribute(key, attributes.get(key));
                 }
-                session.removeAttribute("redirectedData");
+                session.removeAttribute(REDIRECTED_DATA);
             }
         }
-        TransactionFactory transactionFactory = new TransactionFactoryImpl();
-        ServiceFactory serviceFactory = new ServiceFactory(transactionFactory);
+        ServiceFactory serviceFactory = new ServiceFactory(new TransactionFactoryImpl());
         ActionManager actionManager = ActionManagerFactory.getManager(serviceFactory);
-        Action.Forward forward = null;
+        Action.ForwardObject forwardObject = null;
         try {
-            forward = actionManager.execute(action, request, response);
+            forwardObject = actionManager.execute(action, request, response);
         } catch (ServiceException | IncorrectFormDataException e) {
             logger.error(e);
         }
         actionManager.close();
-        if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
-            session.setAttribute("redirectedData", forward.getAttributes());
+        if (session != null && forwardObject != null && !forwardObject.getAttributes().isEmpty()) {
+            session.setAttribute(REDIRECTED_DATA, forwardObject.getAttributes());
         }
-        if (forward != null) {
-            String redirectedUri = request.getContextPath() + forward.getRedirect();
+        if (forwardObject != null) {
+            String redirectedUri = forwardObject.getRedirectUri();
             logger.debug("redirectedUri={}", redirectedUri);
             response.sendRedirect(redirectedUri);
         } else {
-            String jspPage;
+            String forwardPage;
             logger.debug("servletContext={}", getServletContext().getContextPath());
-            jspPage = "/WEB-INF/jsp" + action.getName() + ".jsp";
-            logger.debug("jspPage={}", jspPage);
-            logger.debug("request products={}", request.getAttribute("products"));
-            getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+            forwardPage = "/WEB-INF/jsp" + action.getName() + ".jsp";
+            logger.debug("jspPage={}", forwardPage);
+            try {
+                getServletContext().getRequestDispatcher(forwardPage).forward(request, response);
+            } catch (IllegalArgumentException e) {
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+            }
         }
     }
 }

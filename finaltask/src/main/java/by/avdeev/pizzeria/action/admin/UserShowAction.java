@@ -11,7 +11,7 @@ import java.util.List;
 public class UserShowAction extends AdminAction {
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         UserService userService = factory.getUserService();
         List<User> users = userService.findAll();
         request.setAttribute("users", users);

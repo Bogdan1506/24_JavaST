@@ -17,7 +17,7 @@ public class ItemCreateAction extends ClientAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         ItemService itemService = factory.getItemService();
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
@@ -27,6 +27,6 @@ public class ItemCreateAction extends ClientAction {
             logger.debug("for loop");
             itemService.create(item);
         }
-        return new Forward("/"); //todo remake
+        return new ForwardObject("/"); //todo remake
     }
 }

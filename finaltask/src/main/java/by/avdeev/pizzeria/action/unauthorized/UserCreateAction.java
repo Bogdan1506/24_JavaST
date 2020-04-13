@@ -1,6 +1,5 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
-import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 public class UserCreateAction extends UnauthorizedUserAction {
     @Override
-    public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Validator<User> validator = new UserValidator();
         UserService userService = factory.getUserService();
         HttpSession session = request.getSession();
@@ -32,13 +31,13 @@ public class UserCreateAction extends UnauthorizedUserAction {
             user.setLogin(login);
             user.setId(id);
             user.setRole(Role.CLIENT);
-            Action.Forward forward = new Action.Forward("/profile/create");
+            ForwardObject forwardObject = new ForwardObject("/profile/create");
             session.setAttribute("user", user);
-            return forward;
+            return forwardObject;
         } else {
-            Action.Forward forward = new Action.Forward("/user/sign-up");
-            forward.getAttributes().put("message", "Such login exists!");
-            return forward;
+            ForwardObject forwardObject = new ForwardObject("/user/sign-up");
+            forwardObject.getAttributes().put("message", "Such login exists!");
+            return forwardObject;
         }
     }
 }

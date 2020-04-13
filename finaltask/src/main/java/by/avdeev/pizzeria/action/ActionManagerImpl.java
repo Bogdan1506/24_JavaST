@@ -19,7 +19,7 @@ public class ActionManagerImpl implements ActionManager {
 		this.factory = factory;
 	}
 
-	public Action.Forward execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+	public Action.ForwardObject execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
 		action.setFactory(factory);
 		return action.exec(request, response);
 	}

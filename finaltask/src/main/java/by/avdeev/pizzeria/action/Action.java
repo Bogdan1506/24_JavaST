@@ -43,22 +43,22 @@ abstract public class Action {
         this.factory = factory;
     }
 
-    abstract public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
+    abstract public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException;
 
-    public static class Forward {
-        private String redirect;
+    public static class ForwardObject {
+        private String redirectUri;
         private Map<String, Object> attributes = new HashMap<>();
 
-        public Forward(String redirect) {
-            this.redirect = redirect;
+        public ForwardObject(String redirectUri) {
+            this.redirectUri = redirectUri;
         }
 
-		public void setRedirect(String redirect) {
-			this.redirect = redirect;
+		public void setRedirectUri(String redirectUri) {
+			this.redirectUri = redirectUri;
 		}
 
-		public String getRedirect() {
-            return redirect;
+		public String getRedirectUri() {
+            return redirectUri;
         }
 
         public Map<String, Object> getAttributes() {

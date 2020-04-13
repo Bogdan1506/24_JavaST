@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ChangeRoleFormAction extends AdminAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         return null;
     }
 }

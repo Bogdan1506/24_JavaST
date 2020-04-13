@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 public class UserUpdateAction extends ClientAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         String oldPass = request.getParameter("oldPassword");
         String newPass = request.getParameter("newPassword");
         HttpSession session = request.getSession();
@@ -27,9 +27,9 @@ public class UserUpdateAction extends ClientAction {
         } else {
             msg = "Password isn't changed!";
         }
-        Forward forward = new Forward("/profile/user");
-        forward.getAttributes().put("message", msg);
-        return forward;
+        ForwardObject forwardObject = new ForwardObject("/profile/user");
+        forwardObject.getAttributes().put("message", msg);
+        return forwardObject;
     }
 /*    @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {

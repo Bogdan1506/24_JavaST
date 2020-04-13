@@ -22,7 +22,7 @@ public class ItemCreateSessionAction extends ClientAction {
     private static int counter;
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();
         Product product = productService.findById(id);
@@ -43,6 +43,6 @@ public class ItemCreateSessionAction extends ClientAction {
         }
         cart.add(item);
         logger.debug("session cart={}", cart);
-        return new Forward("/product/menu");
+        return new ForwardObject("/product/menu");
     }
 }

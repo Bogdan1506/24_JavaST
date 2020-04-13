@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ProfileDeleteAction extends ClientAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("/profile/delete");
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        ForwardObject forwardObject = new ForwardObject("/profile/delete");
         int userId = Integer.parseInt(request.getParameter("id"));
         ProfileService profileService = new ProfileServiceImpl();
         profileService.delete(userId);
-        forward.getAttributes().put("id", userId);
-        return forward;
+        forwardObject.getAttributes().put("id", userId);
+        return forwardObject;
     }
 }

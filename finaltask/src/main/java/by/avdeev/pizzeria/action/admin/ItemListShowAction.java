@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ItemListShowAction extends AdminAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         ItemService itemService = factory.getItemService();
         List<Item> items = itemService.findAll();
         request.setAttribute("items", items);

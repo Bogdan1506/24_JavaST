@@ -18,7 +18,7 @@ public class ItemRemoveAction extends ClientAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
         List<Item> cart = (List<Item>) session.getAttribute("cart");
@@ -34,6 +34,6 @@ public class ItemRemoveAction extends ClientAction {
             ListIterator<Item> itemIterator = cart.listIterator();
             cart.removeIf(item -> item.getId() == id);
         }
-        return new Forward("/");
+        return new ForwardObject("/");
     }
 }

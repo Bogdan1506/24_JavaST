@@ -14,14 +14,14 @@ public class ChangeRoleAction extends AdminAction {
     private final Logger logger = LogManager.getLogger();
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         int id = Integer.parseInt(request.getParameter("id"));
         Role role = Role.valueOf(request.getParameter("role").toUpperCase());
         logger.debug("role={}", role);
         UserService userService = factory.getUserService();
         userService.changeRole(role, id);
-        Forward forward = new Forward("/user/list");
-        forward.getAttributes().put("message", "Role is changed!");
-        return forward;
+        ForwardObject forwardObject = new ForwardObject("/user/list");
+        forwardObject.getAttributes().put("message", "Role is changed!");
+        return forwardObject;
     }
 }

@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 public class ProfileCreateAction extends ClientAction {
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
-        Forward forward = new Forward("/");
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+        ForwardObject forwardObject = new ForwardObject("/");
         Validator<Profile> validator = new ProfileValidator();
         Profile profile = validator.validate(request);
         ProfileService profileService = factory.getProfileService();
         profileService.create(profile);
-        forward.getAttributes().put("message", "User is signed up!");
-        return forward;
+        forwardObject.getAttributes().put("message", "User is signed up!");
+        return forwardObject;
     }
 }

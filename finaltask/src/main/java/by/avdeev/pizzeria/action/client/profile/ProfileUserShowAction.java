@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 public class ProfileUserShowAction extends ClientAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         HttpSession session = request.getSession();
         Profile profile;
         ProfileService profileService = factory.getProfileService();

@@ -8,10 +8,10 @@ import javax.servlet.http.HttpSession;
 
 public class UserSignOutAction extends ClientAction {
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) {
-        Forward forward = new Forward("/");
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) {
+        ForwardObject forwardObject = new ForwardObject("/");
         HttpSession session = request.getSession();
         session.invalidate();
-        return forward;
+        return forwardObject;
     }
 }
