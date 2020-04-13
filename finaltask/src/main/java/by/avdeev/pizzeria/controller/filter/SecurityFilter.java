@@ -26,6 +26,18 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession(false);
         Action action = (Action) httpServletRequest.getAttribute("action");
+        class ProcessHandler {
+            void doProcess() throws IOException, ServletException {
+                if (action.getRoles().contains(Role.UNAUTHORIZED)) {
+                    logger.debug("access is confirmed");
+                    filterChain.doFilter(servletRequest, servletResponse);
+                } else {
+                    logger.debug("access is denied");
+                    httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
+                }
+            }
+        }
+        ProcessHandler processHandler = new ProcessHandler();
         if (session != null) {
             logger.debug("session is not null");
             User user = (User) session.getAttribute("user");
@@ -35,33 +47,15 @@ public class SecurityFilter implements Filter {
                 if (action.getRoles().contains(role)) {
                     filterChain.doFilter(servletRequest, servletResponse);
                 } else {
-                    if (action.getRoles().contains(Role.UNAUTHORIZED)) {
-                        logger.debug("session is not null and filter goes");
-                        filterChain.doFilter(servletRequest, servletResponse);
-                    } else {
-                        logger.debug("session is not null and wrong request");
-                        httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
-                    }
+                    processHandler.doProcess();
                 }
             } else {
-                if (action.getRoles().contains(Role.UNAUTHORIZED)) {
-                    logger.debug("session is not null and filter goes");
-                    filterChain.doFilter(servletRequest, servletResponse);
-                } else {
-                    logger.debug("session is not null and wrong request");
-                    httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
-                }
+                processHandler.doProcess();
             }
         } else {
-            logger.debug("session is null");
-            if (action.getRoles().contains(Role.UNAUTHORIZED)) {
-                logger.debug("session is null and filter goes");
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
-                logger.debug("session is null and wrong request");
-                httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
-            }
+            processHandler.doProcess();
         }
     }
 }
+
 
