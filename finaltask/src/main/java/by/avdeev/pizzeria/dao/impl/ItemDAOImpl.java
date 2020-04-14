@@ -28,8 +28,8 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
                 int id = rs.getInt("id");
                 Product product = new Product();
                 product.setId(rs.getInt("product_id"));
-                Size size = Size.values()[rs.getInt("size_id") - 1]; //todo sql alter
-                Dough dough = Dough.values()[rs.getInt("dough_id") - 1];
+                Size size = Size.getById(rs.getInt("size_id"));
+                Dough dough = Dough.getById(rs.getInt("dough_id"));
                 items.add(new Item(id, product, dough, size));
             }
         } catch (SQLException e) {

@@ -13,5 +13,7 @@ public enum Dough {
         return doughId;
     }
 
-    //TODO add getById()
+    public static Dough getById(int id) {
+        return Dough.values()[id - 1];
+    }
 }

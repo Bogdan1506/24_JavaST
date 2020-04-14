@@ -15,7 +15,7 @@
 
 <div class="container">
     <h2>Sign-in form</h2>
-    <c:url value="login" var="signIn"/>
+    <c:url value="/user/login" var="signIn"/>
     <form action="${signIn}" class="was-validated" name="signIn" method="post">
         <div class="form-group">
             <label for="login">Login:</label>

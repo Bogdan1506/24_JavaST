@@ -16,6 +16,8 @@ import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO<User> {
     private static Logger logger = LogManager.getLogger();
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -27,8 +29,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String login = rs.getString("login");
-                String password = rs.getString("password");
+                String login = rs.getString(LOGIN);
+                String password = rs.getString(PASSWORD);
                 int roleInt = rs.getInt("role");
                 Role role = Role.getByIdentity(roleInt);
                 User user = new User(id, login, password, role);
@@ -49,8 +51,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
+                user.setLogin(rs.getString(LOGIN));
+                user.setPassword(rs.getString(PASSWORD));
                 int roleInt = rs.getInt("role");
                 Role role = Role.getByIdentity(roleInt);
                 user.setRole(role);
@@ -116,12 +118,12 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                login = rs.getString("login");
+                login = rs.getString(LOGIN);
                 if (login != null) {
                     user = new User();
                     user.setLogin(login);
                     user.setId(rs.getInt("id"));
-                    user.setPassword(rs.getString("password"));
+                    user.setPassword(rs.getString(PASSWORD));
                     int roleInt = rs.getInt("role");
                     Role role = Role.getByIdentity(roleInt);
                     user.setRole(role);

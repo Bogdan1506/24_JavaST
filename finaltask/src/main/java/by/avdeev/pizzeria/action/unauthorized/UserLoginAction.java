@@ -1,5 +1,6 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
+import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
@@ -19,7 +20,13 @@ public class UserLoginAction extends UnauthorizedUserAction {
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
         if (user != null && user.getPassword().equals(password)) {
-            ForwardObject forwardObject = new ForwardObject("/");
+            Action action = (Action) session.getAttribute("actionDenied");
+            ForwardObject forwardObject;
+            if (action == null) {
+                forwardObject = new ForwardObject("/");
+            } else {
+                forwardObject = new ForwardObject(action.getName());
+            }
             forwardObject.getAttributes().put("message", "User is authorized!");
             session.setAttribute("user", user);
             ProfileService profileService = factory.getProfileService();

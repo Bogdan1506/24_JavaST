@@ -1,6 +1,7 @@
-package by.avdeev.pizzeria.action.client.item;
+package by.avdeev.pizzeria.action.unauthorized.item;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
+import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.entity.Dough;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.Product;
@@ -17,12 +18,13 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCreateSessionAction extends ClientAction {
+public class ItemCreateSessionAction extends UnauthorizedUserAction {
     private static Logger logger = LogManager.getLogger();
     private static int counter;
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+        logger.debug("product id={}", request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();
         Product product = productService.findById(id);

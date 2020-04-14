@@ -7,7 +7,7 @@
     <title>Menu</title>
 </head>
 <body>
-<jsp:include page="../main-bar.jsp"/>
+<jsp:include page="../element/main-bar.jsp"/>
 <jsp:include page="menu-bar.jsp"/>
 <div class="row">
     <div class="col-sm-10">
@@ -66,6 +66,7 @@
                                 <br/>
                                 <input type="hidden" name="id" value="${temp.id}">
                                 <input type="submit" class="btn btn-light" value="Add to cart">
+                            </div>
                         </form>
                     </td>
                     </c:forEach>
@@ -77,7 +78,7 @@
         <jsp:include page="../item/list.jsp"/>
     </div>
 </div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../element/footer.jsp"/>
 </body>
 </html>
 

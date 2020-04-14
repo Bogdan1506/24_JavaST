@@ -18,4 +18,8 @@ public enum Size {
     public double getCoefficient() {
         return coefficient;
     }
+
+    public static Size getById(int id) {
+        return Size.values()[id - 1];
+    }
 }

@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../main-bar.jsp"/>
+<jsp:include page="../element/main-bar.jsp"/>
 <div class="container">
     <h2>Profile Update Form</h2>
     <c:url value="/profile/update" var="profileUpdate"/>
@@ -62,7 +62,7 @@
         <button type="submit" class="btn btn-danger">Change</button>
     </form>
 </div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../element/footer.jsp"/>
 </body>
 </html>
 <script>

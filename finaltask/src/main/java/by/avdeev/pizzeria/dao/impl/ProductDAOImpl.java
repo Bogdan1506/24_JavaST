@@ -25,16 +25,20 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 int id = rs.getInt("id");
                 Product.Type type = Product.Type.valueOf(rs.getString("type").toUpperCase());
                 logger.debug("type={}", type);
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                double price = rs.getDouble("price");
-                String picture = rs.getString("picture");
-                products.add(new Product(id, type, name, description, price, picture));
+                fill(products, rs, id, type);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
         return products;
+    }
+
+    private void fill(List<Product> products, ResultSet rs, int id, Product.Type type) throws SQLException {
+        String name = rs.getString("name");
+        String description = rs.getString("description");
+        double price = rs.getDouble("price");
+        String picture = rs.getString("picture");
+        products.add(new Product(id, type, name, description, price, picture));
     }
 
     @Override
@@ -116,11 +120,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                double price = rs.getDouble("price");
-                String picture = rs.getString("picture");
-                products.add(new Product(id, type, name, description, price, picture));
+                fill(products, rs, id, type);
             }
         } catch (SQLException e) {
             throw new DAOException(e);

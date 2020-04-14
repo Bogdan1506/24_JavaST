@@ -1,3 +1,4 @@
 
-s
-java:S1192+"WDefine a constant instead of duplicating this literal "/WEB-INF/jsp/error.jsp" 3 times.(¿³©a8“ÕßÖ–.
+X	java:S125'"<This block of commented-out lines of code should be removed.(´ˆ´Â8ìç›­—.
+^
+java:S2441%"<Make "Action" serializable or don't store it in the session.(¯±Ì’ýÿÿÿÿ8Æë«­—.

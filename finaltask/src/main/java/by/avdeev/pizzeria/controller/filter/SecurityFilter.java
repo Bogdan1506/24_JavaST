@@ -13,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -33,10 +34,17 @@ public class SecurityFilter implements Filter {
                     filterChain.doFilter(servletRequest, servletResponse);
                 } else {
                     logger.debug("access is denied");
-                    httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
+                    session.setAttribute("actionDenied", action);
+                    logger.debug("id product={}", httpServletRequest.getParameter("id"));
+//                    httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/user/sign-in.jsp").forward(servletRequest, servletResponse);
+//                    httpServletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
+//                    session.setAttribute("productId", httpServletRequest.getParameter("id"));
+                    HttpServletResponse response = (HttpServletResponse) servletResponse;
+                    response.sendRedirect("/user/sign-in");
                 }
             }
         }
+        logger.debug("after");
         ProcessHandler processHandler = new ProcessHandler();
         if (session != null) {
             logger.debug("session is not null");

@@ -24,10 +24,14 @@ public class ActionURIFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String uri = httpServletRequest.getRequestURI();
         logger.debug("uri={}", uri);
-        Action action = commandProvider.receiveCommand(uri);
-        action.setName(uri);
-        httpServletRequest.setAttribute("action", action);
-        logger.debug("action={}", action);
-        filterChain.doFilter(servletRequest, servletResponse);
+        try {
+            Action action = commandProvider.receiveCommand(uri);
+            action.setName(uri);
+            httpServletRequest.setAttribute("action", action);
+            logger.debug("action={}", action);
+            filterChain.doFilter(servletRequest, servletResponse);
+        } catch (NullPointerException e) {
+            httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(servletRequest, servletResponse);
+        }
     }
 }

@@ -27,12 +27,8 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 int userId = rs.getInt("user_id");
                 user.setId(userId);
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String address = rs.getString("address");
-                profiles.add(new Profile(id, user, name, surname, email, phone, address));
+                Profile profile = fill(rs, id);
+                profile.setUser(user);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -51,12 +47,8 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 User user = new User();
                 int userId = rs.getInt("user_id");
                 user.setId(userId);
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String address = rs.getString("address");
-                profile = new Profile(id, user, name, surname, email, phone, address);
+                profile = fill(rs, id);
+                profile.setUser(user);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -128,16 +120,19 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String surname = rs.getString("surname");
-            String email = rs.getString("email");
-            String phone = rs.getString("phone");
-            String address = rs.getString("address");
-            profile = new Profile(id, name, surname, email, phone, address);
+            profile = fill(rs, userId);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
         return profile;
+    }
+
+    private Profile fill(ResultSet rs, int id) throws SQLException {
+        String name = rs.getString("name");
+        String surname = rs.getString("surname");
+        String email = rs.getString("email");
+        String phone = rs.getString("phone");
+        String address = rs.getString("address");
+        return new Profile(id, name, surname, email, phone, address);
     }
 }

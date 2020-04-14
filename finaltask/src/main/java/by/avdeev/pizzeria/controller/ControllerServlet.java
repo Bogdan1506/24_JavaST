@@ -47,6 +47,7 @@ public class ControllerServlet extends HttpServlet {
                     String key = pair.getKey();
                     request.setAttribute(key, attributes.get(key));
                 }
+                logger.debug("attributes session ={}", attributes);
                 session.removeAttribute(REDIRECTED_DATA);
             }
         }
@@ -74,7 +75,7 @@ public class ControllerServlet extends HttpServlet {
             try {
                 getServletContext().getRequestDispatcher(forwardPage).forward(request, response);
             } catch (IllegalArgumentException e) {
-                getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(request, response);
             }
         }
     }

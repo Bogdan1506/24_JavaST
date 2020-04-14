@@ -1,6 +1,7 @@
-package by.avdeev.pizzeria.action.client.item;
+package by.avdeev.pizzeria.action.unauthorized.item;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
+import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ItemCreateAction extends ClientAction {
+public class ItemCreateAction extends UnauthorizedUserAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override

@@ -1,6 +1,7 @@
-package by.avdeev.pizzeria.action.client.item;
+package by.avdeev.pizzeria.action.unauthorized.item;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
+import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ItemRemoveAction extends ClientAction {
+public class ItemRemoveAction extends UnauthorizedUserAction {
     private static Logger logger = LogManager.getLogger();
 
     @Override
