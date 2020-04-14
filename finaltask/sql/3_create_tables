@@ -57,10 +57,10 @@ CREATE TABLE `size`
 
 CREATE TABLE `item`
 (
-    `id`       INT NOT NULL AUTO_INCREMENT,
+    `id`         INT NOT NULL AUTO_INCREMENT,
     `product_id` INT NOT NULL,
-    `size_id`  INT NOT NULL,
-    `dough_id` INT,
+    `size_id`    INT NOT NULL,
+    `dough_id`   INT,
     CONSTRAINT PRIMARY KEY `PK_item` (`id`),
     FOREIGN KEY `FK_item_product` (`product_id`)
         REFERENCES `product` (`id`),
@@ -68,25 +68,36 @@ CREATE TABLE `item`
         REFERENCES `dough` (`id`)
 );
 
-CREATE TABLE `order_position`
+CREATE TABLE `order`
 (
     `id`      INT  NOT NULL AUTO_INCREMENT,
     `user_id` INT  NOT NULL,
     `date`    DATE NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
-    FOREIGN KEY `FK_order_position_user` (`id`)
+    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
+    FOREIGN KEY `FK_order_user` (`id`)
         REFERENCES `user` (`id`)
 );
 
-CREATE TABLE `order`
+CREATE TABLE `order_position`
 (
-    `id`                INT NOT NULL AUTO_INCREMENT,
-    `item_id`           INT NOT NULL,
-    `order_position_id` INT NOT NULL,
-    `price`             INT NOT NULL,
-    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
-    FOREIGN KEY `FK_order_item` (`item_id`)
+    `id`       INT NOT NULL AUTO_INCREMENT,
+    `item_id`  INT NOT NULL,
+    `order_id` INT NOT NULL,
+    `price`    INT NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
+    FOREIGN KEY `FK_order_position_item` (`item_id`)
         REFERENCES `item` (`id`),
-    FOREIGN KEY `FK_order_order_position` (`order_position_id`)
-        REFERENCES `order_position` (`id`)
+    FOREIGN KEY `FK_order_position_order` (`order_id`)
+        REFERENCES `order` (`id`)
+);
+
+CREATE TABLE `delivery`
+(
+    `id`       INT                   NOT NULL AUTO_INCREMENT,
+    `order_id` INT                   NOT NULL,
+    `date`     DATE                  NOT NULL,
+    `payment`  ENUM ('cash', 'card') NOT NULL default 'cash',
+    CONSTRAINT PRIMARY KEY `PK_delivery` (`id`),
+    FOREIGN KEY `FK_delivery_order` (`order_id`)
+        REFERENCES `order` (`id`)
 );
