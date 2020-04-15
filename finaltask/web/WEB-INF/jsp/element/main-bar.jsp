@@ -10,6 +10,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
 
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -26,16 +28,25 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/bar.css">
+
 </head>
 <body>
 <link rel="icon" href="data:,">
 
-<div class="container-fluid">
+    <div class="header">
+        <img src="../../static/img/header.jpg" alt="">
+    </div>
+<%--<div class="container-fluid">
     <div class="jumbotron text-center p-3 my-3 bg-light text-black" style="margin-bottom:0">
         <h1 class="display-1">Pizza</h1>
-        <%--        <img src="img/pic.jpg" class="rounded-circle" alt="Pizza bar" width="304" height="236">--%>
-    </div>
+                <img src="static/img/pic.png" class="rounded-circle" alt="Pizza bar" width="304" height="236">
+    </div>--%>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <a class="navbar-brand" href="#">Pizza</a>
         <ul class="navbar-nav">

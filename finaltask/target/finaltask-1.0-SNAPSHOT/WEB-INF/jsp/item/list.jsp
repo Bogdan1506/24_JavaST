@@ -53,8 +53,8 @@
         </tbody>
     </table>
     <c:if test="${not empty cart}">
-        <c:url value="/item/list/order" var="order"/>
-        <form action="${order}">
+        <c:url value="/item/list/orderPosition" var="orderPosition"/>
+        <form action="${orderPosition}">
             <input class="btn btn-warning" type="submit" value="Order">
         </form>
     </c:if>

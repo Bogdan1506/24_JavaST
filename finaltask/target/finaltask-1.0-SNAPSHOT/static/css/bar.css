@@ -1,0 +1,36 @@
+.header {
+    background-color: white;
+    text-align: center;
+}
+p {
+    color: red;
+}
+/*ul {
+    list-style-type: none;
+    overflow: hidden;
+    margin: 10px;
+    padding: 5px;
+    background-color: #009e00;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    padding: 10px 10px;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+li a:hover {
+    background-color: darkgreen;
+}
+
+.right {
+    float: right;
+}*/
+
