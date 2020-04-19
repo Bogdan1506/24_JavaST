@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-    <h2>Sign-up form</h2>
+    <h2>Sign up form</h2>
     <c:url value="/user/register" var="registerUser"/>
     <form action="${registerUser}" class="was-validated" name="register" method="post">
         <div class="form-group">
@@ -43,12 +43,16 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <c:url value="/user/sign-in" var="userSignIn"/>
+    <form action="${userSignIn}">
+        <button type="submit" class="btn btn-warning float-right">Cancel</button>
+    </form>
     <c:if test="${not empty message}">
-    <div class="alert alert-danger">
-        <strong>
-            ${message}
-        </strong> Try again.
-        </c:if>
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>${message}</strong>
+        </div>
+    </c:if>
 </div>
 </body>
 </html>
