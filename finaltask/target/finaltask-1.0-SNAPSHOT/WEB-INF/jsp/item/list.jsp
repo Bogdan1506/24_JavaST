@@ -24,7 +24,7 @@
     </c:choose>
     <c:forEach var="temp" items="${cart}">
         <p>
-            <img alt="" src="../../../static/img/${temp.product.name}.jpg" width="60" height="60">
+            <img alt="" src="${temp.product.picture}" width="60" height="60">
             <c:out value="${temp.product.name}"/>
             <c:out value="${temp.dough}"/>
             <c:out value="${temp.size}"/>

@@ -1,0 +1,33 @@
+
+R
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8®‚ŸÃ™.
+Q
+java:S1128"5Remove this unused import 'java.io.FileOutputStream'.(˜«ªg8Î±ÜÂ™.
+a
+java:S2147;"DCombine this catch with the one at line 57, which has the same body.(”ı¾8Î±ÜÂ™.
+c
+java:S1075("ARefactor your code to get this URI from a customizable parameter.(ÏÂ‚Ïùÿÿÿÿ8Î±ÜÂ™.
+E
+java:S1148<"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Î±ÜÂ™.
+M
+java:S1128"0Remove this unused import 'java.nio.file.Paths'.(áè°¯8Î±ÜÂ™.
+X
+java:S1128";Remove this unused import 'javax.servlet.ServletException'.(Š‰™Œ8—œÃ™.
+d
+java:S1128"BRemove this unused import 'java.nio.channels.ReadableByteChannel'.(î–ä°ûÿÿÿÿ8Î±ÜÂ™.
+Y
+java:S1128"7Remove this unused import 'java.nio.channels.Channels'.( Ù™ıÿÿÿÿ8Î±ÜÂ™.
+E
+java:S1148:"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Î±ÜÂ™.
+c
+java:S1075!"ARefactor your code to get this URI from a customizable parameter.(ÈĞ“Ïÿÿÿÿÿ8Î±ÜÂ™.
+_
+java:S1128"BRemove this unused import 'java.nio.channels.WritableByteChannel'.(¬ÌÎ³8Î±ÜÂ™.
+Q
+java:S1128"4Remove this unused import 'javax.servlet.http.Part'.(ó•™¬8Î±ÜÂ™.
+L
+java:S1128"/Remove this unused import 'java.nio.file.Path'.(×²êÂ8Î±ÜÂ™.
+b
+java:S1128"ERemove this unused import 'javax.servlet.annotation.MultipartConfig'.(Æ‡Ä»8ÄûØÂ™.
+]	java:S125$"<This block of commented-out lines of code should be removed.(©Ô›ıÿÿÿÿ8ÍÄäÃ™.
+]	java:S125>"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8ÍÄäÃ™.

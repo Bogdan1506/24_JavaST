@@ -16,7 +16,7 @@
                 <c:forEach var="temp" items="${products}">
                     <div class="col-sm-4 mt-5">
                         <p>
-                            <img alt="" src="../../../static/img/${temp.name}.jpg" width="300" height="300">
+                            <img alt="" src="${temp.picture}" width="300" height="300">
                         </p>
                         <h3>
                             <c:out value="${temp.name}"/>
@@ -69,13 +69,13 @@
                         </c:if>
                         <c:if test="${sessionScope.user.role eq 'CREATOR'}">
                             <c:url var="removePosition" value="/remove"/>
-                            <c:url var="editPosition" value="/edit"/>
-                            <%--                            todo--%>
+                            <c:url var="editPosition" value="/product/form"/>
                             <div class="btn-group">
                                 <form action="${removePosition}">
                                     <button type="submit" class="btn btn-danger btn-lg">Remove</button>
                                 </form>
                                 <form action="${editPosition}">
+                                    <input type="hidden" name="id" value="${temp.id}">
                                     <button type="submit" class="btn btn-primary btn-lg">Edit</button>
                                 </form>
                             </div>

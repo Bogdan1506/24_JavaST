@@ -295,21 +295,19 @@ j
 :src/main/java/by/avdeev/pizzeria/service/OrderService.java,4\a\4a34cd675ffe775604efd0042d636ea0724b2a86
 I
 src/java1/Controller.java,8\b\8ba57bfa10815206fc6e20dbc61c3696c6eb2aad
-e
-5target/finaltask-1.0-SNAPSHOT/static/css/main-bar.css,4\1\41e7d25e5b9516a04c0a552682016180e65bf9f5
-K
-web/static/css/main-bar.css,c\1\c18df6fdb66ef25784db96d969bbb5e575da4f09
-K
-web/static/css/menu-bar.css,3\f\3fcd95288213bb3f32395c0f278bd26dc326356e
-O
-web/static/css/new-main-bar.css,6\2\62cfafb0d89b2558c71bca8246d17f9d9d053d33
 R
 "web/WEB-INF/jsp/element/navbar.jsp,9\b\9b7fcd276e2d9c431fdcac2d4f1d32e660858256
-e
-5target/finaltask-1.0-SNAPSHOT/static/css/menu-bar.css,a\1\a10ab80967eb062b1238aaa6d6039cf685167022
-i
-9target/finaltask-1.0-SNAPSHOT/static/css/new-main-bar.css,a\a\aa22ab4f9e72800a84e2caa0fc3cf10e02e02a98
 l
 <target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/navbar.jsp,b\2\b2241dba61438b62bd91642c3c146b77e8013133
 U
 %web/WEB-INF/jsp/element/admin-bar.jsp,a\0\a04c9b7a6288fba83bb2962016dc7c24fc8dd91a
+o
+?target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/admin-bar.jsp,3\f\3f02148b7b235b8d79fb6a29b1901f8fb1dff50f
+r
+Bsrc/main/java/by/avdeev/pizzeria/action/creator/CreatorAction.java,2\b\2b5ee6d353d8b7e10ab799bcc6ce07498e0e10b7
+P
+ web/WEB-INF/jsp/product/form.jsp,3\c\3c486d742373a10825b702ce953e2557a8882872
+v
+Fsrc/main/java/by/avdeev/pizzeria/action/creator/ProductFormAction.java,f\c\fc2cad63c791260c50362d31ea3c53bc3acd62b4
+v
+Fsrc/main/java/by/avdeev/pizzeria/action/creator/ProductEditAction.java,7\c\7cc0555b7e0fba718d5a3689149f33d2fd7d608d

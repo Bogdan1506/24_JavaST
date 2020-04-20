@@ -60,7 +60,7 @@ public class Item implements Entity {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", goods=" + product +
+                ", product=" + product +
                 ", dough=" + dough +
                 ", size=" + size +
                 '}';
