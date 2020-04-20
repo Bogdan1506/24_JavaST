@@ -9,8 +9,8 @@
 </head>
 <body>
 <jsp:include page="../element/navbar.jsp"/>
+<jsp:include page="../element/admin-bar.jsp"/>
 <div class="container mt-3">
-    <h1 style="align-content: center">User list</h1>
     <table class="table table-bordered" id="userTable">
         <thead class="thead-light">
         <tr>

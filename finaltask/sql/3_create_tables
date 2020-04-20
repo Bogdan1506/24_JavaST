@@ -36,7 +36,6 @@ CREATE TABLE `product`
     `name`        VARCHAR(25)                      NOT NULL UNIQUE,
     `description` VARCHAR(255)                     NOT NULL,
     `price`       DOUBLE                           NOT NULL,
-    `picture`     VARCHAR(350)                     NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_goods` (`id`)
 );
 

@@ -44,7 +44,7 @@
         <button type="submit" class="btn btn-warning float-right">Cancel</button>
     </form>
     <c:if test="${not empty message}">
-    <div class="alert alert-success alert-dismissible">
+    <div class="alert alert-danger alert-dismissible mt-5">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>${message}</strong>
     </div>

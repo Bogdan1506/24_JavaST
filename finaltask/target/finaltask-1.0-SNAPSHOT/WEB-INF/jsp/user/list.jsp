@@ -8,9 +8,9 @@
 
 </head>
 <body>
-<jsp:include page="../element/main-bar.jsp"/>
+<jsp:include page="../element/navbar.jsp"/>
+<jsp:include page="../element/admin-bar.jsp"/>
 <div class="container mt-3">
-    <h1 style="align-content: center">User list</h1>
     <table class="table table-bordered" id="userTable">
         <thead class="thead-light">
         <tr>
@@ -51,17 +51,6 @@
     </table>
 </div>
 <jsp:include page="../element/footer.jsp"/>
-<%--<script>
-    $(document).ready(function () {
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>--%>
-
 <script>
     $(document).ready(function () {
         $('#userTable').DataTable();

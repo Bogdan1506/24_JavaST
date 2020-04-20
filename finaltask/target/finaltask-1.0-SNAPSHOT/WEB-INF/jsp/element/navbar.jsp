@@ -19,7 +19,8 @@
 
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Menu</a>
+                <c:url var="menu" value="/"/>
+                <a class="nav-link" href="${menu}">Menu</a>
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
@@ -44,7 +45,7 @@
             </c:choose>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <c:url value="/user/list" var="users"/>
-                <a class="nav-link" href="${users}">Users</a>
+                <a class="nav-link" href="${users}">Abilities</a>
             </c:if>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">

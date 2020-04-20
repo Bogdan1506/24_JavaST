@@ -261,14 +261,10 @@ k
 ;target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/error.jsp,5\2\520cce156db0b51aa825df759f9bd2d1a38d2f7b
 l
 <target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/footer.jsp,9\5\9598931c2fe9f93758ac7184678791b3f29e9bba
-n
->target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/main-bar.jsp,6\b\6b9f1a6bef4e60676599ca6294128027d242d80a
 Q
 !web/WEB-INF/jsp/element/error.jsp,1\a\1a4bbf0df270fbfd28d40f50f1767e86cae43a3c
 R
 "web/WEB-INF/jsp/element/footer.jsp,5\c\5c265ce0c5ec4203f40ed28c56622ba5e637cd01
-T
-$web/WEB-INF/jsp/element/main-bar.jsp,b\f\bf1f5db9ce058219e9778a2cd6c270a7000afac8
 m
 =src/main/java/by/avdeev/pizzeria/service/StandardService.java,5\b\5b2dd1e57b766e4a7ba8beb7990ce6aabbfd5b02
 v
@@ -297,11 +293,23 @@ r
 Bsrc/main/java/by/avdeev/pizzeria/service/OrderPositionService.java,4\5\4530bff9dfb237907fdedb80904b8819d49ca53d
 j
 :src/main/java/by/avdeev/pizzeria/service/OrderService.java,4\a\4a34cd675ffe775604efd0042d636ea0724b2a86
+I
+src/java1/Controller.java,8\b\8ba57bfa10815206fc6e20dbc61c3696c6eb2aad
+e
+5target/finaltask-1.0-SNAPSHOT/static/css/main-bar.css,4\1\41e7d25e5b9516a04c0a552682016180e65bf9f5
+K
+web/static/css/main-bar.css,c\1\c18df6fdb66ef25784db96d969bbb5e575da4f09
+K
+web/static/css/menu-bar.css,3\f\3fcd95288213bb3f32395c0f278bd26dc326356e
 O
-web/WEB-INF/jsp/element/bar.jsp,1\1\11f2ddaa2b651c894a14aaec49bc2e390de556da
-O
-web/WEB-INF/jsp/element/bar.css,9\a\9a8e4e7aaa6c95f6d59259927487e5af34a57b05
-=
-web/test.html,a\8\a8de28d6d69b98a7e07fb7ebc5836b9daa403b95
-=
-web/index.jsp,9\f\9f198ed450f32e45b10ec3c2b1406e609b4a96cd
+web/static/css/new-main-bar.css,6\2\62cfafb0d89b2558c71bca8246d17f9d9d053d33
+R
+"web/WEB-INF/jsp/element/navbar.jsp,9\b\9b7fcd276e2d9c431fdcac2d4f1d32e660858256
+e
+5target/finaltask-1.0-SNAPSHOT/static/css/menu-bar.css,a\1\a10ab80967eb062b1238aaa6d6039cf685167022
+i
+9target/finaltask-1.0-SNAPSHOT/static/css/new-main-bar.css,a\a\aa22ab4f9e72800a84e2caa0fc3cf10e02e02a98
+l
+<target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/element/navbar.jsp,b\2\b2241dba61438b62bd91642c3c146b77e8013133
+U
+%web/WEB-INF/jsp/element/admin-bar.jsp,a\0\a04c9b7a6288fba83bb2962016dc7c24fc8dd91a

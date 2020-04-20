@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-    <h2>Sign-in form</h2>
+    <h2>Sign in form</h2>
     <c:url value="/user/login" var="signIn"/>
     <form action="${signIn}" class="was-validated" name="signIn" method="post">
         <div class="form-group">
@@ -25,7 +25,8 @@
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password"
+                   required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
@@ -36,24 +37,17 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-<%--    <c:choose>
-        <c:when test="${not empty message}">
-            <a href="jsp/user/sign-up.jsp">Sign up</a>
-        </c:when>
-        <c:otherwise>
-            <a href="sign-up.jsp">Sign up</a>
-        </c:otherwise>
-    </c:choose>--%>
     <c:url value="/user/sign-up" var="signUp"/>
     <a href="${signUp}">Sign up</a>
-
+    <c:url value="/" var="menu"/>
+    <form action="${menu}">
+        <button type="submit" class="btn btn-warning float-right">Cancel</button>
+    </form>
     <c:if test="${not empty message}">
-    <div class="alert alert-danger">
-        <strong>
-            <td>${message}</td>
-        </strong> Try again.
-        </c:if>
+    <div class="alert alert-danger alert-dismissible mt-5">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>${message}</strong>
     </div>
-</div>
+    </c:if>
 </body>
 </html>
