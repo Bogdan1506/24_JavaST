@@ -18,11 +18,7 @@ public class ProfileValidator implements Validator<Profile> {
         Profile profile = new Profile();
         String parameter = request.getParameter("id");
         if (parameter != null) {
-            try {
-                profile.setId(Integer.parseInt(parameter));
-            } catch (NumberFormatException e) {
-                throw new IncorrectFormDataException("identity", parameter);
-            }
+            profile.setId(Integer.parseInt(parameter));
         }
         HttpSession session = request.getSession();
         if (session != null) {

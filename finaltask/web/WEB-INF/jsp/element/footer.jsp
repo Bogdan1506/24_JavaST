@@ -6,7 +6,7 @@
     <title>Footer</title>
 </head>
 <body>
-    <div class="alert alert-success alert-dismissible">
+    <div class="alert alert-success alert-dismissible mt-5">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>${message}</strong>
     </div>

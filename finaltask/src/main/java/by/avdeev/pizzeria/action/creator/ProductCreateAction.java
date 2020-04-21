@@ -12,16 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ProductEditAction extends CreatorAction {
+public class ProductCreateAction extends CreatorAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
         Validator<Product> validator = new ProductValidator();
         Product product = validator.validate(request);
         ProductService productService = factory.getProductService();
-        productService.update(product);
-        ForwardObject forwardObject = new ForwardObject("/product/edit-form");
-        forwardObject.getAttributes().put("id",Integer.parseInt(request.getParameter("id")));
-        forwardObject.getAttributes().put("message", "Changed!");
+        productService.create(product);
+        ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+        forwardObject.getAttributes().put("message", "Product is created!");
         return forwardObject;
     }
 }

@@ -12,11 +12,7 @@ public class ProductValidator implements Validator<Product> {
         Product product = new Product();
         String parameter = request.getParameter("id");
         if (parameter != null) {
-            try {
-                product.setId(Integer.parseInt(parameter));
-            } catch (NumberFormatException e) {
-                throw new IncorrectFormDataException("identity", parameter);
-            }
+            product.setId(Integer.parseInt(parameter));
         }
         parameter = request.getParameter("name");
         if (parameter != null && !parameter.isEmpty()) {

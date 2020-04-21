@@ -99,8 +99,9 @@ public class Product implements Entity {
 
     @Override
     public String toString() {
-        return "Goods{" +
+        return "Product{" +
                 "id=" + id +
+                ", type=" + type +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +

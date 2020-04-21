@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ProductFormAction extends CreatorAction {
+public class ProductEditFormAction extends CreatorAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         ProductService productService = factory.getProductService();
         int id;
-        if (request.getParameter("id") == null) {
-            HttpSession session = request.getSession();
-            id = (int) session.getAttribute("id");
+        HttpSession session = request.getSession(false);
+        if (request.getParameter("id") == null && session != null) {
+            id = (int) request.getAttribute("id");
         } else {
             id = Integer.parseInt(request.getParameter("id"));
         }
