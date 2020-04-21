@@ -43,6 +43,11 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
+    public List<User> findAll(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public User findById(int id) throws DAOException {
         User user = new User();
         user.setId(id);

@@ -18,6 +18,11 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
+    public List<Profile> findAll(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public List<Profile> findAll() throws DAOException {
         List<Profile> profiles = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {

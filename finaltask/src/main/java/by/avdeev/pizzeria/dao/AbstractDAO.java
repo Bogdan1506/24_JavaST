@@ -28,6 +28,8 @@ public abstract class AbstractDAO<T extends Entity> {
 
     public abstract List<T> findAll() throws DAOException;
 
+    public abstract List<T> findAll(int begin, int end) throws DAOException;
+
     public abstract T findById(int id) throws DAOException;
 
     public abstract boolean delete(int id) throws DAOException;

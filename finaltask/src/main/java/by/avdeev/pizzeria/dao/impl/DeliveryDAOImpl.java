@@ -36,6 +36,11 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
+    public List<Delivery> findAll(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public Delivery findById(int id) throws DAOException {
         Delivery delivery = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(

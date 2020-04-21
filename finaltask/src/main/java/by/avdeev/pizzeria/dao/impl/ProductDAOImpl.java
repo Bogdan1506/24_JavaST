@@ -17,6 +17,11 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
+    public List<Product> findAll(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public List<Product> findAll() throws DAOException {
         List<Product> products = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {

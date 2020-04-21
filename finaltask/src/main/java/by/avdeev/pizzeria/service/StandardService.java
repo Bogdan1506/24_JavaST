@@ -9,6 +9,8 @@ public interface StandardService<T extends Entity> {
 
     List<T> findAll() throws ServiceException;
 
+    List<T> findAll(int begin, int end) throws ServiceException;
+
     T findById(int id) throws ServiceException;
 
     boolean delete(int id) throws ServiceException;

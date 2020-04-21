@@ -17,12 +17,12 @@
 <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <c:url value="/product/pizzas" var="users"/>
-            <a class="nav-link active" href="${pizzas}">Users</a>
+            <c:url value="/user/list" var="users"/>
+            <a class="nav-link active" href="${users}">Users</a>
         </li>
         <li class="nav-item">
-            <c:url value="/product/sides" var="users"/>
-            <a class="nav-link" href="${sides}">Items</a>
+            <c:url value="/item/items" var="items"/>
+            <a class="nav-link" href="${items}">Items</a>
         </li>
         <li class="nav-item">
             <c:url value="/product/drinks" var="users"/>

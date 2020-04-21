@@ -3,6 +3,7 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
+import by.avdeev.pizzeria.action.admin.ItemListRemoveAction;
 import by.avdeev.pizzeria.action.admin.ItemListShowAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateFormAction;
@@ -73,6 +74,7 @@ public class CommandProvider {
         repository.put("/item/list/order", new ItemCreateAction());
         repository.put("/item/list/remove", new ItemRemoveAction());
         repository.put("/item/items", new ItemListShowAction());
+        repository.put("/item/items/remove", new ItemListRemoveAction());
     }
 
     public Action receiveCommand(String name) {

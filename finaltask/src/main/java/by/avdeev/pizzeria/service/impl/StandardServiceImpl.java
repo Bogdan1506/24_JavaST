@@ -36,6 +36,18 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
     }
 
     @Override
+    public List<T> findAll(int begin, int end) throws ServiceException {
+        AbstractDAO<T> dao = transaction.createDao(daoType);
+        List<T> resultList;
+        try {
+            resultList = dao.findAll(begin, end);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return resultList;
+    }
+
+    @Override
     public T findById(int id) throws ServiceException {
         AbstractDAO<T> dao = transaction.createDao(daoType);
         T entity;

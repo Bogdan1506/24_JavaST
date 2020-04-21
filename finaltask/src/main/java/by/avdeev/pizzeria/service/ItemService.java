@@ -9,6 +9,8 @@ public interface ItemService extends Service {
 
     List<Item> findAll() throws ServiceException;
 
+    List<Item> findAll(int begin, int end) throws ServiceException;
+
     Item findById(int id) throws ServiceException;
 
     boolean delete(int id) throws ServiceException;

@@ -14,6 +14,11 @@ import java.util.List;
 
 public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     @Override
+    public List<OrderPosition> findAll(int begin, int end) throws DAOException {
+        return null;
+    }
+
+    @Override
     public List<OrderPosition> findAll() throws DAOException {
         List<OrderPosition> orderPositions = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {

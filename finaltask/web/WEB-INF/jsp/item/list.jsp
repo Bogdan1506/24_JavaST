@@ -35,7 +35,7 @@
         </p>
     </c:forEach>
     <c:if test="${not empty cart}">
-        <c:url value="/item/list/orderPosition" var="orderPosition"/>
+        <c:url value="/item/list/order" var="orderPosition"/>
         <form action="${orderPosition}">
             <input class="btn btn-warning" type="submit" value="Order">
         </form>
