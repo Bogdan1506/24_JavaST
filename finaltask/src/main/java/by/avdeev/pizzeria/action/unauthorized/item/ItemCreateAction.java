@@ -27,6 +27,6 @@ public class ItemCreateAction extends UnauthorizedUserAction {
             logger.debug("for loop");
             itemService.create(item);
         }
-        return new ForwardObject("/"); //todo remake
+        return new ForwardObject("/delivery/form");
     }
 }

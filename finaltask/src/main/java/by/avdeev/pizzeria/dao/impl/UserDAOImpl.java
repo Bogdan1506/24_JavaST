@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.dao.impl;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
+import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -27,15 +28,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             Statement statement = connection.createStatement();
             String sql = "SELECT id, login, password, role FROM user";
             ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String login = rs.getString(LOGIN);
-                String password = rs.getString(PASSWORD);
-                int roleInt = rs.getInt("role");
-                Role role = Role.getByIdentity(roleInt);
-                User user = new User(id, login, password, role);
-                users.add(user);
-            }
+            fill(users, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -44,7 +37,26 @@ public class UserDAOImpl extends AbstractDAO<User> {
 
     @Override
     public List<User> findAll(int begin, int end) throws DAOException {
-        return null;
+        List<User> users = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery(String.format( "SELECT id, login, password, role FROM user WHERE id >= %d and id <= %d ORDER BY id", begin, end));
+            fill(users, rs);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return users;
+    }
+
+    private void fill(List<User> users, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String login = rs.getString(LOGIN);
+            String password = rs.getString(PASSWORD);
+            int roleInt = rs.getInt("role");
+            Role role = Role.getByIdentity(roleInt);
+            User user = new User(id, login, password, role);
+            users.add(user);
+        }
     }
 
     @Override

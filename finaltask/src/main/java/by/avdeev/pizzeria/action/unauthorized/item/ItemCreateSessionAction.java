@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ItemCreateSessionAction extends UnauthorizedUserAction {
     private static Logger logger = LogManager.getLogger();
-    private static int counter;
+    private static AtomicInteger counter = new AtomicInteger(1);
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
@@ -34,7 +35,7 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
             logger.debug("dough={}", doughPar);
             dough = Dough.valueOf(doughPar.toUpperCase());
         }
-        Item item = new Item(counter++, product, dough, size);
+        Item item = new Item(counter.getAndIncrement(), product, dough, size);
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
         List<Item> cart = (List<Item>) session.getAttribute("cart");

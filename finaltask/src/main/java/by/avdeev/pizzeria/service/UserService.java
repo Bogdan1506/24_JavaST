@@ -10,6 +10,8 @@ public interface UserService extends Service {
 
     List<User> findAll() throws ServiceException;
 
+    List<User> findAll(int begin, int end) throws ServiceException;
+
     User findById(int id) throws ServiceException;
 
     boolean delete(int id) throws ServiceException;

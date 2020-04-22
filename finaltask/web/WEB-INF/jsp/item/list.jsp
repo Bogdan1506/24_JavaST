@@ -10,34 +10,39 @@
 <div class="sticky-top pt-5">
     <p class="display-4">Cart</p>
     <c:choose>
-        <c:when test="${empty sessionScope.cart}">
-            <p style="color: red">Your cart is empty now</p>
-        </c:when>
-        <c:otherwise>
-            <p>
-                <c:url value="/item/list/remove" var="removeAll">
-                    <c:param name="id" value="all"/>
-                </c:url>
-                <a style="color: red" href="${removeAll}">Reset cart</a>
-            </p>
+    <c:when test="${empty sessionScope.cart}">
+        <p style="color: red">Your cart is empty now</p>
+    </c:when>
+    <c:otherwise>
+    <p>
+        <c:url value="/item/list/remove" var="removeAll">
+            <c:param name="id" value="all"/>
+        </c:url>
+        <strong>
+            <a style="color: red" href="${removeAll}">Reset cart</a>
+        </strong>
+    </p>
+    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 500px; max-height: 500px;">
         </c:otherwise>
-    </c:choose>
-    <c:forEach var="temp" items="${cart}">
-        <p>
-            <img alt="" src="${temp.product.picture}" width="60" height="60">
-            <c:out value="${temp.product.name}"/>
-            <c:out value="${temp.dough}"/>
-            <c:out value="${temp.size}"/>
-            <c:url value="/item/list/remove" var="remove">
-                <c:param name="id" value="${temp.id}"/>
-            </c:url>
-            <a style="color:red;" href="${remove}">X</a>
-        </p>
-    </c:forEach>
+        </c:choose>
+        <c:forEach var="temp" items="${cart}">
+            <p>
+                <img alt="" src="${temp.product.picture}" width="60" height="60">
+                <c:out value="${temp.product.name}"/>
+                <c:out value="${temp.dough}"/>
+                <c:out value="${temp.size}"/>
+                <c:url value="/item/list/remove" var="remove">
+                    <c:param name="id" value="${temp.id}"/>
+                </c:url>
+                <a style="color:red;" href="${remove}">X</a>
+            </p>
+            <hr/>
+        </c:forEach>
+    </div>
     <c:if test="${not empty cart}">
-        <c:url value="/item/list/order" var="orderPosition"/>
-        <form action="${orderPosition}">
-            <input class="btn btn-warning" type="submit" value="Order">
+        <c:url value="/item/list/order" var="createItems"/>
+        <form action="${createItems}">
+            <input class="btn btn-lg btn-warning" type="submit" value="Order">
         </form>
     </c:if>
 </div>

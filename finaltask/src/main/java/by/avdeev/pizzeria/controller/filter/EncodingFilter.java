@@ -8,7 +8,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*"})
+@WebFilter(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*"})
 public class EncodingFilter implements Filter {
 
     @Override

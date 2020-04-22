@@ -4,13 +4,14 @@
 <html lang="en">
 <head>
     <title>User List</title>
-
-
 </head>
 <body>
 <jsp:include page="../element/navbar.jsp"/>
 <jsp:include page="../element/admin-bar.jsp"/>
 <div class="container mt-3">
+    <p style="text-align: center" class="display-4">User list</p>
+    <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
+    <br/>
     <table class="table table-bordered" id="userTable">
         <thead class="thead-light">
         <tr>
@@ -49,11 +50,35 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="container">
+        <ul class="pagination">
+            <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
+            <c:url var="pagePreviousUrl" value="/user/list?page=${pagePrevious}"/>
+            <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
+            <c:set value="${requestScope.page}" var="page1"/>
+            <c:url var="page1url" value="/user/list?page=${page1}"/>
+            <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
+            <c:set value="${requestScope.page + 1}" var="page2"/>
+            <c:url var="page2url" value="/user/list?page=${page2}"/>
+            <li class="page-item"><a class="page-link" href="${page2url}">${page2}</a></li>
+            <c:set value="${requestScope.page + 2}" var="page3"/>
+            <c:url var="page3url" value="/user/list?page=${page3}"/>
+            <li class="page-item"><a class="page-link" href="${page3url}">${page3}</a></li>
+            <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
+        </ul>
+        <c:if test="${not empty requestScope.message}">
+            <jsp:include page="../element/footer.jsp"/>
+        </c:if>
+    </div>
 </div>
-<jsp:include page="../element/footer.jsp"/>
 <script>
     $(document).ready(function () {
-        $('#userTable').DataTable();
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
 </script>
 </body>

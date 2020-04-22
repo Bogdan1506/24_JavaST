@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*"})
+@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger();
     private static final String REDIRECTED_DATA = "redirectedData";
