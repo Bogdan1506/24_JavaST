@@ -5,19 +5,22 @@ import java.util.Objects;
 public class OrderPosition implements Entity {
     private int id;
     private Item item;
-    private int orderPositionId;
+    private Order order;
     private double price;
 
-    public OrderPosition(int id, Item item, int orderPositionId, double price) {
-        this.id = id;
+    public OrderPosition() {
+    }
+
+    public OrderPosition(Item item, Order order, double price) {
         this.item = item;
-        this.orderPositionId = orderPositionId;
+        this.order = order;
         this.price = price;
     }
 
-    public OrderPosition(Item item, int orderPositionId, double price) {
+    public OrderPosition(int id, Item item, Order order, double price) {
+        this.id = id;
         this.item = item;
-        this.orderPositionId = orderPositionId;
+        this.order = order;
         this.price = price;
     }
 
@@ -37,12 +40,12 @@ public class OrderPosition implements Entity {
         this.item = item;
     }
 
-    public int getOrderPositionId() {
-        return orderPositionId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderPositionId(int orderPositionId) {
-        this.orderPositionId = orderPositionId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public double getPrice() {
@@ -58,7 +61,7 @@ public class OrderPosition implements Entity {
         return "OrderPosition{" +
                 "id=" + id +
                 ", item=" + item +
-                ", orderPositionId=" + orderPositionId +
+                ", order=" + order +
                 ", price=" + price +
                 '}';
     }
@@ -69,13 +72,13 @@ public class OrderPosition implements Entity {
         if (o == null || getClass() != o.getClass()) return false;
         OrderPosition that = (OrderPosition) o;
         return id == that.id &&
-                orderPositionId == that.orderPositionId &&
                 Double.compare(that.price, price) == 0 &&
-                Objects.equals(item, that.item);
+                Objects.equals(item, that.item) &&
+                Objects.equals(order, that.order);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, item, orderPositionId, price);
+        return Objects.hash(id, item, order, price);
     }
 }

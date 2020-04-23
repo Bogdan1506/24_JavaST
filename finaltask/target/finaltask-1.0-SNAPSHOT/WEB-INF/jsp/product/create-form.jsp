@@ -12,8 +12,8 @@
 <jsp:include page="menu-bar.jsp"/>
 <div class="container">
     <p style="text-align: center" class="display-4">Product form</p>
-    <c:url var="saveProduct" value="/product/create"/>
-    <form action="${saveProduct}" method="post">
+    <c:url var="order" value="/product/create"/>
+    <form action="${order}" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control mb-3" id="name" name="name"

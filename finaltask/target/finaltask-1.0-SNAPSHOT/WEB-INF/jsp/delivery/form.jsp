@@ -23,10 +23,10 @@
             </p>
         </c:forEach>
     </div>
-    <c:url var="saveProduct" value="/product/edit"/>
-    <form action="${saveProduct}" method="post">
+    <c:url var="order" value="/delivery/order"/>
+    <form action="${order}" method="post">
         <input type="hidden" name="id" value="${requestScope.product.id}">
-        <div class="form-group">
+       <%-- <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control mb-3" id="name" name="name" value="${requestScope.profile.name}"
                    required>
@@ -40,11 +40,11 @@
             <label for="address">Address:</label>
             <input type="text" class="form-control mb-3" id="address" name="address"
                    value="${requestScope.profile.address}"
-                   required>
+                   required>--%>
             <div class="form-group row">
-                <label for="example-date-input" class="col-2 col-form-label">Date:</label>
+                <label for="date" class="col-2 col-form-label">Date:</label>
                 <div class="col-10">
-                    <input class="form-control" type="date" id="example-date-input">
+                    <input class="form-control" type="date" name="date" id="date">
                     <%--                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">--%>
                 </div>
 
@@ -58,12 +58,6 @@
         </label>
         <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
     </form>
-    <%-- <form action="/product/edit" enctype="multipart/form-data">
-         <div class="form-group">
-             <input type="file" class="form-control-file border mb-3" name="file">
-         </div>
-         <button type="submit" class="btn btn-success">Upload</button>
-     </form>--%>
     <c:if test="${not empty message}">
         <jsp:include page="../element/footer.jsp"/>
     </c:if>

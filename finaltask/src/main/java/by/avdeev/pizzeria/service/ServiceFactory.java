@@ -1,6 +1,9 @@
 package by.avdeev.pizzeria.service;
 
+import by.avdeev.pizzeria.service.impl.DeliveryServiceImpl;
 import by.avdeev.pizzeria.service.impl.ItemServiceImpl;
+import by.avdeev.pizzeria.service.impl.OrderPositionServiceImpl;
+import by.avdeev.pizzeria.service.impl.OrderServiceImpl;
 import by.avdeev.pizzeria.service.impl.ProductServiceImpl;
 import by.avdeev.pizzeria.service.impl.ProfileServiceImpl;
 import by.avdeev.pizzeria.service.impl.UserServiceImpl;
@@ -13,6 +16,27 @@ public class ServiceFactory {
     private final ProfileService profileService = new ProfileServiceImpl();
     private final ProductService productService = new ProductServiceImpl();
     private final ItemService itemService = new ItemServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
+    private final OrderPositionService orderPositionService = new OrderPositionServiceImpl();
+    private final DeliveryService deliveryService = new DeliveryServiceImpl();
+
+    public OrderService getOrderService() {
+        orderService.setTransaction(transactionFactory.createTransaction());
+        orderService.setDAOType(DAOType.ORDER);
+        return orderService;
+    }
+
+    public OrderPositionService getOrderPositionService() {
+        orderPositionService.setTransaction(transactionFactory.createTransaction());
+        orderPositionService.setDAOType(DAOType.ORDER_POSITION);
+        return orderPositionService;
+    }
+
+    public DeliveryService getDeliveryService() {
+        deliveryService.setTransaction(transactionFactory.createTransaction());
+        deliveryService.setDAOType(DAOType.DELIVERY);
+        return deliveryService;
+    }
 
     public ServiceFactory(TransactionFactory transactionFactory) {
         this.transactionFactory = transactionFactory;

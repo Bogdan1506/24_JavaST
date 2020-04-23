@@ -3,6 +3,7 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Item;
+import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.sql.PreparedStatement;
@@ -24,14 +25,15 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, item_id, order_id, price FROM `order_position`");
             while (rs.next()) {
-                OrderPosition orderPosition = null;
                 int id = rs.getInt("id");
                 Item item = new Item();
                 int itemId = rs.getInt("item_id");
                 item.setId(itemId);
-                int orderPositionId = rs.getInt("order_position_id");
+                Order order = new Order();
+                int orderId = rs.getInt("order_id");
+                order.setId(orderId);
                 double price = rs.getDouble("price");
-                orderPositions.add(new OrderPosition(id, item, orderPositionId, price));
+                orderPositions.add(new OrderPosition(id, item, order, price));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -50,9 +52,11 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 Item item = new Item();
                 int itemId = rs.getInt("item_id");
                 item.setId(itemId);
-                int orderPositionId = rs.getInt("order_position_id");
+                Order order = new Order();
+                int orderId = rs.getInt("order_id");
+                order.setId(orderId);
                 double price = rs.getDouble("price");
-                orderPosition = new OrderPosition(id, item, orderPositionId, price);
+                orderPosition = new OrderPosition(id, item, order, price);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -83,7 +87,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO `order_position` (item_id, order_id, price) VALUES (?,?,?)")) {
             statement.setInt(1, orderPosition.getItem().getId());
-            statement.setInt(2, orderPosition.getOrderPositionId());
+            statement.setInt(2, orderPosition.getOrder().getId());
             statement.setDouble(3, orderPosition.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -96,7 +100,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE `order_position` SET item_id=?, order_id=?, price=? WHERE id=?")) {
             statement.setInt(1, orderPosition.getItem().getId());
-            statement.setInt(2, orderPosition.getOrderPositionId());
+            statement.setInt(2, orderPosition.getOrder().getId());
             statement.setDouble(3, orderPosition.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {

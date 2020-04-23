@@ -18,7 +18,7 @@ CREATE TABLE user
 CREATE TABLE `profile`
 (
     `id`      INT         NOT NULL AUTO_INCREMENT,
-    `user_id` INT         NOT NULL,
+    `user_id` INT,
     `name`    VARCHAR(25) NOT NULL,
     `surname` VARCHAR(25) NOT NULL,
     `email`   VARCHAR(35),
@@ -71,11 +71,11 @@ CREATE TABLE `item`
 CREATE TABLE `order`
 (
     `id`      INT  NOT NULL AUTO_INCREMENT,
-    `user_id` INT  NOT NULL,
+    `profile_id` INT  NOT NULL,
     `date`    DATE NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order` (`id`),
-    FOREIGN KEY `FK_order_user` (`id`)
-        REFERENCES `user` (`id`)
+    FOREIGN KEY `FK_order_profile` (`profile_id`)
+        REFERENCES `profile` (`id`)
 );
 
 CREATE TABLE `order_position`
@@ -83,7 +83,7 @@ CREATE TABLE `order_position`
     `id`       INT NOT NULL AUTO_INCREMENT,
     `item_id`  INT NOT NULL,
     `order_id` INT NOT NULL,
-    `price`    INT NOT NULL,
+    `price`    DOUBLE NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
     FOREIGN KEY `FK_order_position_item` (`item_id`)
         REFERENCES `item` (`id`),
@@ -94,10 +94,10 @@ CREATE TABLE `order_position`
 CREATE TABLE `delivery`
 (
     `id`       INT                   NOT NULL AUTO_INCREMENT,
-    `order_id` INT                   NOT NULL,
+    `order_position_id` INT                   NOT NULL,
     `date`     DATE                  NOT NULL,
     `payment`  ENUM ('cash', 'card') NOT NULL default 'cash',
     CONSTRAINT PRIMARY KEY `PK_delivery` (`id`),
-    FOREIGN KEY `FK_delivery_order` (`order_id`)
-        REFERENCES `order` (`id`)
+    FOREIGN KEY `FK_delivery_order_position` (`order_position_id`)
+        REFERENCES `order_position` (`id`)
 );

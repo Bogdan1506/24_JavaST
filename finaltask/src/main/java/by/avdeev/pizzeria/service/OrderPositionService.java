@@ -4,7 +4,7 @@ import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.util.List;
 
-public interface OrderPositionService {
+public interface OrderPositionService extends Service{
     int create(OrderPosition orderPosition) throws ServiceException;
 
     List<OrderPosition> findAll() throws ServiceException;

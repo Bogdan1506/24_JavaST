@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Delivery implements Entity {
     private int id;
-    private Order order;
+    private OrderPosition orderPosition;
     private Date date;
     private Payment payment;
 
@@ -13,15 +13,18 @@ public class Delivery implements Entity {
         CASH, CARD
     }
 
-    public Delivery(int id, Order order, Date date, Payment payment) {
-        this.id = id;
-        this.order = order;
+    public Delivery() {
+    }
+
+    public Delivery(OrderPosition orderPosition, Date date, Payment payment) {
+        this.orderPosition = orderPosition;
         this.date = date;
         this.payment = payment;
     }
 
-    public Delivery(Order order, Date date, Payment payment) {
-        this.order = order;
+    public Delivery(int id, OrderPosition orderPosition, Date date, Payment payment) {
+        this.id = id;
+        this.orderPosition = orderPosition;
         this.date = date;
         this.payment = payment;
     }
@@ -34,12 +37,12 @@ public class Delivery implements Entity {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public OrderPosition getOrderPosition() {
+        return orderPosition;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderPosition(OrderPosition orderPosition) {
+        this.orderPosition = orderPosition;
     }
 
     public Date getDate() {
@@ -62,7 +65,7 @@ public class Delivery implements Entity {
     public String toString() {
         return "Delivery{" +
                 "id=" + id +
-                ", order=" + order +
+                ", orderPosition=" + orderPosition +
                 ", date=" + date +
                 ", payment=" + payment +
                 '}';
@@ -74,13 +77,13 @@ public class Delivery implements Entity {
         if (o == null || getClass() != o.getClass()) return false;
         Delivery delivery = (Delivery) o;
         return id == delivery.id &&
-                Objects.equals(order, delivery.order) &&
+                Objects.equals(orderPosition, delivery.orderPosition) &&
                 Objects.equals(date, delivery.date) &&
                 payment == delivery.payment;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, order, date, payment);
+        return Objects.hash(id, orderPosition, date, payment);
     }
 }

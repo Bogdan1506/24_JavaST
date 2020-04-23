@@ -4,6 +4,7 @@ import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Delivery;
 import by.avdeev.pizzeria.entity.Order;
+import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.entity.User;
 
 import java.sql.Date;
@@ -19,15 +20,15 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public List<Delivery> findAll() throws DAOException {
         List<Delivery> deliveries = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, order_id, date, payment FROM `delivery`");
+            ResultSet rs = statement.executeQuery("SELECT id, order_position_id, date, payment FROM `delivery`");
             while (rs.next()) {
                 int id = rs.getInt("id");
-                Order order = new Order();
-                int orderId = rs.getInt("order_id");
-                order.setId(orderId);
+                OrderPosition orderPosition = new OrderPosition();
+                int orderPositionId = rs.getInt("order_id");
+                orderPosition.setId(orderPositionId);
                 Date date = rs.getDate("date");
                 Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-                deliveries.add(new Delivery(id, order, date, payment));
+                deliveries.add(new Delivery(id, orderPosition, date, payment));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -44,16 +45,16 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public Delivery findById(int id) throws DAOException {
         Delivery delivery = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT order_id, date, payment FROM `delivery` WHERE id=?")) {
+                "SELECT order_position_id, date, payment FROM `delivery` WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                Order order = new Order();
-                int orderId = rs.getInt("order_id");
-                order.setId(orderId);
+                OrderPosition orderPosition = new OrderPosition();
+                int orderPositionId = rs.getInt("order_id");
+                orderPosition.setId(orderPositionId);
                 Date date = rs.getDate("date");
                 Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-                delivery = new Delivery(id, order, date, payment);
+                delivery = new Delivery(id, orderPosition, date, payment);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -82,8 +83,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     @Override
     public void create(Delivery delivery) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `delivery` (order_id, date, payment) VALUES (?,?,?)")) {
-            statement.setInt(1, delivery.getOrder().getId());
+                "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)")) {
+            statement.setInt(1, delivery.getOrderPosition().getId());
             statement.setDate(2, delivery.getDate());
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.executeUpdate();
@@ -95,8 +96,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     @Override
     public void update(Delivery delivery) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE `delivery` SET order_id=?, date=?, payment=? WHERE id=?")) {
-            statement.setInt(1, delivery.getOrder().getId());
+                "UPDATE `delivery` SET order_position_id=?, date=?, payment=? WHERE id=?")) {
+            statement.setInt(1, delivery.getOrderPosition().getId());
             statement.setDate(2, delivery.getDate());
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.setInt(4, delivery.getId());

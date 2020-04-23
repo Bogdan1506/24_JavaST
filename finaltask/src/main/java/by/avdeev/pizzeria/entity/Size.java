@@ -1,7 +1,7 @@
 package by.avdeev.pizzeria.entity;
 
 public enum Size {
-    SMALL(1, 1.0), MEDIUM(2, 1.5), LARGE(3, 2.0);
+    SMALL(1, 1), MEDIUM(2, 2), LARGE(3, 3);
 
     int sizeId;
     double coefficient;

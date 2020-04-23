@@ -3,7 +3,7 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Order;
-import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.entity.Profile;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,15 +23,15 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     public List<Order> findAll() throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, user_id, date FROM `order`");
+            ResultSet rs = statement.executeQuery("SELECT id, profile_id, date FROM `order`");
             while (rs.next()) {
                 Order order = null;
                 int id = rs.getInt("id");
-                User user = new User();
-                int userId = rs.getInt("user_id");
-                user.setId(userId);
+                Profile profile = new Profile();
+                int profileId = rs.getInt("profile_id");
+                profile.setId(profileId);
                 Date date = rs.getDate("date");
-                orders.add(new Order(id, user, date));
+                orders.add(new Order(id, profile, date));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -43,15 +43,15 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     public Order findById(int id) throws DAOException {
         Order order = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT user_id, date FROM `order` WHERE id=?")) {
+                "SELECT profile_id, date FROM `order` WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                User user = new User();
-                int userId = rs.getInt("user_id");
-                user.setId(userId);
+                Profile profile = new Profile();
+                int profileId = rs.getInt("profile_id");
+                profile.setId(profileId);
                 Date date = rs.getDate("date");
-                order = new Order(id, user, date);
+                order = new Order(id, profile, date);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -80,8 +80,8 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
     public void create(Order order) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order` (user_id, date) VALUES (?,?)")) {
-            statement.setInt(1, order.getUser().getId());
+                "INSERT INTO `order` (profile_id, date) VALUES (?,?)")) {
+            statement.setInt(1, order.getProfile().getId());
             statement.setDate(2, order.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -92,8 +92,8 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
     public void update(Order order) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE `order` SET user_id=?, date=? WHERE id=?")) {
-            statement.setInt(1, order.getUser().getId());
+                "UPDATE `order` SET profile_id=?, date=? WHERE id=?")) {
+            statement.setInt(1, order.getProfile().getId());
             statement.setDate(2, order.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {

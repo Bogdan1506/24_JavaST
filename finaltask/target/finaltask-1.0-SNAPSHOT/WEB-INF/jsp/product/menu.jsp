@@ -68,10 +68,11 @@
                             </form>
                         </c:if>
                         <c:if test="${sessionScope.user.role eq 'CREATOR'}">
-                            <c:url var="removePosition" value="/remove"/>
-                            <c:url var="editPosition" value="/product/form"/>
+                            <c:url var="removePosition" value="/product/remove"/>
+                            <c:url var="editPosition" value="/product/edit-form"/>
                             <div class="btn-group">
                                 <form action="${removePosition}">
+                                    <input type="hidden" name="id" value="${temp.id}">
                                     <button type="submit" class="btn btn-danger btn-lg">Remove</button>
                                 </form>
                                 <form action="${editPosition}">
@@ -86,7 +87,7 @@
         </div>
         <div class="col-sm-3 mt-5">
             <c:if test="${sessionScope.user.role eq 'CREATOR'}">
-                <c:url var="addPosition" value="#"/>
+                <c:url var="addPosition" value="/product/create-form"/>
                 <form action="${addPosition}">
                     <button class="btn btn-warning btn-lg">Add +</button>
                 </form>

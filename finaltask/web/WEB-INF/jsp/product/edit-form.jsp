@@ -12,8 +12,8 @@
 <jsp:include page="menu-bar.jsp"/>
 <div class="container">
     <p style="text-align: center" class="display-4">Product form</p>
-    <c:url var="saveProduct" value="/product/edit"/>
-    <form action="${saveProduct}" method="post">
+    <c:url var="order" value="/product/edit"/>
+    <form action="${order}" method="post">
         <input type="hidden" name="id" value="${requestScope.product.id}">
         <div class="form-group">
             <label for="name">Name:</label>

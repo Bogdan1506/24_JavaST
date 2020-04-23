@@ -5,20 +5,20 @@ import java.util.Objects;
 
 public class Order implements Entity {
     private int id;
-    private User user;
+    private Profile profile;
     private Date date;
 
     public Order() {
     }
 
-    public Order(int id, User user, Date date) {
+    public Order(int id, Profile profile, Date date) {
         this.id = id;
-        this.user = user;
+        this.profile = profile;
         this.date = date;
     }
 
-    public Order(User user, Date date) {
-        this.user = user;
+    public Order(Profile profile, Date date) {
+        this.profile = profile;
         this.date = date;
     }
 
@@ -30,12 +30,12 @@ public class Order implements Entity {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public Date getDate() {
@@ -50,7 +50,7 @@ public class Order implements Entity {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", user=" + user +
+                ", profile=" + profile +
                 ", date=" + date +
                 '}';
     }
@@ -61,12 +61,12 @@ public class Order implements Entity {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return id == order.id &&
-                Objects.equals(user, order.user) &&
+                Objects.equals(profile, order.profile) &&
                 Objects.equals(date, order.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, date);
+        return Objects.hash(id, profile, date);
     }
 }

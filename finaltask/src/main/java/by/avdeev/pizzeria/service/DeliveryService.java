@@ -4,7 +4,7 @@ import by.avdeev.pizzeria.entity.Delivery;
 
 import java.util.List;
 
-public interface DeliveryService {
+public interface DeliveryService extends Service{
     int create(Delivery delivery) throws ServiceException;
 
     List<Delivery> findAll() throws ServiceException;
