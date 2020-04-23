@@ -26,7 +26,7 @@
     <c:url var="order" value="/delivery/order"/>
     <form action="${order}" method="post">
         <input type="hidden" name="id" value="${requestScope.product.id}">
-       <%-- <div class="form-group">
+        <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control mb-3" id="name" name="name" value="${requestScope.profile.name}"
                    required>
@@ -40,7 +40,7 @@
             <label for="address">Address:</label>
             <input type="text" class="form-control mb-3" id="address" name="address"
                    value="${requestScope.profile.address}"
-                   required>--%>
+                   required>
             <div class="form-group row">
                 <label for="date" class="col-2 col-form-label">Date:</label>
                 <div class="col-10">

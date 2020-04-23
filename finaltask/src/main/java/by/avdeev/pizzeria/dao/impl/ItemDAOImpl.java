@@ -23,7 +23,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     public List<Item> findAll(int begin, int end) throws DAOException {
         List<Item> items = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery(String.format( "SELECT id, product_id, size_id, dough_id FROM item WHERE id >= %d and id <= %d ORDER BY id", begin, end));
+            ResultSet rs = statement.executeQuery(String.format("SELECT id, product_id, size_id, dough_id FROM item WHERE id >= %d and id <= %d ORDER BY id", begin, end)); //todo prepareStatement
             fill(items, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -94,14 +94,25 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
 
     @Override
     public void create(Item item) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)")) {
-            statement.setInt(1, item.getProduct().getId());
-            statement.setInt(2, item.getSize().getId());
-            statement.setInt(3, item.getDough().getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
+        if (item.getProduct().getType() == Product.Type.PIZZA) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)")) {
+                statement.setInt(1, item.getProduct().getId());
+                statement.setInt(2, item.getSize().getId());
+                statement.setInt(3, item.getDough().getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } else {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO item (product_id, size_id) VALUES (?,?)")) {
+                statement.setInt(1, item.getProduct().getId());
+                statement.setInt(2, item.getSize().getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
     }
 

@@ -40,6 +40,9 @@ public class OrderAction extends UnauthorizedUserAction {
             //if there is unauthorized user
             ProfileValidator profileValidator = new ProfileValidator();
             profile = profileValidator.validate(request);
+            ProfileService profileService = factory.getProfileService();
+            int profileId = profileService.create(profile);
+            profile.setId(profileId);
         }
 
         //got profile

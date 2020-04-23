@@ -2,7 +2,10 @@ package by.avdeev.pizzeria.action.unauthorized.item;
 
 import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.entity.Item;
+import by.avdeev.pizzeria.entity.Profile;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ItemService;
+import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +30,14 @@ public class ItemCreateAction extends UnauthorizedUserAction {
             logger.debug("for loop");
             itemService.create(item);
         }
-        return new ForwardObject("/delivery/form");
+        System.out.println("tut");
+        ForwardObject forwardObject = new ForwardObject("/delivery/form");
+        ProfileService profileService = factory.getProfileService();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            Profile profile = profileService.findByUserId(user.getId());
+            forwardObject.getAttributes().put("profile", profile);
+        }
+        return forwardObject;
     }
 }

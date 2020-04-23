@@ -17,7 +17,7 @@ public class ProfileValidator implements Validator<Profile> {
     public Profile validate(HttpServletRequest request) throws IncorrectFormDataException {
         Profile profile = new Profile();
         String parameter = request.getParameter("id");
-        if (parameter != null) {
+        if (!parameter.isEmpty()) {
             profile.setId(Integer.parseInt(parameter));
         }
         HttpSession session = request.getSession();

@@ -81,18 +81,32 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
 
     @Override
     public void create(Profile profile) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO profile (user_id, name, surname, email, phone, address) VALUES (?,?,?,?,?,?)")) {
-            statement.setInt(1, profile.getUser().getId());
-            statement.setString(2, profile.getName());
-            statement.setString(3, profile.getSurname());
-            statement.setString(4, profile.getEmail());
-            statement.setString(5, profile.getPhone());
-            statement.setString(6, profile.getAddress());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
+        logger.debug("profile={}", profile);
+        if (profile.getUser() != null) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO profile (user_id, name, surname, email, phone, address) VALUES (?,?,?,?,?,?)")) {
+                statement.setInt(1, profile.getUser().getId());
+                fill(profile, statement);
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        } else {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO profile (name, surname, email, phone, address) VALUES (?,?,?,?,?)")) {
+                fill(profile, statement);
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
+    }
+
+    private void fill(Profile profile, PreparedStatement statement) throws SQLException {
+        statement.setString(1, profile.getName());
+        statement.setString(2, profile.getSurname());
+        statement.setString(3, profile.getEmail());
+        statement.setString(4, profile.getPhone());
+        statement.setString(5, profile.getAddress());
+        statement.executeUpdate();
     }
 
     @Override
