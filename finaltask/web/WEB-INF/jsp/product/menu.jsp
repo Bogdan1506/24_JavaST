@@ -29,8 +29,7 @@
                         </p>
                         <c:url value="/item/list" var="addToCart"/>
                         <c:if test="${sessionScope.user.role ne 'CREATOR'}">
-                            <form action="${addToCart}" method="get">
-<%--todo get--%>
+                            <form action="${addToCart}" method="post">
                                 <c:if test="${temp.type eq 'PIZZA'}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-success active">
