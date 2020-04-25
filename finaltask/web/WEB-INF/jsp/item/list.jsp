@@ -1,50 +1,77 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cart</title>
+    <title>User List</title>
 </head>
 <body>
-<div class="sticky-top pt-5">
-    <p class="display-4">Cart</p>
-    <c:choose>
-    <c:when test="${empty sessionScope.cart}">
-        <p style="color: red">Your cart is empty now</p>
-    </c:when>
-    <c:otherwise>
-    <p>
-        <c:url value="/item/list/remove" var="removeAll">
-            <c:param name="id" value="all"/>
-        </c:url>
-        <strong>
-            <a style="color: red" href="${removeAll}">Reset cart</a>
-        </strong>
-    </p>
-    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 500px; max-height: 500px;">
-        </c:otherwise>
-        </c:choose>
-        <c:forEach var="temp" items="${cart}">
-            <p>
-                <img alt="" src="${temp.product.picture}" width="60" height="60">
-                <c:out value="${temp.product.name}"/>
-                <c:out value="${temp.dough}"/>
-                <c:out value="${temp.size}"/>
-                <c:url value="/item/list/remove" var="remove">
-                    <c:param name="id" value="${temp.id}"/>
-                </c:url>
-                <a style="color:red;" href="${remove}">X</a>
-            </p>
-            <hr/>
+<jsp:include page="../element/navbar.jsp"/>
+<jsp:include page="../element/admin-bar.jsp"/>
+<div class="container mt-3">
+    <p style="text-align: center" class="display-4">Item list</p>
+    <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
+    <br/>
+    <table class="table table-bordered" id="itemTable">
+        <thead class="thead-light">
+        <tr>
+            <th scope="row">id</th>
+            <th scope="row">name</th>
+            <th scope="row">size</th>
+            <th scope="row">dough</th>
+            <th scope="row">delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="temp" items="${items}" varStatus="status">
+            <tr>
+                <td><c:out value="${temp.id}"/></td>
+                <td><c:out value="${temp.product.id}"/></td>
+                <td><c:out value="${temp.size}"/></td>
+                <td><c:out value="${temp.dough}"/></td>
+                <td>
+                    <c:url value="/item/list/remove" var="itemDelete"/>
+                    <form action="${itemDelete}" method="post">
+                        <input type="hidden" name="id" value="${temp.id}"/>
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
         </c:forEach>
+        </tbody>
+    </table>
+    <div class="container">
+        <ul class="pagination">
+            <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
+            <c:url var="pagePreviousUrl" value="/item/list?page=${pagePrevious}"/>
+            <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
+            <c:set value="${requestScope.page}" var="page1"/>
+            <c:url var="page1url" value="/item/list?page=${page1}"/>
+            <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
+            <c:set value="${requestScope.page + 1}" var="page2"/>
+            <c:url var="page2url" value="/item/list?page=${page2}"/>
+            <li class="page-item"><a class="page-link" href="${page2url}">${page2}</a></li>
+            <c:set value="${requestScope.page + 2}" var="page3"/>
+            <c:url var="page3url" value="/item/list?page=${page3}"/>
+            <li class="page-item"><a class="page-link" href="${page3url}">${page3}</a></li>
+            <%--            <c:set value="${requestScope.page + 1}" var="pageNext"/>
+                        <c:url var="pageNextUrl" value="/item/items?page=${pageNext}"/>--%>
+            <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
+        </ul>
+        <c:if test="${not empty requestScope.message}">
+            <jsp:include page="../element/footer.jsp"/>
+        </c:if>
     </div>
-    <c:if test="${not empty cart}">
-        <c:url value="/item/list/order" var="createItems"/>
-        <form action="${createItems}">
-            <input class="btn btn-lg btn-warning" type="submit" value="Order">
-        </form>
-    </c:if>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#itemTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>

@@ -80,6 +80,7 @@ public class OrderAction extends UnauthorizedUserAction {
             double price = item.getProduct().getPrice() * item.getSize().getCoefficient();
             logger.debug("order={}", order);
             OrderPosition orderPosition = new OrderPosition(item, order, price);
+            logger.debug("orderPosition={}", orderPosition);
             int orderPosId = orderPositionService.create(orderPosition);
             orderPosition.setId(orderPosId);
             Delivery delivery = new Delivery(orderPosition, orderDate, payment);

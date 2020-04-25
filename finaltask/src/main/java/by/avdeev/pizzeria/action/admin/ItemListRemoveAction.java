@@ -1,6 +1,11 @@
 package by.avdeev.pizzeria.action.admin;
 
+import by.avdeev.pizzeria.entity.Delivery;
+import by.avdeev.pizzeria.entity.Item;
+import by.avdeev.pizzeria.entity.OrderPosition;
+import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ItemService;
+import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
@@ -13,8 +18,17 @@ public class ItemListRemoveAction extends AdminAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
         ItemService itemService = factory.getItemService();
-        itemService.delete(Integer.parseInt(request.getParameter("id")));
-        ForwardObject forwardObject = new ForwardObject("/item/items");
+        //id of item
+        int itemId = Integer.parseInt(request.getParameter("id"));
+        OrderPositionService orderPositionService = factory.getOrderPositionService();
+        Item item = itemService.findById(itemId);
+        OrderPosition orderPosition = orderPositionService.findByItem(item);
+        DeliveryService deliveryService = factory.getDeliveryService();
+        Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
+        deliveryService.delete(delivery.getId());
+        orderPositionService.delete(orderPosition.getId());
+        itemService.delete(itemId);
+        ForwardObject forwardObject = new ForwardObject("/item/list");
         forwardObject.getAttributes().put("message", "Item is deleted!");
         return forwardObject;
     }

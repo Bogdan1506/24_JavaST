@@ -21,9 +21,12 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
 
     @Override
     public List<Item> findAll(int begin, int end) throws DAOException {
+        logger.debug("begin={}, end={}", begin, end);
         List<Item> items = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery(String.format("SELECT id, product_id, size_id, dough_id FROM item WHERE id >= %d and id <= %d ORDER BY id", begin, end)); //todo prepareStatement
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, product_id, size_id, dough_id FROM item ORDER BY id LIMIT ?, ?")) {
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+            ResultSet rs = preparedStatement.executeQuery();
             fill(items, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -65,7 +68,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
                 Product product = new Product();
                 product.setId(rs.getInt("product_id"));
                 Size size = Size.values()[rs.getInt("size_id")];
-                Dough dough = Dough.values()[rs.getInt("dough_id")];
+                Dough dough = Dough.getById(rs.getInt("dough_id"));
                 item = new Item(id, product, dough, size);
             }
         } catch (SQLException e) {

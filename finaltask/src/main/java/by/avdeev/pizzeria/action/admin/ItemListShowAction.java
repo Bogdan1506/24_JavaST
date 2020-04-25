@@ -22,7 +22,8 @@ public class ItemListShowAction extends AdminAction {
             page = Integer.parseInt(pageNum);
         }
         ItemService itemService = factory.getItemService();
-        List<Item> items = itemService.findAll((page - 1) * 20 + 1, page * 20);
+        int pageSize = 20;
+        List<Item> items = itemService.findAll((page - 1) * pageSize, page * pageSize);
         logger.debug("items={}", items);
         request.setAttribute("items", items);
         logger.debug("pageNum={}", pageNum);

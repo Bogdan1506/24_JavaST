@@ -14,6 +14,6 @@ public enum Dough {
     }
 
     public static Dough getById(int id) {
-        return Dough.values()[id - 1];
+        return id == 1 || id == 2 ? Dough.values()[id - 1] : null;
     }
 }

@@ -3,6 +3,7 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Delivery;
+import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.entity.User;
@@ -105,5 +106,22 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    public Delivery findByOrderPosition(OrderPosition orderPosition) throws DAOException {
+        Delivery delivery = null;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT id, date, payment FROM `delivery` WHERE order_position_id=?")) {
+            statement.setInt(1, orderPosition.getId());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                Date date = rs.getDate("date");
+                Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
+                delivery = new Delivery(id, orderPosition, date, payment);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return delivery;
     }
 }

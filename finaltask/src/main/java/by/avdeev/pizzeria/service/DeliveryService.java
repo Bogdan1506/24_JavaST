@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.service;
 
 import by.avdeev.pizzeria.entity.Delivery;
+import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.util.List;
 
@@ -8,6 +9,8 @@ public interface DeliveryService extends Service{
     int create(Delivery delivery) throws ServiceException;
 
     List<Delivery> findAll() throws ServiceException;
+
+    Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException;
 
     Delivery findById(int id) throws ServiceException;
 

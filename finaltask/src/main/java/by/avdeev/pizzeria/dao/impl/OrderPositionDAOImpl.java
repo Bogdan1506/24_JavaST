@@ -25,20 +25,24 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, item_id, order_id, price FROM `order_position`");
             while (rs.next()) {
-                int id = rs.getInt("id");
-                Item item = new Item();
-                int itemId = rs.getInt("item_id");
-                item.setId(itemId);
-                Order order = new Order();
-                int orderId = rs.getInt("order_id");
-                order.setId(orderId);
-                double price = rs.getDouble("price");
-                orderPositions.add(new OrderPosition(id, item, order, price));
+                orderPositions.add(fill(rs));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
         return orderPositions;
+    }
+
+    private OrderPosition fill(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        Item item = new Item();
+        int itemId = rs.getInt("item_id");
+        item.setId(itemId);
+        Order order = new Order();
+        int orderId = rs.getInt("order_id");
+        order.setId(orderId);
+        double price = rs.getDouble("price");
+        return new OrderPosition(id, item, order, price);
     }
 
     @Override
@@ -49,14 +53,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                Item item = new Item();
-                int itemId = rs.getInt("item_id");
-                item.setId(itemId);
-                Order order = new Order();
-                int orderId = rs.getInt("order_id");
-                order.setId(orderId);
-                double price = rs.getDouble("price");
-                orderPosition = new OrderPosition(id, item, order, price);
+                orderPosition = fill(rs);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -106,5 +103,24 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    public OrderPosition findByItem(Item item) throws DAOException {
+        OrderPosition orderPosition = new OrderPosition();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT id, order_id, price FROM `order_position` WHERE item_id=?")) {
+            statement.setInt(1, item.getId());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                Order order = new Order();
+                int orderId = rs.getInt("order_id");
+                order.setId(orderId);
+                double price = rs.getDouble("price");
+                orderPosition = new OrderPosition(id, item, order, price);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return orderPosition;
     }
 }

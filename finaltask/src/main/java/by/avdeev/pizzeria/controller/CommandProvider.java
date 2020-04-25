@@ -72,11 +72,11 @@ public class CommandProvider {
         repository.put("/product/create", new ProductCreateAction());
         repository.put("/product/remove", new ProductRemoveAction());
 
-        repository.put("/item/list", new ItemCreateSessionAction());
-        repository.put("/item/list/order", new ItemCreateAction());
-        repository.put("/item/list/remove", new ItemRemoveAction());
-        repository.put("/item/items", new ItemListShowAction());
-        repository.put("/item/items/remove", new ItemListRemoveAction());
+        repository.put("/item/cart", new ItemCreateSessionAction());
+        repository.put("/item/cart/order", new ItemCreateAction());
+        repository.put("/item/cart/remove", new ItemRemoveAction());
+        repository.put("/item/list", new ItemListShowAction());
+        repository.put("/item/list/remove", new ItemListRemoveAction());
 
         repository.put("/delivery/form", new DeliveryFormAction());
         repository.put("/delivery/order", new OrderAction());

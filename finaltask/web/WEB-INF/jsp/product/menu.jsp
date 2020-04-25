@@ -27,7 +27,7 @@
                                 ingredients
                             </button>
                         </p>
-                        <c:url value="/item/list" var="addToCart"/>
+                        <c:url value="/item/cart" var="addToCart"/>
                         <c:if test="${sessionScope.user.role ne 'CREATOR'}">
                             <form action="${addToCart}" method="post">
                                 <c:if test="${temp.type eq 'PIZZA'}">
@@ -91,7 +91,7 @@
                     <button class="btn btn-warning btn-lg">Add +</button>
                 </form>
             </c:if>
-            <jsp:include page="../item/list.jsp"/>
+            <jsp:include page="../item/cart.jsp"/>
         </div>
     </div>
     <c:if test="${not empty requestScope.message}">

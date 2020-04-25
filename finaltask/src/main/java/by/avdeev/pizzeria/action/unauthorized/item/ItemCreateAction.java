@@ -28,7 +28,7 @@ public class ItemCreateAction extends UnauthorizedUserAction {
         logger.debug("cart={}", cart);
         for (Item item : cart) {
             logger.debug("for loop");
-            itemService.create(item);
+            item.setId(itemService.create(item));
         }
         System.out.println("tut");
         ForwardObject forwardObject = new ForwardObject("/delivery/form");
