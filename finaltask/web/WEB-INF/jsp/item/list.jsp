@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>User List</title>
+    <title>Item List</title>
 </head>
 <body>
 <jsp:include page="../element/navbar.jsp"/>

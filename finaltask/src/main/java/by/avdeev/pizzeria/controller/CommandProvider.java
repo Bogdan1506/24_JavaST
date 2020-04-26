@@ -5,6 +5,8 @@ import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
 import by.avdeev.pizzeria.action.admin.ItemListRemoveAction;
 import by.avdeev.pizzeria.action.admin.ItemListShowAction;
+import by.avdeev.pizzeria.action.admin.OrderListRemoveAction;
+import by.avdeev.pizzeria.action.admin.OrderListShowAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateFormAction;
 import by.avdeev.pizzeria.action.creator.ProductEditAction;
@@ -28,7 +30,7 @@ import by.avdeev.pizzeria.action.unauthorized.SidesShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.UserCreateAction;
 import by.avdeev.pizzeria.action.client.user.UserDeleteAction;
 import by.avdeev.pizzeria.action.unauthorized.UserLoginAction;
-import by.avdeev.pizzeria.action.admin.UserShowAction;
+import by.avdeev.pizzeria.action.admin.UserShowListAction;
 import by.avdeev.pizzeria.action.unauthorized.UserSignInAction;
 import by.avdeev.pizzeria.action.client.user.UserSignOutAction;
 import by.avdeev.pizzeria.action.unauthorized.UserSignUpAction;
@@ -51,7 +53,7 @@ public class CommandProvider {
         repository.put("/user/sign-in", new UserSignInAction());
         repository.put("/user/sign-out", new UserSignOutAction());
 
-        repository.put("/user/list", new UserShowAction());
+        repository.put("/user/list", new UserShowListAction());
         repository.put("/user/list/update", new ChangeRoleFormAction());
         repository.put("/user/list/role", new ChangeRoleAction());
 
@@ -77,6 +79,9 @@ public class CommandProvider {
         repository.put("/item/cart/remove", new ItemRemoveAction());
         repository.put("/item/list", new ItemListShowAction());
         repository.put("/item/list/remove", new ItemListRemoveAction());
+
+        repository.put("/order/list", new OrderListShowAction());
+        repository.put("/order/list/remove", new OrderListRemoveAction());
 
         repository.put("/delivery/form", new DeliveryFormAction());
         repository.put("/delivery/order", new OrderAction());

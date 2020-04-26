@@ -123,4 +123,23 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         }
         return orderPosition;
     }
+
+    public List<OrderPosition> findByOrderPosition(Order order) throws DAOException {
+        List<OrderPosition> orderPositions = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT id, item_id, price FROM `order_position` WHERE order_id=?")) {
+            statement.setInt(1, order.getId());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                Item item = new Item();
+                int itemId = rs.getInt("item_id");
+                item.setId(itemId);
+                double price = rs.getDouble("price");
+                orderPositions.add(new OrderPosition(id, item, order, price));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return orderPositions;
+    }
 }

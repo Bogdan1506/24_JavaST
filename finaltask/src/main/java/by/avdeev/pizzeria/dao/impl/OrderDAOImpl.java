@@ -16,7 +16,27 @@ import java.util.List;
 public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
     public List<Order> findAll(int begin, int end) throws DAOException {
-        return null;
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, profile_id, date FROM `order` ORDER BY id LIMIT ?, ?")) {
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+            ResultSet rs = preparedStatement.executeQuery();
+            fill(orders, rs);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return orders;
+    }
+
+    private void fill(List<Order> orders, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            Profile profile = new Profile();
+            int profileId = rs.getInt("profile_id");
+            profile.setId(profileId);
+            Date date = rs.getDate("date");
+            orders.add(new Order(id, profile, date));
+        }
     }
 
     @Override
@@ -24,15 +44,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
         List<Order> orders = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, profile_id, date FROM `order`");
-            while (rs.next()) {
-                Order order = null;
-                int id = rs.getInt("id");
-                Profile profile = new Profile();
-                int profileId = rs.getInt("profile_id");
-                profile.setId(profileId);
-                Date date = rs.getDate("date");
-                orders.add(new Order(id, profile, date));
-            }
+            fill(orders, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

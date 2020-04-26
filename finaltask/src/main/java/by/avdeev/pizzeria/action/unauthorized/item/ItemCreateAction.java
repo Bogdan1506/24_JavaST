@@ -30,7 +30,6 @@ public class ItemCreateAction extends UnauthorizedUserAction {
             logger.debug("for loop");
             item.setId(itemService.create(item));
         }
-        System.out.println("tut");
         ForwardObject forwardObject = new ForwardObject("/delivery/form");
         ProfileService profileService = factory.getProfileService();
         User user = (User) session.getAttribute("user");

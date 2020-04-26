@@ -9,6 +9,8 @@ public interface OrderService extends Service {
 
     List<Order> findAll() throws ServiceException;
 
+    List<Order> findAll(int begin, int end) throws ServiceException;
+
     Order findById(int id) throws ServiceException;
 
     boolean delete(int id) throws ServiceException;

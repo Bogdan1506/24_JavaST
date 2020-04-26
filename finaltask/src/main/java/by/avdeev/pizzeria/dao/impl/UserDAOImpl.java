@@ -2,6 +2,8 @@ package by.avdeev.pizzeria.dao.impl;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
+import by.avdeev.pizzeria.entity.Item;
+import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -36,9 +38,12 @@ public class UserDAOImpl extends AbstractDAO<User> {
 
     @Override
     public List<User> findAll(int begin, int end) throws DAOException {
+        logger.debug("begin={}, end={}", begin, end);
         List<User> users = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery(String.format("SELECT id, login, password, role FROM user WHERE id >= %d and id <= %d ORDER BY id", begin, end));
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, login, password, role FROM user ORDER BY id LIMIT ?, ?")) {
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+            ResultSet rs = preparedStatement.executeQuery();
             fill(users, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
