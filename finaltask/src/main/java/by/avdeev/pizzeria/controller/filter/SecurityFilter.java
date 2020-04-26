@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*","/delivery/*", "/order/*"})
+//@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*","/delivery/*", "/order/*", "/orderposition/*"})
 public class SecurityFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
 

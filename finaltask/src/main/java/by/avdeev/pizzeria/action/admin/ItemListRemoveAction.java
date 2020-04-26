@@ -25,8 +25,12 @@ public class ItemListRemoveAction extends AdminAction {
         OrderPosition orderPosition = orderPositionService.findByItem(item);
         DeliveryService deliveryService = factory.getDeliveryService();
         Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
-        deliveryService.delete(delivery.getId());
-        orderPositionService.delete(orderPosition.getId());
+        if (delivery != null) {
+            deliveryService.delete(delivery.getId());
+        }
+        if (orderPosition != null) {
+            orderPositionService.delete(orderPosition.getId());
+        }
         itemService.delete(itemId);
         ForwardObject forwardObject = new ForwardObject("/item/list");
         forwardObject.getAttributes().put("message", "Item is deleted!");

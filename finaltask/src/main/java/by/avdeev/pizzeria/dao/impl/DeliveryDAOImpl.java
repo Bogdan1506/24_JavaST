@@ -3,10 +3,7 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Delivery;
-import by.avdeev.pizzeria.entity.Item;
-import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.OrderPosition;
-import by.avdeev.pizzeria.entity.User;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,15 +19,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         List<Delivery> deliveries = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, order_position_id, date, payment FROM `delivery`");
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                OrderPosition orderPosition = new OrderPosition();
-                int orderPositionId = rs.getInt("order_id");
-                orderPosition.setId(orderPositionId);
-                Date date = rs.getDate("date");
-                Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-                deliveries.add(new Delivery(id, orderPosition, date, payment));
-            }
+            fill(deliveries, rs);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -39,7 +28,28 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
 
     @Override
     public List<Delivery> findAll(int begin, int end) throws DAOException {
-        return null;
+        List<Delivery> deliveries = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, order_position_id, date, payment FROM `delivery` ORDER BY id LIMIT ?, ?")) {
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+            ResultSet rs = preparedStatement.executeQuery();
+            fill(deliveries, rs);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return deliveries;
+    }
+
+    private void fill(List<Delivery> deliveries, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            OrderPosition orderPosition = new OrderPosition();
+            int orderPositionId = rs.getInt("order_position_id");
+            orderPosition.setId(orderPositionId);
+            Date date = rs.getDate("date");
+            Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
+            deliveries.add(new Delivery(id, orderPosition, date, payment));
+        }
     }
 
     @Override

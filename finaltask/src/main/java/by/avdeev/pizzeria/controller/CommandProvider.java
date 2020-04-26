@@ -3,10 +3,14 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.admin.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.ChangeRoleFormAction;
+import by.avdeev.pizzeria.action.admin.DeliveryListRemoveAction;
+import by.avdeev.pizzeria.action.admin.DeliveryListShowAction;
 import by.avdeev.pizzeria.action.admin.ItemListRemoveAction;
 import by.avdeev.pizzeria.action.admin.ItemListShowAction;
 import by.avdeev.pizzeria.action.admin.OrderListRemoveAction;
 import by.avdeev.pizzeria.action.admin.OrderListShowAction;
+import by.avdeev.pizzeria.action.admin.OrderPositionListRemoveAction;
+import by.avdeev.pizzeria.action.admin.OrderPositionListShowAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateAction;
 import by.avdeev.pizzeria.action.creator.ProductCreateFormAction;
 import by.avdeev.pizzeria.action.creator.ProductEditAction;
@@ -83,8 +87,13 @@ public class CommandProvider {
         repository.put("/order/list", new OrderListShowAction());
         repository.put("/order/list/remove", new OrderListRemoveAction());
 
+        repository.put("/orderposition/list", new OrderPositionListShowAction());
+        repository.put("/orderposition/list/remove", new OrderPositionListRemoveAction());
+
         repository.put("/delivery/form", new DeliveryFormAction());
         repository.put("/delivery/order", new OrderAction());
+        repository.put("/delivery/list", new DeliveryListShowAction());
+        repository.put("/delivery/list/remove", new DeliveryListRemoveAction());
     }
 
     public Action receiveCommand(String name) {

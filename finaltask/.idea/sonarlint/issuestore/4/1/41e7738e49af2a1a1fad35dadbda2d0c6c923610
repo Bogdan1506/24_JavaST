@@ -1,5 +1,11 @@
 
-H
-java:S1168("+Return an empty collection instead of null.(¥¹ï8È‚ìñ™.
+e
+java:S1192"HDefine a constant instead of duplicating this literal "payment" 3 times.(Ò§·“8´½—›.
+Y
+java:S1128"<Remove this unused import 'by.avdeev.pizzeria.entity.Order'.(©´”8´½—›.
 X
-java:S1128";Remove this unused import 'by.avdeev.pizzeria.entity.User'.(ŒËÃú8­ªçÏ—.
+java:S1128";Remove this unused import 'by.avdeev.pizzeria.entity.Item'.(Œ¼ñ•8ù´ü–›.
+X
+java:S1128	";Remove this unused import 'by.avdeev.pizzeria.entity.User'.(ŒËÃú8­ªçÏ—.
+H
+java:S1168*"+Return an empty collection instead of null.(¥¹ï8È‚ìñ™.

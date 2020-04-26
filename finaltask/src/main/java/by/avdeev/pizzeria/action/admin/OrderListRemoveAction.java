@@ -8,6 +8,8 @@ import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class OrderListRemoveAction extends AdminAction {
+    private final static Logger logger = LogManager.getLogger();
+
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
         int orderId = Integer.parseInt(request.getParameter("id"));
@@ -23,11 +27,14 @@ public class OrderListRemoveAction extends AdminAction {
         Order order = orderService.findById(orderId);
         OrderPositionService orderPositionService = factory.getOrderPositionService();
         List<OrderPosition> orderPositions = orderPositionService.findByOrder(order);
+        logger.debug("orderPos={}", orderPositions);
         DeliveryService deliveryService = factory.getDeliveryService();
         for (OrderPosition orderPosition : orderPositions) {
             Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
-            deliveryService.delete(delivery.getId());
-            orderPositionService.delete(orderPosition.getId());
+            if (orderPosition != null) {
+                deliveryService.delete(delivery.getId());
+                orderPositionService.delete(orderPosition.getId());
+            }
         }
         orderService.delete(order.getId());
         ForwardObject forwardObject = new ForwardObject("/order/list");

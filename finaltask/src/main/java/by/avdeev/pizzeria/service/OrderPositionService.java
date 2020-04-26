@@ -11,6 +11,8 @@ public interface OrderPositionService extends Service {
 
     List<OrderPosition> findAll() throws ServiceException;
 
+    List<OrderPosition> findAll(int begin, int end) throws ServiceException;
+
     OrderPosition findByItem(Item item) throws ServiceException;
 
     List<OrderPosition> findByOrder(Order order) throws ServiceException;

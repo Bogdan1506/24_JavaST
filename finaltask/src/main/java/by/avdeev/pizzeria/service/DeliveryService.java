@@ -5,10 +5,12 @@ import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.util.List;
 
-public interface DeliveryService extends Service{
+public interface DeliveryService extends Service {
     int create(Delivery delivery) throws ServiceException;
 
     List<Delivery> findAll() throws ServiceException;
+
+    List<Delivery> findAll(int begin, int end) throws ServiceException;
 
     Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException;
 

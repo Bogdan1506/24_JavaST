@@ -67,7 +67,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             if (rs.next()) {
                 Product product = new Product();
                 product.setId(rs.getInt("product_id"));
-                Size size = Size.values()[rs.getInt("size_id")];
+                Size size = Size.getById(rs.getInt("size_id"));
                 Dough dough = Dough.getById(rs.getInt("dough_id"));
                 item = new Item(id, product, dough, size);
             }

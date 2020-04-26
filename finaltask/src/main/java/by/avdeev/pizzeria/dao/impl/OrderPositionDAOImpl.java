@@ -5,6 +5,8 @@ import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.OrderPosition;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
+    private final static Logger logger = LogManager.getLogger();
+
     @Override
     public List<OrderPosition> findAll(int begin, int end) throws DAOException {
-        return null;
+        List<OrderPosition> orderPositions = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, item_id, order_id, price FROM `order_position` ORDER BY id LIMIT ?, ?")) {
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                orderPositions.add(fill(rs));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return orderPositions;
     }
 
     @Override
@@ -49,7 +64,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     public OrderPosition findById(int id) throws DAOException {
         OrderPosition orderPosition = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT item_id, order_id, price FROM `order_position` WHERE id=?")) {
+                "SELECT id, item_id, order_id, price FROM `order_position` WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -125,11 +140,12 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     }
 
     public List<OrderPosition> findByOrderPosition(Order order) throws DAOException {
+        logger.debug("order={}", order);
         List<OrderPosition> orderPositions = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement("SELECT id, item_id, price FROM `order_position` WHERE order_id=?")) {
             statement.setInt(1, order.getId());
             ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 Item item = new Item();
                 int itemId = rs.getInt("item_id");
@@ -140,6 +156,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+        logger.debug("orderPos={}", orderPositions);
         return orderPositions;
     }
 }

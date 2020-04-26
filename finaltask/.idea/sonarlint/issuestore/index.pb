@@ -199,8 +199,6 @@ s
 Csrc/main/java/by/avdeev/pizzeria/action/admin/ChangeRoleAction.java,4\c\4c9b61d7ffe31071caf6dc45e4c406b7cbfe6a8d
 w
 Gsrc/main/java/by/avdeev/pizzeria/action/admin/ChangeRoleFormAction.java,0\2\02d9243eb5cf002fcbb7ede92aebafe9773098bc
-q
-Asrc/main/java/by/avdeev/pizzeria/action/admin/UserShowAction.java,5\0\504b29e3f696c311080e1ca7f30722917bddbd83
 y
 Isrc/main/java/by/avdeev/pizzeria/action/client/user/UserDeleteAction.java,6\3\63561916fae3dd5c6a876e3c52be3f4b22046e6f
 z
@@ -245,10 +243,6 @@ j
 :src/main/java/by/avdeev/pizzeria/dao/impl/ItemDAOImpl.java,3\4\34129a71e843291010a5015e8c44c815b6737961
 g
 7target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/item/list.jsp,2\8\28f9ca622b6d373ebd0336a3cff8d2278e7963d0
-N
-web/WEB-INF/jsp/item/items.jsp,9\2\92758cfd07d3d58949209cf3bf22d3f90e5b62af
-h
-8target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/item/items.jsp,2\7\276a7f953108e0bfb0f96435e399fdd61a285d8c
 u
 Esrc/main/java/by/avdeev/pizzeria/action/admin/ItemListShowAction.java,3\f\3f4c2ea6181e2f65a4f0956c2be9254a50a255a8
 
@@ -331,3 +325,13 @@ Q
 !web/WEB-INF/jsp/delivery/form.jsp,1\2\124bcef16fbb4928ff607dec045e06838c6e5da3
 k
 ;target/finaltask-1.0-SNAPSHOT/WEB-INF/jsp/delivery/form.jsp,8\1\8125f77145690dd546b50c48ddac3a2c0b94e93e
+u
+Esrc/main/java/by/avdeev/pizzeria/action/unauthorized/OrderAction.java,1\6\169c1f0f4ba75f0a9996f975423ca38f625ef9d6
+M
+web/WEB-INF/jsp/item/cart.jsp,5\c\5c5cf2be6c314d8dafb48d25d0bbeb8ebb0fac7c
+u
+Esrc/main/java/by/avdeev/pizzeria/action/admin/UserShowListAction.java,1\0\1046d1de784e65540400dca98efb7446dbf78a8d
+v
+Fsrc/main/java/by/avdeev/pizzeria/action/admin/OrderListShowAction.java,c\e\ce2cf565749b1b1aeaf3a2bace3939dc16794fe5
+N
+web/WEB-INF/jsp/order/list.jsp,8\b\8b112247b2188ed768032a9f411a5e02a6362369

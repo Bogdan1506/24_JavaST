@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
-                <c:forEach var="temp" items="${products}">
+                <c:forEach var="temp" items="${requestScope.products}">
                     <div class="col-sm-4 mt-5">
                         <p>
                             <img alt="" src="${temp.picture}" width="300" height="300">
@@ -27,10 +27,9 @@
                                 ingredients
                             </button>
                         </p>
-                        <c:url value="/item/list" var="addToCart"/>
+                        <c:url value="/item/cart" var="addToCart"/>
                         <c:if test="${sessionScope.user.role ne 'CREATOR'}">
-                            <form action="${addToCart}" method="get">
-
+                            <form action="${addToCart}" method="post">
                                 <c:if test="${temp.type eq 'PIZZA'}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-success active">
@@ -92,10 +91,10 @@
                     <button class="btn btn-warning btn-lg">Add +</button>
                 </form>
             </c:if>
-            <jsp:include page="../item/list.jsp"/>
+            <jsp:include page="../item/cart.jsp"/>
         </div>
     </div>
-    <c:if test="${not empty message}">
+    <c:if test="${not empty requestScope.message}">
         <jsp:include page="../element/footer.jsp"/>
     </c:if>
 </div>
