@@ -18,7 +18,8 @@ public class UserShowListAction extends AdminAction {
             page = Integer.parseInt(pageNum);
         }
         UserService userService = factory.getUserService();
-        List<User> users = userService.findAll((page - 1) * 20 + 1, page * 20);
+        int pageSize = 20;
+        List<User> users = userService.findAll((page - 1) * pageSize, page * pageSize);
         request.setAttribute("users", users);
         request.setAttribute("page", page);
         return null;

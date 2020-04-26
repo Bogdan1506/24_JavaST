@@ -84,8 +84,8 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         logger.debug("profile={}", profile);
         if (profile.getUser() != null) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO profile (user_id, name, surname, email, phone, address) VALUES (?,?,?,?,?,?)")) {
-                statement.setInt(1, profile.getUser().getId());
+                    "INSERT INTO profile (name, surname, email, phone, address, user_id) VALUES (?,?,?,?,?,?)")) {
+                statement.setInt(6, profile.getUser().getId());
                 fill(profile, statement);
             } catch (SQLException e) {
                 throw new DAOException(e);

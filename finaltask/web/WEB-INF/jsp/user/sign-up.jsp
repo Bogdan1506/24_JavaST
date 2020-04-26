@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-    <h2>Sign up form</h2>
+    <p class="display-4 mt-5">Sign up form</p>
     <c:url value="/user/register" var="registerUser"/>
     <form action="${registerUser}" class="was-validated" name="register" method="post">
         <div class="form-group">

@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-    <h2>Create Profile Form</h2>
+    <p class="display-4 mt-5">Password</p>
     <c:url value="/profile/register" var="profileCreate"/>
     <form action="${profileCreate}" class="was-validated" method="post">
         <div class="form-group">

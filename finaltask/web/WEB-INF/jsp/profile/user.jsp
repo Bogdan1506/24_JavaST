@@ -5,16 +5,11 @@
 <head>
     <title>Profile update</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="../element/main-bar.jsp"/>
+<jsp:include page="../element/navbar.jsp"/>
 <div class="container">
-    <h2>Profile Update Form</h2>
+    <p class="display-4">Profile Update Form</p>
     <c:url value="/profile/update" var="profileUpdate"/>
     <form action="${profileUpdate}" class="form-group" method="post">
         <div class="form-group">
@@ -46,7 +41,7 @@
         <button type="submit" class="btn btn-success">Save</button>
     </form>
     <br/>
-    <h3>Password</h3>
+    <p class="display-4">Password</p>
     <c:url value="/user/update" var="userUpdate"/>
     <form action="${userUpdate}" class="form-group" method="post">
         <div class="form-group">
@@ -62,7 +57,9 @@
         <button type="submit" class="btn btn-danger">Change</button>
     </form>
 </div>
-<jsp:include page="../element/footer.jsp"/>
+<c:if test="${not empty requestScope.message}">
+    <jsp:include page="../element/footer.jsp"/>
+</c:if>
 </body>
 </html>
 <script>

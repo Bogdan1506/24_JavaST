@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="temp" items="${users}" varStatus="status">
+        <c:forEach var="temp" items="${requestScope.users}" varStatus="status">
             <tr>
                 <td><c:out value="${temp.id}"/></td>
                 <td><c:out value="${temp.login}"/></td>
@@ -50,26 +50,24 @@
         </c:forEach>
         </tbody>
     </table>
-    <div class="container">
-        <ul class="pagination">
-            <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
-            <c:url var="pagePreviousUrl" value="/user/list?page=${pagePrevious}"/>
-            <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
-            <c:set value="${requestScope.page}" var="page1"/>
-            <c:url var="page1url" value="/user/list?page=${page1}"/>
-            <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
-            <c:set value="${requestScope.page + 1}" var="page2"/>
-            <c:url var="page2url" value="/user/list?page=${page2}"/>
-            <li class="page-item"><a class="page-link" href="${page2url}">${page2}</a></li>
-            <c:set value="${requestScope.page + 2}" var="page3"/>
-            <c:url var="page3url" value="/user/list?page=${page3}"/>
-            <li class="page-item"><a class="page-link" href="${page3url}">${page3}</a></li>
-            <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
-        </ul>
-        <c:if test="${not empty requestScope.message}">
-            <jsp:include page="../element/footer.jsp"/>
-        </c:if>
-    </div>
+    <ul class="pagination justify-content-center">
+        <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
+        <c:url var="pagePreviousUrl" value="/user/list?page=${pagePrevious}"/>
+        <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
+        <c:set value="${requestScope.page}" var="page1"/>
+        <c:url var="page1url" value="/user/list?page=${page1}"/>
+        <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
+        <c:set value="${requestScope.page + 1}" var="page2"/>
+        <c:url var="page2url" value="/user/list?page=${page2}"/>
+        <li class="page-item"><a class="page-link" href="${page2url}">${page2}</a></li>
+        <c:set value="${requestScope.page + 2}" var="page3"/>
+        <c:url var="page3url" value="/user/list?page=${page3}"/>
+        <li class="page-item"><a class="page-link" href="${page3url}">${page3}</a></li>
+        <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
+    </ul>
+    <c:if test="${not empty requestScope.message}">
+        <jsp:include page="../element/footer.jsp"/>
+    </c:if>
 </div>
 <script>
     $(document).ready(function () {

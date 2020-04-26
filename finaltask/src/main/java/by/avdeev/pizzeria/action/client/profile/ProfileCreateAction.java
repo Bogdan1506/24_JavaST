@@ -18,6 +18,7 @@ public class ProfileCreateAction extends ClientAction {
         ForwardObject forwardObject = new ForwardObject("/");
         Validator<Profile> validator = new ProfileValidator();
         Profile profile = validator.validate(request);
+        System.out.println("profile = " + profile);
         ProfileService profileService = factory.getProfileService();
         profileService.create(profile);
         forwardObject.getAttributes().put("message", "User is signed up!");
