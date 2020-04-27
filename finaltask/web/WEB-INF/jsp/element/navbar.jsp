@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="ru_RU" scope="session"/>
+<fmt:setBundle basename="content" var="rb"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +27,7 @@
         <ul class="nav navbar-nav">
             <li class="nav-item">
                 <c:url var="menu" value="/"/>
-                <a class="nav-link" href="${menu}">Menu</a>
+                <a class="nav-link" href="${menu}"><fmt:message key="menu" bundle="${rb}"/></a>
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
@@ -35,7 +38,8 @@
                 <c:when test="${sessionScope.user != null}">
                     <c:url value="/profile/user" var="profileShow"/>
                     <li class="nav-item">
-                        <a class="nav-link border border-success" href="${profileShow}">${sessionScope.user.login}</a>
+                        <a class="nav-link border border-success"
+                           href="${profileShow}">${sessionScope.user.login}</a>
                     </li>
                     <c:url value="/user/sign-out" var="userSignOut"/>
                     <li class="nav-item">

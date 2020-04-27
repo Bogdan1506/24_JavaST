@@ -31,14 +31,14 @@
                 <strong>
                     <c:out value="${temp.product.name}"/>
                 </strong>
+                <c:url value="/item/cart/remove" var="remove">
+                    <c:param name="id" value="${temp.id}"/>
+                </c:url>
                 <a style="color:red;" href="${remove}">X</a>
                 <br/>
                 <c:out value="${temp.dough}"/>
                 <br/>
                 <c:out value="${temp.size}"/>
-                <c:url value="/item/cart/remove" var="remove">
-                    <c:param name="id" value="${temp.id}"/>
-                </c:url>
             </p>
             <%--            <hr/>--%>
         </c:forEach>

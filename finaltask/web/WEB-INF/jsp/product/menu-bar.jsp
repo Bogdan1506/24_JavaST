@@ -13,8 +13,7 @@
 </head>
 <body>
 <img class="mx-auto d-block" src="../../../static/img/header.jpg" alt=""/>
-<div class="font">
-    <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top">
+    <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top font">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <c:url value="/product/pizzas" var="pizzas"/>
@@ -30,6 +29,5 @@
             </li>
         </ul>
     </nav>
-</div>
 </body>
 </html>
