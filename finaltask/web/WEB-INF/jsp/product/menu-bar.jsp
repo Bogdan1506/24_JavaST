@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +18,15 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <c:url value="/product/pizzas" var="pizzas"/>
-                <a class="nav-link" href="${pizzas}">Pizzas</a>
+                <a class="nav-link" href="${pizzas}"><fmt:message key="pizzas" bundle="${rb}"/></a>
             </li>
             <li class="nav-item">
                 <c:url value="/product/sides" var="sides"/>
-                <a class="nav-link" href="${sides}">Sides</a>
+                <a class="nav-link" href="${sides}"><fmt:message key="sides" bundle="${rb}"/></a>
             </li>
             <li class="nav-item">
                 <c:url value="/product/drinks" var="drinks"/>
-                <a class="nav-link" href="${drinks}">Drinks</a>
+                <a class="nav-link" href="${drinks}"><fmt:message key="drinks" bundle="${rb}"/></a>
             </li>
         </ul>
     </nav>

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class PizzaShowListAction extends UnauthorizedUserAction {
@@ -21,6 +22,13 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
 //        Forward forward = new Forward("/product/menu");
 //        forward.getAttributes().put("products", products);
 //        return forward;
+        String lang = request.getParameter("lang");
+        HttpSession session = request.getSession();
+        if (lang == null) {
+            session.setAttribute("lang", "en_US");
+        } else {
+            session.setAttribute("lang", lang);
+        }
         request.setAttribute("products", products);
         setName("/product/menu");
         return null;

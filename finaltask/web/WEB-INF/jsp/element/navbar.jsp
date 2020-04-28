@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="ru_RU" scope="session"/>
-<fmt:setBundle basename="content" var="rb"/>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +32,7 @@
         </ul>
         <ul class="navbar-nav navbar-right">
             <li>
-                <a class="nav-link" href="#">Contacts</a>
+                <a class="nav-link" href="#"><fmt:message key="contacts" bundle="${rb}"/></a>
             </li>
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
@@ -43,12 +43,12 @@
                     </li>
                     <c:url value="/user/sign-out" var="userSignOut"/>
                     <li class="nav-item">
-                        <a class="nav-link" href="${userSignOut}">Sign out</a>
+                        <a class="nav-link" href="${userSignOut}"><fmt:message key="signOut" bundle="${rb}"/></a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <c:url value="/user/sign-in" var="userSignIn"/>
-                    <a class="nav-link" href="${userSignIn}"> Sign in</a>
+                    <a class="nav-link" href="${userSignIn}"><fmt:message key="signIn" bundle="${rb}"/></a>
                 </c:otherwise>
             </c:choose>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
@@ -60,9 +60,12 @@
                     <em class='fas fa-globe-americas'></em>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">EN</a>
-                    <a class="dropdown-item" href="#">RU</a>
-                    <a class="dropdown-item" href="#">BE</a>
+                    <c:url value="/?lang=en_US" var="en"/>
+                    <a class="dropdown-item" href="${en}">EN</a>
+                    <c:url value="/?lang=ru_RU" var="ru"/>
+                    <a class="dropdown-item" href="${ru}">RU</a>
+                    <c:url value="/?lang=be_BY" var="be"/>
+                    <a class="dropdown-item" href="${be}">BE</a>
                 </div>
             </li>
         </ul>
