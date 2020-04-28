@@ -45,6 +45,14 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
         }
         cart.add(item);
         logger.debug("session cart={}", cart);
-        return new ForwardObject("/product/menu");
+        String forward = "pizzas";
+        switch (item.getProduct().getType()) {
+            case SIDES:
+                forward = "sides";
+                break;
+            case DRINK:
+                forward = "drinks";
+        }
+        return new ForwardObject(String.format("/product/%s", forward));
     }
 }

@@ -53,7 +53,7 @@
             </c:choose>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <c:url value="/user/list" var="users"/>
-                <a class="nav-link" href="${users}">Abilities</a>
+                <a class="nav-link" href="${users}"><fmt:message key="abilities" bundle="${rb}"/></a>
             </c:if>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
