@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +37,7 @@
         </li>
     </ul>
 </nav>
+<ctg:statistics/>
 </body>
 </html>
 

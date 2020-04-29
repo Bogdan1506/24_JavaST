@@ -2,18 +2,18 @@ INSERT INTO `user` (`login`,
                     `password`,
                     `role`)
 VALUES ('creator',
-        '1',
+        'creator1234',
         1);
 INSERT INTO `profile` (user_id, name, surname, email, phone, address)
-VALUES (LAST_INSERT_ID(), 'creator', 'creatov', 'creator@mail.ru', +375291234567, 'Nemiga 3');
+VALUES (LAST_INSERT_ID(), 'creator', 'creator', 'creator@mail.ru', +375291234567, 'creator');
 INSERT INTO `user` (`login`,
                     `password`,
                     `role`)
 VALUES ('client',
-        '1234',
+        'client1234',
         2);
 INSERT INTO `profile` (user_id, name, surname, email, phone, address)
-VALUES (LAST_INSERT_ID(), 'client', 'clientov', 'client@mail.ru', +375291234567, 'Nemiga 4');
+VALUES (LAST_INSERT_ID(), 'client', 'client', 'client@mail.ru', +375291234567, 'client');
 
 INSERT INTO `product` (type, name, description, price, picture)
 VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
@@ -51,9 +51,21 @@ VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregan
        ('drink', 'Coca-Cola', 'Sugar, water, vanilla',
         2,
         'https://api.papajohns.by//images/catalog/thumbs/full/ca6771f8591fdca829e2753d804dd90d.png'),
+       ('drink', 'Fanta Orange', 'Sugar, water, orange',
+        2,
+        'https://api.papajohns.by//images/catalog/thumbs/full/bfd37e8d8123c10650078f62603f71e7.png'),
+       ('drink', 'Sprite', 'Sugar, water, lime',
+        2,
+        'https://api.papajohns.by//images/catalog/thumbs/full/f1d48f07d50c2e7532d2b8d20f9c6044.png'),
        ('sides', 'Onion rings', 'Breaded onion rings',
         3.5,
-        'https://api.papajohns.by//images/catalog/thumbs/full/23b62cbd29fe78e3eef9129fd1c1ddbb.png');
+        'https://api.papajohns.by//images/catalog/thumbs/full/23b62cbd29fe78e3eef9129fd1c1ddbb.png'),
+       ('sides', 'Breaded shrimps', 'Large crispy prawns',
+        8.5,
+        'https://api.papajohns.by//images/catalog/thumbs/full/8d614d5724d5dde8f952df6d4c345078.jpg'),
+       ('sides', 'Chicken poppers', 'Breaded chicken poppers',
+        6.9,
+        'https://api.papajohns.by//images/catalog/thumbs/full/0f09182680ffb8383d7c410c2da18b63.jpg');
 
 INSERT INTO `dough` (name)
 VALUES ('Thin'),

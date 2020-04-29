@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,6 +59,7 @@
         </label>
         <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
     </form>
+    <ctg:statistics/>
     <c:if test="${not empty message}">
         <jsp:include page="../element/footer.jsp"/>
     </c:if>

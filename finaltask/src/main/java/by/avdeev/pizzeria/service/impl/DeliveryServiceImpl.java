@@ -9,6 +9,9 @@ import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.transaction.DAOType;
 
+import java.sql.Date;
+import java.util.List;
+
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implements DeliveryService {
     @Override
     public Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException {
@@ -21,5 +24,29 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implement
             throw new ServiceException(e);
         }
         return delivery;
+    }
+
+    @Override
+    public int findByDate(Date date) throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = transaction.createDao(DAOType.DELIVERY);
+        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
+        int count;
+        try {
+            count = deliveryDAO.findByDate(date);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return count;
+    }
+
+    @Override
+    public int countAll() throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = transaction.createDao(DAOType.DELIVERY);
+        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
+        try {
+            return deliveryDAO.countAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

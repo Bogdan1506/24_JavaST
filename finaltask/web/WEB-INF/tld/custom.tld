@@ -12,13 +12,18 @@
         <body-content>empty</body-content>
     </tag>
     <tag>
-    <name>hello</name>
-    <tag-class>by.avdeev.pizzeria.tag.HelloTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-    <name>role</name>
-        <required>true</required>
-        <rtexprvalue>true</rtexprvalue>
-    </attribute>
+        <name>hello</name>
+        <tag-class>by.avdeev.pizzeria.tag.HelloTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>role</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>statistics</name>
+        <tag-class>by.avdeev.pizzeria.tag.Statistics</tag-class>
+        <body-content>empty</body-content>
     </tag>
 </taglib>

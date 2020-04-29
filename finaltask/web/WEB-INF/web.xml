@@ -9,10 +9,10 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    <!-- <jsp-config>
+     <jsp-config>
          <taglib>
              <taglib-uri>customtags</taglib-uri>
- &lt;!&ndash;            <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>&ndash;&gt;
+             <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
          </taglib>
-     </jsp-config>-->
+     </jsp-config>
 </web-app>

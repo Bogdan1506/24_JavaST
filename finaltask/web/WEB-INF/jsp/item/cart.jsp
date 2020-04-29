@@ -22,28 +22,29 @@
             <a style="color: red;" href="${removeAll}">Reset cart</a>
         </strong>
     </p>
-    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 500px; max-height: 500px;">
+    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3"
+         style="max-width: 500px; max-height: 500px; background-color: white">
         </c:otherwise>
         </c:choose>
-        <c:forEach var="temp" items="${cart}">
-            <p>
-                <img alt="" src="${temp.product.picture}" width="60" height="60">
-                <strong>
-                    <c:out value="${temp.product.name}"/>
-                </strong>
-                <c:url value="/item/cart/remove" var="remove">
-                    <c:param name="id" value="${temp.id}"/>
-                </c:url>
-                <a style="color:red;" href="${remove}">X</a>
-                <br/>
-                <c:out value="${temp.dough}"/>
-                <br/>
-                <c:out value="${temp.size}"/>
-            </p>
-            <%--            <hr/>--%>
+        <c:forEach var="temp" items="${sessionScope.cart}">
+            <ul style="list-style-type:none;padding: 0;
+  width: 200px;
+  margin: 0 auto;">
+                <li><img alt="" src="${temp.product.picture}" width="60" height="60"></li>
+                <li>
+                    <strong>
+                        <c:out value="${temp.product.name}"/>
+                    </strong>
+                    <c:url value="/item/cart/remove" var="remove">
+                        <c:param name="id" value="${temp.id}"/>
+                    </c:url>
+                    <a style="color:red;" href="${remove}">X</a></li>
+                <li><c:out value="${temp.dough}"/></li>
+                <li><c:out value="${temp.size}"/></li>
+            </ul>
         </c:forEach>
     </div>
-    <c:if test="${not empty cart}">
+    <c:if test="${not empty sessionScope.cart}">
         <c:url value="/item/cart/order" var="createItems"/>
         <form action="${createItems}">
             <input class="btn btn-lg btn-warning" type="submit" value="Order">

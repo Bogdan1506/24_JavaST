@@ -134,4 +134,31 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         }
         return delivery;
     }
+
+    public int countAll() throws DAOException {
+        int count = 0;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) as count FROM delivery");
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return count;
+    }
+
+    public int findByDate(Date date) throws DAOException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) as count FROM `delivery` WHERE date=?")) {
+            statement.setDate(1, date);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return count;
+    }
 }
