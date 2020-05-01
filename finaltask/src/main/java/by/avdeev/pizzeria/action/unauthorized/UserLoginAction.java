@@ -6,12 +6,17 @@ import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class UserLoginAction extends UnauthorizedUserAction {
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         UserService userService = factory.getUserService();
@@ -32,6 +37,13 @@ public class UserLoginAction extends UnauthorizedUserAction {
             ProfileService profileService = factory.getProfileService();
             Profile profile = profileService.findByUserId(user.getId());
             session.setAttribute("profile", profile);
+            String remember = request.getParameter("remember");
+            logger.debug("remember={}", remember);
+            if (remember != null) {
+                Cookie cookie = new Cookie("user", user.getLogin());
+                cookie.setMaxAge(60 * 60);
+                response.addCookie(cookie);
+            }
             return forwardObject;
         } else {
             ForwardObject forwardObject = new ForwardObject("sign-in");

@@ -17,6 +17,7 @@ import by.avdeev.pizzeria.action.creator.ProductEditAction;
 import by.avdeev.pizzeria.action.creator.ProductEditFormAction;
 import by.avdeev.pizzeria.action.creator.ProductRemoveAction;
 import by.avdeev.pizzeria.action.unauthorized.DeliveryFormAction;
+import by.avdeev.pizzeria.action.unauthorized.LocalizationAction;
 import by.avdeev.pizzeria.action.unauthorized.OrderAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateSessionAction;
@@ -48,6 +49,8 @@ public class CommandProvider {
 
     public CommandProvider() {
         repository.put("/", new PizzaShowListAction());
+
+        repository.put("/local", new LocalizationAction());
 
         repository.put("/user/delete", new UserDeleteAction());
         repository.put("/user/sign-up", new UserSignUpAction());

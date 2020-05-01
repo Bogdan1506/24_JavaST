@@ -43,10 +43,10 @@
     <form action="${menu}">
         <button type="submit" class="btn btn-warning float-right">Cancel</button>
     </form>
-    <c:if test="${not empty message}">
+    <c:if test="${not empty requestScope.message}">
     <div class="alert alert-danger alert-dismissible mt-5">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>${message}</strong>
+        <strong>${requestScope.message}</strong>
     </div>
     </c:if>
 </body>

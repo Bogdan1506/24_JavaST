@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*"})
+@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger();
     private static final String REDIRECTED_DATA = "redirectedData";
@@ -35,6 +36,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        useCookie(request);
         logger.trace("started");
         Action action = (Action) request.getAttribute("action");
         HttpSession session = request.getSession(true);
@@ -76,6 +78,16 @@ public class ControllerServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher(forwardPage).forward(request, response);
             } catch (IllegalArgumentException e) {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(request, response);
+            }
+        }
+    }
+
+    private void useCookie(HttpServletRequest request) {
+        @SuppressWarnings("unchecked")
+        Map<String, String> cookies = (Map<String, String>) request.getAttribute("cookies");
+        if (cookies != null) {
+            for (Map.Entry<String, String> cookiePair : cookies.entrySet()) {
+                request.setAttribute(cookiePair.getKey(), cookiePair.getValue());
             }
         }
     }

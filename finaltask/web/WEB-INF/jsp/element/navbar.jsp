@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setLocale value="${requestScope.local}" scope="session"/>
 <fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,11 +60,12 @@
                     <em class='fas fa-globe-americas'></em>
                 </a>
                 <div class="dropdown-menu">
-                    <c:url value="/?lang=en_US" var="en"/>
+                    <c:url value="${requestScope['javax.servlet.forward.request_uri']}" var="currentURI"/>
+                    <c:url value="/local?lang=en_US&uri=${currentURI}" var="en"/>
                     <a class="dropdown-item" href="${en}">EN</a>
-                    <c:url value="/?lang=ru_RU" var="ru"/>
+                    <c:url value="/local?lang=ru_RU&uri=${currentURI}" var="ru"/>
                     <a class="dropdown-item" href="${ru}">RU</a>
-                    <c:url value="/?lang=be_BY" var="be"/>
+                    <c:url value="/local?lang=be_BY&uri=${currentURI}" var="be"/>
                     <a class="dropdown-item" href="${be}">BE</a>
                 </div>
             </li>

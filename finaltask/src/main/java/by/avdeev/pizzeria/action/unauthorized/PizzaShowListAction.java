@@ -19,18 +19,6 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
         logger.debug("products={}", products);
-//        Forward forward = new Forward("/product/menu");
-//        forward.getAttributes().put("products", products);
-//        return forward;
-       /* String lang = request.getParameter("lang");
-        HttpSession session = request.getSession();
-        if (lang == null) {
-            logger.debug("lang=en_US");
-            session.setAttribute("lang", "en_US");
-        } else {
-            logger.debug("lang=another");
-            session.setAttribute("lang", lang);
-        }*/
         request.setAttribute("products", products);
         setName("/product/menu");
         return null;
