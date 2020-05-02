@@ -1,9 +1,7 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
 import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
-import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -33,17 +31,21 @@ public class UserLoginAction extends UnauthorizedUserAction {
                 forwardObject = new ForwardObject(action.getName());
             }
             forwardObject.getAttributes().put("message", "User is authorized!");
-            session.setAttribute("user", user);
-            ProfileService profileService = factory.getProfileService();
-            Profile profile = profileService.findByUserId(user.getId());
-            session.setAttribute("profile", profile);
             String remember = request.getParameter("remember");
             logger.debug("remember={}", remember);
+            Cookie loginCookie = new Cookie("login", login);
+            loginCookie.setPath("/");
+            Cookie roleCookie = new Cookie("role", String.valueOf(user.getRole()));
+            roleCookie.setPath("/");
             if (remember != null) {
-                Cookie cookie = new Cookie("user", user.getLogin());
-                cookie.setMaxAge(60 * 60);
-                response.addCookie(cookie);
+                loginCookie.setMaxAge(60 * 60 * 24);
+                roleCookie.setMaxAge(60 * 60 * 24);
+            } else {
+                loginCookie.setMaxAge(-1);
+                roleCookie.setMaxAge(-1);
             }
+            response.addCookie(roleCookie);
+            response.addCookie(loginCookie);
             return forwardObject;
         } else {
             ForwardObject forwardObject = new ForwardObject("sign-in");

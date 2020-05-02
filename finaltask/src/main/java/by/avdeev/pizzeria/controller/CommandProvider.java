@@ -18,6 +18,7 @@ import by.avdeev.pizzeria.action.creator.ProductEditFormAction;
 import by.avdeev.pizzeria.action.creator.ProductRemoveAction;
 import by.avdeev.pizzeria.action.unauthorized.DeliveryFormAction;
 import by.avdeev.pizzeria.action.unauthorized.LocalizationAction;
+import by.avdeev.pizzeria.action.unauthorized.MenuAction;
 import by.avdeev.pizzeria.action.unauthorized.OrderAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateSessionAction;
@@ -48,7 +49,7 @@ public class CommandProvider {
     private final Map<String, Action> repository = new ConcurrentHashMap<>();
 
     public CommandProvider() {
-        repository.put("/", new PizzaShowListAction());
+        repository.put("/", new MenuAction());
 
         repository.put("/local", new LocalizationAction());
 
@@ -59,7 +60,6 @@ public class CommandProvider {
         repository.put("/user/login", new UserLoginAction());
         repository.put("/user/sign-in", new UserSignInAction());
         repository.put("/user/sign-out", new UserSignOutAction());
-
         repository.put("/user/list", new UserShowListAction());
         repository.put("/user/list/update", new ChangeRoleFormAction());
         repository.put("/user/list/role", new ChangeRoleAction());

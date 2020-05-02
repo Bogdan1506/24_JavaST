@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class PizzaShowListAction extends UnauthorizedUserAction {
@@ -19,8 +18,8 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
         logger.debug("products={}", products);
-        request.setAttribute("products", products);
-        setName("/product/menu");
-        return null;
+        ForwardObject forwardObject = new ForwardObject("/product/menu");
+        forwardObject.getAttributes().put("products", products);
+        return forwardObject;
     }
 }

@@ -11,6 +11,7 @@ import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 import org.apache.logging.log4j.LogManager;
@@ -22,11 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class OrderAction extends UnauthorizedUserAction {
     private final static Logger logger = LogManager.getLogger();
@@ -36,8 +34,12 @@ public class OrderAction extends UnauthorizedUserAction {
         //if user exists
         Profile profile;
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("user") != null) {
-            User user = (User) session.getAttribute("user");
+
+        String login = (String) request.getAttribute("login");
+        if (login != null) {
+//            User user = (User) session.getAttribute("user");
+            UserService userService = factory.getUserService();
+            User user = userService.findByLogin(login);
             ProfileService profileService = factory.getProfileService();
             profile = profileService.findByUserId(user.getId());
         } else {

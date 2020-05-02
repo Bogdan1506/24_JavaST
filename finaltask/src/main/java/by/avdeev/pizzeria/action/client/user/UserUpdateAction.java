@@ -8,42 +8,25 @@ import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class UserUpdateAction extends ClientAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         String oldPass = request.getParameter("oldPassword");
         String newPass = request.getParameter("newPassword");
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        String login = (String) request.getAttribute("login");
         UserService userService = factory.getUserService();
+        User user = userService.findByLogin(login);
         String msg;
         if (user.getPassword().equals(oldPass) && !newPass.isEmpty()) {
             user.setPassword(newPass);
             userService.update(user);
-            session.setAttribute("user", user);
             msg = "Password is changed!";
         } else {
-            msg = "Password isn't changed!";
+            msg = "Current password is incorrect! Try again!";
         }
         ForwardObject forwardObject = new ForwardObject("/profile/user");
         forwardObject.getAttributes().put("message", msg);
         return forwardObject;
     }
-/*    @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Forward forward = new Forward("userShowList");
-        UserService userService = factory.getUserService();
-        User user = userService.findById(Integer.parseInt(request.getParameter("id")));
-        Role role = Role.valueOf(request.getParameter("role").toUpperCase());
-        if (role != user.getRole()) {
-            user.setRole(role);
-            userService.update(user);
-            forward.getAttributes().put("message", "User is updated!");
-        } else {
-            forward.getAttributes().put("message", "Update isn't done!");
-        }
-        return forward;
-    }*/  //todo for admin delete user
 }

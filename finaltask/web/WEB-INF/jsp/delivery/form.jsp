@@ -45,21 +45,19 @@
             <div class="form-group row">
                 <label for="date" class="col-2 col-form-label">Date:</label>
                 <div class="col-10">
-                    <input class="form-control" type="date" name="date" id="date">
-                    <%--                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">--%>
+                    <input class="form-control" type="date" value="${requestScope.date}" name="date" id="date">
                 </div>
 
             </div>
         </div>
         <label>Payment:
-            <input type="radio" name="payment" id="cash" value="Cash">
+            <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
             <label for="cash">Cash</label>
             <input type="radio" name="payment" id="card" value="Card">
             <label for="card">Card</label>
         </label>
         <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
     </form>
-    <ctg:statistics/>
     <c:if test="${not empty message}">
         <jsp:include page="../element/footer.jsp"/>
     </c:if>

@@ -31,6 +31,7 @@ public class Statistics extends TagSupport {
         } catch (ServiceException | IOException e) {
             throw new JspException(e.getMessage());
         }
+        transactionFactory.close();
         return SKIP_BODY;
     }
 }

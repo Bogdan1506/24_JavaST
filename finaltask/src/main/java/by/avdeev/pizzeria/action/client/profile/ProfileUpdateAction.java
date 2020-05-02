@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class ProfileUpdateAction extends ClientAction {
     private static Logger logger = LogManager.getLogger();
@@ -24,8 +23,6 @@ public class ProfileUpdateAction extends ClientAction {
         logger.debug(String.format("Profile=%s", profile));
         ProfileService profileService = factory.getProfileService();
         profileService.update(profile);
-        HttpSession session = request.getSession();
-        session.setAttribute("profile", profile);
         ForwardObject forwardObject = new ForwardObject("/profile/user");
         forwardObject.getAttributes().put("message", "Profile is updated!");
         return forwardObject;

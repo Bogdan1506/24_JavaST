@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
+@WebFilter(filterName = "actionURI")
 public class ActionURIFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
     private final CommandProvider commandProvider = new CommandProvider();
@@ -28,11 +28,11 @@ public class ActionURIFilter implements Filter {
             Action action = commandProvider.receiveCommand(uri);
             action.setName(uri);
             httpServletRequest.setAttribute("action", action);
-            logger.debug("action={}", action.getName());
+            logger.debug("action={}", action);
             logger.debug("filter={}", filterChain);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (NullPointerException e) {
-            logger.debug("ex={}", e.getMessage());
+            logger.debug("ex={}", e);
             httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(servletRequest, servletResponse);
         }
     }

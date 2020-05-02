@@ -15,29 +15,28 @@
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
-                   value="${profile.name}" required>
+                   value="${requestScope.profile.name}" required>
         </div>
         <div class="form-group">
             <label for="surname">Surname:</label>
             <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname"
-                   value="${profile.surname}" required>
+                   value="${requestScope.profile.surname}" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="text" class="form-control" id="email" placeholder="Enter email" name="email"
-                   value="${profile.email}">
+                   value="${requestScope.profile.email}">
         </div>
         <div class="form-group">
             <label for="phone">Phone:</label>
             <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone"
-                   value="${profile.phone}" required>
+                   value="${requestScope.profile.phone}" required>
         </div>
         <div class="form-group">
             <label for="address">Address:</label>
             <input type="text" class="form-control" id="address" placeholder="Enter address" name="address"
-                   value="${profile.address}" required>
+                   value="${requestScope.profile.address}" required>
         </div>
-        <input type="hidden" name="userId" value="${user.id}">
         <button type="submit" class="btn btn-success">Save</button>
     </form>
     <br/>

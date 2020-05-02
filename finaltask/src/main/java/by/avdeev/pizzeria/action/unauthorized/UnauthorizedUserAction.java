@@ -7,5 +7,7 @@ public abstract class UnauthorizedUserAction extends Action {
     public UnauthorizedUserAction() {
         getRoles().add(Role.UNAUTHORIZED);
         getRoles().add(Role.CLIENT);
+        getRoles().add(Role.CREATOR);
+        getRoles().add(Role.ADMIN);
     }
 }

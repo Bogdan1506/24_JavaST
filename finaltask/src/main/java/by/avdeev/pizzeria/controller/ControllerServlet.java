@@ -3,16 +3,20 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.ActionManager;
 import by.avdeev.pizzeria.action.ActionManagerFactory;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
+import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
+import by.avdeev.pizzeria.transaction.TransactionFactory;
 import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.JsonUtils;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +40,11 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        useCookie(request);
+        try {
+            useCookie(request);
+        } catch (ServiceException e) {
+            throw new ServletException();
+        }
         logger.trace("started");
         Action action = (Action) request.getAttribute("action");
         HttpSession session = request.getSession(true);
@@ -82,9 +90,10 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void useCookie(HttpServletRequest request) {
+    private void useCookie(HttpServletRequest request) throws ServiceException {
         @SuppressWarnings("unchecked")
         Map<String, String> cookies = (Map<String, String>) request.getAttribute("cookies");
+        logger.debug("cookies={}", cookies);
         if (cookies != null) {
             for (Map.Entry<String, String> cookiePair : cookies.entrySet()) {
                 request.setAttribute(cookiePair.getKey(), cookiePair.getValue());

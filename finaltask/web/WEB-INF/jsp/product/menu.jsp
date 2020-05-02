@@ -28,7 +28,7 @@
                             </button>
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
-                        <c:if test="${sessionScope.user.role ne 'CREATOR'}">
+                        <c:if test="${requestScope.role ne 'CREATOR'}">
                             <form action="${addToCart}" method="post">
                                 <c:if test="${temp.type eq 'PIZZA'}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -66,7 +66,7 @@
                                 <input type="submit" class="btn btn-light" value="Add to cart">
                             </form>
                         </c:if>
-                        <c:if test="${sessionScope.user.role eq 'CREATOR'}">
+                        <c:if test="${requestScope.role eq 'CREATOR'}">
                             <c:url var="removePosition" value="/product/remove"/>
                             <c:url var="editPosition" value="/product/edit-form"/>
                             <div class="btn-group">

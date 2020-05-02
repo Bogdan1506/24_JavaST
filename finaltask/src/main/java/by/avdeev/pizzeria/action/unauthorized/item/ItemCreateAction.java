@@ -7,6 +7,7 @@ import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 
 public class ItemCreateAction extends UnauthorizedUserAction {
@@ -32,11 +34,14 @@ public class ItemCreateAction extends UnauthorizedUserAction {
         }
         ForwardObject forwardObject = new ForwardObject("/delivery/form");
         ProfileService profileService = factory.getProfileService();
-        User user = (User) session.getAttribute("user");
+        String login = (String) request.getAttribute("login");
+        UserService userService = factory.getUserService();
+        User user = userService.findByLogin(login);
         if (user != null) {
             Profile profile = profileService.findByUserId(user.getId());
             forwardObject.getAttributes().put("profile", profile);
         }
+        forwardObject.getAttributes().put("date", new Date(System.currentTimeMillis()));
         return forwardObject;
     }
 }

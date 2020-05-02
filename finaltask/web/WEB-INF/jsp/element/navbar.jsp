@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${requestScope.local}" scope="session"/>
+<fmt:setLocale value="${requestScope.local}"/>
 <fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,11 +35,11 @@
                 <a class="nav-link" href="#"><fmt:message key="contacts" bundle="${rb}"/></a>
             </li>
             <c:choose>
-                <c:when test="${sessionScope.user != null}">
+                <c:when test="${requestScope.login != null}">
                     <c:url value="/profile/user" var="profileShow"/>
                     <li class="nav-item">
                         <a class="nav-link border border-success"
-                           href="${profileShow}">${sessionScope.user.login}</a>
+                           href="${profileShow}">${requestScope.login}</a>
                     </li>
                     <c:url value="/user/sign-out" var="userSignOut"/>
                     <li class="nav-item">
@@ -51,7 +51,7 @@
                     <a class="nav-link" href="${userSignIn}"><fmt:message key="signIn" bundle="${rb}"/></a>
                 </c:otherwise>
             </c:choose>
-            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+            <c:if test="${requestScope.role eq 'ADMIN'}">
                 <c:url value="/user/list" var="users"/>
                 <a class="nav-link" href="${users}"><fmt:message key="abilities" bundle="${rb}"/></a>
             </c:if>
@@ -59,13 +59,13 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                     <em class='fas fa-globe-americas'></em>
                 </a>
+                <c:url value="uri=${requestScope['javax.servlet.forward.request_uri']}" var="uri"/>
                 <div class="dropdown-menu">
-                    <c:url value="${requestScope['javax.servlet.forward.request_uri']}" var="currentURI"/>
-                    <c:url value="/local?lang=en_US&uri=${currentURI}" var="en"/>
+                    <c:url value="/local?lang=en_US&${uri}" var="en"/>
                     <a class="dropdown-item" href="${en}">EN</a>
-                    <c:url value="/local?lang=ru_RU&uri=${currentURI}" var="ru"/>
+                    <c:url value="/local?lang=ru_RU&${uri}" var="ru"/>
                     <a class="dropdown-item" href="${ru}">RU</a>
-                    <c:url value="/local?lang=be_BY&uri=${currentURI}" var="be"/>
+                    <c:url value="/local?lang=be_BY&${uri}" var="be"/>
                     <a class="dropdown-item" href="${be}">BE</a>
                 </div>
             </li>

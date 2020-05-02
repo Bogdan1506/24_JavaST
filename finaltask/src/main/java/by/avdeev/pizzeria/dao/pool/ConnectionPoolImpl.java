@@ -30,7 +30,7 @@ public class ConnectionPoolImpl
     }
 
     public static ConnectionPoolImpl create() {
-        int initialPoolSize = 5;
+        int initialPoolSize = 10;
         BlockingQueue<Connection> freeConnections = new LinkedBlockingQueue<>(initialPoolSize);
         for (int i = 0; i < initialPoolSize; i++) {
             freeConnections.add(createConnection());

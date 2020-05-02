@@ -10,5 +10,5 @@
               maxActive="20"
               maxTotal="40"
               maxWait="10000"
-              maxIdle="5"/>
+              maxIdle="10"/>
 </Context>
