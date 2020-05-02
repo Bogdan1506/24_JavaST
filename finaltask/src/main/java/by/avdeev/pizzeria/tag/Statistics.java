@@ -16,7 +16,12 @@ public class Statistics extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         JspWriter out = pageContext.getOut();
-        TransactionFactory transactionFactory = new TransactionFactoryImpl();
+        TransactionFactory transactionFactory = null;
+        try {
+            transactionFactory = new TransactionFactoryImpl();
+        } catch (ServiceException e) {
+            throw new JspException(e.getMessage());
+        }
         ServiceFactory serviceFactory = new ServiceFactory(transactionFactory);
         DeliveryService deliveryService = serviceFactory.getDeliveryService();
         int totalCount;
@@ -28,10 +33,10 @@ public class Statistics extends TagSupport {
             String resTotal = String.format("<h6>Deliveries total: %d</h6>", totalCount);
             String resToday = String.format("</br><h6>Deliveries today: %d</h6>", todayCount);
             out.write(resTotal + resToday);
+            transactionFactory.close();
         } catch (ServiceException | IOException e) {
             throw new JspException(e.getMessage());
         }
-        transactionFactory.close();
         return SKIP_BODY;
     }
 }

@@ -21,6 +21,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             ResultSet rs = statement.executeQuery("SELECT id, order_position_id, date, payment FROM `delivery`");
             fill(deliveries, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return deliveries;
@@ -35,6 +36,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             ResultSet rs = preparedStatement.executeQuery();
             fill(deliveries, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return deliveries;
@@ -68,6 +70,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
                 delivery = new Delivery(id, orderPosition, date, payment);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return delivery;
@@ -81,6 +84,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -100,6 +104,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -114,6 +119,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             statement.setInt(4, delivery.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -130,6 +136,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
                 delivery = new Delivery(id, orderPosition, date, payment);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return delivery;
@@ -143,6 +150,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
                 count = rs.getInt("count");
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return count;
@@ -157,6 +165,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
                 count = rs.getInt("count");
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return count;

@@ -54,4 +54,12 @@ public abstract class AbstractDAO<T extends Entity> {
         }
         return lastId;
     }
+
+    protected void rollback() throws DAOException {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
 }

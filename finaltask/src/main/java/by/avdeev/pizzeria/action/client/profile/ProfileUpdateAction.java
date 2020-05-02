@@ -2,8 +2,10 @@ package by.avdeev.pizzeria.action.client.profile;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
 import by.avdeev.pizzeria.entity.Profile;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
@@ -20,7 +22,11 @@ public class ProfileUpdateAction extends ClientAction {
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         Validator<Profile> validator = new ProfileValidator();
         Profile profile = validator.validate(request);
-        logger.debug(String.format("Profile=%s", profile));
+        logger.debug("profile={}", profile);
+        UserService userService = factory.getUserService();
+        String login = (String) request.getAttribute("login");
+        User user = userService.findByLogin(login);
+        profile.setUser(user);
         ProfileService profileService = factory.getProfileService();
         profileService.update(profile);
         ForwardObject forwardObject = new ForwardObject("/profile/user");

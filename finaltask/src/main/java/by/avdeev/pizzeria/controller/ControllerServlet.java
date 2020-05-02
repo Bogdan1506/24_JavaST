@@ -3,17 +3,12 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.action.ActionManager;
 import by.avdeev.pizzeria.action.ActionManagerFactory;
-import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
-import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import by.avdeev.pizzeria.transaction.TransactionFactory;
 import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.JsonUtils;
-import org.w3c.dom.ls.LSOutput;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,12 +35,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            useCookie(request);
-        } catch (ServiceException e) {
-            throw new ServletException();
-        }
-        logger.trace("started");
+        useCookie(request);
         Action action = (Action) request.getAttribute("action");
         HttpSession session = request.getSession(true);
         if (session != null) {
@@ -61,15 +51,20 @@ public class ControllerServlet extends HttpServlet {
                 session.removeAttribute(REDIRECTED_DATA);
             }
         }
-        ServiceFactory serviceFactory = new ServiceFactory(new TransactionFactoryImpl());
+        ServiceFactory serviceFactory = null;
+        try {
+            serviceFactory = new ServiceFactory(new TransactionFactoryImpl());
+        } catch (ServiceException e) {
+            logger.error(e);
+        }
         ActionManager actionManager = ActionManagerFactory.getManager(serviceFactory);
         Action.ForwardObject forwardObject = null;
         try {
             forwardObject = actionManager.execute(action, request, response);
+            actionManager.close();
         } catch (ServiceException | IncorrectFormDataException e) {
             logger.error(e);
         }
-        actionManager.close();
         if (session != null && forwardObject != null && !forwardObject.getAttributes().isEmpty()) {
             session.setAttribute(REDIRECTED_DATA, forwardObject.getAttributes());
         }
@@ -90,7 +85,7 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void useCookie(HttpServletRequest request) throws ServiceException {
+    private void useCookie(HttpServletRequest request) {
         @SuppressWarnings("unchecked")
         Map<String, String> cookies = (Map<String, String>) request.getAttribute("cookies");
         logger.debug("cookies={}", cookies);

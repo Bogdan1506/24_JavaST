@@ -31,6 +31,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             ResultSet rs = statement.executeQuery(sql);
             fill(users, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return users;
@@ -46,6 +47,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             ResultSet rs = preparedStatement.executeQuery();
             fill(users, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return users;
@@ -79,6 +81,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
                 user.setRole(role);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return user;
@@ -91,6 +94,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -111,6 +115,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setString(2, password);
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -128,6 +133,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setInt(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -151,6 +157,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
                 }
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return user;
@@ -163,6 +170,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }

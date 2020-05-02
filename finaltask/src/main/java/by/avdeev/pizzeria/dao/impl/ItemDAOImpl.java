@@ -29,6 +29,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             ResultSet rs = preparedStatement.executeQuery();
             fill(items, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return items;
@@ -52,6 +53,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             ResultSet rs = statement.executeQuery("SELECT id, product_id, size_id, dough_id FROM item");
             fill(items, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return items;
@@ -72,6 +74,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
                 item = new Item(id, product, dough, size);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return item;
@@ -85,6 +88,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -105,6 +109,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
                 statement.setInt(3, item.getDough().getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
+                rollback();
                 throw new DAOException(e);
             }
         } else {
@@ -114,6 +119,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
                 statement.setInt(2, item.getSize().getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
+                rollback();
                 throw new DAOException(e);
             }
         }
@@ -128,6 +134,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             statement.setInt(3, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }

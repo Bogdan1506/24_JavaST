@@ -36,6 +36,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 profile.setUser(user);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return profiles;
@@ -56,6 +57,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 profile.setUser(user);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return profile;
@@ -69,6 +71,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -88,6 +91,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 statement.setInt(6, profile.getUser().getId());
                 fill(profile, statement);
             } catch (SQLException e) {
+                rollback();
                 throw new DAOException(e);
             }
         } else {
@@ -95,6 +99,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                     "INSERT INTO profile (name, surname, email, phone, address) VALUES (?,?,?,?,?)")) {
                 fill(profile, statement);
             } catch (SQLException e) {
+                rollback();
                 throw new DAOException(e);
             }
         }
@@ -128,6 +133,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             statement.setInt(6, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -141,6 +147,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             rs.next();
             profile = fill(rs, userId);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return profile;

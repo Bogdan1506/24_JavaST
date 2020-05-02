@@ -13,7 +13,7 @@ public class ActionManagerImpl implements ActionManager {
 	private ServiceFactory factory;
 
 	@Override
-	public void close() {
+	public void close() throws ServiceException {
 		factory.close();
 	}
 

@@ -23,6 +23,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             ResultSet rs = preparedStatement.executeQuery();
             fill(orders, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orders;
@@ -46,6 +47,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             ResultSet rs = statement.executeQuery("SELECT id, profile_id, date FROM `order`");
             fill(orders, rs);
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orders;
@@ -66,6 +68,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
                 order = new Order(id, profile, date);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return order;
@@ -79,6 +82,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -97,6 +101,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             statement.setDate(2, order.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -109,6 +114,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             statement.setDate(2, order.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }

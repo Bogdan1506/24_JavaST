@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,10 @@
                 <td><c:out value="${temp.id}"/></td>
                 <td><c:out value="${temp.item.id}"/></td>
                 <td><c:out value="${temp.order.id}"/></td>
-                <td><c:out value="${temp.price}"/></td>
+                <td>
+                    <c:set var="price" value="${temp.price}"/>
+                    <fmt:formatNumber type="number" pattern="##.#" value="${price}"/>
+                </td>
                 <td>
                     <c:url value="/orderposition/list/remove" var="orderPositionDelete"/>
                     <form action="${orderPositionDelete}" method="post">

@@ -11,5 +11,5 @@ import java.io.IOException;
 public interface ActionManager {
     Action.ForwardObject execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException;
 
-    void close();
+    void close() throws ServiceException;
 }

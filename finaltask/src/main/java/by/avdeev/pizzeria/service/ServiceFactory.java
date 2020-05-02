@@ -70,7 +70,7 @@ public class ServiceFactory {
         return transactionFactory;
     }
 
-    public void close() {
+    public void close() throws ServiceException {
         transactionFactory.close();
     }
 }

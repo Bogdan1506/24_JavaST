@@ -29,6 +29,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 orderPositions.add(fill(rs));
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orderPositions;
@@ -43,6 +44,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 orderPositions.add(fill(rs));
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orderPositions;
@@ -71,6 +73,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 orderPosition = fill(rs);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orderPosition;
@@ -84,6 +87,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -103,6 +107,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
             statement.setDouble(3, orderPosition.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -116,6 +121,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
             statement.setDouble(3, orderPosition.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -134,6 +140,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 orderPosition = new OrderPosition(id, item, order, price);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return orderPosition;
@@ -154,6 +161,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
                 orderPositions.add(new OrderPosition(id, item, order, price));
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         logger.debug("orderPos={}", orderPositions);

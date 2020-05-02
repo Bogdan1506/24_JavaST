@@ -33,6 +33,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 fill(products, rs, id, type);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return products;
@@ -62,6 +63,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 product = new Product(id, type, name, description, price, picture);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return product;
@@ -75,6 +77,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -97,6 +100,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             statement.setString(6, product.getPicture());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -114,6 +118,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             statement.setInt(6, product.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
     }
@@ -128,6 +133,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 fill(products, rs, id, type);
             }
         } catch (SQLException e) {
+            rollback();
             throw new DAOException(e);
         }
         return products;
