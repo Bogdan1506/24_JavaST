@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ItemListShowAction extends AdminAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         String pageNum = request.getParameter("page");

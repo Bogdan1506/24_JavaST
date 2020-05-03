@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class OrderListRemoveAction extends AdminAction {
-    private final static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
         int orderId = Integer.parseInt(request.getParameter("id"));

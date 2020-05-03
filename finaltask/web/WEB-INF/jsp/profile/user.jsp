@@ -66,7 +66,7 @@
         , confirm_password = document.getElementById("newPassword");
 
     function validatePassword() {
-        if (password.value == confirm_password.value) {
+        if (password.value === confirm_password.value) {
             confirm_password.setCustomValidity("Passwords Match");
         } else {
             confirm_password.setCustomValidity('');

@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAction extends UnauthorizedUserAction {
-    private final static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
         //if user exists
@@ -45,7 +43,8 @@ public class OrderAction extends UnauthorizedUserAction {
         } else {
             //if there is unauthorized user
             ProfileValidator profileValidator = new ProfileValidator();
-            profile = profileValidator.validate(request);
+            profile = null;
+//            profile = profileValidator.validate(request);
             ProfileService profileService = factory.getProfileService();
             int profileId = profileService.create(profile);
             profile.setId(profileId);

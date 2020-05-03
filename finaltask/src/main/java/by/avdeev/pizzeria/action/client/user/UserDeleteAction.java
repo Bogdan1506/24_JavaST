@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class UserDeleteAction extends ClientAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/user/list");

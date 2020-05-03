@@ -33,7 +33,8 @@
                                 <c:if test="${temp.type eq 'PIZZA'}">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-success active">
-                                            <input type="radio" name="dough" id="thick" value="Thick" autocomplete="off"
+                                            <input type="radio" name="dough" id="thick" value="Thick"
+                                                   autocomplete="off"
                                                    checked>
                                             Thick
                                         </label>
@@ -70,11 +71,11 @@
                             <c:url var="removePosition" value="/product/remove"/>
                             <c:url var="editPosition" value="/product/edit-form"/>
                             <div class="btn-group">
-                                <form action="${removePosition}">
+                                <form action="${removePosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
                                     <button type="submit" class="btn btn-danger btn-lg">Remove</button>
                                 </form>
-                                <form action="${editPosition}">
+                                <form action="${editPosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
                                     <button type="submit" class="btn btn-primary btn-lg">Edit</button>
                                 </form>
@@ -85,7 +86,7 @@
             </div>
         </div>
         <div class="col-sm-3 mt-5">
-            <c:if test="${sessionScope.user.role eq 'CREATOR'}">
+            <c:if test="${requestScope.role eq 'CREATOR'}">
                 <c:url var="addPosition" value="/product/create-form"/>
                 <form action="${addPosition}">
                     <button class="btn btn-warning btn-lg">Add +</button>

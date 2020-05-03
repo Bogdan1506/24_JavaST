@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class UserLoginAction extends UnauthorizedUserAction {
-    private static final Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         UserService userService = factory.getUserService();

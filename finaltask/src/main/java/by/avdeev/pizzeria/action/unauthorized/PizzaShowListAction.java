@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class PizzaShowListAction extends UnauthorizedUserAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ProductService productService = factory.getProductService();

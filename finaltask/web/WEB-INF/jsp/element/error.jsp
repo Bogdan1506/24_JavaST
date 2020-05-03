@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <p class="display-3 justify-content-center">This page doesn't exists</p>
+    <p class="display-3 justify-content-center">This page doesn't exist</p>
     <div class="row">
         <div class="col-6">
             <c:url value="/" var="menu"/>

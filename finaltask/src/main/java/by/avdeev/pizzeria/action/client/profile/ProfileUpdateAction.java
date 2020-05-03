@@ -14,23 +14,35 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileUpdateAction extends ClientAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
-        Validator<Profile> validator = new ProfileValidator();
-        Profile profile = validator.validate(request);
-        logger.debug("profile={}", profile);
-        UserService userService = factory.getUserService();
+        int parametersCount = 4;
+        Map<String, String> parameters = new HashMap<>();
         String login = (String) request.getAttribute("login");
+        UserService userService = factory.getUserService();
         User user = userService.findByLogin(login);
+        ForwardObject forwardObjectEx = new ForwardObject("/profile/user");
+        boolean isValid = validateRequest(request, parameters, parametersCount);
+        if (!isValid) {
+            forwardObjectEx.getAttributes().put(MESSAGE, "Fill all fields!");
+            return forwardObjectEx;
+        }
+        Validator<Profile> validator = new ProfileValidator();
+        Profile profile = new Profile();
         profile.setUser(user);
-        ProfileService profileService = factory.getProfileService();
-        profileService.update(profile);
+        boolean isProfileValid = validator.validate(parameters, profile);
         ForwardObject forwardObject = new ForwardObject("/profile/user");
-        forwardObject.getAttributes().put("message", "Profile is updated!");
+        if (isProfileValid) {
+            ProfileService profileService = factory.getProfileService();
+            profileService.update(profile);
+            forwardObject.getAttributes().put("message", "Profile is updated!");
+        } else {
+            forwardObject.getAttributes().put("message", "Data is incorrect! Try again!");
+        }
         return forwardObject;
     }
 }

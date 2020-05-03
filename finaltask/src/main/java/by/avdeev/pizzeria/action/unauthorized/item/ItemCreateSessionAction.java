@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ItemCreateSessionAction extends UnauthorizedUserAction {
-    private static Logger logger = LogManager.getLogger();
     private static AtomicInteger counter = new AtomicInteger(1);
 
     @Override

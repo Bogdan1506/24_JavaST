@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class ItemRemoveAction extends UnauthorizedUserAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         HttpSession session = request.getSession();

@@ -15,7 +15,7 @@ public class ProductRemoveAction extends CreatorAction {
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();
         productService.delete(id);
-        ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+        ForwardObject forwardObject = new ForwardObject("/product/menu");
         forwardObject.getAttributes().put("message", "Product is deleted!");
         return forwardObject;
     }

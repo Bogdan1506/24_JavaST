@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class DeliveryListShowAction extends AdminAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageNum = request.getParameter("page");

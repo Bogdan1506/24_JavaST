@@ -28,11 +28,13 @@ public class SecurityFilter implements Filter {
         Action action = (Action) httpServletRequest.getAttribute("action");
         @SuppressWarnings("unchecked")
         Map<String, String> cookies = (Map<String, String>) httpServletRequest.getAttribute("cookies");
+        logger.debug("cookies={}", cookies);
         String roleStr = cookies.get("role");
         Role role = null;
         if (roleStr != null) {
             role = Role.valueOf(roleStr);
         }
+        logger.debug("role={}", role);
         if (role != null && action.getRoles().contains(role) || action.getRoles().contains(Role.UNAUTHORIZED)) {
             filterChain.doFilter(httpServletRequest, servletResponse);
         } else {

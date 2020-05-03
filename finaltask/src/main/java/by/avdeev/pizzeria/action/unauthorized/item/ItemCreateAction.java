@@ -19,8 +19,6 @@ import java.sql.Date;
 import java.util.List;
 
 public class ItemCreateAction extends UnauthorizedUserAction {
-    private static Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         ItemService itemService = factory.getItemService();

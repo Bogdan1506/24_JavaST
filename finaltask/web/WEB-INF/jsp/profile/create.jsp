@@ -14,7 +14,7 @@
 <body>
 
 <div class="container">
-    <p class="display-4 mt-5">Password</p>
+    <p class="display-4 mt-5">Profile</p>
     <c:url value="/profile/register" var="profileCreate"/>
     <form action="${profileCreate}" class="was-validated" method="post">
         <div class="form-group">
@@ -45,7 +45,6 @@
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
-        <input type="hidden" name="userId" value="${user.id}">
         <button type="submit" class="btn btn-success">Save</button>
     </form>
 </div>

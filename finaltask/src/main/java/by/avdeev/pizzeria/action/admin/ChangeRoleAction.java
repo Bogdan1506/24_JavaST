@@ -4,15 +4,11 @@ import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ChangeRoleAction extends AdminAction {
-    private final Logger logger = LogManager.getLogger();
-
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
         int id = Integer.parseInt(request.getParameter("id"));
