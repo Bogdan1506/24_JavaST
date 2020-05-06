@@ -19,34 +19,83 @@
     <form action="${profileCreate}" class="was-validated" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" value="${profile.name}" required>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" pattern="[a-zA-z]+" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.name}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.name}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group">
             <label for="surname">Surname:</label>
-            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" value="${profile.name}" required>
+            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" pattern="[a-zA-z]+" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.surname}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.surname}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="${profile.email}">
+            <input type="text" class="form-control" id="email" placeholder="Enter email (example@gmail.com)"
+                   name="email" pattern="\w+@\w+">
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.email}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.email}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group">
             <label for="phone">Phone:</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone" value="${profile.phone}" required>
+            <input type="text" class="form-control" id="phone" placeholder="Enter phone (+1234567)" name="phone" pattern="\+\d+" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.phone}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.phone}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group">
             <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" value="${profile.address}" required>
+            <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" pattern="\w+" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.phone}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.phone}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <button type="submit" class="btn btn-success">Save</button>
     </form>
+</div>
 </div>
 </body>
 </html>

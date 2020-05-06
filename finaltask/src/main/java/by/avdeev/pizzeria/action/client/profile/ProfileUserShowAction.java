@@ -6,8 +6,6 @@ import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

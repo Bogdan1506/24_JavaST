@@ -7,8 +7,8 @@
     <title>Order Position List</title>
 </head>
 <body>
-<jsp:include page="../element/navbar.jsp"/>
-<jsp:include page="../element/admin-bar.jsp"/>
+<c:import url="../element/navbar.jsp"/>
+<c:import url="../element/admin-bar.jsp"/>
 <div class="container mt-3">
     <p style="text-align: center" class="display-4">Order Position list</p>
     <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
@@ -60,7 +60,7 @@
         <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
     </ul>
     <c:if test="${not empty requestScope.message}">
-        <jsp:include page="../element/footer.jsp"/>
+        <c:import url="../element/footer.jsp"/>
     </c:if>
 </div>
 <script>

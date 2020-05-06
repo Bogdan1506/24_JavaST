@@ -5,7 +5,6 @@ import by.avdeev.pizzeria.action.ActionManager;
 import by.avdeev.pizzeria.action.ActionManagerFactory;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,7 +61,7 @@ public class ControllerServlet extends HttpServlet {
         try {
             forwardObject = actionManager.execute(action, request, response);
             actionManager.close();
-        } catch (ServiceException | IncorrectFormDataException e) {
+        } catch (ServiceException e) {
             logger.error(e);
         }
         if (session != null && forwardObject != null && !forwardObject.getAttributes().isEmpty()) {

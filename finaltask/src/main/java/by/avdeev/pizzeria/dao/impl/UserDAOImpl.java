@@ -2,8 +2,6 @@ package by.avdeev.pizzeria.dao.impl;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
-import by.avdeev.pizzeria.entity.Item;
-import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +32,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
             rollback();
             throw new DAOException(e);
         }
+        logger.debug("users={}", users);
         return users;
     }
 
@@ -67,13 +66,14 @@ public class UserDAOImpl extends AbstractDAO<User> {
 
     @Override
     public User findById(int id) throws DAOException {
-        User user = new User();
-        user.setId(id);
+        User user = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT login, password, role FROM user WHERE id=?")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
+                user = new User();
+                user.setId(id);
                 user.setLogin(rs.getString(LOGIN));
                 user.setPassword(rs.getString(PASSWORD));
                 int roleInt = rs.getInt("role");

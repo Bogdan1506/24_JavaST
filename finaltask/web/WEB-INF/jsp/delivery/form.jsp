@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="../element/navbar.jsp"/>
-<jsp:include page="../product/menu-bar.jsp"/>
+<c:import url="../element/navbar.jsp"/>
+<c:import url="../product/menu-bar.jsp"/>
 <p style="text-align: center" class="display-4">Delivery form</p>
 <div class="container">
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 1200px; max-height: 300px;">
@@ -59,7 +59,7 @@
         <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
     </form>
     <c:if test="${not empty message}">
-        <jsp:include page="../element/footer.jsp"/>
+        <c:import url="../element/footer.jsp"/>
     </c:if>
 </div>
 </body>

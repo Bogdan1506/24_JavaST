@@ -2,7 +2,6 @@ package by.avdeev.pizzeria.action.admin;
 
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class DeliveryListRemoveAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         int deliveryId = Integer.parseInt(request.getParameter("id"));
         DeliveryService deliveryService = factory.getDeliveryService();
         deliveryService.delete(deliveryId);

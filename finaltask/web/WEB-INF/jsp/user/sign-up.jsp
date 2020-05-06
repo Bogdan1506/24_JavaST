@@ -15,26 +15,56 @@
 
 <div class="container">
     <p class="display-4 mt-5">Sign up form</p>
-    <c:url value="/user/register" var="registerUser"/>
     <form action="${registerUser}" class="was-validated" name="register" method="post">
         <div class="form-group">
             <label for="login">Login:</label>
-            <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" required>
+            <input type="text" class="form-control" id="login" placeholder="Enter login (only letters and digits)"
+                   name="login" pattern="\w+" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.login}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.login}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
+            <input type="password" class="form-control" id="pwd"
+                   placeholder="Enter password (only letters and digits — minimum 5, max — 30)" name="password"
+                   pattern="\w{5,30}" required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.password}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.password}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group">
             <label for="reppwd">Repeat Password:</label>
             <input type="password" class="form-control" id="reppwd" placeholder="Repeat password" name="repPassword"
                    required>
             <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.repPassword}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.repPassword}
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div class="form-group form-check">
             <label class="form-check-label">
@@ -42,11 +72,13 @@
             </label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <c:url value="/user/register" var="registerUser"/>
     </form>
     <c:url value="/user/sign-in" var="userSignIn"/>
     <form action="${userSignIn}">
         <button type="submit" class="btn btn-warning float-right">Cancel</button>
     </form>
+    <jsp:useBean id="message" scope="request" class="java.lang.String"/>
     <c:if test="${not empty message}">
         <div class="alert alert-danger alert-dismissible mt-5">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -61,7 +93,7 @@
         , confirm_password = document.getElementById("reppwd");
 
     function validatePassword() {
-        if (password.value != confirm_password.value) {
+        if (password.value !== confirm_password.value) {
             confirm_password.setCustomValidity("Passwords Don't Match");
         } else {
             confirm_password.setCustomValidity('');

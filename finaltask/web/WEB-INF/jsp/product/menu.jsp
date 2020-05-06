@@ -7,8 +7,8 @@
     <title>Menu</title>
 </head>
 <body>
-<jsp:include page="../element/navbar.jsp"/>
-<jsp:include page="menu-bar.jsp"/>
+<c:import url="../element/navbar.jsp"/>
+<c:import url="menu-bar.jsp"/>
 <div class="container mt-6">
     <div class="row">
         <div class="col-sm-9">
@@ -92,11 +92,11 @@
                     <button class="btn btn-warning btn-lg">Add +</button>
                 </form>
             </c:if>
-            <jsp:include page="../item/cart.jsp"/>
+            <c:import url="../item/cart.jsp"/>
         </div>
     </div>
     <c:if test="${not empty requestScope.message}">
-        <jsp:include page="../element/footer.jsp"/>
+        <c:import url="../element/footer.jsp"/>
     </c:if>
 </div>
 </body>

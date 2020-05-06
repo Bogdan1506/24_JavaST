@@ -20,4 +20,5 @@ public class SessionListenerImpl implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent se) {
         logger.debug("session destroyed, id={}", se.getSession().getId());
     }
+
 }

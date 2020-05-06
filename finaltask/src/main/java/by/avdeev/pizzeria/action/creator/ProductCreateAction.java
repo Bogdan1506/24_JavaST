@@ -1,9 +1,12 @@
 package by.avdeev.pizzeria.action.creator;
 
+import by.avdeev.pizzeria.action.validator.ProductTypeValidator;
+import by.avdeev.pizzeria.action.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.ProductCreator;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.impl.ProductValidator;
 
@@ -11,35 +14,43 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class ProductCreateAction extends CreatorAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
-        int parametersCount = 5;
-        Map<String, String> parameters = new HashMap<>();
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "description", "type", "price", "picture"));
+        Map<String, Object> parameters = new HashMap<>();
+        Map<String, String> invalidParameters = new HashMap<>();
         ForwardObject forwardObjectEx = new ForwardObject("/product/create-form");
-        boolean isValid = validateRequest(request, parameters, parametersCount);
+        forwardObjectEx.getAttributes().put("param", invalidParameters);
+        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (!isValid) {
             forwardObjectEx.getAttributes().put(MESSAGE, "Fill all fields!");
             return forwardObjectEx;
         }
-        Validator<Product> validator = new ProductValidator();
-        Product product = new Product();
-        boolean isProductValid = validator.validate(parameters, product);
-        logger.debug("product={}", product);
+        TypeValidator typeValidator = new ProductTypeValidator();
+        boolean isProductValid = typeValidator.validate(parameters);
         logger.debug("param={}", parameters);
         logger.debug("isProductValid={}", isProductValid);
         if (isProductValid) {
-            ProductService productService = factory.getProductService();
-            productService.create(product);
-            ForwardObject forwardObject = new ForwardObject("/product/pizzas");
-            forwardObject.getAttributes().put(MESSAGE, "Product is created!");
-            return forwardObject;
-        } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Data is incorrect! Try again!");
-            return forwardObjectEx;
+            Validator validator = new ProductValidator();
+            boolean isParamValid = validator.validate(parameters, invalidParameters);
+            if (isParamValid) {
+                Creator<Product> creator = new ProductCreator();
+                Product product = creator.create(parameters);
+                logger.debug("product={}", product);
+                ProductService productService = factory.getProductService();
+                productService.create(product);
+                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+                forwardObject.getAttributes().put(MESSAGE, "Product is created!");
+                return forwardObject;
+            }
         }
+        return forwardObjectEx;
     }
 }

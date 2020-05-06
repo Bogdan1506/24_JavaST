@@ -116,6 +116,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
 
     @Override
     public void update(Profile profile) throws DAOException {
+        logger.debug("profile={}", profile);
         int id = profile.getUser().getId();
         String name = profile.getName();
         String surname = profile.getSurname();

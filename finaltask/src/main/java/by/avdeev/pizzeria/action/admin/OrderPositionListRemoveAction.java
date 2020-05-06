@@ -5,7 +5,6 @@ import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 public class OrderPositionListRemoveAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         int orderPosId = Integer.parseInt(request.getParameter("id"));
         OrderPositionService orderPositionService = factory.getOrderPositionService();
         OrderPosition orderPosition = orderPositionService.findById(orderPosId);

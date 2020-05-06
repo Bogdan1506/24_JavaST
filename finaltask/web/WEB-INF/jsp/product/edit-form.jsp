@@ -8,8 +8,8 @@
     <meta charset="utf-8">
 </head>
 <body>
-<jsp:include page="../element/navbar.jsp"/>
-<jsp:include page="menu-bar.jsp"/>
+<c:import url="../element/navbar.jsp"/>
+<c:import url="menu-bar.jsp"/>
 <div class="container">
     <p style="text-align: center" class="display-4">Product form</p>
     <c:url var="order" value="/product/edit"/>
@@ -17,50 +17,83 @@
         <input type="hidden" name="id" value="${requestScope.product.id}">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control mb-3" id="name" name="name" value="${requestScope.product.name}"
-                   required>
-            <div class="form-group">
-                <label for="desc">Description:</label>
-                <input type="text" class="form-control mb-3" id="desc" name="description"
-                       value="${requestScope.product.description}" required>
-            </div>
-            <label for="price">Price:</label><input class="form-control mb-3" type="text" id="price" name="price"
-                                                    value="${requestScope.product.price}" required/>
-            <label for="pic">Picture:</label>
-            <input class="form-control mb-3" type="text" id="pic" name="picture"
-                   value="${requestScope.product.picture}"/>
-            <label for="type">Type:</label>
-            <select id="type" name="type" class="custom-select">
+            <input type="text" class="form-control" id="name" value="${product.name}"
+                   placeholder="Enter name (only letters and digits)"
+                   name="name" pattern="\w+" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
                 <c:choose>
-                    <c:when test="${requestScope.product.type eq 'PIZZA'}">
-                        <option value="pizza">Pizza</option>
-                        <option value="sides">Sides</option>
-                        <option value="drinks">Drinks</option>
-                    </c:when>
-                    <c:when test="${requestScope.product.type eq 'SIDES'}">
-                        <option value="sides">Sides</option>
-                        <option value="pizza">Pizza</option>
-                        <option value="drinks">Drinks</option>
+                    <c:when test="${empty requestScope.param.name}">
+                        Please fill out this field.
                     </c:when>
                     <c:otherwise>
-                        <option value="drinks">Drinks</option>
-                        <option value="pizza">Pizza</option>
-                        <option value="sides">Sides</option>
+                        ${requestScope.param.name}
                     </c:otherwise>
                 </c:choose>
-            </select>
-            <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
+            </div>
         </div>
-    </form>
-    <%--<form action="/product/edit" enctype="multipart/form-data">
         <div class="form-group">
-            <input type="file" class="form-control-file border mb-3" name="file">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description"
+                   placeholder="Enter description" name="description" value="${product.description}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                Please fill out this field.
+            </div>
         </div>
-        <button type="submit" class="btn btn-success">Upload</button>
-    </form>--%>
-    <c:if test="${not empty message}">
-        <jsp:include page="../element/footer.jsp"/>
-    </c:if>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
+                   value="${product.price}"
+                   required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.price}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.price}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="picture">Picture:</label>
+            <input type="text" class="form-control" id="picture" placeholder="Enter picture reference" name="picture"
+                   value="${product.picture}"
+                   required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                Please fill out this field.
+            </div>
+        </div>
+        <label for="type">Type:</label>
+        <select id="type" name="type" class="custom-select">
+            <c:choose>
+                <c:when test="${requestScope.product.type eq 'PIZZA'}">
+                    <option value="pizza">Pizza</option>
+                    <option value="sides">Sides</option>
+                    <option value="drinks">Drinks</option>
+                </c:when>
+                <c:when test="${requestScope.product.type eq 'SIDES'}">
+                    <option value="sides">Sides</option>
+                    <option value="pizza">Pizza</option>
+                    <option value="drinks">Drinks</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="drink">Drinks</option>
+                    <option value="pizza">Pizza</option>
+                    <option value="sides">Sides</option>
+                </c:otherwise>
+            </c:choose>
+        </select>
+        <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
+    </form>
+</div>
+<c:if test="${not empty message}">
+    <c:import url="../element/footer.jsp"/>
+</c:if>
 </div>
 </body>
 </html>

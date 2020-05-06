@@ -12,55 +12,55 @@ import by.avdeev.pizzeria.transaction.TransactionFactory;
 
 public class ServiceFactory {
     private final TransactionFactory transactionFactory;
-    private final UserService userService = new UserServiceImpl();
-    private final ProfileService profileService = new ProfileServiceImpl();
-    private final ProductService productService = new ProductServiceImpl();
-    private final ItemService itemService = new ItemServiceImpl();
-    private final OrderService orderService = new OrderServiceImpl();
-    private final OrderPositionService orderPositionService = new OrderPositionServiceImpl();
-    private final DeliveryService deliveryService = new DeliveryServiceImpl();
+
+    public ServiceFactory(TransactionFactory transactionFactory) {
+        this.transactionFactory = transactionFactory;
+    }
 
     public OrderService getOrderService() {
+        OrderService orderService = new OrderServiceImpl();
         orderService.setTransaction(transactionFactory.createTransaction());
         orderService.setDAOType(DAOType.ORDER);
         return orderService;
     }
 
     public OrderPositionService getOrderPositionService() {
+        OrderPositionService orderPositionService = new OrderPositionServiceImpl();
         orderPositionService.setTransaction(transactionFactory.createTransaction());
         orderPositionService.setDAOType(DAOType.ORDER_POSITION);
         return orderPositionService;
     }
 
     public DeliveryService getDeliveryService() {
+        DeliveryService deliveryService = new DeliveryServiceImpl();
         deliveryService.setTransaction(transactionFactory.createTransaction());
         deliveryService.setDAOType(DAOType.DELIVERY);
         return deliveryService;
     }
 
-    public ServiceFactory(TransactionFactory transactionFactory) {
-        this.transactionFactory = transactionFactory;
-    }
-
     public ItemService getItemService() {
+        ItemService itemService = new ItemServiceImpl();
         itemService.setTransaction(transactionFactory.createTransaction());
         itemService.setDAOType(DAOType.ITEM);
         return itemService;
     }
 
     public UserService getUserService() {
+        UserService userService = new UserServiceImpl();
         userService.setTransaction(transactionFactory.createTransaction());
         userService.setDAOType(DAOType.USER);
         return userService;
     }
 
     public ProfileService getProfileService() {
+        ProfileService profileService = new ProfileServiceImpl();
         profileService.setTransaction(transactionFactory.createTransaction());
         profileService.setDAOType(DAOType.PROFILE);
         return profileService;
     }
 
     public ProductService getProductService() {
+        ProductService productService = new ProductServiceImpl();
         productService.setTransaction(transactionFactory.createTransaction());
         productService.setDAOType(DAOType.PRODUCT);
         return productService;

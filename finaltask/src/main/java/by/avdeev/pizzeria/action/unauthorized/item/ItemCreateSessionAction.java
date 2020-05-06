@@ -7,9 +7,6 @@ import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.entity.Size;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +19,7 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
     private static AtomicInteger counter = new AtomicInteger(1);
 
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         logger.debug("product id={}", request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();

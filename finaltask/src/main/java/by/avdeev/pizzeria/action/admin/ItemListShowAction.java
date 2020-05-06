@@ -3,9 +3,6 @@ package by.avdeev.pizzeria.action.admin;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class ItemListShowAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String pageNum = request.getParameter("page");
         int page = 1;
         if (pageNum != null) {

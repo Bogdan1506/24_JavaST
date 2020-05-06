@@ -7,9 +7,6 @@ import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +16,7 @@ import java.util.List;
 
 public class OrderListRemoveAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         int orderId = Integer.parseInt(request.getParameter("id"));
         OrderService orderService = factory.getOrderService();
         Order order = orderService.findById(orderId);

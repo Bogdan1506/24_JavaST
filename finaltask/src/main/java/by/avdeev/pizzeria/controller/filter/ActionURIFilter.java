@@ -26,9 +26,9 @@ public class ActionURIFilter implements Filter {
         logger.debug("uri={}", uri);
         try {
             Action action = commandProvider.receiveCommand(uri);
+            logger.debug("action={}", action);
             action.setName(uri);
             httpServletRequest.setAttribute("action", action);
-            logger.debug("action={}", action);
             logger.debug("filter={}", filterChain);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (NullPointerException e) {

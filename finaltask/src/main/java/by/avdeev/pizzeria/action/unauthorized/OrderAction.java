@@ -12,7 +12,6 @@ import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +27,7 @@ import java.util.List;
 
 public class OrderAction extends UnauthorizedUserAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         //if user exists
         Profile profile;
         HttpSession session = request.getSession(false);

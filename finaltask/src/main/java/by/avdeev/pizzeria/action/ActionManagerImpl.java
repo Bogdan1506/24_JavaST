@@ -2,7 +2,6 @@ package by.avdeev.pizzeria.action;
 
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
-import by.avdeev.pizzeria.service.validator.IncorrectFormDataException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ public class ActionManagerImpl implements ActionManager {
 		this.factory = factory;
 	}
 
-	public Action.ForwardObject execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IncorrectFormDataException, IOException, ServletException {
+	public Action.ForwardObject execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
 		action.setFactory(factory);
 		return action.exec(request, response);
 	}
