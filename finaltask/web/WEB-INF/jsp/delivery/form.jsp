@@ -25,39 +25,145 @@
         </c:forEach>
     </div>
     <c:url var="order" value="/delivery/order"/>
-    <form action="${order}" method="post">
-        <input type="hidden" name="id" value="${requestScope.product.id}">
+    <%--    <form action="${order}" method="post">--%>
+    <form action="${order}" class="was-validated" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control mb-3" id="name" name="name" value="${requestScope.profile.name}"
-                   required>
-            <label for="surname">Surname:</label>
-            <input type="text" class="form-control mb-3" id="surname" name="surname"
-                   value="${requestScope.profile.surname}"
-                   required>
-            <label for="phone">Phone number:</label>
-            <input type="text" class="form-control mb-3" id="phone" name="phone" value="${requestScope.profile.phone}"
-                   required>
-            <label for="address">Address:</label>
-            <input type="text" class="form-control mb-3" id="address" name="address"
-                   value="${requestScope.profile.address}"
-                   required>
-            <div class="form-group row">
-                <label for="date" class="col-2 col-form-label">Date:</label>
-                <div class="col-10">
-                    <input class="form-control" type="date" value="${requestScope.date}" name="date" id="date">
-                </div>
-
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                   value="${requestScope.profile.name}" pattern="[a-zA-z]+" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.name}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.name}
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
-        <label>Payment:
-            <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
-            <label for="cash">Cash</label>
-            <input type="radio" name="payment" id="card" value="Card">
-            <label for="card">Card</label>
-        </label>
-        <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
+        <div class="form-group">
+            <label for="surname">Surname:</label>
+            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname"
+                   value="${requestScope.profile.surname}" pattern="[a-zA-z]+" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.surname}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.surname}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" value="${requestScope.profile.email}"
+                   placeholder="Enter email (example@gmail.com)"
+                   name="email" pattern="\w+@\w+\.\w+">
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.email}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.email}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" placeholder="Enter phone (+1234567)" name="phone"
+                   value="${requestScope.profile.phone}" pattern="\+\d+" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.phone}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.phone}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter address" name="address"
+                   value="${requestScope.profile.address}" pattern="\w+" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                <c:choose>
+                    <c:when test="${empty requestScope.param.phone}">
+                        Please fill out this field.
+                    </c:when>
+                    <c:otherwise>
+                        ${requestScope.param.phone}
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="form-group row">
+                <label for="date" class="col-2 col-form-label form-control">Date:</label>
+                <div class="col-10">
+                    <input class="form-control" type="date" value="${requestScope.date}" name="date" id="date" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">
+                        <c:choose>
+                            <c:when test="${empty requestScope.param.date}">
+                                Please fill out this field.
+                            </c:when>
+                            <c:otherwise>
+                                ${requestScope.param.date}
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="${requestScope.product.id}">
+            <label>Payment:
+                <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
+                <label for="cash">Cash</label>
+                <input type="radio" name="payment" id="card" value="Card">
+                <label for="card">Card</label>
+            </label>
+            <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
+
+        </div>
     </form>
+
+    <%--
+     <div class="form-group">
+         <label for="name">Name:</label>
+         <input type="text" class="form-control mb-3" id="name" name="name" value="${requestScope.profile.name}"
+                required>
+         <label for="surname">Surname:</label>
+         <input type="text" class="form-control mb-3" id="surname" name="surname"
+                value="${requestScope.profile.surname}"
+                required>
+         <label for="phone">Phone number:</label>
+         <input type="text" class="form-control mb-3" id="phone" name="phone" value="${requestScope.profile.phone}"
+                required>
+         <label for="address">Address:</label>
+         <input type="text" class="form-control mb-3" id="address" name="address"
+                value="${requestScope.profile.address}"
+                required>
+
+
+         </div>
+     </div>
+     <label>Payment:
+         <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
+         <label for="cash">Cash</label>
+         <input type="radio" name="payment" id="card" value="Card">
+         <label for="card">Card</label>
+     </label>
+     <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
+ </form>--%>
     <c:if test="${not empty message}">
         <c:import url="../element/footer.jsp"/>
     </c:if>

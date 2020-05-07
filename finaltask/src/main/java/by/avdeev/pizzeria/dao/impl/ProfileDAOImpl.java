@@ -32,7 +32,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
                 int userId = rs.getInt("user_id");
                 user.setId(userId);
                 int id = rs.getInt("id");
-                Profile profile = fill(rs, id);
+                Profile profile = fill(rs);
                 profile.setUser(user);
             }
         } catch (SQLException e) {
@@ -46,14 +46,14 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     public Profile findById(int id) throws DAOException {
         Profile profile = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT user_id, name, surname, email, phone, address FROM profile WHERE id=?")) {
+                "SELECT id, user_id, name, surname, email, phone, address FROM profile WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 User user = new User();
                 int userId = rs.getInt("user_id");
                 user.setId(userId);
-                profile = fill(rs, id);
+                profile = fill(rs);
                 profile.setUser(user);
             }
         } catch (SQLException e) {
@@ -146,15 +146,17 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            profile = fill(rs, userId);
+            profile = fill(rs);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        logger.debug("dao profile={}", profile);
         return profile;
     }
 
-    private Profile fill(ResultSet rs, int id) throws SQLException {
+    private Profile fill(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
         String name = rs.getString("name");
         String surname = rs.getString("surname");
         String email = rs.getString("email");

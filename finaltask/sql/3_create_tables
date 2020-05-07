@@ -70,9 +70,9 @@ CREATE TABLE `item`
 
 CREATE TABLE `order`
 (
-    `id`      INT  NOT NULL AUTO_INCREMENT,
-    `profile_id` INT  NOT NULL,
-    `date`    DATE NOT NULL,
+    `id`         INT       NOT NULL AUTO_INCREMENT,
+    `profile_id` INT       NOT NULL,
+    `date`       TIMESTAMP NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order` (`id`),
     FOREIGN KEY `FK_order_profile` (`profile_id`)
         REFERENCES `profile` (`id`)
@@ -80,9 +80,9 @@ CREATE TABLE `order`
 
 CREATE TABLE `order_position`
 (
-    `id`       INT NOT NULL AUTO_INCREMENT,
-    `item_id`  INT NOT NULL,
-    `order_id` INT NOT NULL,
+    `id`       INT    NOT NULL AUTO_INCREMENT,
+    `item_id`  INT    NOT NULL,
+    `order_id` INT    NOT NULL,
     `price`    DOUBLE NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
     FOREIGN KEY `FK_order_position_item` (`item_id`)
@@ -93,10 +93,10 @@ CREATE TABLE `order_position`
 
 CREATE TABLE `delivery`
 (
-    `id`       INT                   NOT NULL AUTO_INCREMENT,
+    `id`                INT                   NOT NULL AUTO_INCREMENT,
     `order_position_id` INT                   NOT NULL,
-    `date`     DATE                  NOT NULL,
-    `payment`  ENUM ('cash', 'card') NOT NULL default 'cash',
+    `date`              TIMESTAMP             NOT NULL,
+    `payment`           ENUM ('cash', 'card') NOT NULL default 'cash',
     CONSTRAINT PRIMARY KEY `PK_delivery` (`id`),
     FOREIGN KEY `FK_delivery_order_position` (`order_position_id`)
         REFERENCES `order_position` (`id`)

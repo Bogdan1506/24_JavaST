@@ -5,10 +5,14 @@ import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.Profile;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -96,9 +100,8 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
     public void create(Order order) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order` (profile_id, date) VALUES (?,?)")) {
+                "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())")) {
             statement.setInt(1, order.getProfile().getId());
-            statement.setDate(2, order.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
             rollback();
