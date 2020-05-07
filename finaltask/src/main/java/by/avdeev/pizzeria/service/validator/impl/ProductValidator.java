@@ -5,6 +5,10 @@ import by.avdeev.pizzeria.service.validator.Validator;
 import java.util.Map;
 
 public class ProductValidator implements Validator {
+    private static final String DESCRIPTION = "description";
+    private static final String PICTURE = "picture";
+    private static final String PRICE = "price";
+
     @Override
     public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
         boolean isValid = true;
@@ -17,24 +21,25 @@ public class ProductValidator implements Validator {
                         invalidParameters.put("name", "Name consists incorrect symbols");
                     }
                     break;
-                case "description":
-                    String description = (String) parameters.get("description");
+                case DESCRIPTION:
+                    String description = (String) parameters.get(DESCRIPTION);
                     if (description.matches("[<>]")) {
                         description = description.replace("<", "&lt;").replace(">", "&gt;");
-                        invalidParameters.put("description", description);
+                        invalidParameters.put(DESCRIPTION, description);
                     }
                     break;
-                case "picture":
-                    String picture = (String) parameters.get("picture");
+                case PICTURE:
+                    String picture = (String) parameters.get(PICTURE);
                     if (picture.matches("[<>]")) {
                         picture = picture.replace("<", "&lt;").replace(">", "&gt;");
-                        invalidParameters.put("picture", picture);
+                        invalidParameters.put(PICTURE, picture);
                     }
-                case "price":
-                    double price = (double) parameters.get("price");
+                    break;
+                case PRICE:
+                    double price = (double) parameters.get(PRICE);
                     if (price < 0) {
                         isValid = false;
-                        invalidParameters.put("price", "Price lower than 0");
+                        invalidParameters.put(PRICE, "Price lower than 0");
                     }
                     break;
             }
@@ -42,25 +47,3 @@ public class ProductValidator implements Validator {
         return isValid;
     }
 }
-
-    /*public boolean validate(Map<String, Object> parameters, Product product) {
-        String name = (String) parameters.get("name");
-        String description = (String) parameters.get("description");
-        String picture = (String) parameters.get("picture");
-        double price = (double) parameters.get("price");
-        Product.Type type = (Product.Type) parameters.get("type");
-        if (name.matches("\\w+") &&
-                description.matches("\\w+") &&
-                price > 0) {
-            picture = picture.replace("<", "&lt;").replace(">", "&gt;");
-            product.setType(type);
-            product.setPicture(picture);
-            product.setPrice(price);
-            product.setDescription(description);
-            product.setName(name);
-            return true;
-        } else {
-            return false;
-        }
-    }
-}*/

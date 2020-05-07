@@ -5,6 +5,10 @@ import by.avdeev.pizzeria.service.validator.Validator;
 import java.util.Map;
 
 public class ProfileValidator implements Validator {
+    private static final String SURNAME = "surname";
+    private static final String EMAIL = "email";
+    private static final String PHONE = "phone";
+    private static final String ADDRESS = "address";
 
     @Override
     public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
@@ -18,31 +22,32 @@ public class ProfileValidator implements Validator {
                         invalidParameters.put("name", "Name consists incorrect symbols");
                     }
                     break;
-                case "surname":
-                    String surname = (String) parameters.get("surname");
+                case SURNAME:
+                    String surname = (String) parameters.get(SURNAME);
                     if (!surname.matches("[A-aZ-z]+")) {
                         isValid = false;
-                        invalidParameters.put("surname", "Surname consists incorrect symbols");
+                        invalidParameters.put(SURNAME, "Surname consists incorrect symbols");
                     }
                     break;
-                case "email":
-                    String email = String.valueOf(parameters.get("email"));
-                    if (!email.isEmpty() && !email.matches("\\w+@\\w+")) {
+                case EMAIL:
+                    String email = String.valueOf(parameters.get(EMAIL));
+                    if (!email.isEmpty() && !email.matches("\\w+@\\w+\\.\\w+")) {
                         isValid = false;
-                        invalidParameters.put("email", "Email consists incorrect symbols");
+                        invalidParameters.put(EMAIL, "Email consists incorrect symbols");
                     }
-                case "phone":
-                    String phone = (String) parameters.get("phone");
+                    break;
+                case PHONE:
+                    String phone = (String) parameters.get(PHONE);
                     if (!phone.matches("\\+\\d+")) {
                         isValid = false;
-                        invalidParameters.put("phone", "Phone consists incorrect symbols");
+                        invalidParameters.put(PHONE, "Phone consists incorrect symbols");
                     }
                     break;
-                case "address":
-                    String address = (String) parameters.get("address");
+                case ADDRESS:
+                    String address = (String) parameters.get(ADDRESS);
                     if (!address.matches("\\w+")) {
                         isValid = false;
-                        invalidParameters.put("address", "Address consists incorrect symbols");
+                        invalidParameters.put(ADDRESS, "Address consists incorrect symbols");
                     }
                     break;
             }

@@ -45,10 +45,16 @@ public class ProductCreateAction extends CreatorAction {
                 Product product = creator.create(parameters);
                 logger.debug("product={}", product);
                 ProductService productService = factory.getProductService();
-                productService.create(product);
-                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
-                forwardObject.getAttributes().put(MESSAGE, "Product is created!");
-                return forwardObject;
+                Product existProduct = productService.findByName(product.getName());
+                logger.debug("existProduct={}", existProduct);
+                if (existProduct == null) {
+                    productService.create(product);
+                    ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+                    forwardObject.getAttributes().put(MESSAGE, "Product is created!");
+                    return forwardObject;
+                } else {
+                    invalidParameters.put("name", "Such name exists!");
+                }
             }
         }
         return forwardObjectEx;

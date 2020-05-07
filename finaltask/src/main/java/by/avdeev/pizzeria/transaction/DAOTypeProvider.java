@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DAOTypeProvider {
-    private static DAOTypeProvider daoTypeProvider = new DAOTypeProvider();
+    private static DAOTypeProvider daoTypeProvider;
     private final Map<DAOType, AbstractDAO<? extends Entity>> repository = new ConcurrentHashMap<>();
 
     private DAOTypeProvider() {
@@ -32,6 +32,9 @@ public class DAOTypeProvider {
     }
 
     public static DAOTypeProvider getDaoTypeProvider() {
+        if (daoTypeProvider == null) {
+            daoTypeProvider = new DAOTypeProvider();
+        }
         return daoTypeProvider;
     }
 }

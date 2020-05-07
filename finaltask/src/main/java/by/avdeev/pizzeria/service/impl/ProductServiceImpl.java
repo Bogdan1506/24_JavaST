@@ -26,4 +26,17 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
         }
         return products;
     }
+
+    @Override
+    public Product findByName(String name) throws ServiceException {
+        AbstractDAO<Product> abstractDAO = transaction.createDao(daoType);
+        ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
+        Product product;
+        try {
+            product = productDAO.findByName(name);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return product;
+    }
 }

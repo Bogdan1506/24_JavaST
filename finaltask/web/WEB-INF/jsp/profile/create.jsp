@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="text" class="form-control" id="email" placeholder="Enter email (example@gmail.com)"
-                   name="email" pattern="\w+@\w+">
+                   name="email" pattern="\w+@\w+\.\w+">
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">
                 <c:choose>

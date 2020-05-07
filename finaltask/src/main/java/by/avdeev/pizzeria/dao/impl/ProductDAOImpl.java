@@ -6,6 +6,7 @@ import by.avdeev.pizzeria.entity.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.Proxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -137,5 +138,21 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             throw new DAOException(e);
         }
         return products;
+    }
+
+    public Product findByName(String name) throws DAOException {
+        Product product = null;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT id, type, description, price, picture FROM product WHERE name=?")) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                product = findById(id);
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return product;
     }
 }

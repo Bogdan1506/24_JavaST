@@ -11,6 +11,8 @@ public interface ProductService extends Service {
 
     Product findById(int id) throws ServiceException;
 
+    Product findByName(String name) throws ServiceException;
+
     boolean delete(int id) throws ServiceException;
 
     void update(Product product) throws ServiceException;
