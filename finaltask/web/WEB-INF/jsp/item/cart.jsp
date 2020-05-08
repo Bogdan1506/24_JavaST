@@ -7,19 +7,16 @@
     <title>Cart</title>
 </head>
 <body>
-<div class="sticky-top pt-5">
-    <p style="text-align: center;" class="display-4">Cart</p>
+<div id="cart" class="sticky-top">
+    <p style="text-align: center;" class="display-4 pt-5">Cart</p>
     <c:choose>
     <c:when test="${empty sessionScope.cart}">
         <p style="color: red; text-align: right">Your cart is empty now</p>
     </c:when>
     <c:otherwise>
     <p>
-        <c:url value="/item/cart/remove" var="removeAll">
-            <c:param name="id" value="all"/>
-        </c:url>
         <strong>
-            <a style="color: red;" href="${removeAll}">Reset cart</a>
+            <a style="color: red;" onclick="remove('all')">Reset cart</a>
         </strong>
     </p>
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3"
@@ -35,12 +32,13 @@
                     <strong>
                         <c:out value="${temp.product.name}"/>
                     </strong>
-                    <c:url value="/item/cart/remove" var="remove">
-                        <c:param name="id" value="${temp.id}"/>
-                    </c:url>
-                    <a style="color:red;" href="${remove}">X</a></li>
                 <li><c:out value="${temp.dough}"/></li>
                 <li><c:out value="${temp.size}"/></li>
+                <li>
+                    <label>
+                        <input class="btn btn-sm btn-danger" onclick="remove(${temp.id})" value="x">
+                    </label>
+                </li>
             </ul>
         </c:forEach>
     </div>

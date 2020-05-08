@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ItemCreateSessionAction extends UnauthorizedUserAction {
@@ -20,6 +23,8 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        Set<Map.Entry<String, String[]>> set = request.getParameterMap().entrySet();
+        set.forEach(a -> System.out.println(a.getKey() + " " + Arrays.toString(a.getValue())));
         logger.debug("product id={}", request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();
@@ -49,6 +54,7 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
             case DRINK:
                 forward = "drinks";
         }
-        return new ForwardObject(String.format("/product/%s", forward));
+//        return new ForwardObject(String.format("/product/%s", forward));
+        return new ForwardObject("/item/cart");
     }
 }

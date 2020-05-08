@@ -29,6 +29,6 @@ public class ItemRemoveAction extends UnauthorizedUserAction {
             ListIterator<Item> itemIterator = cart.listIterator();
             cart.removeIf(item -> item.getId() == id);
         }
-        return new ForwardObject("/");
+        return new ForwardObject("/item/cart");
     }
 }

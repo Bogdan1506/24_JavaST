@@ -5,6 +5,8 @@
 <html lang="en">
 <head>
     <title>Menu</title>
+    <script src="../../../static/js/remove.js"></script>
+    <script src="../../../static/js/add-to-cart.js"></script>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
@@ -29,43 +31,50 @@
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
                         <c:if test="${requestScope.role ne 'CREATOR'}">
-                            <form action="${addToCart}" method="post">
-                                <c:if test="${temp.type eq 'PIZZA'}">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-success active">
-                                            <input type="radio" name="dough" id="thick" value="Thick"
-                                                   autocomplete="off"
-                                                   checked>
-                                            Thick
-                                        </label>
-                                        <label class="btn btn-success">
-                                            <input type="radio" name="dough" id="thin" value="Thin"
-                                                   autocomplete="off"> Thin
-                                        </label>
-                                    </div>
-                                </c:if>
+                            <%--                            <form action="" id="ajax_form" method="get">--%>
+                            <%--                            <form id="myForm" action="${addToCart}" method="get">--%>
+
+                            <c:if test="${temp.type eq 'PIZZA'}">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-primary active">
-                                        <input type="radio" name="size" id="size1" value="Small" autocomplete="off"
+                                    <label class="btn btn-success active">
+                                        <input class="dough_param" type="radio" name="dough" id="thick"
+                                               value="Thick"
+                                               autocomplete="off"
                                                checked>
-                                        S ${temp.price}
+                                        Thick
                                     </label>
-                                    <label class="btn btn-primary">
-                                        <c:set var="amountM" value="${temp.price * 2}"/>
-                                        <input type="radio" name="size" id="size2" value="Medium"
-                                               autocomplete="off"> M
-                                        <fmt:formatNumber type="number" pattern="##.#" value="${amountM}"/>
-                                    </label>
-                                    <c:set var="amountL" value="${temp.price * 3}"/>
-                                    <label class="btn btn-primary">
-                                        <input type="radio" name="size" id="size3" value="Large" autocomplete="off">
-                                        L
-                                        <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
+                                    <label class="btn btn-success">
+                                        <input class="dough_param" type="radio" name="dough" id="thin" value="Thin"
+                                               autocomplete="off"> Thin
                                     </label>
                                 </div>
-                                <input type="hidden" name="id" value="${temp.id}">
-                                <input type="submit" class="btn btn-light" value="Add to cart">
-                            </form>
+                            </c:if>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input class="size_param" type="radio" name="size" id="size1" value="Small"
+                                           autocomplete="off"
+                                           checked>
+                                    S ${temp.price}
+                                </label>
+                                <label class="btn btn-primary">
+                                    <c:set var="amountM" value="${temp.price * 2}"/>
+                                    <input class="size_param" type="radio" name="size" id="size2" value="Medium"
+                                           autocomplete="off"> M
+                                    <fmt:formatNumber type="number" pattern="##.#" value="${amountM}"/>
+                                </label>
+                                <c:set var="amountL" value="${temp.price * 3}"/>
+                                <label class="btn btn-primary">
+                                    <input class="size_param" type="radio" name="size" id="size3" value="Large"
+                                           autocomplete="off">
+                                    L
+                                    <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
+                                </label>
+                            </div>
+                            <input class="id_param" type="hidden" name="id" value="${temp.id}">
+                            <%--                            <input type="submit" onclick="loadDoc()" class="btn btn-light" value="Add to cart">--%>
+                            <input type="submit" class="btn btn-light" value="Add to cart"
+                                   onclick="addToCart(${temp.id})">
+                            <%--                            </form>--%>
                         </c:if>
                         <c:if test="${requestScope.role eq 'CREATOR'}">
                             <c:url var="removePosition" value="/product/remove"/>
@@ -101,4 +110,3 @@
 </div>
 </body>
 </html>
-
