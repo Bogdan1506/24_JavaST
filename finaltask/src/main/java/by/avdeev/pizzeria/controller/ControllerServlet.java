@@ -24,6 +24,11 @@ public class ControllerServlet extends HttpServlet {
     private static final String REDIRECTED_DATA = "redirectedData";
 
     @Override
+    public void destroy() {
+        ServiceFactory.closeConnection();
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
     }

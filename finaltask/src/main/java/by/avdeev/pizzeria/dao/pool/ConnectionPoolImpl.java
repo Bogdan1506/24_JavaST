@@ -22,6 +22,21 @@ public class ConnectionPoolImpl
     private ConnectionPoolImpl() {
     }
 
+    public Queue<Connection> getFreeConnections() {
+        return freeConnections;
+    }
+
+    @Override
+    public void closeConnection() {
+        freeConnections.forEach(a -> {
+            try {
+                a.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     public static ConnectionPoolImpl getConnectionPoolImpl() {
         if (connectionPoolImpl == null) {
             connectionPoolImpl = create();
@@ -54,21 +69,6 @@ public class ConnectionPoolImpl
     public boolean releaseConnection(Connection connection) {
         freeConnections.add(connection);
         return usedConnections.remove(connection);
-    }
-
-    @Override
-    public String getUrl() {
-        return null;
-    }
-
-    @Override
-    public String getUser() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
     }
 
     private static Connection createConnection() {

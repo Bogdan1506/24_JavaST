@@ -1,5 +1,7 @@
 package by.avdeev.pizzeria.service;
 
+import by.avdeev.pizzeria.dao.pool.ConnectionPool;
+import by.avdeev.pizzeria.dao.pool.ConnectionPoolImpl;
 import by.avdeev.pizzeria.service.impl.DeliveryServiceImpl;
 import by.avdeev.pizzeria.service.impl.ItemServiceImpl;
 import by.avdeev.pizzeria.service.impl.OrderPositionServiceImpl;
@@ -72,5 +74,10 @@ public class ServiceFactory {
 
     public void close() throws ServiceException {
         transactionFactory.close();
+    }
+
+    public static void closeConnection() {
+        ConnectionPool connectionPool = ConnectionPoolImpl.getConnectionPoolImpl();
+        connectionPool.closeConnection();
     }
 }
