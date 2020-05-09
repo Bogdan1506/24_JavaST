@@ -23,7 +23,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
         try {
-            logger.debug(String.format("Connection=%s", connection));
+            logger.debug("Connection={}", connection);
             Statement statement = connection.createStatement();
             String sql = "SELECT id, login, password, role FROM user";
             ResultSet rs = statement.executeQuery(sql);
@@ -173,5 +173,21 @@ public class UserDAOImpl extends AbstractDAO<User> {
             rollback();
             throw new DAOException(e);
         }
+    }
+
+    public int countAll() throws DAOException {
+        int total = 0;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT COUNT(*) as count FROM user";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return total;
     }
 }

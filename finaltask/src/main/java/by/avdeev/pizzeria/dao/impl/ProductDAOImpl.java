@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDAOImpl extends AbstractDAO<Product> {
     private static Logger logger = LogManager.getLogger();
@@ -154,5 +156,21 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             throw new DAOException(e);
         }
         return product;
+    }
+
+    public Map<String, Integer> findCountProduct() throws DAOException {
+        Map<String, Integer> res = new HashMap<>();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery("SELECT name, count_item FROM (SELECT `item_id`, COUNT(`item_id`) as `count_item`, `product_id` FROM `item` JOIN `order_position` ON order_position.item_id = item.id group by `item_id`) " +
+                    "as ds JOIN product ON product_id = product.id group by `name`");
+            while (rs.next()) {
+                String name = rs.getString("name");
+                int count = rs.getInt("count_item");
+                res.put(name, count);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return res;
     }
 }

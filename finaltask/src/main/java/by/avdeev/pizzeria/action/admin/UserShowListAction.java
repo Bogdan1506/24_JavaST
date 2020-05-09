@@ -21,6 +21,8 @@ public class UserShowListAction extends AdminAction {
         List<User> users = userService.findAll((page - 1) * pageSize, page * pageSize);
         request.setAttribute("users", users);
         request.setAttribute("page", page);
+        int total = userService.countAll();
+        request.setAttribute("totalUsers", total);
         return null;
     }
 }

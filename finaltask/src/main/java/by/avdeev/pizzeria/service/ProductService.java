@@ -3,6 +3,7 @@ package by.avdeev.pizzeria.service;
 import by.avdeev.pizzeria.entity.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService extends Service {
     int create(Product product) throws ServiceException;
@@ -18,4 +19,6 @@ public interface ProductService extends Service {
     void update(Product product) throws ServiceException;
 
     List<Product> findByType(Product.Type type) throws ServiceException;
+
+    Map<String, Integer> findCount() throws ServiceException;
 }

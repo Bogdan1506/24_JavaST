@@ -23,7 +23,6 @@ import by.avdeev.pizzeria.action.unauthorized.DeliveryFormAction;
 import by.avdeev.pizzeria.action.unauthorized.LocalizationAction;
 import by.avdeev.pizzeria.action.unauthorized.MenuAction;
 import by.avdeev.pizzeria.action.unauthorized.OrderAction;
-import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateSessionAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemFormAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemRemoveAction;
@@ -84,7 +83,6 @@ public class CommandProvider {
 
         repository.put("/item/cart", new ItemFormAction());
         repository.put("/item/cart/create", new ItemCreateSessionAction());
-        repository.put("/item/cart/order", new ItemCreateAction());
         repository.put("/item/cart/remove", new ItemRemoveAction());
         repository.put("/item/list", new ItemListShowAction());
         repository.put("/item/list/remove", new ItemListRemoveAction());

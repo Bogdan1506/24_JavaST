@@ -3,11 +3,10 @@ package by.avdeev.pizzeria.action.admin;
 import by.avdeev.pizzeria.entity.Delivery;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.List;
 
 public class DeliveryListShowAction extends AdminAction {
@@ -24,6 +23,10 @@ public class DeliveryListShowAction extends AdminAction {
         logger.debug("deliveries={}", deliveries);
         request.setAttribute("deliveries", deliveries);
         request.setAttribute("page", page);
+        int countTotal = deliveryService.countAll();
+        int countToday = deliveryService.findByDate(new Date(System.currentTimeMillis()));
+        request.setAttribute("countTotal", countTotal);
+        request.setAttribute("countToday", countToday);
         return null;
     }
 }

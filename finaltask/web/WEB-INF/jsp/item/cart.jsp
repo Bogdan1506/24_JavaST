@@ -43,7 +43,7 @@
         </c:forEach>
     </div>
     <c:if test="${not empty sessionScope.cart}">
-        <c:url value="/item/cart/order" var="createItems"/>
+        <c:url value="/delivery/form" var="createItems"/>
         <form action="${createItems}">
             <input class="btn btn-lg btn-warning" type="submit" value="Order">
         </form>

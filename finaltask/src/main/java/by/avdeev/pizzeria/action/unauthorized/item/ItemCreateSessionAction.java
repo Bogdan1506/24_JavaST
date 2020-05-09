@@ -5,6 +5,7 @@ import by.avdeev.pizzeria.entity.Dough;
 import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.entity.Size;
+import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
 
@@ -19,12 +20,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ItemCreateSessionAction extends UnauthorizedUserAction {
-    private static AtomicInteger counter = new AtomicInteger(1);
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        Set<Map.Entry<String, String[]>> set = request.getParameterMap().entrySet();
-        set.forEach(a -> System.out.println(a.getKey() + " " + Arrays.toString(a.getValue())));
+        ItemService itemService = factory.getItemService();
+        List<Item> items = itemService.findAll();
         logger.debug("product id={}", request.getParameter("id"));
         int id = Integer.parseInt(request.getParameter("id"));
         ProductService productService = factory.getProductService();
@@ -36,7 +36,18 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
             logger.debug("dough={}", doughPar);
             dough = Dough.valueOf(doughPar.toUpperCase());
         }
-        Item item = new Item(counter.getAndIncrement(), product, dough, size);
+        Item item = new Item(product, dough, size);
+        int itemId = 0;
+        if (items.contains(item)) {
+            for (Item tempItem : items) {
+                if (item.equals(tempItem)) {
+                    itemId = tempItem.getId();
+                }
+            }
+        } else {
+            itemId = itemService.create(item);
+        }
+        item.setId(itemId);
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
         List<Item> cart = (List<Item>) session.getAttribute("cart");
@@ -46,15 +57,6 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
         }
         cart.add(item);
         logger.debug("session cart={}", cart);
-        String forward = "pizzas";
-        switch (item.getProduct().getType()) {
-            case SIDES:
-                forward = "sides";
-                break;
-            case DRINK:
-                forward = "drinks";
-        }
-//        return new ForwardObject(String.format("/product/%s", forward));
         return new ForwardObject("/item/cart");
     }
 }

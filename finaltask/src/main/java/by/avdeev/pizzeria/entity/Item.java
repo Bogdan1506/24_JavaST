@@ -71,7 +71,7 @@ public class Item implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(product, item.product) &&
+        return product.equals(item.product) &&
                 dough == item.dough &&
                 size == item.size;
     }

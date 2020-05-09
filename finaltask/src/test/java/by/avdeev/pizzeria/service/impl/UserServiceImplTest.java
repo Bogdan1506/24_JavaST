@@ -36,7 +36,7 @@ public class UserServiceImplTest {
     public void setUpConnection() {
         try {
             Properties properties = new Properties();
-            FileInputStream inputStream = new FileInputStream("src/main/resources/connection.properties"); //TODO relative path
+            FileInputStream inputStream = new FileInputStream("src/test/resources/connection.properties"); //TODO relative path
             properties.load(inputStream);
             String url = (String) properties.get("url");
             String username = (String) properties.get("uName");

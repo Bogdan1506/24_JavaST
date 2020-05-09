@@ -10,8 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     @Override
@@ -97,10 +101,14 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
 
     @Override
     public void create(Delivery delivery) throws DAOException {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        java.util.Date date = new java.util.Date(timestamp.getTime());
+        System.out.println("date = " + date);
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)")) {
             statement.setInt(1, delivery.getOrderPosition().getId());
-            statement.setDate(2, delivery.getDate());
+//            statement.setDate(2, new Date(delivery.getDate().getTime() + 14400000));
+            statement.setTimestamp(2, timestamp);
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.executeUpdate();
         } catch (SQLException e) {

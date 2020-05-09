@@ -33,4 +33,17 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public int countAll() throws ServiceException {
+        AbstractDAO<User> abstractDAO = transaction.createDao(daoType);
+        UserDAOImpl userDAO = (UserDAOImpl) abstractDAO;
+        int total;
+        try {
+            total = userDAO.countAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return total;
+    }
 }

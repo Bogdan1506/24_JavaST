@@ -15,6 +15,8 @@ CREATE TABLE user
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
+CREATE UNIQUE INDEX login_index ON `user`(`login`);
+
 CREATE TABLE `profile`
 (
     `id`      INT         NOT NULL AUTO_INCREMENT,

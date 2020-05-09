@@ -4,19 +4,19 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
-@SuppressWarnings("serial")
-public class InfoTimeTag extends TagSupport {
+public class TotalUserTag extends TagSupport {
+    private int totalUsers;
+
+    public void setTotalUsers(int totalUsers) {
+        this.totalUsers = totalUsers;
+    }
+
     @Override
     public int doStartTag() throws JspException {
-        GregorianCalendar gc = new GregorianCalendar();
-        String time = "<hr/>Time : <b> " + gc.getTime() + " </b><hr/>";
-        String locale = "Locale : <b> " + Locale.getDefault() + " </b><hr/> ";
         try {
             JspWriter out = pageContext.getOut();
-            out.write(time + locale);
+            out.write("<h3>Total users: " + totalUsers + "</h3>");
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }

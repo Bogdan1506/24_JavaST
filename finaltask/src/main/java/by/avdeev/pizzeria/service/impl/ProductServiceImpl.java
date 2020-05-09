@@ -9,7 +9,9 @@ import by.avdeev.pizzeria.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductServiceImpl extends StandardServiceImpl<Product> implements ProductService {
     private static Logger logger = LogManager.getLogger();
@@ -38,5 +40,18 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             throw new ServiceException(e);
         }
         return product;
+    }
+
+    @Override
+    public Map<String, Integer> findCount() throws ServiceException {
+        AbstractDAO<Product> abstractDAO = transaction.createDao(daoType);
+        ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
+        Map<String, Integer> products;
+        try {
+            products = productDAO.findCountProduct();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return products;
     }
 }
