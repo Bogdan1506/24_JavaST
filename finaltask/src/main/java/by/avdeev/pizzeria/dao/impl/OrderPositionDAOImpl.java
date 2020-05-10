@@ -126,6 +126,23 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         }
     }
 
+    @Override
+    public int countAll() throws DAOException {
+        int total = 0;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT COUNT(*) as count FROM order_position";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return total;
+    }
+
     public OrderPosition findByItem(Item item) throws DAOException {
         OrderPosition orderPosition = new OrderPosition();
         try (PreparedStatement statement = connection.prepareStatement("SELECT id, order_id, price FROM `order_position` WHERE item_id=?")) {

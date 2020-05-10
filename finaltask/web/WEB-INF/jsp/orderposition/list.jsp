@@ -54,19 +54,29 @@
                 </tbody>
             </table>
             <ul class="pagination justify-content-center">
-                <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
-                <c:url var="pagePreviousUrl" value="/orderposition/list?page=${pagePrevious}"/>
-                <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
+                <c:choose>
+                    <c:when test="${requestScope.page != 1}">
+                        <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
+                        <c:url var="pagePreviousUrl" value="/orderposition/list?page=${pagePrevious}"/>
+                        <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                    </c:otherwise>
+                </c:choose>
                 <c:set value="${requestScope.page}" var="page1"/>
                 <c:url var="page1url" value="/orderposition/list?page=${page1}"/>
                 <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
-                <c:set value="${requestScope.page + 1}" var="page2"/>
-                <c:url var="page2url" value="/orderposition/list?page=${page2}"/>
-                <li class="page-item"><a class="page-link" href="${page2url}">${page2}</a></li>
-                <c:set value="${requestScope.page + 2}" var="page3"/>
-                <c:url var="page3url" value="/orderposition/list?page=${page3}"/>
-                <li class="page-item"><a class="page-link" href="${page3url}">${page3}</a></li>
-                <li class="page-item"><a class="page-link" href="${page2url}">Next</a></li>
+                <c:set value="${requestScope.page + 1}" var="pageNext"/>
+                <c:url var="pageNextUrl" value="/orderposition/list?page=${pageNext}"/>
+                <c:choose>
+                    <c:when test="${requestScope.page * 20 < requestScope.countTotal}">
+                        <li class="page-item"><a class="page-link" href="${pageNextUrl}">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled"><a class="page-link">Next</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
             <c:if test="${not empty requestScope.message}">
                 <c:import url="../element/footer.jsp"/>

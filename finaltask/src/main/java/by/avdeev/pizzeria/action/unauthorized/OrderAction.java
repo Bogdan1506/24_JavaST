@@ -98,7 +98,7 @@ public class OrderAction extends UnauthorizedUserAction {
                         Delivery delivery = new Delivery(orderPosition, orderDate, payment);
                         deliveryService.create(delivery);
                     }
-                    ForwardObject forwardObject = new ForwardObject("/");
+                    ForwardObject forwardObject = new ForwardObject("/product/pizzas");
                     forwardObject.getAttributes().put("message", "Ordered!");
                     cart = new ArrayList<>();
                     session.setAttribute("cart", cart);

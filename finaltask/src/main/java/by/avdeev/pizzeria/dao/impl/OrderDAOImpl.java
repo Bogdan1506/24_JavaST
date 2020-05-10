@@ -5,14 +5,10 @@ import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.Profile;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -120,5 +116,22 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             rollback();
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public int countAll() throws DAOException {
+        int total = 0;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT COUNT(*) as count FROM `order`";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return total;
     }
 }

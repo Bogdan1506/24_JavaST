@@ -10,7 +10,6 @@ import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.transaction.DAOType;
 
 import java.sql.Date;
-import java.util.List;
 
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implements DeliveryService {
     @Override
@@ -37,16 +36,5 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implement
             throw new ServiceException(e);
         }
         return count;
-    }
-
-    @Override
-    public int countAll() throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = transaction.createDao(DAOType.DELIVERY);
-        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
-        try {
-            return deliveryDAO.countAll();
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
     }
 }

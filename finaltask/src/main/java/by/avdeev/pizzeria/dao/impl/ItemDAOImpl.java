@@ -138,4 +138,9 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
             throw new DAOException(e);
         }
     }
+
+    @Override
+    public int countAll() throws DAOException {
+        return 0;
+    }
 }

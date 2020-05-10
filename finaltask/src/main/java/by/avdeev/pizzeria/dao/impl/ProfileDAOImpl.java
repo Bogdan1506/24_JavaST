@@ -139,6 +139,11 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         }
     }
 
+    @Override
+    public int countAll() throws DAOException {
+        return 0;
+    }
+
     public Profile findByUserId(int userId) throws DAOException {
         Profile profile;
         try (PreparedStatement statement = connection.prepareStatement(

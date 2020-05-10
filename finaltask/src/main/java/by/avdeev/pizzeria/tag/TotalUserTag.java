@@ -16,7 +16,7 @@ public class TotalUserTag extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             JspWriter out = pageContext.getOut();
-            out.write("<h3>Total users: " + totalUsers + "</h3>");
+            out.write("<h6>Total users: " + totalUsers + "</h6>");
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }

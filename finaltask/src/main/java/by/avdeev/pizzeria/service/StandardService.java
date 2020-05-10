@@ -16,4 +16,6 @@ public interface StandardService<T extends Entity> {
     boolean delete(int id) throws ServiceException;
 
     void update(T entity) throws ServiceException;
+
+    int countAll() throws ServiceException;
 }

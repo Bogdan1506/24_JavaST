@@ -16,4 +16,6 @@ public interface OrderService extends Service {
     boolean delete(int id) throws ServiceException;
 
     void update(Order order) throws ServiceException;
+
+    int countAll() throws ServiceException;
 }

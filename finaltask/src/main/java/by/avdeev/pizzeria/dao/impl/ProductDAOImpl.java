@@ -126,6 +126,11 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         }
     }
 
+    @Override
+    public int countAll() throws DAOException {
+        return 0;
+    }
+
     public List<Product> findByType(Product.Type type) throws DAOException {
         List<Product> products = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement("SELECT id, name, description, price, picture FROM product WHERE type=?")) {

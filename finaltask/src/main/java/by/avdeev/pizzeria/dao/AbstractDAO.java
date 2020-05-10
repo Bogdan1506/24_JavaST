@@ -40,6 +40,8 @@ public abstract class AbstractDAO<T extends Entity> {
 
     public abstract void update(T entity) throws DAOException;
 
+    public abstract int countAll() throws DAOException;
+
     public int findLastInsertId() throws DAOException {
         int lastId = 0;
         try (Statement statement = connection.createStatement()) {

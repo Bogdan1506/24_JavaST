@@ -21,6 +21,8 @@ public class OrderListShowAction extends AdminAction {
         List<Order> orders = orderService.findAll((page - 1) * pageSize, page * pageSize);
         request.setAttribute("orders", orders);
         request.setAttribute("page", page);
+        int count = orderService.countAll();
+        request.setAttribute("countTotal", count);
         return null;
     }
 }

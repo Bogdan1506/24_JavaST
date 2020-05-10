@@ -6,17 +6,12 @@ import by.avdeev.pizzeria.entity.Entity;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.StandardService;
 import by.avdeev.pizzeria.service.TransactionService;
-import by.avdeev.pizzeria.service.validator.Validator;
 
 import java.util.List;
 
 public class StandardServiceImpl<T extends Entity> extends TransactionService implements StandardService<T> {
     @Override
     public int create(T entity) throws ServiceException {
-/*        boolean isValid = validate(entity);
-        if (!isValid) {
-            return -1;
-        }*/
         AbstractDAO<T> dao = transaction.createDao(daoType);
         int lastId;
         try {
@@ -78,10 +73,6 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public void update(T entity) throws ServiceException {
-/*        boolean isValid = validate(entity);
-        if (!isValid) {
-            return false;
-        }*/
         AbstractDAO<T> dao = transaction.createDao(daoType);
         try {
             dao.update(entity);
@@ -90,9 +81,15 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
         }
     }
 
-/*    private boolean validate(T entity) throws ServiceException {
-        ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator<T> validator = validatorFactory.getValidator(entity);
-        return validator.validate(parameters, entity);
-    }*/
+    @Override
+    public int countAll() throws ServiceException {
+        AbstractDAO<T> dao = transaction.createDao(daoType);
+        int count;
+        try {
+            count = dao.countAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return count;
+    }
 }

@@ -28,6 +28,8 @@ public class OrderPositionListShowAction extends AdminAction {
         Map<String, Integer> map = productService.findCount();
         CountMap countMap = new CountMap(map);
         request.setAttribute("count", countMap);
+        int count = orderPositionService.countAll();
+        request.setAttribute("countTotal", count);
         return null;
     }
 }
