@@ -32,7 +32,7 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
         Size size = Size.valueOf(request.getParameter("size").toUpperCase());
         String doughPar = request.getParameter("dough");
         Dough dough = null;
-        if (doughPar != null) {
+        if (doughPar != null && !doughPar.equals("undefined")) {
             logger.debug("dough={}", doughPar);
             dough = Dough.valueOf(doughPar.toUpperCase());
         }

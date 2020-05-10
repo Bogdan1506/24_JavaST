@@ -31,9 +31,6 @@
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
                         <c:if test="${requestScope.role ne 'CREATOR'}">
-                            <%--                            <form action="" id="ajax_form" method="get">--%>
-                            <%--                            <form id="myForm" action="${addToCart}" method="get">--%>
-
                             <c:if test="${temp.type eq 'PIZZA'}">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-success active">
@@ -71,10 +68,8 @@
                                 </label>
                             </div>
                             <input class="id_param" type="hidden" name="id" value="${temp.id}">
-                            <%--                            <input type="submit" onclick="loadDoc()" class="btn btn-light" value="Add to cart">--%>
                             <input type="submit" class="btn btn-light" value="Add to cart"
                                    onclick="addToCart(${temp.id})">
-                            <%--                            </form>--%>
                         </c:if>
                         <c:if test="${requestScope.role eq 'CREATOR'}">
                             <c:url var="removePosition" value="/product/remove"/>

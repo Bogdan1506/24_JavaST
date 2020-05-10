@@ -11,7 +11,6 @@
 <c:import url="../element/admin-bar.jsp"/>
 <div class="container-fluid">
     <div class="row">
-
         <div class="col-3">
             <ctg:totalUsers totalUsers="${requestScope.totalUsers}"/>
         </div>
