@@ -26,6 +26,7 @@ public class OrderListRemoveAction extends AdminAction {
         DeliveryService deliveryService = factory.getDeliveryService();
         for (OrderPosition orderPosition : orderPositions) {
             Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
+            logger.debug("delivery={}", delivery);
             if (orderPosition != null) {
                 deliveryService.delete(delivery.getId());
                 orderPositionService.delete(orderPosition.getId());

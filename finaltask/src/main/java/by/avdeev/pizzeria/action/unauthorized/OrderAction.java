@@ -53,7 +53,7 @@ public class OrderAction extends UnauthorizedUserAction {
                 boolean isOrderValid = orderValidator.validate(parameters, invalidParameters);
                 if (isProfileValid && isOrderValid) {
                     Profile profileUpdated;
-                    Profile profile;
+                    Profile profile = null;
                     HttpSession session = request.getSession(false);
                     ProfileService profileService = factory.getProfileService();
                     Creator<Profile> creator = new ProfileCreator();
@@ -65,9 +65,10 @@ public class OrderAction extends UnauthorizedUserAction {
                         profile = profileService.findByUserId(user.getId());
                         logger.debug("order profile = {}", profile);
                         profileUpdated.setId(profile.getId());
-                        if (!profile.equals(profileUpdated)) {
+                        profileUpdated.setUser(user);
+//                        if (!profile.equals(profileUpdated)) {
                             profileService.update(profileUpdated);
-                        }
+//                        }
                     } else {
                         int id = profileService.create(profileUpdated);
                         profileUpdated.setId(id);

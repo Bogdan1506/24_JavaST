@@ -35,11 +35,11 @@
                 <a class="nav-link" href="#"><fmt:message key="contacts" bundle="${rb}"/></a>
             </li>
             <c:choose>
-                <c:when test="${requestScope.login != null}">
+                <c:when test="${cookie.login.value != null}">
                     <c:url value="/profile/user" var="profileShow"/>
                     <li class="nav-item">
                         <a class="nav-link border border-success"
-                           href="${profileShow}">${requestScope.login}</a>
+                           href="${profileShow}">${cookie.login.value}</a>
                     </li>
                     <c:url value="/user/sign-out" var="userSignOut"/>
                     <li class="nav-item">
@@ -49,9 +49,11 @@
                 <c:otherwise>
                     <c:url value="/user/sign-in" var="userSignIn"/>
                     <a class="nav-link" href="${userSignIn}"><fmt:message key="signIn" bundle="${rb}"/></a>
+                    <c:url value="/user/sign-up" var="userSignUp"/>
+                    <a class="nav-link" href="${userSignUp}"><fmt:message key="signUp" bundle="${rb}"/></a>
                 </c:otherwise>
             </c:choose>
-            <c:if test="${requestScope.role eq 'ADMIN'}">
+            <c:if test="${cookie.role.value eq 'ADMIN'}">
                 <c:url value="/user/list" var="users"/>
                 <a class="nav-link" href="${users}"><fmt:message key="abilities" bundle="${rb}"/></a>
             </c:if>

@@ -6,25 +6,30 @@ import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 
 public class DeliveryListShowAction extends AdminAction {
+    private static final String PAGE_SIZE = "pageSize";
+
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        ForwardObject forwardObjectEx = new ForwardObject("/delivery/list");
+        HttpSession session = request.getSession();
         DeliveryService deliveryService = factory.getDeliveryService();
-        String pageSizeStr = request.getParameter("pageNum");
+        String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = 20;
         if (pageSizeStr != null) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
-                request.setAttribute("pageSize", pageSize);
+                session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                request.setAttribute("message", "Incorrect number format!");
-                return null;
+                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect number format!");
+                return forwardObjectEx;
             }
         } else {
-            Object pageSizeObj = request.getAttribute("pageSize");
+            Object pageSizeObj = session.getAttribute(PAGE_SIZE);
             if (pageSizeObj != null) {
                 pageSize = (int) pageSizeObj;
             }
@@ -36,21 +41,23 @@ public class DeliveryListShowAction extends AdminAction {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                request.setAttribute("message", "Incorrect number format!");
-                return null;
+                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect number format!");
+                return forwardObjectEx;
             }
         }
-        if (pageSize > 0 && (countTotal % (page * pageSize) > 0 && page > 0)) {
-            logger.debug("pageSize={}", pageSize);
-            List<Delivery> deliveries = deliveryService.findAll((page - 1) * pageSize, page * pageSize);
-            logger.debug("deliveries={}", deliveries);
+        int maxPage = (int) Math.ceil((double) countTotal / pageSize);
+        if (pageSize > 0 && page <= maxPage && page > 0) {
+            List<Delivery> deliveries = deliveryService.findAll((page - 1) * pageSize, pageSize);
+            System.out.println("deliveries.size() = " + deliveries.size());
+            request.setAttribute("maxPage", maxPage);
             request.setAttribute("deliveries", deliveries);
             request.setAttribute("page", page);
             int countToday = deliveryService.findByDate(new Date(System.currentTimeMillis()));
             request.setAttribute("countTotal", countTotal);
             request.setAttribute("countToday", countToday);
         } else {
-            request.setAttribute("message", "Incorrect page size!");
+            forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
+            return forwardObjectEx;
         }
         return null;
     }

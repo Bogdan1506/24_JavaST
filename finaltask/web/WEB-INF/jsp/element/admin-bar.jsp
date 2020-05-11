@@ -17,11 +17,7 @@
     <ul class="navbar-nav">
         <li class="nav-item">
             <c:url value="/user/list" var="users"/>
-            <a class="nav-link active" href="${users}"><fmt:message key="users" bundle="${sessionScope.rb}"/></a>
-        </li>
-        <li class="nav-item">
-            <c:url value="/item/list" var="items"/>
-            <a class="nav-link" href="${items}"><fmt:message key="items" bundle="${rb}"/></a>
+            <a class="nav-link active" href="${users}"><fmt:message key="users" bundle="${rb}"/></a>
         </li>
         <li class="nav-item">
             <c:url value="/order/list" var="orders"/>
@@ -37,8 +33,6 @@
         </li>
     </ul>
 </nav>
-
-<%--<ctg:statistics head1="ad" head2="adaDx"/>--%>
 </body>
 </html>
 

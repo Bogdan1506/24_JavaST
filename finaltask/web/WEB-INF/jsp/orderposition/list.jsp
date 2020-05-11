@@ -53,46 +53,27 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <ul class="pagination justify-content-center">
-                <c:choose>
-                    <c:when test="${requestScope.page != 1}">
-                        <c:set value="${requestScope.page - 1}" var="pagePrevious"/>
-                        <c:url var="pagePreviousUrl" value="/orderposition/list?page=${pagePrevious}"/>
-                        <li class="page-item"><a class="page-link" href="${pagePreviousUrl}">Previous</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item disabled"><a class="page-link">Previous</a></li>
-                    </c:otherwise>
-                </c:choose>
-                <c:set value="${requestScope.page}" var="page1"/>
-                <c:url var="page1url" value="/orderposition/list?page=${page1}"/>
-                <li class="page-item"><a class="page-link" href="${page1url}">${page1}</a></li>
-                <c:set value="${requestScope.page + 1}" var="pageNext"/>
-                <c:url var="pageNextUrl" value="/orderposition/list?page=${pageNext}"/>
-                <c:choose>
-                    <c:when test="${requestScope.page * 20 < requestScope.countTotal}">
-                        <li class="page-item"><a class="page-link" href="${pageNextUrl}">Next</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item disabled"><a class="page-link">Next</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
+            <c:url var="url" value="/orderposition/list"/>
+            <c:import url="../element/pagination.jsp"/>
             <c:if test="${not empty requestScope.message}">
                 <c:import url="../element/footer.jsp"/>
             </c:if>
         </div>
-        <script>
-            $(document).ready(function () {
-                $("#searchInput").on("keyup", function () {
-                    const value = $(this).val().toLowerCase();
-                    $("#orderPosTable tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
+        <div class="col-2"></div>
+        <div class="col-1">
+            <c:import url="../element/select-num-page.jsp"/>
+        </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            const value = $(this).val().toLowerCase();
+            $("#orderPosTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>
