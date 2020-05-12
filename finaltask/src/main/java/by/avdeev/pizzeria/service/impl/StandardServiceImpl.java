@@ -12,7 +12,7 @@ import java.util.List;
 public class StandardServiceImpl<T extends Entity> extends TransactionService implements StandardService<T> {
     @Override
     public int create(T entity) throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         int lastId;
         try {
             dao.create(entity);
@@ -25,7 +25,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public List<T> findAll() throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         List<T> resultList;
         try {
             resultList = dao.findAll();
@@ -37,7 +37,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public List<T> findAll(int begin, int end) throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         List<T> resultList;
         try {
             resultList = dao.findAll(begin, end);
@@ -49,7 +49,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public T findById(int id) throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         T entity;
         try {
             entity = dao.findById(id);
@@ -61,7 +61,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public boolean delete(int id) throws ServiceException {
-        AbstractDAO<T> profileDAO = transaction.createDao(daoType);
+        AbstractDAO<T> profileDAO = transaction.createDao(type);
         boolean isDeleted;
         try {
             isDeleted = profileDAO.delete(id);
@@ -73,7 +73,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public void update(T entity) throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         try {
             dao.update(entity);
         } catch (DAOException e) {
@@ -83,7 +83,7 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public int countAll() throws ServiceException {
-        AbstractDAO<T> dao = transaction.createDao(daoType);
+        AbstractDAO<T> dao = transaction.createDao(type);
         int count;
         try {
             count = dao.countAll();

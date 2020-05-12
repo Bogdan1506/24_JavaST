@@ -1,5 +1,6 @@
-package by.avdeev.pizzeria.action.unauthorized;
+package by.avdeev.pizzeria.action.unauthorized.product;
 
+import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.ServletException;

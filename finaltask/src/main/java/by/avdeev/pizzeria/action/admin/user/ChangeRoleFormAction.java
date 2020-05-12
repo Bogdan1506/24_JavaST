@@ -1,5 +1,6 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.user;
 
+import by.avdeev.pizzeria.action.admin.AdminAction;
 import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;

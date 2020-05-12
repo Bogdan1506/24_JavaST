@@ -71,7 +71,6 @@
             <option value="drink">Drinks</option>
         </select>
         <button type="submit" class="btn btn-primary float-right mt-3">Save</button>
-
     </form>
     <c:if test="${not empty message}">
         <c:import url="../element/footer.jsp"/>

@@ -8,6 +8,8 @@ import java.util.Map;
 public interface ProductService extends Service {
     int create(Product product) throws ServiceException;
 
+    int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
+
     List<Product> findAll() throws ServiceException;
 
     Product findById(int id) throws ServiceException;

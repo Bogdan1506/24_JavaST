@@ -1,5 +1,6 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.order;
 
+import by.avdeev.pizzeria.action.admin.AdminAction;
 import by.avdeev.pizzeria.entity.Delivery;
 import by.avdeev.pizzeria.entity.Order;
 import by.avdeev.pizzeria.entity.OrderPosition;

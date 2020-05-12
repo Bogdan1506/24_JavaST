@@ -1,10 +1,9 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.orderposition;
 
+import by.avdeev.pizzeria.action.admin.AdminAction;
 import by.avdeev.pizzeria.entity.Delivery;
-import by.avdeev.pizzeria.entity.Item;
 import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
-import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.ServiceException;
 
@@ -13,26 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ItemListRemoveAction extends AdminAction {
+public class OrderPositionListRemoveAction extends AdminAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        ItemService itemService = factory.getItemService();
-        //id of item
-        int itemId = Integer.parseInt(request.getParameter("id"));
+        int orderPosId = Integer.parseInt(request.getParameter("id"));
         OrderPositionService orderPositionService = factory.getOrderPositionService();
-        Item item = itemService.findById(itemId);
-        OrderPosition orderPosition = orderPositionService.findByItem(item);
+        OrderPosition orderPosition = orderPositionService.findById(orderPosId);
         DeliveryService deliveryService = factory.getDeliveryService();
         Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
         if (delivery != null) {
             deliveryService.delete(delivery.getId());
         }
-        if (orderPosition != null) {
-            orderPositionService.delete(orderPosition.getId());
-        }
-        itemService.delete(itemId);
-        ForwardObject forwardObject = new ForwardObject("/item/list");
-        forwardObject.getAttributes().put("message", "Item is deleted!");
+        orderPositionService.delete(orderPosition.getId());
+        ForwardObject forwardObject = new ForwardObject("/orderposition/list");
+        forwardObject.getAttributes().put("message", "Order Position is deleted!");
         return forwardObject;
     }
 }

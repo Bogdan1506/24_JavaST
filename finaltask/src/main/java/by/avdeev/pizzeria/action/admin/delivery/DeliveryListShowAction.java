@@ -1,22 +1,24 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.delivery;
 
-import by.avdeev.pizzeria.entity.Order;
-import by.avdeev.pizzeria.service.OrderService;
+import by.avdeev.pizzeria.action.admin.AdminAction;
+import by.avdeev.pizzeria.entity.Delivery;
+import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 
-public class OrderListShowAction extends AdminAction {
+public class DeliveryListShowAction extends AdminAction {
     private static final String PAGE_SIZE = "pageSize";
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        ForwardObject forwardObjectEx = new ForwardObject("/order/list");
+        ForwardObject forwardObjectEx = new ForwardObject("/delivery/list");
         HttpSession session = request.getSession();
-        OrderService orderService = factory.getOrderService();
+        DeliveryService deliveryService = factory.getDeliveryService();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = 20;
         if (pageSizeStr != null) {
@@ -33,7 +35,7 @@ public class OrderListShowAction extends AdminAction {
                 pageSize = (int) pageSizeObj;
             }
         }
-        int countTotal = orderService.countAll();
+        int countTotal = deliveryService.countAll();
         int page = 1;
         String pageNum = request.getParameter("page");
         if (pageNum != null) {
@@ -46,11 +48,13 @@ public class OrderListShowAction extends AdminAction {
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage && page > 0) {
-            List<Order> orders = orderService.findAll((page - 1) * pageSize, page * pageSize);
-            request.setAttribute("orders", orders);
+            List<Delivery> deliveries = deliveryService.findAll((page - 1) * pageSize, pageSize);
             request.setAttribute("maxPage", maxPage);
+            request.setAttribute("deliveries", deliveries);
             request.setAttribute("page", page);
+            int countToday = deliveryService.findByDate(new Date(System.currentTimeMillis()));
             request.setAttribute("countTotal", countTotal);
+            request.setAttribute("countToday", countToday);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
             return forwardObjectEx;

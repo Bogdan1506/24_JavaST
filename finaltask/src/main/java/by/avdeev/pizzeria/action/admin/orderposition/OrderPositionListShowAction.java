@@ -1,22 +1,26 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.orderposition;
 
-import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.action.admin.AdminAction;
+import by.avdeev.pizzeria.entity.CountMap;
+import by.avdeev.pizzeria.entity.OrderPosition;
+import by.avdeev.pizzeria.service.OrderPositionService;
+import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
-public class UserShowListAction extends AdminAction {
+public class OrderPositionListShowAction extends AdminAction {
     private static final String PAGE_SIZE = "pageSize";
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        ForwardObject forwardObjectEx = new ForwardObject("/user/list");
+        ForwardObject forwardObjectEx = new ForwardObject("/orderposition/list");
         HttpSession session = request.getSession();
-        UserService userService = factory.getUserService();
+        OrderPositionService orderPositionService = factory.getOrderPositionService();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = 20;
         if (pageSizeStr != null) {
@@ -33,7 +37,7 @@ public class UserShowListAction extends AdminAction {
                 pageSize = (int) pageSizeObj;
             }
         }
-        int countTotal = userService.countAll();
+        int countTotal = orderPositionService.countAll();
         int page = 1;
         String pageNum = request.getParameter("page");
         if (pageNum != null) {
@@ -46,10 +50,15 @@ public class UserShowListAction extends AdminAction {
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage && page > 0) {
-            List<User> users = userService.findAll((page - 1) * pageSize, page * pageSize);
-            request.setAttribute("users", users);
+            List<OrderPosition> orders = orderPositionService.findAll((page - 1) * pageSize, page * pageSize);
+            request.setAttribute("orderPositions", orders);
             request.setAttribute("page", page);
-            request.setAttribute("countTotal", countTotal);
+            ProductService productService = factory.getProductService();
+            Map<String, Integer> map = productService.findCount();
+            CountMap countMap = new CountMap(map);
+            request.setAttribute("count", countMap);
+            int count = orderPositionService.countAll();
+            request.setAttribute("countTotal", count);
             request.setAttribute("maxPage", maxPage);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
@@ -58,4 +67,3 @@ public class UserShowListAction extends AdminAction {
         return null;
     }
 }
-

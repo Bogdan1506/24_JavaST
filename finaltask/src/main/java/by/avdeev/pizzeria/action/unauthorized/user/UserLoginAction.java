@@ -1,26 +1,31 @@
-package by.avdeev.pizzeria.action.unauthorized;
+package by.avdeev.pizzeria.action.unauthorized.user;
 
 import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class UserLoginAction extends UnauthorizedUserAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, ServletException, IOException {
         UserService userService = factory.getUserService();
         String login = request.getParameter("login");
-        User user = userService.findByLogin(login);
         String password = request.getParameter("password");
-        HttpSession session = request.getSession();
-        if (user != null && user.getPassword().equals(password)) {
+        User user = userService.findByLogin(login);
+        boolean isValid = userService.userLogin(user, password);
+        if (isValid) {
+
+
+            //return to goal page
+            HttpSession session = request.getSession();
             Action action = (Action) session.getAttribute("actionDenied");
             ForwardObject forwardObject;
             if (action == null) {
@@ -29,6 +34,9 @@ public class UserLoginAction extends UnauthorizedUserAction {
                 forwardObject = new ForwardObject(action.getName());
             }
             forwardObject.getAttributes().put("message", "User is authorized!");
+
+
+            //TODO move to common method
             String remember = request.getParameter("remember");
             logger.debug("remember={}", remember);
             Cookie loginCookie = new Cookie("login", login);

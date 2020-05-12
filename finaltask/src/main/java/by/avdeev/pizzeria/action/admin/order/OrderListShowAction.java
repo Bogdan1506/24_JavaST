@@ -1,25 +1,23 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.order;
 
-import by.avdeev.pizzeria.entity.CountMap;
-import by.avdeev.pizzeria.entity.OrderPosition;
-import by.avdeev.pizzeria.service.OrderPositionService;
-import by.avdeev.pizzeria.service.ProductService;
+import by.avdeev.pizzeria.action.admin.AdminAction;
+import by.avdeev.pizzeria.entity.Order;
+import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
-public class OrderPositionListShowAction extends AdminAction {
+public class OrderListShowAction extends AdminAction {
     private static final String PAGE_SIZE = "pageSize";
 
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        ForwardObject forwardObjectEx = new ForwardObject("/orderposition/list");
+        ForwardObject forwardObjectEx = new ForwardObject("/order/list");
         HttpSession session = request.getSession();
-        OrderPositionService orderPositionService = factory.getOrderPositionService();
+        OrderService orderService = factory.getOrderService();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = 20;
         if (pageSizeStr != null) {
@@ -36,7 +34,7 @@ public class OrderPositionListShowAction extends AdminAction {
                 pageSize = (int) pageSizeObj;
             }
         }
-        int countTotal = orderPositionService.countAll();
+        int countTotal = orderService.countAll();
         int page = 1;
         String pageNum = request.getParameter("page");
         if (pageNum != null) {
@@ -49,16 +47,11 @@ public class OrderPositionListShowAction extends AdminAction {
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage && page > 0) {
-            List<OrderPosition> orders = orderPositionService.findAll((page - 1) * pageSize, page * pageSize);
-            request.setAttribute("orderPositions", orders);
-            request.setAttribute("page", page);
-            ProductService productService = factory.getProductService();
-            Map<String, Integer> map = productService.findCount();
-            CountMap countMap = new CountMap(map);
-            request.setAttribute("count", countMap);
-            int count = orderPositionService.countAll();
-            request.setAttribute("countTotal", count);
+            List<Order> orders = orderService.findAll((page - 1) * pageSize, page * pageSize);
+            request.setAttribute("orders", orders);
             request.setAttribute("maxPage", maxPage);
+            request.setAttribute("page", page);
+            request.setAttribute("countTotal", countTotal);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
             return forwardObjectEx;

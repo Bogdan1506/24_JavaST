@@ -13,10 +13,10 @@ public class TransactionImpl implements Transaction {
     }
 
     @Override
-    public <T extends Entity> AbstractDAO<T> createDao(DAOType daoType) {
+    public <T extends Entity> AbstractDAO<T> createDao(Type type) {
         DAOTypeProvider daoTypeProvider = DAOTypeProvider.getDaoTypeProvider();
         @SuppressWarnings("unchecked")
-        AbstractDAO<T> dao = (AbstractDAO<T>) daoTypeProvider.findDAO(daoType);
+        AbstractDAO<T> dao = (AbstractDAO<T>) daoTypeProvider.findDAO(type);
         dao.setConnection(connection);
         return dao;
     }

@@ -152,6 +152,9 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             ResultSet rs = statement.executeQuery();
             rs.next();
             profile = fill(rs);
+            User user = new User();
+            user.setId(userId);
+            profile.setUser(user);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

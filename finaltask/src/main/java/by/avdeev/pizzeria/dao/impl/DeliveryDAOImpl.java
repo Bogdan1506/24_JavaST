@@ -100,7 +100,6 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public void create(Delivery delivery) throws DAOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         java.util.Date date = new java.util.Date(timestamp.getTime());
-        System.out.println("date = " + date);
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)")) {
             statement.setInt(1, delivery.getOrderPosition().getId());

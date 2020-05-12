@@ -2,22 +2,13 @@ package by.avdeev.pizzeria.service.validator.impl;
 
 import by.avdeev.pizzeria.service.validator.Validator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.Map;
 
-public class OrderPositionValidator implements Validator {
+public class DeliveryValidator implements Validator {
     @Override
     public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
-        String strDate = (String) parameters.get("date");
-        SimpleDateFormat format = new SimpleDateFormat(strDate);
-        format.applyPattern("yyyy-MM-dd");
-        java.util.Date date;
-        try {
-            date = format.parse(strDate);
-        } catch (ParseException e) {
-            return false;
-        }
+        Date date = (Date) parameters.get("date");
         long dateOrder = date.getTime();
         long dateNow = System.currentTimeMillis();
         int difference = 86399999;

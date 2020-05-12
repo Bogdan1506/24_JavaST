@@ -4,9 +4,10 @@ import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends Service {
-    int create(User user) throws ServiceException;
+    int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
 
     List<User> findAll() throws ServiceException;
 
@@ -23,4 +24,6 @@ public interface UserService extends Service {
     User findByLogin(String login) throws ServiceException;
 
     void changeRole(Role role, int id) throws ServiceException;
+
+    boolean userLogin(User user, String password) throws ServiceException;
 }

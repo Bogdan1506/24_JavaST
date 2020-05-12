@@ -1,7 +1,6 @@
 package by.avdeev.pizzeria.action.client.profile;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
-import by.avdeev.pizzeria.action.validator.ProfileTypeValidator;
 import by.avdeev.pizzeria.action.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;

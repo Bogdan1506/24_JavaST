@@ -30,7 +30,7 @@
                             </button>
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
-                        <c:if test="${requestScope.role ne 'CREATOR'}">
+                        <c:if test="${cookie.role.value ne 'CREATOR'}">
                             <c:if test="${temp.type eq 'PIZZA'}">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-success active">
@@ -67,11 +67,11 @@
                                     <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
                                 </label>
                             </div>
-                            <input class="id_param" type="hidden" name="id" value="${temp.id}">
+<%--                            <input class="id_param" type="hidden" name="id" value="${temp.id}">--%>
                             <input type="submit" class="btn btn-light" value="Add to cart"
                                    onclick="addToCart(${temp.id})">
                         </c:if>
-                        <c:if test="${requestScope.role eq 'CREATOR'}">
+                        <c:if test="${cookie.role.value eq 'CREATOR'}">
                             <c:url var="removePosition" value="/product/remove"/>
                             <c:url var="editPosition" value="/product/edit-form"/>
                             <div class="btn-group">
@@ -90,7 +90,7 @@
             </div>
         </div>
         <div class="col-sm-3 mt-5">
-            <c:if test="${requestScope.role eq 'CREATOR'}">
+            <c:if test="${cookie.role.value eq 'CREATOR'}">
                 <c:url var="addPosition" value="/product/create-form"/>
                 <form action="${addPosition}">
                     <button class="btn btn-warning btn-lg">Add +</button>

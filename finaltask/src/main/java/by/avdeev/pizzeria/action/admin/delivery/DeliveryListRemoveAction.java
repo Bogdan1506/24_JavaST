@@ -1,5 +1,6 @@
-package by.avdeev.pizzeria.action.admin;
+package by.avdeev.pizzeria.action.admin.delivery;
 
+import by.avdeev.pizzeria.action.admin.AdminAction;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
 
