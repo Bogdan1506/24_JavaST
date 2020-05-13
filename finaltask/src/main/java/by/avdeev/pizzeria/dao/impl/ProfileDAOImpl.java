@@ -145,16 +145,17 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     }
 
     public Profile findByUserId(int userId) throws DAOException {
-        Profile profile;
+        Profile profile = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, name, surname, email, phone, address FROM profile WHERE user_id=?")) {
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
-            rs.next();
-            profile = fill(rs);
-            User user = new User();
-            user.setId(userId);
-            profile.setUser(user);
+            if (rs.next()) {
+                profile = fill(rs);
+                User user = new User();
+                user.setId(userId);
+                profile.setUser(user);
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

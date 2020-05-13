@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +38,6 @@ public class OrderAction extends UnauthorizedUserAction {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address", "date"));
         Map<String, Object> parameters = new HashMap<>();
         Map<String, String> invalidParameters = new HashMap<>();
-
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
         forwardObjectEx.getAttributes().put("param", invalidParameters);
         boolean isParamCountValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
@@ -87,6 +86,8 @@ public class OrderAction extends UnauthorizedUserAction {
                     Delivery delivery = new Delivery(orderPosition, orderDate, payment);
                     if (deliveryValidator.validate(parameters, invalidParameters)) {
                         deliveryService.create(delivery);
+                    } else {
+                        return forwardObjectEx;
                     }
                 }
                 ForwardObject forwardObject = new ForwardObject("/product/pizzas");

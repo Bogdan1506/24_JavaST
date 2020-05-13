@@ -32,10 +32,10 @@ public class ProfileServiceImpl extends StandardServiceImpl<Profile> implements 
     @Override
     public Profile findByUserId(int userId) throws ServiceException {
         AbstractDAO<Profile> abstractDAO = transaction.createDao(type);
-        ProfileDAOImpl profileDAO1 = (ProfileDAOImpl) abstractDAO;
+        ProfileDAOImpl profileDAO = (ProfileDAOImpl) abstractDAO;
         Profile profile;
         try {
-            profile = profileDAO1.findByUserId(userId);
+            profile = profileDAO.findByUserId(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

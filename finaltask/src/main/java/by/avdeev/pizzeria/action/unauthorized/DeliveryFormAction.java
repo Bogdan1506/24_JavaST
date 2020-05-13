@@ -10,7 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DeliveryFormAction extends UnauthorizedUserAction {
     @Override
@@ -23,7 +26,12 @@ public class DeliveryFormAction extends UnauthorizedUserAction {
             Profile profile = profileService.findByUserId(user.getId());
             request.setAttribute("profile", profile);
         }
-        request.setAttribute("date", new Date(System.currentTimeMillis()));
+        int hour = 3600000;
+        long timeOrder = System.currentTimeMillis() + hour;
+        Date date = new Date(timeOrder);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        String strDate = dateFormat.format(date);
+        request.setAttribute("date", strDate);
         return null;
     }
 }

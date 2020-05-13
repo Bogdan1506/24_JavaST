@@ -25,7 +25,6 @@
         </c:forEach>
     </div>
     <c:url var="order" value="/delivery/order"/>
-    <c:url var="order" value="/delivery/order"/>
     <form action="${order}" class="was-validated" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -107,23 +106,16 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-<%--            <div class="form-group row">--%>
-                <label for="date">Date:</label>
-                <%--                <div class="col-10">--%>
-                <input class="form-control" type="date" value="${requestScope.date}" name="date" id="date" required>
+            <label for="date">Date:</label>
+            <div class="form-group">
+                <input type="datetime-local" id="date"
+                       name="date" value="${requestScope.date}"
+                       min="${requestScope.date}"/>
                 <div class="valid-feedback">Valid.</div>
                 <div class="invalid-feedback">
-                    <c:choose>
-                        <c:when test="${empty requestScope.param.date}">
-                            Please fill out this field.
-                        </c:when>
-                        <c:otherwise>
-                            ${requestScope.param.date}
-                        </c:otherwise>
-                    </c:choose>
+                    Cannot deliver on this date.
                 </div>
-<%--            </div>--%>
-            <%--            </div>--%>
+            </div>
             <input type="hidden" name="id" value="${requestScope.product.id}">
             <label>Payment:
                 <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
@@ -132,7 +124,6 @@
                 <label for="card">Card</label>
             </label>
             <button type="submit" class="btn btn-warning float-right mt-3">Order</button>
-
         </div>
     </form>
     <c:if test="${not empty message}">

@@ -104,7 +104,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
                 "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)")) {
             statement.setInt(1, delivery.getOrderPosition().getId());
 //            statement.setDate(2, new Date(delivery.getDate().getTime() + 14400000));
-            statement.setTimestamp(2, timestamp);
+            statement.setTimestamp(2, new Timestamp(delivery.getDate().getTime()));
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -118,7 +118,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE `delivery` SET order_position_id=?, date=?, payment=? WHERE id=?")) {
             statement.setInt(1, delivery.getOrderPosition().getId());
-            statement.setDate(2, delivery.getDate());
+//            statement.setDate(2, delivery.getDate());
+            statement.setTimestamp(2, new Timestamp(delivery.getDate().getTime()));
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.setInt(4, delivery.getId());
             statement.executeUpdate();
@@ -164,6 +165,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         int count = 0;
         try (PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) as count FROM `delivery` WHERE date=?")) {
             statement.setDate(1, date);
+//            statement.setTimestamp(1, da);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 count = rs.getInt("count");

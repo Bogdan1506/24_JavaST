@@ -11,6 +11,7 @@ import by.avdeev.pizzeria.service.creator.Creator;
 import by.avdeev.pizzeria.service.creator.ProfileCreator;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
+import org.apache.logging.log4j.core.util.JsonUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,10 +42,16 @@ public class ProfileUpdateAction extends ClientAction {
         if (isProfileValid) {
             Creator<Profile> creator = new ProfileCreator();
             Profile profile = creator.create(parameters);
-            profile.setUser(user);
             ProfileService profileService = factory.getProfileService();
-            logger.debug("params={}", parameters);
-            profileService.update(profile);
+            Profile profileCheck = profileService.findByUserId(user.getId());
+            profile.setUser(user);
+            if (profileCheck != null) {
+                profile.setId(profileCheck.getId());
+                profileService.update(profile);
+                logger.debug("params={}", parameters);
+            } else {
+                profileService.create(profile);
+            }
             forwardObject.getAttributes().put("message", "Profile is updated!");
         }
         return forwardObject;
