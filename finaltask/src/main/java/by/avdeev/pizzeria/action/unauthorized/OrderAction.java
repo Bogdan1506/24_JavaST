@@ -14,6 +14,8 @@ import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
+import by.avdeev.pizzeria.service.validator.Validator;
+import by.avdeev.pizzeria.service.validator.impl.DeliveryValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +76,7 @@ public class OrderAction extends UnauthorizedUserAction {
                 Delivery.Payment payment = (Delivery.Payment) parameters.get("payment");
                 logger.debug("payment={}", payment);
                 DeliveryService deliveryService = factory.getDeliveryService();
+                Validator deliveryValidator = new DeliveryValidator();
                 for (Item item : cart) {
                     double price = item.getProduct().getPrice() * item.getSize().getCoefficient();
                     logger.debug("order={}", order);
@@ -82,17 +85,15 @@ public class OrderAction extends UnauthorizedUserAction {
                     int orderPosId = orderPositionService.create(orderPosition);
                     orderPosition.setId(orderPosId);
                     Delivery delivery = new Delivery(orderPosition, orderDate, payment);
-                    int id = deliveryService.create(parameters, invalidParameters, delivery);
-                    if (id == 1) {
-                        return forwardObjectEx;
-                    } else {
-                        ForwardObject forwardObject = new ForwardObject("/product/pizzas");
-                        forwardObject.getAttributes().put("message", "Ordered!");
-                        cart = new ArrayList<>();
-                        session.setAttribute("cart", cart);
-                        return forwardObject;
+                    if (deliveryValidator.validate(parameters, invalidParameters)) {
+                        deliveryService.create(delivery);
                     }
                 }
+                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+                forwardObject.getAttributes().put("message", "Ordered!");
+                cart = new ArrayList<>();
+                session.setAttribute("cart", cart);
+                return forwardObject;
             }
         }
         return forwardObjectEx;

@@ -1,7 +1,6 @@
 package by.avdeev.pizzeria.action.client.user;
 
 import by.avdeev.pizzeria.action.client.ClientAction;
-import by.avdeev.pizzeria.action.validator.UserTypeValidator;
 import by.avdeev.pizzeria.action.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -35,18 +34,14 @@ public class UserUpdateAction extends ClientAction {
         UserService userService = factory.getUserService();
         User user = userService.findByLogin(login);
         String msg = null;
-        TypeValidator typeValidator = new UserTypeValidator();
-        boolean isUserValid = typeValidator.validate(parameters);
-        if (isUserValid) {
-            if (user.getPassword().equals(oldPass)) {
-                Validator validator = new UserValidator();
-                boolean isNewPassValid = validator.validate(parameters, invalidParameters);
-                if (isNewPassValid) {
-                    user.setPassword(newPass);
-                    logger.debug("params={}", parameters);
-                    userService.update(user);
-                    msg = "Password is changed!";
-                }
+        if (user.getPassword().equals(oldPass)) {
+            Validator validator = new UserValidator();
+            boolean isNewPassValid = validator.validate(parameters, invalidParameters);
+            if (isNewPassValid) {
+                user.setPassword(newPass);
+                logger.debug("params={}", parameters);
+                userService.update(user);
+                msg = "Password is changed!";
             } else {
                 msg = "Current password is incorrect! Try again!";
             }

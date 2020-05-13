@@ -7,36 +7,23 @@ import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
-import by.avdeev.pizzeria.service.creator.Creator;
-import by.avdeev.pizzeria.service.creator.CreatorService;
-import by.avdeev.pizzeria.service.validator.Validator;
-import by.avdeev.pizzeria.service.validator.ValidatorFactory;
-
-import java.util.Map;
 
 public class UserServiceImpl extends StandardServiceImpl<User> implements UserService {
 
+
     @Override
-    public int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException {
+    public int create(User user) throws ServiceException {
         AbstractDAO<User> dao = transaction.createDao(type);
-        ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator validator = validatorFactory.findValidator(type);
-        if (validator.validate(parameters, invalidParameters)) {
-            CreatorService creatorService = CreatorService.getInstance();
-            @SuppressWarnings("unchecked")
-            Creator<User> creator = creatorService.findCreator(type);
-            User user = creator.create(parameters);
-            User checkUser = findByLogin((String) parameters.get("login"));
-            if (checkUser == null) {
-                int lastId;
-                try {
-                    dao.create(user);
-                    lastId = dao.findLastInsertId();
-                } catch (DAOException e) {
-                    throw new ServiceException(e);
-                }
-                return lastId;
+        User checkUser = findByLogin(user.getLogin());
+        if (checkUser == null) {
+            int lastId;
+            try {
+                dao.create(user);
+                lastId = dao.findLastInsertId();
+            } catch (DAOException e) {
+                throw new ServiceException(e);
             }
+            return lastId;
         }
         return -1;
     }

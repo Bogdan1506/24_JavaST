@@ -1,11 +1,16 @@
 package by.avdeev.pizzeria.action.unauthorized.user;
 
 import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
-import by.avdeev.pizzeria.action.validator.UserTypeValidator;
 import by.avdeev.pizzeria.action.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.Role;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.UserCreator;
+import by.avdeev.pizzeria.service.validator.Validator;
+import by.avdeev.pizzeria.service.validator.ValidatorFactory;
+import by.avdeev.pizzeria.transaction.Type;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -24,10 +29,10 @@ public class UserCreateAction extends UnauthorizedUserAction {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("login", "password"));
         Map<String, Object> parameters = new HashMap<>();
         Map<String, String> invalidParameters = new HashMap<>();
+
         ForwardObject forwardObjectEx = new ForwardObject("/user/sign-up");
         forwardObjectEx.getAttributes().put("param", invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
-        if (!isValid) {
+        if (!TypeValidator.validateRequest(request, parameters, requiredParameters)) {
             forwardObjectEx.getAttributes().put(MESSAGE, "Fill all fields!");
             return forwardObjectEx;
         }
@@ -35,21 +40,14 @@ public class UserCreateAction extends UnauthorizedUserAction {
             invalidParameters.put("repPassword", "Passwords don't match!");
             return forwardObjectEx;
         }
-
-
-        TypeValidator typeValidator = new UserTypeValidator();
-        boolean isUserTypeValid = typeValidator.validate(parameters);
-        if (isUserTypeValid) {
-
-            //checked on type
-
-
-            UserService userService = factory.getUserService();
-            int id = userService.create(parameters, invalidParameters);
-            //-1 or real id
-
-            //if -1 means incorrect
-            if (id >= 0) {
+        UserService userService = factory.getUserService();
+        ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
+        Validator validator = validatorFactory.findValidator(Type.USER);
+        if (validator.validate(parameters, invalidParameters)) {
+            Creator<User> creator = new UserCreator();
+            User user = creator.create(parameters);
+            int id = userService.create(user);
+            if (id != -1) {
                 ForwardObject forwardObject = new ForwardObject("/profile/create");
                 String remember = request.getParameter("remember");
                 Cookie loginCookie = new Cookie("login", (String) parameters.get("login"));
@@ -66,13 +64,11 @@ public class UserCreateAction extends UnauthorizedUserAction {
                 response.addCookie(loginCookie);
                 response.addCookie(roleCookie);
                 return forwardObject;
-                //if all is good
             } else {
-                // if -1 means incorrect parameters pattern
                 invalidParameters.put("login", "Such login exists!");
             }
+            //TODO move cookie block to common method
         }
-        //TODO move cookie block to common method
         return forwardObjectEx;
     }
 }

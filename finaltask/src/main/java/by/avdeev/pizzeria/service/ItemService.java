@@ -8,8 +8,6 @@ import java.util.Map;
 public interface ItemService extends Service {
     int create(Item item) throws ServiceException;
 
-    Item create(Map<String, Object> parameters) throws ServiceException;
-
     List<Item> findAll() throws ServiceException;
 
     List<Item> findAll(int begin, int end) throws ServiceException;

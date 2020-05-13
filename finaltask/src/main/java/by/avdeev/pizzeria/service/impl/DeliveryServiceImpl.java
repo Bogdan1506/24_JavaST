@@ -7,12 +7,9 @@ import by.avdeev.pizzeria.entity.Delivery;
 import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.validator.Validator;
-import by.avdeev.pizzeria.service.validator.impl.DeliveryValidator;
 import by.avdeev.pizzeria.transaction.Type;
 
 import java.sql.Date;
-import java.util.Map;
 
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implements DeliveryService {
 
@@ -40,16 +37,5 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implement
             throw new ServiceException(e);
         }
         return count;
-    }
-
-    @Override
-    public int create(Map<String, Object> parameters, Map<String, String> invalidParameters, Delivery delivery) throws ServiceException {
-        Validator validator = new DeliveryValidator();
-        if (validator.validate(parameters, invalidParameters)) {
-            delivery.setDate((Date) parameters.get("date"));
-            return create(delivery);
-        } else {
-            return -1;
-        }
     }
 }

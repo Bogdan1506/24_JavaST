@@ -67,7 +67,6 @@
                                     <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
                                 </label>
                             </div>
-<%--                            <input class="id_param" type="hidden" name="id" value="${temp.id}">--%>
                             <input type="submit" class="btn btn-light" value="Add to cart"
                                    onclick="addToCart(${temp.id})">
                         </c:if>

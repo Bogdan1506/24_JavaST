@@ -1,6 +1,5 @@
 package by.avdeev.pizzeria.service.impl;
 
-import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.impl.ProductDAOImpl;
@@ -21,6 +20,15 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
     private static Logger logger = LogManager.getLogger();
 
     @Override
+    public int create(Product product) throws ServiceException {
+        Product checkProduct = findByName(product.getName());
+        if (checkProduct == null) {
+            return super.create(product);
+        }
+        return -1;
+    }
+
+    @Override
     public List<Product> findByType(Product.Type type) throws ServiceException {
         AbstractDAO<Product> abstractDAO = transaction.createDao(this.type);
         ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
@@ -33,7 +41,6 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
         return products;
     }
 
-    @Override
     public int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException {
         Validator validator = new ProductValidator();
         boolean isParamValid = validator.validate(parameters, invalidParameters);
@@ -44,7 +51,7 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             Product existProduct = findByName(product.getName());
             logger.debug("existProduct={}", existProduct);
             if (existProduct == null) {
-               return create(product);
+                return create(product);
             }
         }
         return -1;

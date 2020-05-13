@@ -18,11 +18,6 @@ import java.util.Map;
 public class ProfileServiceImpl extends StandardServiceImpl<Profile> implements ProfileService {
     private static Logger logger = LogManager.getLogger();
 
-    /*@Override
-    public int create(Profile profile) throws ServiceException {
-        return 0;
-    }*/
-
     @Override
     public Profile create(Map<String, Object> parameters, Map<String, String> invalidParameters) {
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();

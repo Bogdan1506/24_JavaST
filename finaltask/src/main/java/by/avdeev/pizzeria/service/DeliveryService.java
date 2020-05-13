@@ -5,10 +5,9 @@ import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 public interface DeliveryService extends Service {
-    int create(Map<String, Object> parameters, Map<String, String> invalidParameters, Delivery delivery) throws ServiceException;
+    int create(Delivery delivery) throws ServiceException;
 
     List<Delivery> findAll() throws ServiceException;
 

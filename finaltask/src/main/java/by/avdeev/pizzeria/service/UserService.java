@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService extends Service {
-    int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
+    int create(User user) throws ServiceException;
 
     List<User> findAll() throws ServiceException;
 

@@ -8,6 +8,8 @@ import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ItemService;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.ItemCreator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,11 +30,13 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("id", "dough", "size"));
         Map<String, Object> parameters = new HashMap<>();
         //TODO move to common
+
         if (TypeValidator.validateRequest(request, parameters, requiredParameters)) {
             TypeValidator typeValidator = new ItemTypeValidator();
             if (typeValidator.validate(parameters)) {
                 ItemService itemService = factory.getItemService();
-                Item item = itemService.create(parameters);
+                Creator<Item> creator = new ItemCreator();
+                Item item = creator.create(parameters);
                 ProductService productService = factory.getProductService();
                 Product product = productService.findById(item.getProduct().getId());
                 item.setProduct(product);
