@@ -13,7 +13,9 @@ import by.avdeev.pizzeria.service.validator.impl.ProductValidator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +25,7 @@ import java.util.Set;
 public class ProductEditAction extends CreatorAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "description", "type", "price", "picture"));
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "description", "type", "price"));
         Map<String, Object> parameters = new HashMap<>();
         Map<String, String> invalidParameters = new HashMap<>();
         ForwardObject forwardObject = new ForwardObject("/product/edit-form");
@@ -38,6 +40,9 @@ public class ProductEditAction extends CreatorAction {
         if (isProductValid) {
             Validator validator = new ProductValidator();
             if (validator.validate(parameters, invalidParameters)) {
+                Part filePart = request.getPart("picture");
+                InputStream inputStream = filePart.getInputStream();
+                parameters.put("picture", inputStream);
                 Creator<Product> creator = new ProductCreator();
                 Product product = creator.create(parameters);
                 int id = Integer.parseInt(request.getParameter("id"));

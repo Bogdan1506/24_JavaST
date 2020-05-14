@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class ProductValidator implements Validator {
     private static final String DESCRIPTION = "description";
-    private static final String PICTURE = "picture";
     private static final String PRICE = "price";
 
     @Override
@@ -26,13 +25,6 @@ public class ProductValidator implements Validator {
                     if (description.matches("[<>]")) {
                         description = description.replace("<", "&lt;").replace(">", "&gt;");
                         invalidParameters.put(DESCRIPTION, description);
-                    }
-                    break;
-                case PICTURE:
-                    String picture = (String) parameters.get(PICTURE);
-                    if (picture.matches("[<>]")) {
-                        picture = picture.replace("<", "&lt;").replace(">", "&gt;");
-                        invalidParameters.put(PICTURE, picture);
                     }
                     break;
                 case PRICE:

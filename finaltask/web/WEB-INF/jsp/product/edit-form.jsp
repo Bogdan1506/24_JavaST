@@ -13,7 +13,7 @@
 <div class="container">
     <p style="text-align: center" class="display-4">Product form</p>
     <c:url var="order" value="/product/edit"/>
-    <form action="${order}" method="post">
+    <form action="${order}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${requestScope.product.id}">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -60,14 +60,20 @@
         </div>
         <div class="form-group">
             <label for="picture">Picture:</label>
-            <input type="text" class="form-control" id="picture" placeholder="Enter picture reference" name="picture"
-                   value="${product.picture}"
-                   required>
+            <input type="file" id="picture" name="picture" size="50" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">
                 Please fill out this field.
             </div>
         </div>
+<%--        <div class="form-group">
+            <label for="picture">Picture:</label>
+            <input type="file" id="picture" name="picture" size="50" value="${product.picture}" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">
+                Please fill out this field.
+            </div>
+        </div>--%>
         <label for="type">Type:</label>
         <select id="type" name="type" class="custom-select">
             <c:choose>
@@ -94,6 +100,5 @@
 <c:if test="${not empty message}">
     <c:import url="../element/footer.jsp"/>
 </c:if>
-</div>
 </body>
 </html>

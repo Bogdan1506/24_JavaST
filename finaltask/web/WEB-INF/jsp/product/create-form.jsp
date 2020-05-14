@@ -13,7 +13,7 @@
 <div class="container">
     <p style="text-align: center" class="display-4">Product form</p>
     <c:url var="order" value="/product/create"/>
-    <form action="${order}" class="was-validated" name="order" method="post">
+    <form action="${order}" class="was-validated" name="order" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" placeholder="Enter name (only letters and digits)"
@@ -57,8 +57,7 @@
         </div>
         <div class="form-group">
             <label for="picture">Picture:</label>
-            <input type="text" class="form-control" id="picture" placeholder="Enter picture reference" name="picture"
-                   required>
+            <input type="file" id="picture" name="picture" size="50" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">
                 Please fill out this field.

@@ -1,5 +1,6 @@
 package by.avdeev.pizzeria.entity;
 
+import java.io.InputStream;
 import java.util.Objects;
 
 public class Product implements Entity {
@@ -9,6 +10,7 @@ public class Product implements Entity {
     private String description;
     private double price;
     private String picture;
+    private InputStream inputStream;
 
     public enum Type {
         PIZZA, SIDES, DRINK
@@ -47,6 +49,22 @@ public class Product implements Entity {
         this.description = description;
         this.price = price;
         this.picture = picture;
+    }
+
+    public Product(Type type, String name, String description, double price, InputStream inputStream) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.inputStream = inputStream;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     public int getId() {

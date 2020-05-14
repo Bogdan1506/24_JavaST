@@ -27,7 +27,7 @@
             <ul style="list-style-type:none;padding: 0;
   width: 200px;
   margin: 0 auto;">
-                <li><img alt="" src="${temp.product.picture}" width="60" height="60"></li>
+                <li><img alt="" src="data:image/jpg;base64,${temp.product.picture}" width="60" height="60"></li>
                 <li>
                     <strong>
                         <c:out value="${temp.product.name}"/>

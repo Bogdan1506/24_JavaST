@@ -17,7 +17,7 @@
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 1200px; max-height: 300px;">
         <c:forEach var="temp" items="${sessionScope.cart}">
             <p>
-                <img alt="" src="${temp.product.picture}" width="60" height="60">
+                <img alt="" src="data:image/jpg;base64,${temp.product.picture}" width="60" height="60">
                 <c:out value="${temp.product.name}"/>
                 <c:out value="${temp.dough}"/>
                 <c:out value="${temp.size}"/>
