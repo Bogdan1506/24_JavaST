@@ -58,12 +58,13 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             if (existProduct == null) {
                 InputStream picture = (InputStream) parameters.get("picture");
                 try {
+                    int id;
                     if (picture != null) {
-                        dao.create(product, picture);
+                        id = dao.create(product, picture);
                     } else {
-                        dao.create(product);
+                        id = dao.create(product);
                     }
-                    return dao.findLastInsertId();
+                    return id;
                 } catch (DAOException e) {
                     throw new ServiceException(e);
                 }

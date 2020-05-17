@@ -28,9 +28,9 @@ public class ConnectionPoolImpl
 
     @Override
     public void closeConnection() {
-        freeConnections.forEach(a -> {
+        freeConnections.forEach(connection -> {
             try {
-                a.close();
+                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

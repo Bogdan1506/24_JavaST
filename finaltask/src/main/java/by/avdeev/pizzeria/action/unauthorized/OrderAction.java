@@ -32,7 +32,6 @@ import java.util.Set;
 public class OrderAction extends UnauthorizedUserAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        //common
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address", "date"));
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
         forwardObjectEx.getAttributes().put("param", invalidParameters);

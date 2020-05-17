@@ -100,29 +100,33 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public void create(Item item) throws DAOException {
+    public int create(Item item) throws DAOException {
+        int id;
         if (item.getProduct().getType() == Product.Type.PIZZA) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)")) {
+                    "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
                 statement.setInt(1, item.getProduct().getId());
                 statement.setInt(2, item.getSize().getId());
                 statement.setInt(3, item.getDough().getId());
                 statement.executeUpdate();
+                id = findLastId(statement);
             } catch (SQLException e) {
                 rollback();
                 throw new DAOException(e);
             }
         } else {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO item (product_id, size_id) VALUES (?,?)")) {
+                    "INSERT INTO item (product_id, size_id) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
                 statement.setInt(1, item.getProduct().getId());
                 statement.setInt(2, item.getSize().getId());
                 statement.executeUpdate();
+                id = findLastId(statement);
             } catch (SQLException e) {
                 rollback();
                 throw new DAOException(e);
             }
         }
+        return id;
     }
 
     @Override

@@ -40,14 +40,13 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
         AbstractDAO<User> dao = transaction.createDao(type);
         User checkUser = findByLogin(user.getLogin());
         if (checkUser == null) {
-            int lastId;
+            int id;
             try {
-                dao.create(user);
-                lastId = dao.findLastInsertId();
+                id = dao.create(user);
             } catch (DAOException e) {
                 throw new ServiceException(e);
             }
-            return lastId;
+            return id;
         }
         return -1;
     }
@@ -64,8 +63,7 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
             if (checkUser == null) {
                 if (user.getPassword().equals(parameters.get("repPassword"))) {
                     try {
-                        abstractDAO.create(user);
-                        return abstractDAO.findLastInsertId();
+                        return abstractDAO.create(user);
                     } catch (DAOException e) {
                         throw new ServiceException(e);
                     }

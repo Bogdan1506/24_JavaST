@@ -75,15 +75,18 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     }
 
     @Override
-    public void create(Profile profile) throws DAOException {
+    public int create(Profile profile) throws DAOException {
+        int id;
         logger.debug("profile={}", profile);
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO profile (name, surname, email, phone, address) VALUES (?,?,?,?,?)")) {
+                "INSERT INTO profile (name, surname, email, phone, address) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             fill(profile, statement);
+            id = findLastId(statement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
     private void fill(Profile profile, PreparedStatement statement) throws SQLException {

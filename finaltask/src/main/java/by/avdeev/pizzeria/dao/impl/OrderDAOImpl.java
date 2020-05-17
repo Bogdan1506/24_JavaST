@@ -94,15 +94,18 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public void create(Order order) throws DAOException {
+    public int create(Order order) throws DAOException {
+        int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())")) {
+                "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getProfile().getId());
             statement.executeUpdate();
+            id = findLastId(statement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
     @Override

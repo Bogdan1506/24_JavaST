@@ -112,35 +112,39 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     }
 
     @Override
-    public void create(Product product) throws DAOException {
+    public int create(Product product) throws DAOException {
+        int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO product (id, type, name, description, price) VALUES (?,?,?,?,?)")) {
-            statement.setInt(1, product.getId());
-            statement.setString(2, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(3, product.getName());
-            statement.setString(4, product.getDescription());
-            statement.setDouble(5, product.getPrice());
+                "INSERT INTO product ( type, name, description, price) VALUES (?,?,?,?)")) {
+            statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+            statement.setString(2, product.getName());
+            statement.setString(3, product.getDescription());
+            statement.setDouble(4, product.getPrice());
             statement.executeUpdate();
+            id = findLastId(statement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
-    public void create(Product product, InputStream picture) throws DAOException {
+    public int create(Product product, InputStream picture) throws DAOException {
+        int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO product (id, type, name, description, price, picture) VALUES (?,?,?,?,?,?)")) {
-            statement.setInt(1, product.getId());
-            statement.setString(2, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(3, product.getName());
-            statement.setString(4, product.getDescription());
-            statement.setDouble(5, product.getPrice());
-            statement.setBlob(6, picture);
+                "INSERT INTO product (type, name, description, price, picture) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+            statement.setString(2, product.getName());
+            statement.setString(3, product.getDescription());
+            statement.setDouble(4, product.getPrice());
+            statement.setBlob(5, picture);
             statement.executeUpdate();
+            id = findLastId(statement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
     public void update(Product product, InputStream picture) throws DAOException {

@@ -3,9 +3,9 @@ package by.avdeev.pizzeria.dao;
 import by.avdeev.pizzeria.entity.Entity;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public abstract class AbstractDAO<T extends Entity> {
@@ -36,23 +36,17 @@ public abstract class AbstractDAO<T extends Entity> {
 
     public abstract boolean delete(T entity) throws DAOException;
 
-    public abstract void create(T entity) throws DAOException;
+    public abstract int create(T entity) throws DAOException;
 
     public abstract void update(T entity) throws DAOException;
 
     public abstract int countAll() throws DAOException;
 
-    public int findLastInsertId() throws DAOException {
+    public int findLastId(PreparedStatement ps) throws SQLException {
         int lastId = 0;
-        try (Statement statement = connection.createStatement()) {
-            ResultSet lastIdSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
-            if (lastIdSet.next()) {
-                lastId = lastIdSet.getInt("last_insert_id()");
-            }
-
-        } catch (
-                SQLException e) {
-            throw new DAOException(e);
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            lastId = rs.getInt(1);
         }
         return lastId;
     }

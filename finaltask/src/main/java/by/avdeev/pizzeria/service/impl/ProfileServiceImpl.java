@@ -24,8 +24,7 @@ public class ProfileServiceImpl extends StandardServiceImpl<Profile> implements 
             Creator<Profile> creator = new ProfileCreator();
             Profile profile = creator.create(parameters);
             try {
-                abstractDAO.create(profile);
-                return abstractDAO.findLastInsertId();
+                return abstractDAO.create(profile);
             } catch (DAOException e) {
                 throw new ServiceException(e);
             }

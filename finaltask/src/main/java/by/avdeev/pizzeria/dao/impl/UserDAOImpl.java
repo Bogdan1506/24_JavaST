@@ -112,20 +112,22 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public void create(User user) throws DAOException {
+    public int create(User user) throws DAOException {
+        int id;
         String login = user.getLogin();
         String password = user.getPassword();
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO user (login, password) VALUES (?,?)")) {
-//                "INSERT INTO user (login, password, profile_id) VALUES (?,?,?)")) {
+                "INSERT INTO user (login, password) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, login);
             statement.setString(2, password);
-//            statement.setInt(3, user.getProfile().getId());
             statement.executeUpdate();
+            id = findLastId(statement);
+            ResultSet rs = statement.getGeneratedKeys();
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
     @Override

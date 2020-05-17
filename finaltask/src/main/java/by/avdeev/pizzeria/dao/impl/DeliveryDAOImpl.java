@@ -97,20 +97,20 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public void create(Delivery delivery) throws DAOException {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        java.util.Date date = new java.util.Date(timestamp.getTime());
+    public int create(Delivery delivery) throws DAOException {
+        int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)")) {
+                "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, delivery.getOrderPosition().getId());
-//            statement.setDate(2, new Date(delivery.getDate().getTime() + 14400000));
             statement.setTimestamp(2, new Timestamp(delivery.getDate().getTime()));
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.executeUpdate();
+            id = findLastId(statement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
+        return id;
     }
 
     @Override
@@ -118,7 +118,6 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE `delivery` SET order_position_id=?, date=?, payment=? WHERE id=?")) {
             statement.setInt(1, delivery.getOrderPosition().getId());
-//            statement.setDate(2, delivery.getDate());
             statement.setTimestamp(2, new Timestamp(delivery.getDate().getTime()));
             statement.setString(3, String.valueOf(delivery.getPayment()));
             statement.setInt(4, delivery.getId());

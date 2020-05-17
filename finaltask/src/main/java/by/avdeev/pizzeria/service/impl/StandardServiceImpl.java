@@ -13,14 +13,14 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
     @Override
     public int create(T entity) throws ServiceException {
         AbstractDAO<T> dao = transaction.createDao(type);
-        int lastId;
+        int id;
         try {
-            dao.create(entity);
-            lastId = dao.findLastInsertId();
+            id = dao.create(entity);
+//            lastId = dao.findLastInsertId();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        return lastId;
+        return id;
     }
 
     @Override
