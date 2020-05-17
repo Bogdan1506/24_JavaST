@@ -101,6 +101,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
 
     @Override
     public int create(Item item) throws DAOException {
+        System.out.println("item = " + item);
         int id;
         if (item.getProduct().getType() == Product.Type.PIZZA) {
             try (PreparedStatement statement = connection.prepareStatement(

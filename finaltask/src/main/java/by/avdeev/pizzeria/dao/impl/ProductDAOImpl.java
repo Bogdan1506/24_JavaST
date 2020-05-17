@@ -50,13 +50,12 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         String name = rs.getString("name");
         String description = rs.getString("description");
         double price = rs.getDouble("price");
-        String picture = receivePicture(rs);
-
+        String picture = rs.getString("picture");
         products.add(new Product(id, type, name, description, price, picture));
     }
 
     private String receivePicture(ResultSet rs) throws SQLException, IOException {
-        Blob blob = rs.getBlob("picture");
+     /*   Blob blob = rs.getBlob("picture");
         InputStream inputStream = blob.getBinaryStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[4096];
@@ -67,7 +66,8 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         byte[] imageBytes = outputStream.toByteArray();
         inputStream.close();
         outputStream.close();
-        return Base64.getEncoder().encodeToString(imageBytes);
+        return Base64.getEncoder().encodeToString(imageBytes);*/
+        return null;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 Product.Type type = Product.Type.valueOf(rs.getString("type").toUpperCase());
                 String description = rs.getString("description");
                 double price = rs.getDouble("price");
-                String picture = receivePicture(rs);
+                String picture = rs.getString("picture");
                 product = new Product(id, type, name, description, price, picture);
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
@@ -114,22 +114,41 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     @Override
     public int create(Product product) throws DAOException {
         int id;
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO product ( type, name, description, price) VALUES (?,?,?,?)")) {
-            statement.setString(1, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(2, product.getName());
-            statement.setString(3, product.getDescription());
-            statement.setDouble(4, product.getPrice());
-            statement.executeUpdate();
-            id = findLastId(statement);
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
+        System.out.println("product = " + product);
+        if (product.getPicture() == null) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO product ( type, name, description, price) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                System.out.println("w picture");
+                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                statement.setString(2, product.getName());
+                statement.setString(3, product.getDescription());
+                statement.setDouble(4, product.getPrice());
+                statement.executeUpdate();
+                id = findLastId(statement);
+            } catch (SQLException e) {
+                rollback();
+                throw new DAOException(e);
+            }
+        } else {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO product ( type, name, description, price, picture) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                System.out.println("w out picture");
+                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                statement.setString(2, product.getName());
+                statement.setString(3, product.getDescription());
+                statement.setDouble(4, product.getPrice());
+                statement.setString(5, product.getPicture());
+                statement.executeUpdate();
+                id = findLastId(statement);
+            } catch (SQLException e) {
+                rollback();
+                throw new DAOException(e);
+            }
         }
         return id;
     }
 
-    public int create(Product product, InputStream picture) throws DAOException {
+    /*public int create(Product product, InputStream picture) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO product (type, name, description, price, picture) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -145,25 +164,42 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             throw new DAOException(e);
         }
         return id;
-    }
+    }*/
 
-    public void update(Product product, InputStream picture) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE product SET name=?, type=?, description=?, price=?, picture=? WHERE id=?")) {
-            statement.setString(1, product.getName());
-            statement.setString(2, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(3, product.getDescription());
-            statement.setDouble(4, product.getPrice());
-            statement.setBlob(5, picture);
-            statement.setInt(6, product.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
+    public void update(Product product) throws DAOException {
+        if (product.getPicture() == null) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE product SET type=?, name=?, description=?, price=? WHERE id=?")) {
+                System.out.println("w picture");
+                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                statement.setString(2, product.getName());
+                statement.setString(3, product.getDescription());
+                statement.setDouble(4, product.getPrice());
+                statement.setInt(5, product.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                rollback();
+                throw new DAOException(e);
+            }
+        } else {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE product SET type=?, name=?, description=?, price=?, picture=? WHERE id=?")) {
+                System.out.println("w out picture");
+                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                statement.setString(2, product.getName());
+                statement.setString(3, product.getDescription());
+                statement.setDouble(4, product.getPrice());
+                statement.setString(5, product.getPicture());
+                statement.setInt(6, product.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                rollback();
+                throw new DAOException(e);
+            }
         }
     }
 
-    @Override
+   /* @Override
     public void update(Product product) throws DAOException {
         logger.debug("Connection={}", connection);
         try (PreparedStatement statement = connection.prepareStatement(
@@ -178,7 +214,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             rollback();
             throw new DAOException(e);
         }
-    }
+    }*/
 
     @Override
     public int countAll() {

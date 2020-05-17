@@ -24,7 +24,9 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("id", "dough", "size"));
         if (TypeValidator.validateRequest(request, parameters, requiredParameters)) {
             TypeValidator typeValidator = new ItemTypeValidator();
+            System.out.println(1);
             if (typeValidator.validate(parameters)) {
+            System.out.println(2);
                 HttpSession session = request.getSession();
                 @SuppressWarnings("unchecked")
                 List<Item> cart = (List<Item>) session.getAttribute("cart");
@@ -37,7 +39,7 @@ public class ItemCreateSessionAction extends UnauthorizedUserAction {
                 logger.debug("session cart={}", cart);
                 return new ForwardObject("/item/cart");
             } else {
-                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect types!");
+                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect types!"); //todo remove
             }
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect param number!");

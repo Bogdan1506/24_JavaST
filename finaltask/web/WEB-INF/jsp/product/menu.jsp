@@ -18,7 +18,8 @@
                 <c:forEach var="temp" items="${requestScope.products}">
                     <div class="col-sm-4 mt-5">
                         <p>
-                            <img alt="Pizza image" src="data:image/jpg;base64,${temp.picture}" width="280"
+                            <img alt="Pizza image" src="../../../img/${temp.picture}" width="280"
+<%--                            <img alt="Pizza image" src="data:image/jpg;base64,${temp.picture}" width="280"--%>
                                  height="280">
                         </p>
                         <h3>

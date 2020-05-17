@@ -1,0 +1,85 @@
+INSERT INTO `profile` (name, surname, email, phone, address)
+VALUES ('creator', 'creator', 'creator@mail.ru', +375291234567, 'creator');
+
+INSERT INTO `user` (`login`,
+                    `password`,
+                    `profile_id`,
+                    `role`)
+VALUES ('creator',
+        'creator1234',
+        LAST_INSERT_ID(),
+        1);
+
+INSERT INTO `profile` (name, surname, email, phone, address)
+VALUES ('client', 'client', 'client@mail.ru', +375291234567, 'client');
+
+INSERT INTO `user` (`login`,
+                    `password`,
+                    `profile_id`,
+                    `role`)
+VALUES ('client',
+        'client1234',
+        LAST_INSERT_ID(),
+        2);
+
+
+INSERT INTO `product` (type, name, description, price, picture)
+VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
+        'margherita.jpg'),
+       ('pizza', 'Pepperoni', 'Tomato pizza sauce, pepperoni, mozzarella', 6.9,
+        'pepperoni.jpg'),
+       ('pizza', 'Greek',
+        'Tomato pizza sauce, black olives, onion, mozzarella, tomatoes, feta cheese, jalapeno pepper, oregano',
+        9.9,
+        'greek.png'),
+       ('pizza', 'Hawaiian', 'Tomato pizza sauce, mozzarella, ham, pineapples',
+        9.9,
+        'hawaiian.png'),
+       ('pizza', 'Vegetarian',
+        'Tomato pizza sauce, mozzarella, mushrooms, tomatoes, onions, sweet green pepper, black olives',
+        9.9,
+        'vegetarian.jpg'),
+       ('pizza', 'Mustard', 'Mustard sauce, mozzarella, chicken breast, chees feta, tomatoes, onions',
+        10.9,
+        'mustard.jpg'),
+       ('pizza', '4 Cheese', 'Tomato pizza sauce, feta cheese, parmesan, blue cheese, mozzarella, oregano',
+        9.9,
+        '4 Cheese.jpg'),
+       ('pizza', 'Sea',
+        'Ranch sauce base, mozzarella, seafood cocktail, sweet red peppers, sweet green peppers, garlic, Italian seasoning, onions',
+        9.9,
+        'sea.png'),
+       ('pizza', 'Mexican',
+        'Tomato pizza sauce, mozzarella, grilled chicken, onions, sweet green peppers, mushrooms, tomatoes, jalapeno peppers',
+        12.9,
+        'mexican.png'),
+       ('pizza', 'Alfredo', 'Mozzarella, ham, bacon, mushrooms, onions, alfredo sauce base',
+        12.9,
+        'alfredo.png'),
+       ('drink', 'Coca-Cola', 'Sugar, water, vanilla',
+        2,
+        'coca-cola.png'),
+       ('drink', 'Fanta Orange', 'Sugar, water, orange',
+        2,
+        'fanta.png'),
+       ('drink', 'Sprite', 'Sugar, water, lime',
+        2,
+        'sprite.png'),
+       ('sides', 'Onion rings', 'Breaded onion rings',
+        3.5,
+        'onion-rings.png'),
+       ('sides', 'Breaded shrimps', 'Large crispy prawns',
+        8.5,
+        'breaded-shrimps.jpg'),
+       ('sides', 'Chicken poppers', 'Breaded chicken poppers',
+        6.9,
+        'chicken-poppers.jpg');
+
+INSERT INTO `dough` (name)
+VALUES ('Thin'),
+       ('Thick');
+
+INSERT INTO `size` (name, coefficient)
+VALUES ('Small', 1.0),
+       ('Medium', 1.5),
+       ('Large', 2.0);

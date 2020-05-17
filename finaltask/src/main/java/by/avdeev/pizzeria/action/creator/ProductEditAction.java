@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -30,10 +31,29 @@ public class ProductEditAction extends CreatorAction {
         TypeValidator typeValidator = new ProductTypeValidator();
         boolean isProductValid = typeValidator.validate(parameters);
         if (isProductValid) {
-            Part filePart = request.getPart("picture");
-            if (filePart != null && filePart.getSize() > 0) {
-                InputStream inputStream = filePart.getInputStream();
-                parameters.put("picture", inputStream);
+
+
+            Part part = request.getPart("picture");
+            if (part.getSize() > 0) {
+                String uploadFilePath = "E:\\24_JavaST\\finaltask\\web\\img";
+                File fileSaveDir = new File(uploadFilePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdirs();
+                }
+                String fileName = null;
+
+                String contentDisp = part.getHeader("content-disposition");
+                System.out.println("content-disposition header= " + contentDisp);
+                String[] tokens = contentDisp.split(";");
+                for (String token : tokens) {
+                    if (token.trim().startsWith("filename")) {
+                        fileName = token.substring(token.indexOf("=") + 2, token.length() - 1);
+                    }
+                }
+                part.write(uploadFilePath + File.separator + fileName);
+
+                System.out.println("fileName = " + fileName);
+                parameters.put("picture", fileName);
             }
             ProductService productService = factory.getProductService();
             int id = productService.update(parameters, invalidParameters);

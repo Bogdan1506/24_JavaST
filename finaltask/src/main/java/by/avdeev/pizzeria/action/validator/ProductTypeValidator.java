@@ -8,6 +8,7 @@ public class ProductTypeValidator implements TypeValidator {
 
     @Override
     public boolean validate(Map<String, Object> parameters) {
+        System.out.println("parameters = " + parameters);
         try {
             double price = Double.parseDouble((String) parameters.get("price"));
             parameters.put("price", price);

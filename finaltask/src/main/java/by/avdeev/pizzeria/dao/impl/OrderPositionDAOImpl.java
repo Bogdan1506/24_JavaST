@@ -102,7 +102,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     public int create(OrderPosition orderPosition) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order_position` (item_id, order_id, price) VALUES (?,?,?)")) {
+                "INSERT INTO `order_position` (item_id, order_id, price) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, orderPosition.getItem().getId());
             statement.setInt(2, orderPosition.getOrder().getId());
             statement.setDouble(3, orderPosition.getPrice());
@@ -118,7 +118,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     @Override
     public void update(OrderPosition orderPosition) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE `order_position` SET item_id=?, order_id=?, price=? WHERE id=?", Statement.RETURN_GENERATED_KEYS)) {
+                "UPDATE `order_position` SET item_id=?, order_id=?, price=? WHERE id=?")) {
             statement.setInt(1, orderPosition.getItem().getId());
             statement.setInt(2, orderPosition.getOrder().getId());
             statement.setDouble(3, orderPosition.getPrice());

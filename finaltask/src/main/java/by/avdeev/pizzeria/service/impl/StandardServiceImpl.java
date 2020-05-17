@@ -16,7 +16,6 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
         int id;
         try {
             id = dao.create(entity);
-//            lastId = dao.findLastInsertId();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

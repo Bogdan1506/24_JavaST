@@ -36,6 +36,7 @@ public class ItemServiceImpl extends StandardServiceImpl<Item> implements ItemSe
     public void create(Map<String, Object> parameters, List<Item> cart) throws ServiceException {
         Creator<Item> creator = new ItemCreator();
         Item item = creator.create(parameters);
+        System.out.println("v service = " + item);
         AbstractDAO<Product> productAbstractDAO = transaction.createDao(Type.PRODUCT);
         Product product;
         try {

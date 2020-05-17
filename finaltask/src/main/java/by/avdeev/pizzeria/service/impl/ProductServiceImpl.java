@@ -13,7 +13,6 @@ import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -56,15 +55,8 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             Product existProduct = findByName(product.getName());
             logger.debug("existProduct={}", existProduct);
             if (existProduct == null) {
-                InputStream picture = (InputStream) parameters.get("picture");
                 try {
-                    int id;
-                    if (picture != null) {
-                        id = dao.create(product, picture);
-                    } else {
-                        id = dao.create(product);
-                    }
-                    return id;
+                    return dao.create(product);
                 } catch (DAOException e) {
                     throw new ServiceException(e);
                 }
@@ -103,14 +95,9 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             Product existProduct = findById(id);
             logger.debug("existProduct={}", existProduct);
             if (existProduct != null) {
-                InputStream picture = (InputStream) parameters.get("picture");
                 product.setId(id);
                 try {
-                    if (picture != null) {
-                        dao.update(product, picture);
-                    } else {
-                        dao.update(product);
-                    }
+                    dao.update(product);
                     return id;
                 } catch (DAOException e) {
                     throw new ServiceException(e);

@@ -38,7 +38,7 @@ CREATE TABLE `product`
     `name`        VARCHAR(25)                      NOT NULL UNIQUE,
     `description` VARCHAR(255)                     NOT NULL,
     `price`       DOUBLE                           NOT NULL,
-    `picture`     MEDIUMBLOB,
+    `picture`     VARCHAR(150) default 'pizza_not_found.jpg',
     CONSTRAINT PRIMARY KEY `PK_goods` (`id`)
 );
 

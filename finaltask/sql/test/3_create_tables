@@ -1,0 +1,105 @@
+USE `pizzeria_test`;
+
+CREATE TABLE `profile`
+(
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `name`    VARCHAR(25) NOT NULL,
+    `surname` VARCHAR(25) NOT NULL,
+    `email`   VARCHAR(35),
+    `phone`   VARCHAR(15) NOT NULL,
+    `address` VARCHAR(25) NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_profile` (`id`)
+);
+
+CREATE TABLE user
+(
+    `id`         INTEGER      NOT NULL AUTO_INCREMENT,
+    `login`      VARCHAR(255) NOT NULL UNIQUE,
+    `password`   CHAR(30)     NOT NULL,
+    `profile_id` INT,
+    /*
+     * 0 - администратор (Role.ADMINISTRATOR)
+     * 1 - создатель (Role.CREATOR)
+     * 2 - клиент(Role.CLIENT)
+     */
+    `role`       TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)) default 2,
+    CONSTRAINT PRIMARY KEY `PK_user` (`id`),
+    FOREIGN KEY `FK_user_profile` (`profile_id`) REFERENCES `profile` (`id`)
+) ENGINE = INNODB
+  DEFAULT CHARACTER SET utf8;
+
+CREATE UNIQUE INDEX login_index ON `user` (`login`);
+
+
+CREATE TABLE `product`
+(
+    `id`          INT                              NOT NULL AUTO_INCREMENT,
+    `type`        ENUM ('pizza', 'drink', 'sides') NOT NULL,
+    `name`        VARCHAR(25)                      NOT NULL UNIQUE,
+    `description` VARCHAR(255)                     NOT NULL,
+    `price`       DOUBLE                           NOT NULL,
+    `picture`     VARCHAR(150) default 'pizza_not_found.jpg',
+    CONSTRAINT PRIMARY KEY `PK_goods` (`id`)
+);
+
+CREATE TABLE `dough`
+(
+    `id`   INT         NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(25) NOT NULL UNIQUE,
+    CONSTRAINT PRIMARY KEY `PK_dough` (`id`)
+);
+
+CREATE TABLE `size`
+(
+    `id`          INT         NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(25) NOT NULL UNIQUE,
+    `coefficient` DOUBLE      NOT NULL UNIQUE,
+    CONSTRAINT PRIMARY KEY `PK_size` (`id`)
+);
+
+CREATE TABLE `item`
+(
+    `id`         INT NOT NULL AUTO_INCREMENT,
+    `product_id` INT NOT NULL,
+    `size_id`    INT NOT NULL,
+    `dough_id`   INT,
+    CONSTRAINT PRIMARY KEY `PK_item` (`id`),
+    FOREIGN KEY `FK_item_product` (`product_id`)
+        REFERENCES `product` (`id`),
+    FOREIGN KEY `FK_item_dough` (`dough_id`)
+        REFERENCES `dough` (`id`)
+);
+
+CREATE TABLE `order`
+(
+    `id`         INT       NOT NULL AUTO_INCREMENT,
+    `profile_id` INT       NOT NULL,
+    `date`       TIMESTAMP NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order` (`id`),
+    FOREIGN KEY `FK_order_profile` (`profile_id`)
+        REFERENCES `profile` (`id`)
+);
+
+CREATE TABLE `order_position`
+(
+    `id`       INT    NOT NULL AUTO_INCREMENT,
+    `item_id`  INT    NOT NULL,
+    `order_id` INT    NOT NULL,
+    `price`    DOUBLE NOT NULL,
+    CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
+    FOREIGN KEY `FK_order_position_item` (`item_id`)
+        REFERENCES `item` (`id`),
+    FOREIGN KEY `FK_order_position_order` (`order_id`)
+        REFERENCES `order` (`id`)
+);
+
+CREATE TABLE `delivery`
+(
+    `id`                INT                   NOT NULL AUTO_INCREMENT,
+    `order_position_id` INT                   NOT NULL,
+    `date`              TIMESTAMP             NOT NULL,
+    `payment`           ENUM ('cash', 'card') NOT NULL default 'cash',
+    CONSTRAINT PRIMARY KEY `PK_delivery` (`id`),
+    FOREIGN KEY `FK_delivery_order_position` (`order_position_id`)
+        REFERENCES `order_position` (`id`)
+);

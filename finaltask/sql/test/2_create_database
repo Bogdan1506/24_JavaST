@@ -1,0 +1,10 @@
+CREATE DATABASE `pizzeria_test` DEFAULT CHARACTER SET utf8;
+
+/*GRANT SELECT, INSERT, UPDATE, DELETE
+    ON `pizzeria`
+    TO PUBLIC;
+use pizzeria;*/
+/*GRANT SELECT, INSERT, UPDATE, DELETE
+    ON `pizzeria`.*
+    TO pizzeria_user@'%'
+    IDENTIFIED BY 'pizzeria_password';*/-
