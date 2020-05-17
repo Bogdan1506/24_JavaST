@@ -20,6 +20,8 @@ public interface ProductService extends Service {
 
     void update(Product product) throws ServiceException;
 
+    int update(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
+
     List<Product> findByType(Product.Type type) throws ServiceException;
 
     Map<String, Integer> findCount() throws ServiceException;

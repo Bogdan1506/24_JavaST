@@ -14,6 +14,7 @@ public class UserSignOutAction extends ClientAction {
         ForwardObject forwardObject = new ForwardObject("/");
         HttpSession session = request.getSession();
         session.invalidate();
+
         Cookie loginCookie = new Cookie("login", "admin");
         loginCookie.setMaxAge(0);
         loginCookie.setPath("/");
@@ -22,6 +23,7 @@ public class UserSignOutAction extends ClientAction {
         roleCookie.setMaxAge(0);
         roleCookie.setPath("/");
         response.addCookie(roleCookie);
+
         return forwardObject;
     }
 }

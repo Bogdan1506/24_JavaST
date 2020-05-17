@@ -8,6 +8,7 @@ public class User implements Entity, Serializable {
     private int id;
     private String login;
     private String password;
+    private Profile profile;
     private Role role;
 
     public User() {
@@ -28,6 +29,21 @@ public class User implements Entity, Serializable {
     public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
+        this.role = role;
+    }
+
+    public User(String login, String password, Profile profile, Role role) {
+        this.login = login;
+        this.password = password;
+        this.profile = profile;
+        this.role = role;
+    }
+
+    public User(int id, String login, String password, Profile profile, Role role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.profile = profile;
         this.role = role;
     }
 
@@ -55,6 +71,14 @@ public class User implements Entity, Serializable {
         this.password = password;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -71,12 +95,13 @@ public class User implements Entity, Serializable {
         return id == user.id &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
+                Objects.equals(profile, user.profile) &&
                 role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role);
+        return Objects.hash(id, login, password, profile, role);
     }
 
     @Override
@@ -85,6 +110,7 @@ public class User implements Entity, Serializable {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", profile=" + profile +
                 ", role=" + role +
                 '}';
     }

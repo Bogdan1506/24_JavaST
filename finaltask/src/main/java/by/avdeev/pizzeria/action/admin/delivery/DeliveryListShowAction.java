@@ -19,6 +19,7 @@ public class DeliveryListShowAction extends AdminAction {
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/list");
         HttpSession session = request.getSession();
         DeliveryService deliveryService = factory.getDeliveryService();
+        int countTotal = deliveryService.countAll();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = 20;
         if (pageSizeStr != null) {
@@ -35,7 +36,6 @@ public class DeliveryListShowAction extends AdminAction {
                 pageSize = (int) pageSizeObj;
             }
         }
-        int countTotal = deliveryService.countAll();
         int page = 1;
         String pageNum = request.getParameter("page");
         if (pageNum != null) {

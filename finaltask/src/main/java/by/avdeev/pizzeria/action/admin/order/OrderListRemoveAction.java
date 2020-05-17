@@ -22,9 +22,9 @@ public class OrderListRemoveAction extends AdminAction {
         OrderService orderService = factory.getOrderService();
         Order order = orderService.findById(orderId);
         OrderPositionService orderPositionService = factory.getOrderPositionService();
+        DeliveryService deliveryService = factory.getDeliveryService();
         List<OrderPosition> orderPositions = orderPositionService.findByOrder(order);
         logger.debug("orderPos={}", orderPositions);
-        DeliveryService deliveryService = factory.getDeliveryService();
         for (OrderPosition orderPosition : orderPositions) {
             Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
             logger.debug("delivery={}", delivery);

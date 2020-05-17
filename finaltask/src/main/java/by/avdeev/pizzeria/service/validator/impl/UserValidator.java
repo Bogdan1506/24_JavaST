@@ -29,7 +29,7 @@ public class UserValidator implements Validator {
                     }
                     if (password.length() > 30 || password.length() < 5) {
                         isValid = false;
-                        invalidParameters.put(PASSWORD, "Incorrect new password's size");
+                        invalidParameters.put(PASSWORD, "Incorrect password's size");
                     }
                     break;
                 case NEW_PASSWORD:

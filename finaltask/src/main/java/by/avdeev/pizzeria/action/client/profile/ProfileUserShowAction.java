@@ -19,7 +19,7 @@ public class ProfileUserShowAction extends ClientAction {
         UserService userService = factory.getUserService();
         User user = userService.findByLogin(login);
         logger.debug("user={}", user);
-        profile = profileService.findByUserId(user.getId());
+        profile = profileService.findById(user.getProfile().getId());
         logger.debug("profile={}", profile);
         request.setAttribute("profile", profile);
         return null;

@@ -18,7 +18,8 @@
                 <c:forEach var="temp" items="${requestScope.products}">
                     <div class="col-sm-4 mt-5">
                         <p>
-                            <img alt="product picture" src="data:image/jpg;base64,${temp.picture}" width="300" height="300">
+                            <img alt="Pizza image" src="data:image/jpg;base64,${temp.picture}" width="280"
+                                 height="280">
                         </p>
                         <h3>
                             <c:out value="${temp.name}"/>

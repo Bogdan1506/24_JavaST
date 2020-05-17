@@ -34,7 +34,6 @@ public class OrderListShowAction extends AdminAction {
                 pageSize = (int) pageSizeObj;
             }
         }
-        int countTotal = orderService.countAll();
         int page = 1;
         String pageNum = request.getParameter("page");
         if (pageNum != null) {
@@ -45,6 +44,7 @@ public class OrderListShowAction extends AdminAction {
                 return forwardObjectEx;
             }
         }
+        int countTotal = orderService.countAll();
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage && page > 0) {
             List<Order> orders = orderService.findAll((page - 1) * pageSize, page * pageSize);

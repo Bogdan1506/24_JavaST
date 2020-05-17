@@ -25,10 +25,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class OrderAction extends UnauthorizedUserAction {
@@ -36,8 +34,6 @@ public class OrderAction extends UnauthorizedUserAction {
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         //common
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address", "date"));
-        Map<String, Object> parameters = new HashMap<>();
-        Map<String, String> invalidParameters = new HashMap<>();
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
         forwardObjectEx.getAttributes().put("param", invalidParameters);
         boolean isParamCountValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
@@ -45,18 +41,20 @@ public class OrderAction extends UnauthorizedUserAction {
             TypeValidator orderTypeValidator = new DeliveryTypeValidator();
             boolean isDeliveryValid = orderTypeValidator.validate(parameters);
             if (isDeliveryValid) {
+
                 ProfileService profileService = factory.getProfileService();
-                Profile profile = profileService.create(parameters, invalidParameters);
                 String login = (String) request.getAttribute("login");
+                Profile profile = new Profile();
                 if (login != null) {
                     UserService userService = factory.getUserService();
                     User user = userService.findByLogin(login);
-                    Profile profileOld = profileService.findByUserId(user.getId());
-                    profile.setId(profileOld.getId());
-                    profile.setUser(profileOld.getUser());
-                    profileService.update(profile);
+                    profile.setId(user.getProfile().getId());
+                    boolean isUpdated = profileService.update(parameters, invalidParameters, user.getProfile().getId());
+                    if (!isUpdated) {
+                        return forwardObjectEx;
+                    }
                 } else {
-                    int id = profileService.create(profile);
+                    int id = profileService.create(parameters, invalidParameters);
                     profile.setId(id);
                 }
                 HttpSession session = request.getSession();

@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,6 +18,8 @@ import java.util.Set;
 abstract public class Action {
     protected final static Logger logger = LogManager.getLogger();
     protected static final String MESSAGE = "message";
+    protected Map<String, Object> parameters = new HashMap<>();
+    protected Map<String, String> invalidParameters = new HashMap<>();
     private Set<Role> roles = new HashSet<>();
     private String name;
     protected ServiceFactory factory;

@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.dao.impl;
 
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
+import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
         try {
             logger.debug("Connection={}", connection);
             Statement statement = connection.createStatement();
-            String sql = "SELECT id, login, password, role FROM user";
+            String sql = "SELECT id, login, password, profile_id, role FROM user";
             ResultSet rs = statement.executeQuery(sql);
             fill(users, rs);
         } catch (SQLException e) {
@@ -40,7 +41,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public List<User> findAll(int begin, int end) throws DAOException {
         logger.debug("begin={}, end={}", begin, end);
         List<User> users = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, login, password, role FROM user ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, login, password, profile_id, role FROM user ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
@@ -59,7 +60,9 @@ public class UserDAOImpl extends AbstractDAO<User> {
             String password = rs.getString(PASSWORD);
             int roleInt = rs.getInt("role");
             Role role = Role.getByIdentity(roleInt);
-            User user = new User(id, login, password, role);
+            Profile profile = new Profile();
+            profile.setId(rs.getInt("profile_id"));
+            User user = new User(id, login, password, profile, role);
             users.add(user);
         }
     }
@@ -68,7 +71,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public User findById(int id) throws DAOException {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT login, password, role FROM user WHERE id=?")) {
+                "SELECT login, password, profile_id, role FROM user WHERE id=?")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -76,6 +79,9 @@ public class UserDAOImpl extends AbstractDAO<User> {
                 user.setId(id);
                 user.setLogin(rs.getString(LOGIN));
                 user.setPassword(rs.getString(PASSWORD));
+                Profile profile = new Profile();
+                profile.setId(rs.getInt("profile_id"));
+                user.setProfile(profile);
                 int roleInt = rs.getInt("role");
                 Role role = Role.getByIdentity(roleInt);
                 user.setRole(role);
@@ -111,8 +117,10 @@ public class UserDAOImpl extends AbstractDAO<User> {
         String password = user.getPassword();
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO user (login, password) VALUES (?,?)")) {
+//                "INSERT INTO user (login, password, profile_id) VALUES (?,?,?)")) {
             statement.setString(1, login);
             statement.setString(2, password);
+//            statement.setInt(3, user.getProfile().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             rollback();
@@ -122,15 +130,12 @@ public class UserDAOImpl extends AbstractDAO<User> {
 
     @Override
     public void update(User user) throws DAOException {
-        int id = user.getId();
-        String password = user.getPassword();
-        Role role = user.getRole();
-        logger.debug(String.format("role=%s", role));
-        int roleInt = role.getId();
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE user SET password=?, role=? WHERE id=?")) {
-            statement.setString(1, password);
-            statement.setInt(2, roleInt);
-            statement.setInt(3, id);
+        logger.debug("user={}", user);
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE user SET password=?, role=?, profile_id=? WHERE id=?")) {
+            statement.setString(1, user.getPassword());
+            statement.setInt(2, user.getRole().getId());
+            statement.setInt(3, user.getProfile().getId());
+            statement.setInt(4, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             rollback();
@@ -141,20 +146,23 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public User findByLogin(String login) throws DAOException {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT id, login, password, role FROM user WHERE login=?")) {
+                "SELECT id, password, profile_id, role FROM user WHERE login=?")) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                login = rs.getString(LOGIN);
-                if (login != null) {
-                    user = new User();
-                    user.setLogin(login);
-                    user.setId(rs.getInt("id"));
-                    user.setPassword(rs.getString(PASSWORD));
-                    int roleInt = rs.getInt("role");
-                    Role role = Role.getByIdentity(roleInt);
-                    user.setRole(role);
-                }
+//                login = rs.getString(LOGIN);
+//                if (login != null) {
+                user = new User();
+                user.setLogin(login);
+                user.setId(rs.getInt("id"));
+                user.setPassword(rs.getString(PASSWORD));
+                int roleInt = rs.getInt("role");
+                Role role = Role.getByIdentity(roleInt);
+                Profile profile = new Profile();
+                profile.setId(rs.getInt("profile_id"));
+                user.setProfile(profile);
+                user.setRole(role);
+//                }
             }
         } catch (SQLException e) {
             rollback();

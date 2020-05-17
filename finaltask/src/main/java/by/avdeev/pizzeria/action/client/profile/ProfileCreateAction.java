@@ -15,17 +15,13 @@ import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ProfileCreateAction extends ClientAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address"));
-        Map<String, Object> parameters = new HashMap<>();
-        Map<String, String> invalidParameters = new HashMap<>();
         ForwardObject forwardObject = new ForwardObject("/");
         String login = (String) request.getAttribute("login");
         UserService userService = factory.getUserService();
@@ -38,14 +34,13 @@ public class ProfileCreateAction extends ClientAction {
         }
         boolean isProfileValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (isProfileValid) {
-            Validator validator = new ProfileValidator();
-            boolean isParamValid = validator.validate(parameters, invalidParameters);
-            if (isParamValid) {
-                Creator<Profile> creator = new ProfileCreator();
-                Profile profile = creator.create(parameters);
-                profile.setUser(user);
-                ProfileService profileService = factory.getProfileService();
-                profileService.create(profile);
+            ProfileService profileService = factory.getProfileService();
+            int id = profileService.create(parameters, invalidParameters);
+            Profile profile = new Profile();
+            profile.setId(id);
+            user.setProfile(profile);
+            userService.update(user);
+            if (id != -1) {
                 forwardObject.getAttributes().put(MESSAGE, "User is signed up!");
                 return forwardObject;
             }

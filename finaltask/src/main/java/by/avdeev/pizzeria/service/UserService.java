@@ -9,6 +9,10 @@ import java.util.Map;
 public interface UserService extends Service {
     int create(User user) throws ServiceException;
 
+    int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
+
+    boolean changePassword(Map<String, Object> parameters, Map<String, String> invalidParameters, String login) throws ServiceException;
+
     List<User> findAll() throws ServiceException;
 
     int countAll() throws ServiceException;

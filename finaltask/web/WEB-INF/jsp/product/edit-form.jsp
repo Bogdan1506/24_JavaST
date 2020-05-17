@@ -57,23 +57,24 @@
                     </c:otherwise>
                 </c:choose>
             </div>
+<%--            <img style="margin-top: 15px" alt="" src="data:image/jpg;base64,${requestScope.product.picture}" width="280" height="280"/>--%>
         </div>
         <div class="form-group">
             <label for="picture">Picture:</label>
-            <input type="file" id="picture" name="picture" size="50" required>
+            <input type="file" id="picture" name="picture" size="50">
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">
                 Please fill out this field.
             </div>
         </div>
-<%--        <div class="form-group">
-            <label for="picture">Picture:</label>
-            <input type="file" id="picture" name="picture" size="50" value="${product.picture}" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">
-                Please fill out this field.
-            </div>
-        </div>--%>
+        <%--        <div class="form-group">
+                    <label for="picture">Picture:</label>
+                    <input type="file" id="picture" name="picture" size="50" value="${product.picture}" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">
+                        Please fill out this field.
+                    </div>
+                </div>--%>
         <label for="type">Type:</label>
         <select id="type" name="type" class="custom-select">
             <c:choose>
@@ -97,6 +98,7 @@
         <button type="submit" class="btn btn-primary float-right mt-3">Edit</button>
     </form>
 </div>
+<c:out value="${param.id}"/>
 <c:if test="${not empty message}">
     <c:import url="../element/footer.jsp"/>
 </c:if>

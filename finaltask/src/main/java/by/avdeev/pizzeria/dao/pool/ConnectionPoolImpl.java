@@ -66,9 +66,9 @@ public class ConnectionPoolImpl
     }
 
     @Override
-    public boolean releaseConnection(Connection connection) {
+    public void releaseConnection(Connection connection) {
         freeConnections.add(connection);
-        return usedConnections.remove(connection);
+        usedConnections.remove(connection);
     }
 
     private static Connection createConnection() {

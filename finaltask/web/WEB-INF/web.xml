@@ -8,19 +8,48 @@
     </welcome-file-list>
     <filter-mapping>
         <filter-name>encoding</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/index.html</url-pattern>
+        <url-pattern>/product/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/item/*</url-pattern>
+        <url-pattern>/delivery/*</url-pattern>
+        <url-pattern>/order/*</url-pattern>
+        <url-pattern>/orderposition/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>cookieReceive</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/index.html</url-pattern>
+        <url-pattern>/product/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/item/*</url-pattern>
+        <url-pattern>/delivery/*</url-pattern>
+        <url-pattern>/order/*</url-pattern>
+        <url-pattern>/orderposition/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>actionURI</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/index.html</url-pattern>
+        <url-pattern>/product/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/item/*</url-pattern>
+        <url-pattern>/delivery/*</url-pattern>
+        <url-pattern>/order/*</url-pattern>
+        <url-pattern>/orderposition/*</url-pattern>
+        <url-pattern>/local/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>security</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/index.html</url-pattern>
+        <url-pattern>/product/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
+        <url-pattern>/item/*</url-pattern>
+        <url-pattern>/delivery/*</url-pattern>
+        <url-pattern>/order/*</url-pattern>
+        <url-pattern>/orderposition/*</url-pattern>
     </filter-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

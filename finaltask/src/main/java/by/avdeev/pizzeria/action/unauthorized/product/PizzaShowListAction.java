@@ -14,7 +14,7 @@ public class PizzaShowListAction extends UnauthorizedUserAction {
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.PIZZA);
-        logger.debug("products={}", products);
+//        logger.debug("products={}", products);
         ForwardObject forwardObject = new ForwardObject("/product/menu");
         String message = (String) request.getAttribute("message");
         if (message != null) {

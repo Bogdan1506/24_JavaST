@@ -1,21 +1,29 @@
+INSERT INTO `profile` (name, surname, email, phone, address)
+VALUES ('creator', 'creator', 'creator@mail.ru', +375291234567, 'creator');
+
 INSERT INTO `user` (`login`,
                     `password`,
+                    `profile_id`,
                     `role`)
 VALUES ('creator',
         'creator1234',
+        LAST_INSERT_ID(),
         1);
-INSERT INTO `profile` (user_id, name, surname, email, phone, address)
-VALUES (LAST_INSERT_ID(), 'creator', 'creator', 'creator@mail.ru', +375291234567, 'creator');
+
+INSERT INTO `profile` (name, surname, email, phone, address)
+VALUES ('client', 'client', 'client@mail.ru', +375291234567, 'client');
+
 INSERT INTO `user` (`login`,
                     `password`,
+                    `profile_id`,
                     `role`)
 VALUES ('client',
         'client1234',
+        LAST_INSERT_ID(),
         2);
-INSERT INTO `profile` (user_id, name, surname, email, phone, address)
-VALUES (LAST_INSERT_ID(), 'client', 'client', 'client@mail.ru', +375291234567, 'client');
 
-INSERT INTO `product` (type, name, description, price, picture)
+
+/*INSERT INTO `product` (type, name, description, price, picture)
 VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregano', 6.9,
         'https://api.papajohns.by//images/catalog/thumbs/full/fe239676da6c27d17d5e64b81f23a1e0.jpg'),
        ('pizza', 'Pepperoni', 'Tomato pizza sauce, pepperoni, mozzarella', 6.9,
@@ -65,7 +73,7 @@ VALUES ('pizza', 'Margherita', 'Tomato pizza sauce, mozzarella, tomatoes, oregan
         'https://api.papajohns.by//images/catalog/thumbs/full/8d614d5724d5dde8f952df6d4c345078.jpg'),
        ('sides', 'Chicken poppers', 'Breaded chicken poppers',
         6.9,
-        'https://api.papajohns.by//images/catalog/thumbs/full/0f09182680ffb8383d7c410c2da18b63.jpg');
+        'https://api.papajohns.by//images/catalog/thumbs/full/0f09182680ffb8383d7c410c2da18b63.jpg');*/
 
 INSERT INTO `dough` (name)
 VALUES ('Thin'),
