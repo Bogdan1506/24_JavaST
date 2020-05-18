@@ -185,7 +185,6 @@ public class UserServiceImplTest {
         assertTrue(invalidParameters.isEmpty());
     }
 
-
     @DataProvider(name = "negativeDataUserProviderForChangePassword")
     public Object[][] createNegativeDataForChangePassword() {
         Map<String, Object> parameters1 = new HashMap<>();
@@ -202,7 +201,6 @@ public class UserServiceImplTest {
     public void testChangePasswordNegative(Map<String, Object> parameters, Map<String, String> invalidParameters, String login) throws ServiceException {
         assertFalse(userService.changePassword(parameters, invalidParameters, login));
     }
-
 
     @DataProvider(name = "findByLogin")
     public Object[][] createDataForFindByLogin() {
@@ -222,7 +220,6 @@ public class UserServiceImplTest {
         User actualUser = userService.findByLogin(login);
         assertEquals(actualUser, expectedUser);
     }
-
 
     @Test
     public void testChangeRole() {

@@ -6,16 +6,11 @@ import by.avdeev.pizzeria.entity.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,35 +34,19 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 logger.debug("type={}", type);
                 fill(products, rs, id, type);
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
         return products;
     }
 
-    private void fill(List<Product> products, ResultSet rs, int id, Product.Type type) throws SQLException, IOException {
+    private void fill(List<Product> products, ResultSet rs, int id, Product.Type type) throws SQLException {
         String name = rs.getString("name");
         String description = rs.getString("description");
         double price = rs.getDouble("price");
         String picture = rs.getString("picture");
         products.add(new Product(id, type, name, description, price, picture));
-    }
-
-    private String receivePicture(ResultSet rs) throws SQLException, IOException {
-     /*   Blob blob = rs.getBlob("picture");
-        InputStream inputStream = blob.getBinaryStream();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        byte[] imageBytes = outputStream.toByteArray();
-        inputStream.close();
-        outputStream.close();
-        return Base64.getEncoder().encodeToString(imageBytes);*/
-        return null;
     }
 
     @Override
@@ -114,11 +93,9 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     @Override
     public int create(Product product) throws DAOException {
         int id;
-        System.out.println("product = " + product);
         if (product.getPicture() == null) {
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO product ( type, name, description, price) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-                System.out.println("w picture");
                 statement.setString(1, String.valueOf(product.getType()).toLowerCase());
                 statement.setString(2, product.getName());
                 statement.setString(3, product.getDescription());
@@ -132,7 +109,6 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         } else {
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO product ( type, name, description, price, picture) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-                System.out.println("w out picture");
                 statement.setString(1, String.valueOf(product.getType()).toLowerCase());
                 statement.setString(2, product.getName());
                 statement.setString(3, product.getDescription());
@@ -148,29 +124,10 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return id;
     }
 
-    /*public int create(Product product, InputStream picture) throws DAOException {
-        int id;
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO product (type, name, description, price, picture) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(2, product.getName());
-            statement.setString(3, product.getDescription());
-            statement.setDouble(4, product.getPrice());
-            statement.setBlob(5, picture);
-            statement.executeUpdate();
-            id = findLastId(statement);
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
-        }
-        return id;
-    }*/
-
     public void update(Product product) throws DAOException {
         if (product.getPicture() == null) {
             try (PreparedStatement statement = connection.prepareStatement(
                     "UPDATE product SET type=?, name=?, description=?, price=? WHERE id=?")) {
-                System.out.println("w picture");
                 statement.setString(1, String.valueOf(product.getType()).toLowerCase());
                 statement.setString(2, product.getName());
                 statement.setString(3, product.getDescription());
@@ -184,7 +141,6 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         } else {
             try (PreparedStatement statement = connection.prepareStatement(
                     "UPDATE product SET type=?, name=?, description=?, price=?, picture=? WHERE id=?")) {
-                System.out.println("w out picture");
                 statement.setString(1, String.valueOf(product.getType()).toLowerCase());
                 statement.setString(2, product.getName());
                 statement.setString(3, product.getDescription());
@@ -198,23 +154,6 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
             }
         }
     }
-
-   /* @Override
-    public void update(Product product) throws DAOException {
-        logger.debug("Connection={}", connection);
-        try (PreparedStatement statement = connection.prepareStatement(
-                "UPDATE product SET name=?, type=?, description=?, price=? WHERE id=?")) {
-            statement.setString(1, product.getName());
-            statement.setString(2, String.valueOf(product.getType()).toLowerCase());
-            statement.setString(3, product.getDescription());
-            statement.setDouble(4, product.getPrice());
-            statement.setInt(5, product.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
-        }
-    }*/
 
     @Override
     public int countAll() {
@@ -230,7 +169,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
                 int id = rs.getInt("id");
                 fill(products, rs, id, type);
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }

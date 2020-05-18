@@ -12,7 +12,6 @@ public class ProductCreator implements Creator<Product> {
         double price = (double) parameters.get("price");
         Product.Type type = (Product.Type) parameters.get("type");
         String picture = (String) parameters.get("picture");
-        System.out.println("picture = " + picture);
         if (picture != null) {
             return new Product(type, name, description, price, picture);
         } else {

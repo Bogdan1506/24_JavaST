@@ -31,7 +31,6 @@ public class ProductCreateAction extends CreatorAction {
         logger.debug("param={}", parameters);
         logger.debug("isProductValid={}", isProductValid);
         if (isProductValid) {
-
             Part part = request.getPart("picture");
             if (part.getSize() > 0) {
                 String uploadFilePath = "E:\\24_JavaST\\finaltask\\web\\img";
@@ -40,9 +39,7 @@ public class ProductCreateAction extends CreatorAction {
                     fileSaveDir.mkdirs();
                 }
                 String fileName = null;
-
                 String contentDisp = part.getHeader("content-disposition");
-                System.out.println("content-disposition header= " + contentDisp);
                 String[] tokens = contentDisp.split(";");
                 for (String token : tokens) {
                     if (token.trim().startsWith("filename")) {
@@ -50,8 +47,6 @@ public class ProductCreateAction extends CreatorAction {
                     }
                 }
                 part.write(uploadFilePath + File.separator + fileName);
-
-                System.out.println("fileName = " + fileName);
                 parameters.put("picture", fileName);
             }
             ProductService productService = factory.getProductService();

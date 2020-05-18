@@ -1,5 +1,7 @@
 package by.avdeev.pizzeria.service.validator;
 
+import by.avdeev.pizzeria.service.validator.impl.ProductValidator;
+import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 import by.avdeev.pizzeria.service.validator.impl.UserValidator;
 import by.avdeev.pizzeria.transaction.Type;
 
@@ -12,8 +14,8 @@ public class ValidatorFactory {
 
     private ValidatorFactory() {
         repository.put(Type.USER, new UserValidator());
-        repository.put(Type.PROFILE, new UserValidator());
-        repository.put(Type.PRODUCT, new UserValidator());
+        repository.put(Type.PROFILE, new ProfileValidator());
+        repository.put(Type.PRODUCT, new ProductValidator());
     }
 
     public static ValidatorFactory getInstance() {

@@ -10,8 +10,6 @@ import java.util.Map;
 public class ItemCreator implements Creator<Item> {
     @Override
     public Item create(Map<String, Object> parameters) {
-        System.out.println(3);
-        System.out.println("parameters = " + parameters);
         int id = (int) parameters.get("id");
         Product product = new Product();
         product.setId(id);

@@ -17,14 +17,9 @@ import java.util.Map;
 public class UserServiceImpl extends StandardServiceImpl<User> implements UserService {
     @Override
     public boolean changePassword(Map<String, Object> parameters, Map<String, String> invalidParameters, String login) throws ServiceException {
-        System.out.println(1);
         AbstractDAO<User> dao = transaction.createDao(type);
         User user = findByLogin(login);
-        System.out.println("user = " + user);
-        System.out.println("parameters = " + parameters);
-        System.out.println(2);
         if (user != null && user.getPassword().equals(parameters.get("oldPassword"))) {
-            System.out.println(4);
             ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
             Validator validator = validatorFactory.findValidator(type);
             if (validator.validate(parameters, invalidParameters)) {
@@ -37,7 +32,6 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
                 }
             }
         }
-        System.out.println(3);
         return false;
     }
 
