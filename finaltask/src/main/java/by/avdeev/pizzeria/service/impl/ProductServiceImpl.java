@@ -81,7 +81,7 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
     }
 
     @Override
-    public int update(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException {
+    public int update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException {
         AbstractDAO<Product> abstractDAO = transaction.createDao(type);
         ProductDAOImpl dao = (ProductDAOImpl) abstractDAO;
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
@@ -91,7 +91,6 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
             Creator<Product> creator = new ProductCreator();
             Product product = creator.create(parameters);
             logger.debug("product={}", product);
-            int id = Integer.parseInt((String) parameters.get("id"));
             Product existProduct = findById(id);
             logger.debug("existProduct={}", existProduct);
             if (existProduct != null) {

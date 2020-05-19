@@ -18,9 +18,7 @@ public interface ProfileService extends Service {
 
     boolean delete(int id) throws ServiceException;
 
-    void update(Profile profile) throws ServiceException;
+    boolean update(Profile profile) throws ServiceException;
 
     boolean update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException;
-
-    Profile findByUserId(int userId) throws ServiceException;
 }

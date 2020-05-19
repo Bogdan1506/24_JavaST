@@ -1,12 +1,14 @@
 package by.avdeev.pizzeria.action.unauthorized;
 
 import by.avdeev.pizzeria.entity.Profile;
+import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,9 +18,10 @@ public class DeliveryFormAction extends UnauthorizedUserAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         ProfileService profileService = factory.getProfileService();
-        String login = (String) request.getAttribute("login");
-        if (login != null) {
-            Profile profile = profileService.findByUserLogin(login);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            Profile profile = profileService.findByUserLogin(user.getLogin());
             request.setAttribute("profile", profile);
         }
         int hour = 3600000;

@@ -40,14 +40,16 @@ public class OrderAction extends UnauthorizedUserAction {
             TypeValidator orderTypeValidator = new DeliveryTypeValidator();
             boolean isDeliveryValid = orderTypeValidator.validate(parameters);
             if (isDeliveryValid) {
-
+                HttpSession session = request.getSession();
+                User user = (User) session.getAttribute("user");
                 ProfileService profileService = factory.getProfileService();
-                String login = (String) request.getAttribute("login");
+//                String login = (String) request.getAttribute("login");
                 Profile profile = new Profile();
-                if (login != null) {
+                if (user != null) {
                     UserService userService = factory.getUserService();
-                    User user = userService.findByLogin(login);
-                    profile.setId(user.getProfile().getId());
+//                    User user = userService.findByLogin(login);
+                    profile = profileService.findByUserLogin(user.getLogin());
+//                    profile.setId(user.getProfile().getId());
                     boolean isUpdated = profileService.update(parameters, invalidParameters, user.getProfile().getId());
                     if (!isUpdated) {
                         return forwardObjectEx;
@@ -56,7 +58,7 @@ public class OrderAction extends UnauthorizedUserAction {
                     int id = profileService.create(parameters, invalidParameters);
                     profile.setId(id);
                 }
-                HttpSession session = request.getSession();
+//                HttpSession session = request.getSession();
                 Order order = new Order();
                 order.setProfile(profile);
                 logger.debug("order={}", order);

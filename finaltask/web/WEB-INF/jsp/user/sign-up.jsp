@@ -3,16 +3,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sign up</title>
+<%--    <title>Sign up</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
+    <title>Sign up</title>
 </head>
 <body>
-
+<c:import url="../element/navbar.jsp"/>
 <div class="container">
     <p class="display-4 mt-5">Sign up form</p>
     <c:url value="/user/register" var="registerUser"/>
@@ -67,18 +68,18 @@
                 </c:choose>
             </div>
         </div>
-        <div class="form-group form-check">
+<%--        <div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="remember"> Save me.
             </label>
-        </div>
+        </div>--%>
         <button type="submit" class="btn btn-primary">Submit</button>
         <c:url value="/user/register" var="registerUser"/>
     </form>
     <c:url value="/user/sign-in" var="userSignIn"/>
-    <form action="${userSignIn}">
+<%--    <form action="${userSignIn}">
         <button type="submit" class="btn btn-warning float-right">Cancel</button>
-    </form>
+    </form>--%>
     <jsp:useBean id="message" scope="request" class="java.lang.String"/>
     <c:if test="${not empty message}">
         <div class="alert alert-danger alert-dismissible mt-5">
@@ -90,7 +91,7 @@
 </body>
 </html>
 <script>
-    var password = document.getElementById("pwd")
+    const password = document.getElementById("pwd")
         , confirm_password = document.getElementById("reppwd");
 
     function validatePassword() {

@@ -16,6 +16,7 @@ public class ValidatorFactory {
         repository.put(Type.USER, new UserValidator());
         repository.put(Type.PROFILE, new ProfileValidator());
         repository.put(Type.PRODUCT, new ProductValidator());
+        repository.put(Type.DELIVERY, new ProductValidator());
     }
 
     public static ValidatorFactory getInstance() {

@@ -7,15 +7,18 @@ import by.avdeev.pizzeria.entity.Delivery;
 import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.validator.Validator;
+import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 import by.avdeev.pizzeria.transaction.Type;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Map;
 
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implements DeliveryService {
 
     @Override
     public Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = transaction.createDao(Type.DELIVERY);
+        AbstractDAO<Delivery> abstractDAO = transaction.createDao(type);
         DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
         Delivery delivery;
         try {
@@ -27,15 +30,20 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implement
     }
 
     @Override
-    public int findByDate(Date date) throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = transaction.createDao(Type.DELIVERY);
-        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
-        int count;
-        try {
-            count = deliveryDAO.findByDate(date);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
+    public boolean update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = transaction.createDao(type);
+        ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
+        Validator validator = validatorFactory.findValidator(type);
+        if (validator.validate(parameters, invalidParameters)) {
+            Delivery delivery = new Delivery();
+            delivery.setDate((Date) parameters.get("date"));
+            delivery.setPayment((Delivery.Payment) parameters.get("payment"));
+            try {
+                return abstractDAO.update(delivery);
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            }
         }
-        return count;
+        return false;
     }
 }

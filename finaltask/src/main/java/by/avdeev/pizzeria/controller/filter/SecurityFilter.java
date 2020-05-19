@@ -2,6 +2,7 @@ package by.avdeev.pizzeria.controller.filter;
 
 import by.avdeev.pizzeria.action.Action;
 import by.avdeev.pizzeria.entity.Role;
+import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
 
 @WebFilter(filterName = "security")
 public class SecurityFilter implements Filter {
@@ -24,18 +24,11 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        HttpSession session = httpServletRequest.getSession(false);
+        HttpSession session = httpServletRequest.getSession();
         Action action = (Action) httpServletRequest.getAttribute("action");
-        @SuppressWarnings("unchecked")
-        Map<String, String> cookies = (Map<String, String>) httpServletRequest.getAttribute("cookies");
-        logger.debug("cookies={}", cookies);
-        String roleStr = cookies.get("role");
-        Role role = null;
-        if (roleStr != null) {
-            role = Role.valueOf(roleStr);
-        }
-        logger.debug("role={}", role);
-        if (role != null && action.getRoles().contains(role) || action.getRoles().contains(Role.UNAUTHORIZED)) {
+        logger.debug("action={}", action);
+        User user = (User) session.getAttribute("user");
+        if (user != null && action.getRoles().contains(user.getRole()) || action.getRoles().contains(Role.UNAUTHORIZED)) {
             filterChain.doFilter(httpServletRequest, servletResponse);
         } else {
             session.setAttribute("actionDenied", action);

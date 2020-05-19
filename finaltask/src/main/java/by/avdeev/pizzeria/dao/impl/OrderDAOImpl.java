@@ -9,8 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class OrderDAOImpl extends AbstractDAO<Order> {
@@ -35,7 +36,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             Profile profile = new Profile();
             int profileId = rs.getInt("profile_id");
             profile.setId(profileId);
-            Date date = rs.getDate("date");
+            Date date = new Date(rs.getTimestamp("date").getTime());
             orders.add(new Order(id, profile, date));
         }
     }
@@ -79,8 +80,8 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM `order` WHERE id=?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            return true;
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -109,12 +110,13 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public void update(Order order) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
+    public boolean update(Order order) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE `order` SET profile_id=?, date=? WHERE id=?")) {
-            statement.setInt(1, order.getProfile().getId());
-            statement.setDate(2, order.getDate());
-            statement.executeUpdate();
+            preparedStatement.setInt(1, order.getProfile().getId());
+            preparedStatement.setTimestamp(2, new Timestamp(order.getDate().getTime()));
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

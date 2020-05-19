@@ -21,7 +21,7 @@ public interface OrderPositionService extends Service {
 
     boolean delete(int id) throws ServiceException;
 
-    void update(OrderPosition orderPosition) throws ServiceException;
+    boolean update(OrderPosition orderPosition) throws ServiceException;
 
     int countAll() throws ServiceException;
 }

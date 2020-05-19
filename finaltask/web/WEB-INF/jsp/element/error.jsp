@@ -19,12 +19,12 @@
     <div class="row">
         <div class="col-6">
             <c:url value="/" var="menu"/>
-            <form action="${menu}" method="post">
+            <form action="${menu}" method="get">
                 <button style="color: white" class="btn btn-lg bg-success">Jump to menu</button>
             </form>
         </div>
         <div class="col-6">
-            <img class="rounded-circle" src="../../../static/img/error.jpg" alt="error image">
+            <img class="rounded-circle" src="../../../img/error.jpg" alt="error image">
         </div>
     </div>
 </div>

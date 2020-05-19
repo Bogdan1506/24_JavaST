@@ -119,8 +119,8 @@ public class UserServiceImplTest {
         profileCreator.setId(2);
         Profile profileClient = new Profile();
         profileClient.setId(3);
-        List<User> expectedUsers = new ArrayList<>(Arrays.asList(new User(1, "admin", "admin1234", profileAdmin, Role.ADMIN),
-                new User(2, "creator", "creator1234", profileCreator, Role.CREATOR), new User(3, "client", "client1234", profileClient, Role.CLIENT)));
+        List<User> expectedUsers = new ArrayList<>(Arrays.asList(new User(1, "admin", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm", profileAdmin, Role.ADMIN),
+                new User(2, "creator", "$2a$10$rBvV1aYev0xJfJlCr6nAAedJ1gvdoUOiMfs0B047JSXjk7cX8xNOm", profileCreator, Role.CREATOR), new User(3, "client", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze", profileClient, Role.CLIENT)));
         return new Object[][]{{expectedUsers, 0, 4}};
     }
 
@@ -146,8 +146,8 @@ public class UserServiceImplTest {
         profile1.setId(1);
         Profile profile2 = new Profile();
         profile2.setId(3);
-        return new Object[][]{{1, new User(1, "admin", "admin1234", profile1, Role.ADMIN)},
-                {3, new User(3, "client", "client1234", profile2, Role.CLIENT)}};
+        return new Object[][]{{1, new User(1, "admin", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm", profile1, Role.ADMIN)},
+                {3, new User(3, "client", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze", profile2, Role.CLIENT)}};
     }
 
     @Test(dataProvider = "dataUserProviderForFindById")
@@ -170,10 +170,10 @@ public class UserServiceImplTest {
     @DataProvider(name = "positiveDataUserProviderForChangePassword")
     public Object[][] createPositiveDataForChangePassword() {
         Map<String, Object> parameters1 = new HashMap<>();
-        parameters1.put("oldPassword", "client1234");
+        parameters1.put("oldPassword", "client");
         parameters1.put("newPassword", "client1234567");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("oldPassword", "admin1234");
+        parameters2.put("oldPassword", "admin");
         parameters2.put("newPassword", "admin1234567");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{{parameters1, invalidParameters, "client"}, {parameters2, invalidParameters, "admin"}};
@@ -188,10 +188,10 @@ public class UserServiceImplTest {
     @DataProvider(name = "negativeDataUserProviderForChangePassword")
     public Object[][] createNegativeDataForChangePassword() {
         Map<String, Object> parameters1 = new HashMap<>();
-        parameters1.put("oldPassword", "client");
+        parameters1.put("oldPassword", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7");
         parameters1.put("newPassword", "client1234567");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("oldPassword", "admin1234");
+        parameters2.put("oldPassword", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm");
         parameters2.put("newPassword", "admin12!34567");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{{parameters1, invalidParameters, "client"}, {parameters2, invalidParameters, "admin"}};
@@ -209,8 +209,8 @@ public class UserServiceImplTest {
         Profile profile2 = new Profile();
         profile2.setId(3);
         return new Object[][]{
-                {new User(1, "admin", "admin1234", profile1, Role.ADMIN), "admin"},
-                {new User(3, "client", "client1234", profile2, Role.CLIENT), "client"},
+                {new User(1, "admin", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm", profile1, Role.ADMIN), "admin"},
+                {new User(3, "client", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze", profile2, Role.CLIENT), "client"},
                 {null, null}
         };
     }
@@ -232,9 +232,9 @@ public class UserServiceImplTest {
         Profile profile2 = new Profile();
         profile2.setId(3);
         return new Object[][]{
-                {true, new User(1, "admin", "admin1234", profile1, Role.ADMIN), "admin1234"},
-                {true, new User(3, "client", "client1234", profile2, Role.CLIENT), "client1234"},
-                {false, new User(3, "client", "client1234", profile2, Role.CLIENT), "client"},
+                {true, new User(1, "admin", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm", profile1, Role.ADMIN), "admin"},
+                {true, new User(3, "client", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze", profile2, Role.CLIENT), "client"},
+                {false, new User(3, "client", "$2a$10$JS5VSr5DDZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze", profile2, Role.CLIENT), "client"},
                 {false, null, null}
         };
     }

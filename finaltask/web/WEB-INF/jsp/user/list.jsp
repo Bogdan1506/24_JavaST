@@ -11,10 +11,10 @@
 <c:import url="../element/admin-bar.jsp"/>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3">
+        <div class="col-2">
             <ctg:totalUsers totalUsers="${requestScope.countTotal}"/>
         </div>
-        <div class="col-6">
+        <div class="col-8">
             <p style="text-align: center" class="display-4">User list</p>
             <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
             <br/>
@@ -44,7 +44,7 @@
                             </form>
                         </td>
                         <td>
-                            <c:if test="${temp.role.id != 0}">
+                            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                                 <c:url value="/user/delete" var="userDelete"/>
                                 <form action="${userDelete}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}"/>
@@ -62,7 +62,7 @@
                 <c:import url="../element/footer.jsp"/>
             </c:if>
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
         <div class="col-1">
             <c:import url="../element/select-num-page.jsp"/>
         </div>

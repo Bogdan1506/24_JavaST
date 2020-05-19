@@ -4,15 +4,15 @@
 <html lang="en">
 <head>
     <title>Sign in</title>
-    <meta charset="utf-8">
+  <%--  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
 </head>
 <body>
-
+<c:import url="../element/navbar.jsp"/>
 <div class="container">
     <p class="display-4 mt-5">Sign in form</p>
     <c:url value="/user/login" var="signIn"/>
@@ -30,19 +30,19 @@
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
-        <div class="form-group form-check">
+        <%--<div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="remember"> Save me.
             </label>
-        </div>
+        </div>--%>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <c:url value="/user/sign-up" var="signUp"/>
     <a href="${signUp}">Sign up</a>
     <c:url value="/" var="menu"/>
-    <form action="${menu}">
+<%--    <form action="${menu}">
         <button type="submit" class="btn btn-warning float-right">Cancel</button>
-    </form>
+    </form>--%>
     <c:if test="${not empty requestScope.message}">
     <div class="alert alert-danger alert-dismissible mt-5">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

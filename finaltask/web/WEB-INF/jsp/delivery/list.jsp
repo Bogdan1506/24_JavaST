@@ -26,6 +26,7 @@
                     <th scope="row">date</th>
                     <th scope="row">payment</th>
                     <th scope="row">delete</th>
+                    <th scope="row">update</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,6 +41,13 @@
                             <form action="${deliveryDelete}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
                                 <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                        <td>
+                            <c:url value="/delivery/list/update-form" var="deliveryUpdate"/>
+                            <form action="${deliveryUpdate}" method="post">
+                                <input type="hidden" name="id" value="${temp.id}"/>
+                                <input type="submit" value="Update">
                             </form>
                         </td>
                     </tr>

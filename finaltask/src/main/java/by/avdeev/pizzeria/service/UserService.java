@@ -23,7 +23,7 @@ public interface UserService extends Service {
 
     boolean delete(int id) throws ServiceException;
 
-    void update(User user) throws ServiceException;
+    boolean update(User user) throws ServiceException;
 
     User findByLogin(String login) throws ServiceException;
 

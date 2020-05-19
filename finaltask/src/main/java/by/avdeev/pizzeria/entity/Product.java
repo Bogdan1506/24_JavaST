@@ -29,6 +29,10 @@ public class Product implements Entity {
     public Product() {
     }
 
+    public Product(int id) {
+        this.id = id;
+    }
+
     public Product(int id, Type type, String name, String description, double price, String picture) {
         this.id = id;
         this.type = type;

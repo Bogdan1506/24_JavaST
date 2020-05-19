@@ -41,7 +41,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        useCookie(request);
+//        useCookie(request);
         Action action = (Action) request.getAttribute("action");
         HttpSession session = request.getSession(true);
         if (session != null) {
@@ -87,17 +87,6 @@ public class ControllerServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher(forwardPage).forward(request, response);
             } catch (IllegalArgumentException e) {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(request, response);
-            }
-        }
-    }
-
-    private void useCookie(HttpServletRequest request) {
-        @SuppressWarnings("unchecked")
-        Map<String, String> cookies = (Map<String, String>) request.getAttribute("cookies");
-        logger.debug("cookies={}", cookies);
-        if (cookies != null) {
-            for (Map.Entry<String, String> cookiePair : cookies.entrySet()) {
-                request.setAttribute(cookiePair.getKey(), cookiePair.getValue());
             }
         }
     }

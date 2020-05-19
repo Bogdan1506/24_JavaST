@@ -19,7 +19,6 @@
                     <div class="col-sm-4 mt-5">
                         <p>
                             <img alt="Pizza image" src="../../../img/${temp.picture}" width="280"
-<%--                            <img alt="Pizza image" src="data:image/jpg;base64,${temp.picture}" width="280"--%>
                                  height="280">
                         </p>
                         <h3>
@@ -32,7 +31,7 @@
                             </button>
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
-                        <c:if test="${cookie.role.value ne 'CREATOR'}">
+                        <c:if test="${sessionScope.user.role ne 'CREATOR'}">
                             <c:if test="${temp.type eq 'PIZZA'}">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-success active">
@@ -72,7 +71,7 @@
                             <input type="submit" class="btn btn-light" value="Add to cart"
                                    onclick="addToCart(${temp.id})">
                         </c:if>
-                        <c:if test="${cookie.role.value eq 'CREATOR'}">
+                        <c:if test="${sessionScope.user.role eq 'CREATOR'}">
                             <c:url var="removePosition" value="/product/remove"/>
                             <c:url var="editPosition" value="/product/edit-form"/>
                             <div class="btn-group">
@@ -91,7 +90,7 @@
             </div>
         </div>
         <div class="col-sm-3 mt-5">
-            <c:if test="${cookie.role.value eq 'CREATOR'}">
+            <c:if test="${sessionScope.user.role eq 'CREATOR'}">
                 <c:url var="addPosition" value="/product/create-form"/>
                 <form action="${addPosition}">
                     <button class="btn btn-warning btn-lg">Add +</button>

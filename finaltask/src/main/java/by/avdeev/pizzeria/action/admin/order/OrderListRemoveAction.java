@@ -1,11 +1,7 @@
 package by.avdeev.pizzeria.action.admin.order;
 
 import by.avdeev.pizzeria.action.admin.AdminAction;
-import by.avdeev.pizzeria.entity.Delivery;
-import by.avdeev.pizzeria.entity.Order;
-import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
-import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ServiceException;
 
@@ -13,29 +9,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 public class OrderListRemoveAction extends AdminAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        int orderId = Integer.parseInt(request.getParameter("id"));
-        OrderService orderService = factory.getOrderService();
-        Order order = orderService.findById(orderId);
-        OrderPositionService orderPositionService = factory.getOrderPositionService();
-        DeliveryService deliveryService = factory.getDeliveryService();
-        List<OrderPosition> orderPositions = orderPositionService.findByOrder(order);
-        logger.debug("orderPos={}", orderPositions);
-        for (OrderPosition orderPosition : orderPositions) {
-            Delivery delivery = deliveryService.findByOrderPosition(orderPosition);
-            logger.debug("delivery={}", delivery);
-            if (orderPosition != null) {
-                deliveryService.delete(delivery.getId());
-                orderPositionService.delete(orderPosition.getId());
-            }
-        }
-        orderService.delete(order.getId());
         ForwardObject forwardObject = new ForwardObject("/order/list");
-        forwardObject.getAttributes().put("message", "Order is deleted!");
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch (IllegalArgumentException e) {
+            forwardObject.getAttributes().put(MESSAGE, "Incorrect id!");
+        }
+        OrderService orderService = factory.getOrderService();
+        boolean isDeleted = orderService.delete(id);
+        if (isDeleted) {
+            forwardObject.getAttributes().put(MESSAGE, "Order is deleted!!");
+        } else {
+            forwardObject.getAttributes().putIfAbsent(MESSAGE, "Such order is absent!");
+
+        }
         return forwardObject;
     }
 }

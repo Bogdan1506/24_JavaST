@@ -1,10 +1,10 @@
 INSERT INTO `profile` (name, surname, email, phone, address)
-VALUES ('admin', 'admin', 'admin@mail.ru', +375291234567, 'admin');
+VALUES ('admin', 'admin', 'admin@mail.ru', '+375291234567', 'admin');
 INSERT INTO `user` (`login`,
                     `password`,
                     `profile_id`,
                     `role`)
 VALUES ('admin',
-        'admin1234',
+        '$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm',
         LAST_INSERT_ID(),
         0);

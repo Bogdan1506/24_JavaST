@@ -3,18 +3,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>User Update</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<title>Change role</title>
 </head>
 <body>
-
+<c:import url="../../element/navbar.jsp"/>
+<c:import url="../../element/admin-bar.jsp"/>
 <div class="container">
-    <h2>Update User Form</h2>
+    <p class="display-4 m-5" style="text-align: center">Update User Form</p>
     <c:url value="/user/list/role" var="changeRole"/>
     <form action="${changeRole}" class="form-control" name="userUpdate" method="post">
         <label for="sel">Select role:</label>
@@ -24,8 +19,8 @@
             <option>Client</option>
         </select>
         <input type="hidden" name="id" value="${param.id}">
-        <button type="submit" class="btn btn-info">Update</button>
+        <button type="submit" class="btn btn-info mt-5 float-lg-right">Update</button>
     </form>
-    </div>
+</div>
 </body>
 </html>

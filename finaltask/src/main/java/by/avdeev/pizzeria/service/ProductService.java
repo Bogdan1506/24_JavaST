@@ -18,9 +18,9 @@ public interface ProductService extends Service {
 
     boolean delete(int id) throws ServiceException;
 
-    void update(Product product) throws ServiceException;
+    boolean update(Product product) throws ServiceException;
 
-    int update(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException;
+    int update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException;
 
     List<Product> findByType(Product.Type type) throws ServiceException;
 

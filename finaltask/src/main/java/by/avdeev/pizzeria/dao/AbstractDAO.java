@@ -38,7 +38,7 @@ public abstract class AbstractDAO<T extends Entity> {
 
     public abstract int create(T entity) throws DAOException;
 
-    public abstract void update(T entity) throws DAOException;
+    public abstract boolean update(T entity) throws DAOException;
 
     public abstract int countAll() throws DAOException;
 

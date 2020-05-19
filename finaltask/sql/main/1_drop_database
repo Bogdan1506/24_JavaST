@@ -1,1 +1,2 @@
 DROP DATABASE IF EXISTS `pizzeria`;
+DROP USER IF EXISTS 'application'@'localhost';

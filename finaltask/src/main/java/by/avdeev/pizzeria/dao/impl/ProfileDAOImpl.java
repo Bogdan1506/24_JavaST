@@ -60,8 +60,8 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM profile WHERE id=?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            return true;
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -99,7 +99,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     }
 
     @Override
-    public void update(Profile profile) throws DAOException {
+    public boolean update(Profile profile) throws DAOException {
         logger.debug("profile={}", profile);
         int id = profile.getId();
         String name = profile.getName();
@@ -108,15 +108,16 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         String phone = profile.getPhone();
         String address = profile.getAddress();
         logger.debug(String.format("Connection=%s", connection));
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE profile SET name=?, surname=?, email=?, phone=?, address=? WHERE id=?")) {
-            statement.setString(1, name);
-            statement.setString(2, surname);
-            statement.setString(3, email);
-            statement.setString(4, phone);
-            statement.setString(5, address);
-            statement.setInt(6, id);
-            statement.executeUpdate();
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, address);
+            preparedStatement.setInt(6, id);
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

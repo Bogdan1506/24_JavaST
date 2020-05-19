@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<img class="mx-auto d-block" src="../../../static/img/header.jpg" alt=""/>
+<img class="mx-auto d-block" src="../../../img/header.jpg" alt=""/>
     <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top font">
         <ul class="navbar-nav">
             <li class="nav-item">

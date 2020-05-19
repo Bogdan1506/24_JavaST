@@ -20,6 +20,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
 
+
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
@@ -95,10 +96,10 @@ public class UserDAOImpl extends AbstractDAO<User> {
 
     @Override
     public boolean delete(int id) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            return true;
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
+            preparedStatement.setInt(1, id);
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -122,7 +123,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setString(2, password);
             statement.executeUpdate();
             id = findLastId(statement);
-            ResultSet rs = statement.getGeneratedKeys();
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -131,14 +131,15 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public void update(User user) throws DAOException {
+    public boolean update(User user) throws DAOException {
         logger.debug("user={}", user);
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE user SET password=?, role=?, profile_id=? WHERE id=?")) {
-            statement.setString(1, user.getPassword());
-            statement.setInt(2, user.getRole().getId());
-            statement.setInt(3, user.getProfile().getId());
-            statement.setInt(4, user.getId());
-            statement.executeUpdate();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET password=?, role=?, profile_id=? WHERE id=?")) {
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setInt(2, user.getRole().getId());
+            preparedStatement.setInt(3, user.getProfile().getId());
+            preparedStatement.setInt(4, user.getId());
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -152,8 +153,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-//                login = rs.getString(LOGIN);
-//                if (login != null) {
                 user = new User();
                 user.setLogin(login);
                 user.setId(rs.getInt("id"));
@@ -164,7 +163,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
                 profile.setId(rs.getInt("profile_id"));
                 user.setProfile(profile);
                 user.setRole(role);
-//                }
             }
         } catch (SQLException e) {
             rollback();

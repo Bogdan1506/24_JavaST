@@ -76,8 +76,8 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM product WHERE id=?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            return true;
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -124,30 +124,32 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return id;
     }
 
-    public void update(Product product) throws DAOException {
+    public boolean update(Product product) throws DAOException {
         if (product.getPicture() == null) {
-            try (PreparedStatement statement = connection.prepareStatement(
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE product SET type=?, name=?, description=?, price=? WHERE id=?")) {
-                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
-                statement.setString(2, product.getName());
-                statement.setString(3, product.getDescription());
-                statement.setDouble(4, product.getPrice());
-                statement.setInt(5, product.getId());
-                statement.executeUpdate();
+                preparedStatement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                preparedStatement.setString(2, product.getName());
+                preparedStatement.setString(3, product.getDescription());
+                preparedStatement.setDouble(4, product.getPrice());
+                preparedStatement.setInt(5, product.getId());
+                int rows = preparedStatement.executeUpdate();
+                return rows > 0;
             } catch (SQLException e) {
                 rollback();
                 throw new DAOException(e);
             }
         } else {
-            try (PreparedStatement statement = connection.prepareStatement(
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE product SET type=?, name=?, description=?, price=?, picture=? WHERE id=?")) {
-                statement.setString(1, String.valueOf(product.getType()).toLowerCase());
-                statement.setString(2, product.getName());
-                statement.setString(3, product.getDescription());
-                statement.setDouble(4, product.getPrice());
-                statement.setString(5, product.getPicture());
-                statement.setInt(6, product.getId());
-                statement.executeUpdate();
+                preparedStatement.setString(1, String.valueOf(product.getType()).toLowerCase());
+                preparedStatement.setString(2, product.getName());
+                preparedStatement.setString(3, product.getDescription());
+                preparedStatement.setDouble(4, product.getPrice());
+                preparedStatement.setString(5, product.getPicture());
+                preparedStatement.setInt(6, product.getId());
+                int rows = preparedStatement.executeUpdate();
+                return rows > 0;
             } catch (SQLException e) {
                 rollback();
                 throw new DAOException(e);

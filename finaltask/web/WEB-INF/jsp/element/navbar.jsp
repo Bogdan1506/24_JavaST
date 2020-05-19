@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${requestScope.local}"/>
+<fmt:setLocale value="${cookie.local.value}"/>
 <fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,13 +33,14 @@
         <ul class="navbar-nav navbar-right">
             <li>
                 <a class="nav-link" href="#"><fmt:message key="contacts" bundle="${rb}"/></a>
+<%--                TODO--%>
             </li>
             <c:choose>
-                <c:when test="${cookie.login.value != null}">
+                <c:when test="${sessionScope.user != null}">
                     <c:url value="/profile/user" var="profileShow"/>
                     <li class="nav-item">
                         <a class="nav-link border border-success"
-                           href="${profileShow}">${cookie.login.value}</a>
+                           href="${profileShow}">${sessionScope.user.login}</a>
                     </li>
                     <c:url value="/user/sign-out" var="userSignOut"/>
                     <li class="nav-item">
@@ -53,7 +54,7 @@
                     <a class="nav-link" href="${userSignUp}"><fmt:message key="signUp" bundle="${rb}"/></a>
                 </c:otherwise>
             </c:choose>
-            <c:if test="${cookie.role.value eq 'ADMIN'}">
+            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <c:url value="/user/list" var="users"/>
                 <a class="nav-link" href="${users}"><fmt:message key="abilities" bundle="${rb}"/></a>
             </c:if>

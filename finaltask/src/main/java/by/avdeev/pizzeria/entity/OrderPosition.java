@@ -11,6 +11,10 @@ public class OrderPosition implements Entity {
     public OrderPosition() {
     }
 
+    public OrderPosition(int id) {
+        this.id = id;
+    }
+
     public OrderPosition(Item item, Order order, double price) {
         this.item = item;
         this.order = order;

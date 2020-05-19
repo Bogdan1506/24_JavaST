@@ -9,17 +9,18 @@ import by.avdeev.pizzeria.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ProfileUserShowAction extends ClientAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Profile profile;
         ProfileService profileService = factory.getProfileService();
-        String login = (String) request.getAttribute("login");
         UserService userService = factory.getUserService();
-        User user = userService.findByLogin(login);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         logger.debug("user={}", user);
-        profile = profileService.findById(user.getProfile().getId());
+        profile = profileService.findByUserLogin(user.getLogin());
         logger.debug("profile={}", profile);
         request.setAttribute("profile", profile);
         return null;

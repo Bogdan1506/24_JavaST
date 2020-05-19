@@ -15,7 +15,7 @@ CREATE TABLE user
 (
     `id`         INTEGER      NOT NULL AUTO_INCREMENT,
     `login`      VARCHAR(255) NOT NULL UNIQUE,
-    `password`   CHAR(30)     NOT NULL,
+    `password`   CHAR(150)     NOT NULL,
     `profile_id` INT,
     /*
      * 0 - администратор (Role.ADMINISTRATOR)
@@ -25,6 +25,8 @@ CREATE TABLE user
     `role`       TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)) default 2,
     CONSTRAINT PRIMARY KEY `PK_user` (`id`),
     FOREIGN KEY `FK_user_profile` (`profile_id`) REFERENCES `profile` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 ) ENGINE = INNODB
   DEFAULT CHARACTER SET utf8;
 
@@ -68,6 +70,8 @@ CREATE TABLE `item`
         REFERENCES `product` (`id`),
     FOREIGN KEY `FK_item_dough` (`dough_id`)
         REFERENCES `dough` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE `order`
@@ -78,6 +82,8 @@ CREATE TABLE `order`
     CONSTRAINT PRIMARY KEY `PK_order` (`id`),
     FOREIGN KEY `FK_order_profile` (`profile_id`)
         REFERENCES `profile` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE `order_position`
@@ -88,9 +94,12 @@ CREATE TABLE `order_position`
     `price`    DOUBLE NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_order_position` (`id`),
     FOREIGN KEY `FK_order_position_item` (`item_id`)
-        REFERENCES `item` (`id`),
+        REFERENCES `item` (`id`)
+        ON DELETE CASCADE,
     FOREIGN KEY `FK_order_position_order` (`order_id`)
         REFERENCES `order` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE `delivery`
@@ -102,4 +111,6 @@ CREATE TABLE `delivery`
     CONSTRAINT PRIMARY KEY `PK_delivery` (`id`),
     FOREIGN KEY `FK_delivery_order_position` (`order_position_id`)
         REFERENCES `order_position` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );

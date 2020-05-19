@@ -23,6 +23,7 @@
                     <th scope="row">profile</th>
                     <th scope="row">date</th>
                     <th scope="row">delete</th>
+                    <th scope="row">update</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,13 @@
                             <form action="${orderDelete}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
                                 <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                        <td>
+                            <c:url value="/order/list/update-form" var="orderUpdate"/>
+                            <form action="${orderUpdate}" method="post">
+                                <input type="hidden" name="id" value="${temp.profile.id}"/>
+                                <input type="submit" value="Update">
                             </form>
                         </td>
                     </tr>

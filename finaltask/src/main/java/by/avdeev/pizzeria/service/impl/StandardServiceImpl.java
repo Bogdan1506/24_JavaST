@@ -60,10 +60,10 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
 
     @Override
     public boolean delete(int id) throws ServiceException {
-        AbstractDAO<T> profileDAO = transaction.createDao(type);
+        AbstractDAO<T> dao = transaction.createDao(type);
         boolean isDeleted;
         try {
-            isDeleted = profileDAO.delete(id);
+            isDeleted = dao.delete(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -71,10 +71,10 @@ public class StandardServiceImpl<T extends Entity> extends TransactionService im
     }
 
     @Override
-    public void update(T entity) throws ServiceException {
+    public boolean update(T entity) throws ServiceException {
         AbstractDAO<T> dao = transaction.createDao(type);
         try {
-            dao.update(entity);
+            return dao.update(entity);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

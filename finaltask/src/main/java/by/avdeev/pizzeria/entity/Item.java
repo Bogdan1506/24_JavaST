@@ -11,6 +11,10 @@ public class Item implements Entity {
     public Item() {
     }
 
+    public Item(int id) {
+        this.id = id;
+    }
+
     public Item(int id, Product product, Dough dough, Size size) {
         this.id = id;
         this.product = product;
@@ -71,13 +75,14 @@ public class Item implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return product.equals(item.product) &&
+        return id == item.id &&
+                Objects.equals(product, item.product) &&
                 dough == item.dough &&
                 size == item.size;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(product, dough, size);
+        return Objects.hash(id, product, dough, size);
     }
 }

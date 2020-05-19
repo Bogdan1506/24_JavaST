@@ -84,8 +84,8 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM `order_position` WHERE id=?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            return true;
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -116,13 +116,14 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     }
 
     @Override
-    public void update(OrderPosition orderPosition) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
+    public boolean update(OrderPosition orderPosition) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE `order_position` SET item_id=?, order_id=?, price=? WHERE id=?")) {
-            statement.setInt(1, orderPosition.getItem().getId());
-            statement.setInt(2, orderPosition.getOrder().getId());
-            statement.setDouble(3, orderPosition.getPrice());
-            statement.executeUpdate();
+            preparedStatement.setInt(1, orderPosition.getItem().getId());
+            preparedStatement.setInt(2, orderPosition.getOrder().getId());
+            preparedStatement.setDouble(3, orderPosition.getPrice());
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

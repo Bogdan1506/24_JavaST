@@ -1,6 +1,6 @@
 package by.avdeev.pizzeria.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 public class Order implements Entity {
@@ -9,6 +9,14 @@ public class Order implements Entity {
     private Date date;
 
     public Order() {
+    }
+
+    public Order(int id) {
+        this.id = id;
+    }
+
+    public Order(Profile profile) {
+        this.profile = profile;
     }
 
     public Order(int id, Profile profile, Date date) {

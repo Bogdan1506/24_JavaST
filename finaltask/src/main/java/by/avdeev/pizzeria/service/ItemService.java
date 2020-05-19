@@ -18,5 +18,5 @@ public interface ItemService extends Service {
 
     boolean delete(int id) throws ServiceException;
 
-    void update(Item item) throws ServiceException;
+    boolean update(Item item) throws ServiceException;
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,7 +49,7 @@ public class ProductEditAction extends CreatorAction {
                 parameters.put("picture", fileName);
             }
             ProductService productService = factory.getProductService();
-            int id = productService.update(parameters, invalidParameters);
+            int id = productService.update(parameters, invalidParameters, Integer.parseInt((String) parameters.get("id")));
             if (id != -1) {
                 Product product = productService.findById(id);
                 forwardObject.getAttributes().put("id", Integer.parseInt(request.getParameter("id")));

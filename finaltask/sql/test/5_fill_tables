@@ -1,24 +1,24 @@
 INSERT INTO `profile` (name, surname, email, phone, address)
-VALUES ('creator', 'creator', 'creator@mail.ru', +375291234567, 'creator');
+VALUES ('creator', 'creator', 'creator@mail.ru', '+375291234567', 'creator');
 
 INSERT INTO `user` (`login`,
                     `password`,
                     `profile_id`,
                     `role`)
 VALUES ('creator',
-        'creator1234',
+        '$2a$10$rBvV1aYev0xJfJlCr6nAAedJ1gvdoUOiMfs0B047JSXjk7cX8xNOm',
         LAST_INSERT_ID(),
         1);
 
 INSERT INTO `profile` (name, surname, email, phone, address)
-VALUES ('client', 'client', 'client@mail.ru', +375291234567, 'client');
+VALUES ('client', 'client', 'client@mail.ru', '+375291234567', 'client');
 
 INSERT INTO `user` (`login`,
                     `password`,
                     `profile_id`,
                     `role`)
 VALUES ('client',
-        'client1234',
+        '$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7/ze',
         LAST_INSERT_ID(),
         2);
 
@@ -83,3 +83,23 @@ INSERT INTO `size` (name, coefficient)
 VALUES ('Small', 1.0),
        ('Medium', 1.5),
        ('Large', 2.0);
+
+INSERT INTO `item` (product_id, size_id, dough_id)
+VALUES (1, 1, 1),
+       (2, 1, 2),
+       (3, 2, 2);
+
+INSERT INTO `order` (profile_id, date)
+VALUES (1, TIMESTAMP('2020-01-01 00:00:00')),
+       (2, TIMESTAMP('2020-01-01 00:00:00')),
+       (3, TIMESTAMP('2020-01-01 00:00:00'));
+
+INSERT INTO `order_position` (item_id, order_id, price)
+VALUES (1, 1, 10.0),
+       (2, 2, 12.0),
+       (3, 3, 14.0);
+
+INSERT INTO `delivery` (order_position_id, date, payment)
+VALUES (1, TIMESTAMP('2020-01-01 01:00:00'), 'cash'),
+       (2, TIMESTAMP('2020-01-01 01:00:00'), 'card'),
+       (3, TIMESTAMP('2020-01-01 01:00:00'), 'cash');

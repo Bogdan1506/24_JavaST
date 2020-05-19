@@ -1,6 +1,10 @@
 package by.avdeev.pizzeria.controller;
 
 import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.action.admin.delivery.DeliveryUpdateAction;
+import by.avdeev.pizzeria.action.admin.delivery.DeliveryUpdateForm;
+import by.avdeev.pizzeria.action.admin.order.OrderListUpdateAction;
+import by.avdeev.pizzeria.action.admin.order.OrderProfileUpdateAction;
 import by.avdeev.pizzeria.action.admin.user.ChangeRoleAction;
 import by.avdeev.pizzeria.action.admin.user.ChangeRoleFormAction;
 import by.avdeev.pizzeria.action.admin.delivery.DeliveryListRemoveAction;
@@ -19,7 +23,6 @@ import by.avdeev.pizzeria.action.creator.ProductEditFormAction;
 import by.avdeev.pizzeria.action.creator.ProductRemoveAction;
 import by.avdeev.pizzeria.action.unauthorized.DeliveryFormAction;
 import by.avdeev.pizzeria.action.unauthorized.LocalizationAction;
-import by.avdeev.pizzeria.action.unauthorized.product.MenuAction;
 import by.avdeev.pizzeria.action.unauthorized.OrderAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateSessionAction;
 import by.avdeev.pizzeria.action.unauthorized.item.ItemFormAction;
@@ -47,7 +50,7 @@ public class CommandProvider {
     private final Map<String, Action> repository = new ConcurrentHashMap<>();
 
     public CommandProvider() {
-        repository.put("/", new MenuAction());
+        repository.put("/", new PizzaShowListAction());
 
         repository.put("/local", new LocalizationAction());
 
@@ -85,6 +88,8 @@ public class CommandProvider {
 
         repository.put("/order/list", new OrderListShowAction());
         repository.put("/order/list/remove", new OrderListRemoveAction());
+        repository.put("/order/list/update-form", new OrderListUpdateAction());
+        repository.put("/order/list/update", new OrderProfileUpdateAction());
 
         repository.put("/orderposition/list", new OrderPositionListShowAction());
         repository.put("/orderposition/list/remove", new OrderPositionListRemoveAction());
@@ -93,6 +98,8 @@ public class CommandProvider {
         repository.put("/delivery/order", new OrderAction());
         repository.put("/delivery/list", new DeliveryListShowAction());
         repository.put("/delivery/list/remove", new DeliveryListRemoveAction());
+        repository.put("/delivery/list/update-form", new DeliveryUpdateForm());
+        repository.put("/delivery/list/update", new DeliveryUpdateAction());
     }
 
     public Action receiveCommand(String name) {

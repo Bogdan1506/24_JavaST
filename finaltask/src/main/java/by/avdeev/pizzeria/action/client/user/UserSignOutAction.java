@@ -15,14 +15,14 @@ public class UserSignOutAction extends ClientAction {
         HttpSession session = request.getSession();
         session.invalidate();
 
-        Cookie loginCookie = new Cookie("login", "admin");
+        /*Cookie loginCookie = new Cookie("login", "admin");
         loginCookie.setMaxAge(0);
         loginCookie.setPath("/");
         response.addCookie(loginCookie);
         Cookie roleCookie = new Cookie("role", "1");
         roleCookie.setMaxAge(0);
         roleCookie.setPath("/");
-        response.addCookie(roleCookie);
+        response.addCookie(roleCookie);*/
 
         return forwardObject;
     }

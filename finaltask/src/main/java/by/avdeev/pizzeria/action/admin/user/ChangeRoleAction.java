@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ChangeRoleAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Role role = Role.valueOf(request.getParameter("role").toUpperCase());
-        Cookie cookie = new Cookie("role", role.name());
+    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) {
+        ForwardObject forwardObject = new ForwardObject("/user/list");
+        int id = 0;
+        Role role = null;
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+            role = Role.valueOf(request.getParameter("role").toUpperCase());
+/*        Cookie cookie = new Cookie("role", role.name());
         cookie.setPath("/");
         Cookie[] cookies = request.getCookies();
         for (Cookie tempCookie : cookies) {
@@ -23,12 +27,14 @@ public class ChangeRoleAction extends AdminAction {
                 break;
             }
         }
-        response.addCookie(cookie);
-        logger.debug("role={}", role);
-        UserService userService = factory.getUserService();
-        userService.changeRole(role, id);
-        ForwardObject forwardObject = new ForwardObject("/user/list");
-        forwardObject.getAttributes().put("message", "Role is changed!");
+        response.addCookie(cookie);*/
+            logger.debug("role={}", role);
+            UserService userService = factory.getUserService();
+            userService.changeRole(role, id);
+        } catch (ServiceException | IllegalArgumentException e) {
+            forwardObject.getAttributes().put(MESSAGE, "Role is not changed!");
+        }
+        forwardObject.getAttributes().putIfAbsent(MESSAGE, "Role is changed!");
         return forwardObject;
     }
 }

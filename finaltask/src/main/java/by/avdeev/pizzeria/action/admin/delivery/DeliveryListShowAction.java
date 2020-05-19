@@ -47,14 +47,14 @@ public class DeliveryListShowAction extends AdminAction {
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
-        if (pageSize > 0 && page <= maxPage && page > 0) {
+        if (pageSize > 0 && page <= maxPage || maxPage == 0 && page > 0) {
             List<Delivery> deliveries = deliveryService.findAll((page - 1) * pageSize, pageSize);
             request.setAttribute("maxPage", maxPage);
             request.setAttribute("deliveries", deliveries);
             request.setAttribute("page", page);
-            int countToday = deliveryService.findByDate(new Date(System.currentTimeMillis()));
+//            int countToday = deliveryService.findByDate(new Date(System.currentTimeMillis()));
             request.setAttribute("countTotal", countTotal);
-            request.setAttribute("countToday", countToday);
+//            request.setAttribute("countToday", countToday);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
             return forwardObjectEx;

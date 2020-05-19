@@ -6,5 +6,6 @@ import by.avdeev.pizzeria.entity.Role;
 public abstract class CreatorAction extends Action {
     public CreatorAction() {
         getRoles().add(Role.CREATOR);
+        getRoles().add(Role.ADMIN);
     }
 }

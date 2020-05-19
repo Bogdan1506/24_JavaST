@@ -85,8 +85,8 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM item WHERE id=?")) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            return true;
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -130,13 +130,14 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public void update(Item item) throws DAOException {
-        try (PreparedStatement statement = connection.prepareStatement(
+    public boolean update(Item item) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE item SET size_id=?, dough_id=? WHERE id=?")) {
-            statement.setInt(1, item.getSize().getId());
-            statement.setInt(2, item.getDough().getId());
-            statement.setInt(3, item.getId());
-            statement.executeUpdate();
+            preparedStatement.setInt(1, item.getSize().getId());
+            preparedStatement.setInt(2, item.getDough().getId());
+            preparedStatement.setInt(3, item.getId());
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);

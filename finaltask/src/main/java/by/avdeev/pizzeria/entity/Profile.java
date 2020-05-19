@@ -15,6 +15,10 @@ public class Profile implements Entity, Serializable {
     public Profile() {
     }
 
+    public Profile(int id) {
+        this.id = id;
+    }
+
     public Profile(int id, String name, String surname, String email, String phone, String address) {
         this.id = id;
         this.name = name;

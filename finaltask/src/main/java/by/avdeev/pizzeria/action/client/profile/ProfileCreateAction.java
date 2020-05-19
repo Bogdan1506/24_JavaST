@@ -14,6 +14,7 @@ import by.avdeev.pizzeria.service.validator.impl.ProfileValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,9 +24,11 @@ public class ProfileCreateAction extends ClientAction {
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address"));
         ForwardObject forwardObject = new ForwardObject("/");
-        String login = (String) request.getAttribute("login");
+//        String login = (String) request.getAttribute("login");
         UserService userService = factory.getUserService();
-        User user = userService.findByLogin(login);
+//        User user = userService.findByLogin(login);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         ForwardObject forwardObjectEx = new ForwardObject("/profile/create");
         boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (!isValid) {

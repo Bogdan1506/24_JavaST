@@ -5,6 +5,8 @@ import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.impl.UserDAOImpl;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.service.security.SecurityHandler;
+import by.avdeev.pizzeria.service.security.SecurityHandlerImpl;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.creator.Creator;
@@ -19,11 +21,12 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
     public boolean changePassword(Map<String, Object> parameters, Map<String, String> invalidParameters, String login) throws ServiceException {
         AbstractDAO<User> dao = transaction.createDao(type);
         User user = findByLogin(login);
-        if (user != null && user.getPassword().equals(parameters.get("oldPassword"))) {
+        SecurityHandler securityHandler = new SecurityHandlerImpl();
+        if (user != null && securityHandler.verifyPassword((String) parameters.get("oldPassword"), user.getPassword())) {
             ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
             Validator validator = validatorFactory.findValidator(type);
             if (validator.validate(parameters, invalidParameters)) {
-                user.setPassword((String) parameters.get("newPassword"));
+                user.setPassword(securityHandler.generatePassword((String) parameters.get("newPassword")));
                 try {
                     dao.update(user);
                     return true;
@@ -61,7 +64,7 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
             User user = creator.create(parameters);
             User checkUser = findByLogin(user.getLogin());
             if (checkUser == null) {
-                if (user.getPassword().equals(parameters.get("repPassword"))) {
+                if (parameters.get("password").equals(parameters.get("repPassword"))) {
                     try {
                         return abstractDAO.create(user);
                     } catch (DAOException e) {
@@ -102,7 +105,8 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
     }
 
     @Override
-    public boolean userLogin(User user, String password) {
-        return user != null && user.getPassword().equals(password);
+    public boolean userLogin(User user, String plainPassword) {
+        SecurityHandler securityHandler = new SecurityHandlerImpl();
+        return user != null && securityHandler.verifyPassword(plainPassword, user.getPassword());
     }
 }

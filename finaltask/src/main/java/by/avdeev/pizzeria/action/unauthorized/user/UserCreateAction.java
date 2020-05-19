@@ -1,8 +1,6 @@
 package by.avdeev.pizzeria.action.unauthorized.user;
 
-import by.avdeev.pizzeria.action.cookie.CookieSend;
 import by.avdeev.pizzeria.action.unauthorized.UnauthorizedUserAction;
-import by.avdeev.pizzeria.action.cookie.UserCookieSendAction;
 import by.avdeev.pizzeria.action.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -11,6 +9,7 @@ import by.avdeev.pizzeria.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,9 +31,8 @@ public class UserCreateAction extends UnauthorizedUserAction {
         if (id != -1) {
             ForwardObject forwardObject = new ForwardObject("/profile/create");
             User user = userService.findById(id);
-            CookieSend<User> cookieSendAction = new UserCookieSendAction();
-            String remember = request.getParameter("remember");
-            cookieSendAction.sendCookie(remember != null && remember.equals("on"), user, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
             return forwardObject;
         }
         return forwardObjectEx;
