@@ -13,22 +13,32 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-public class OrderPositionListShowAction extends AdminAction {
-    private static final String PAGE_SIZE = "pageSize";
+import static by.avdeev.pizzeria.action.ConstantRepository.COUNT;
+import static by.avdeev.pizzeria.action.ConstantRepository.COUNT_TOTAL;
+import static by.avdeev.pizzeria.action.ConstantRepository.DEFAULT_PAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.DEFAULT_PAGE_SIZE;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_NUMBER_FORMAT;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_PAGE_SIZE;
+import static by.avdeev.pizzeria.action.ConstantRepository.MAX_PAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.ORDER_POSITIONS;
+import static by.avdeev.pizzeria.action.ConstantRepository.PAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.PAGE_SIZE;
 
+public class OrderPositionListShowAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/orderposition/list");
         HttpSession session = request.getSession();
         OrderPositionService orderPositionService = factory.getOrderPositionService();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
-        int pageSize = 20;
+        int pageSize = DEFAULT_PAGE_SIZE;
         if (pageSizeStr != null) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect number format!");
+                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         } else {
@@ -38,30 +48,30 @@ public class OrderPositionListShowAction extends AdminAction {
             }
         }
         int countTotal = orderPositionService.countAll();
-        int page = 1;
-        String pageNum = request.getParameter("page");
+        int page = DEFAULT_PAGE;
+        String pageNum = request.getParameter(PAGE);
         if (pageNum != null) {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect number format!");
+                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage || maxPage == 0 && page > 0) {
             List<OrderPosition> orders = orderPositionService.findAll((page - 1) * pageSize, page * pageSize);
-            request.setAttribute("orderPositions", orders);
-            request.setAttribute("page", page);
+            request.setAttribute(ORDER_POSITIONS, orders);
+            request.setAttribute(PAGE, page);
             ProductService productService = factory.getProductService();
             Map<String, Integer> map = productService.findCount();
             CountMap countMap = new CountMap(map);
-            request.setAttribute("count", countMap);
+            request.setAttribute(COUNT, countMap);
             int count = orderPositionService.countAll();
-            request.setAttribute("countTotal", count);
-            request.setAttribute("maxPage", maxPage);
+            request.setAttribute(COUNT_TOTAL, count);
+            request.setAttribute(MAX_PAGE, maxPage);
         } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect page size!");
+            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE_SIZE);
             return forwardObjectEx;
         }
         return null;

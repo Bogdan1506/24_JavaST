@@ -1,33 +1,35 @@
 package by.avdeev.pizzeria.action.admin.user;
 
 import by.avdeev.pizzeria.action.admin.AdminAction;
-import by.avdeev.pizzeria.action.client.ClientAction;
-import by.avdeev.pizzeria.entity.Profile;
-import by.avdeev.pizzeria.entity.User;
-import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.ILLEGAL_PARAMETERS;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_TYPES;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.POSITION_DELETED;
+
 public class UserDeleteAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/user/list");
         UserService userService = factory.getUserService();
-        ProfileService profileService = factory.getProfileService();
-        int userId = Integer.parseInt(request.getParameter("id"));
-        User user = userService.findById(userId);
-        Profile profile = profileService.findByUserLogin(user.getLogin());
-        logger.debug("Profile={}", profile);
-        boolean isDeleted = profileService.delete(profile.getId());
-        logger.debug("isDeleted Profile={}", isDeleted);
-        if (isDeleted) {
-            userService.delete(userId);
-            forwardObject.getAttributes().put(MESSAGE, "User is deleted!");
+        int id;
+        try {
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (IllegalArgumentException e) {
+            forwardObject.getAttributes().putIfAbsent(MESSAGE, INCORRECT_TYPES);
+            return forwardObject;
+        }
+        boolean idDeleted = userService.delete(id);
+        if (idDeleted) {
+            forwardObject.getAttributes().put(MESSAGE, POSITION_DELETED);
         } else {
-            forwardObject.getAttributes().put(MESSAGE, "User is not deleted!");
+            forwardObject.getAttributes().put(MESSAGE, ILLEGAL_PARAMETERS);
         }
         return forwardObject;
     }

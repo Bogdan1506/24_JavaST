@@ -14,22 +14,28 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE_PATTERN;
+import static by.avdeev.pizzeria.action.ConstantRepository.HOUR;
+import static by.avdeev.pizzeria.action.ConstantRepository.PROFILE;
+import static by.avdeev.pizzeria.action.ConstantRepository.USER;
+
 public class DeliveryFormAction extends UnauthorizedUserAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
         ProfileService profileService = factory.getProfileService();
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(USER);
         if (user != null) {
             Profile profile = profileService.findByUserLogin(user.getLogin());
-            request.setAttribute("profile", profile);
+            request.setAttribute(PROFILE, profile);
         }
-        int hour = 3600000;
-        long timeOrder = System.currentTimeMillis() + hour;
+        long timeOrder = System.currentTimeMillis() + HOUR;
         Date date = new Date(timeOrder);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         String strDate = dateFormat.format(date);
-        request.setAttribute("date", strDate);
+        request.setAttribute(DATE, strDate);
         return null;
     }
 }

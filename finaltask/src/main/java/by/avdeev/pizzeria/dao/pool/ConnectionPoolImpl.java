@@ -1,5 +1,8 @@
 package by.avdeev.pizzeria.dao.pool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,11 +16,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ConnectionPoolImpl
-        implements ConnectionPool {
+public class ConnectionPoolImpl implements ConnectionPool {
     private static ConnectionPoolImpl connectionPoolImpl;
     private Queue<Connection> freeConnections = new ConcurrentLinkedQueue<>();
     private Set<Connection> usedConnections = new HashSet<>();
+    private static Logger logger = LogManager.getLogger();
 
     private ConnectionPoolImpl() {
     }
@@ -79,7 +82,7 @@ public class ConnectionPoolImpl
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/pizzeriaPool");
             connection = ds.getConnection();
         } catch (NamingException | SQLException e) {
-//            throw new DAOException(e); //todo throw
+            logger.error(e);
         }
         return connection;
     }

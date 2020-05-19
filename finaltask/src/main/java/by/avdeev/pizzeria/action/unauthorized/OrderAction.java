@@ -13,7 +13,6 @@ import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.impl.DeliveryValidator;
 
@@ -29,27 +28,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ADDRESS;
+import static by.avdeev.pizzeria.action.ConstantRepository.CART;
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.ORDERED;
+import static by.avdeev.pizzeria.action.ConstantRepository.PARAM;
+import static by.avdeev.pizzeria.action.ConstantRepository.PAYMENT;
+import static by.avdeev.pizzeria.action.ConstantRepository.PHONE;
+import static by.avdeev.pizzeria.action.ConstantRepository.SURNAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.USER;
+
 public class OrderAction extends UnauthorizedUserAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address", "date"));
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS, DATE));
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
-        forwardObjectEx.getAttributes().put("param", invalidParameters);
+        forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
         boolean isParamCountValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (isParamCountValid) {
             TypeValidator orderTypeValidator = new DeliveryTypeValidator();
             boolean isDeliveryValid = orderTypeValidator.validate(parameters);
             if (isDeliveryValid) {
                 HttpSession session = request.getSession();
-                User user = (User) session.getAttribute("user");
+                User user = (User) session.getAttribute(USER);
                 ProfileService profileService = factory.getProfileService();
-//                String login = (String) request.getAttribute("login");
                 Profile profile = new Profile();
                 if (user != null) {
-                    UserService userService = factory.getUserService();
-//                    User user = userService.findByLogin(login);
                     profile = profileService.findByUserLogin(user.getLogin());
-//                    profile.setId(user.getProfile().getId());
                     boolean isUpdated = profileService.update(parameters, invalidParameters, user.getProfile().getId());
                     if (!isUpdated) {
                         return forwardObjectEx;
@@ -58,20 +66,18 @@ public class OrderAction extends UnauthorizedUserAction {
                     int id = profileService.create(parameters, invalidParameters);
                     profile.setId(id);
                 }
-//                HttpSession session = request.getSession();
-                Order order = new Order();
-                order.setProfile(profile);
+                Order order = new Order(profile);
                 logger.debug("order={}", order);
-                logger.debug("cart={}", session.getAttribute("cart"));
+                logger.debug("cart={}", session.getAttribute(CART));
                 OrderService orderService = factory.getOrderService();
                 int orderId = orderService.create(order);
                 order.setId(orderId);
                 @SuppressWarnings("unchecked")
-                List<Item> cart = (List<Item>) session.getAttribute("cart");
+                List<Item> cart = (List<Item>) session.getAttribute(CART);
                 OrderPositionService orderPositionService = factory.getOrderPositionService();
-                Date orderDate = (Date) parameters.get("date");
+                Date orderDate = (Date) parameters.get(DATE);
                 logger.debug("date={}", orderDate);
-                Delivery.Payment payment = (Delivery.Payment) parameters.get("payment");
+                Delivery.Payment payment = (Delivery.Payment) parameters.get(PAYMENT);
                 logger.debug("payment={}", payment);
                 DeliveryService deliveryService = factory.getDeliveryService();
                 Validator deliveryValidator = new DeliveryValidator();
@@ -90,9 +96,9 @@ public class OrderAction extends UnauthorizedUserAction {
                     }
                 }
                 ForwardObject forwardObject = new ForwardObject("/product/pizzas");
-                forwardObject.getAttributes().put("message", "Ordered!");
+                forwardObject.getAttributes().put(MESSAGE, ORDERED);
                 cart = new ArrayList<>();
-                session.setAttribute("cart", cart);
+                session.setAttribute(CART, cart);
                 return forwardObject;
             }
         }

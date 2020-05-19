@@ -15,15 +15,31 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.CONTENT_DISPOSITION;
+import static by.avdeev.pizzeria.action.ConstantRepository.CREATED;
+import static by.avdeev.pizzeria.action.ConstantRepository.DESCRIPTION;
+import static by.avdeev.pizzeria.action.ConstantRepository.FILENAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.FILE_UPLOAD_PATH;
+import static by.avdeev.pizzeria.action.ConstantRepository.FILL_FIELDS;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_TYPES;
+import static by.avdeev.pizzeria.action.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.NAME_EXISTS;
+import static by.avdeev.pizzeria.action.ConstantRepository.PARAM;
+import static by.avdeev.pizzeria.action.ConstantRepository.PICTURE;
+import static by.avdeev.pizzeria.action.ConstantRepository.PRICE;
+import static by.avdeev.pizzeria.action.ConstantRepository.TYPE;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+
 public class ProductCreateAction extends CreatorAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "description", "type", "price"));
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, DESCRIPTION, TYPE, PRICE));
         ForwardObject forwardObjectEx = new ForwardObject("/product/create-form");
-        forwardObjectEx.getAttributes().put("param", invalidParameters);
+        forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
         boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (!isValid) {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Fill all fields!");
+            forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
         }
         TypeValidator typeValidator = new ProductTypeValidator();
@@ -31,35 +47,34 @@ public class ProductCreateAction extends CreatorAction {
         logger.debug("param={}", parameters);
         logger.debug("isProductValid={}", isProductValid);
         if (isProductValid) {
-            Part part = request.getPart("picture");
+            Part part = request.getPart(PICTURE);
             if (part.getSize() > 0) {
-                String uploadFilePath = "E:\\24_JavaST\\finaltask\\web\\img";
-                File fileSaveDir = new File(uploadFilePath);
+                File fileSaveDir = new File(FILE_UPLOAD_PATH);
                 if (!fileSaveDir.exists()) {
                     fileSaveDir.mkdirs();
                 }
                 String fileName = null;
-                String contentDisp = part.getHeader("content-disposition");
+                String contentDisp = part.getHeader(CONTENT_DISPOSITION);
                 String[] tokens = contentDisp.split(";");
                 for (String token : tokens) {
-                    if (token.trim().startsWith("filename")) {
-                        fileName = token.substring(token.indexOf("=") + 2, token.length() - 1);
+                    if (token.trim().startsWith(FILENAME)) {
+                        fileName = token.substring(token.indexOf('=') + 2, token.length() - 1);
                     }
                 }
-                part.write(uploadFilePath + File.separator + fileName);
-                parameters.put("picture", fileName);
+                part.write(FILE_UPLOAD_PATH + File.separator + fileName);
+                parameters.put(PICTURE, fileName);
             }
             ProductService productService = factory.getProductService();
             int id = productService.create(parameters, invalidParameters);
             if (id != -1) {
                 ForwardObject forwardObject = new ForwardObject("/product/pizzas");
-                forwardObject.getAttributes().put(MESSAGE, "Product is created!");
+                forwardObject.getAttributes().put(MESSAGE, CREATED);
                 return forwardObject;
             } else {
-                invalidParameters.put("name", "Such name exists!");
+                invalidParameters.put(NAME, NAME_EXISTS);
             }
         } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect types!");
+            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_TYPES);
         }
         return forwardObjectEx;
     }

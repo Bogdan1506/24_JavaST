@@ -7,19 +7,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE_PATTERN;
+import static by.avdeev.pizzeria.action.ConstantRepository.PAYMENT;
+
 public class DeliveryTypeValidator implements TypeValidator {
     @Override
-    public boolean validate(Map<String, Object> parameters) {
+    public boolean validate(final Map<String, Object> parameters) {
         try {
-            String strDate = (String) parameters.get("date");
-            Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(strDate);
-            parameters.put("date", date);
-            Delivery.Payment payment = Delivery.Payment.valueOf(String.valueOf(parameters.get("payment")).toUpperCase());
-            parameters.put("payment", payment);
-        } catch (IllegalArgumentException e) {
+            String strDate = (String) parameters.get(DATE);
+            Date date = new SimpleDateFormat(DATE_PATTERN).parse(strDate);
+            parameters.put(DATE, date);
+            Delivery.Payment payment = Delivery.Payment.valueOf(String.valueOf(parameters.get(PAYMENT)).toUpperCase());
+            parameters.put(PAYMENT, payment);
+        } catch (IllegalArgumentException | ParseException e) {
             return false;
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         return true;
     }

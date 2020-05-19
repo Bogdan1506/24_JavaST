@@ -7,9 +7,16 @@ import by.avdeev.pizzeria.service.security.SecurityHandlerImpl;
 
 import java.util.Map;
 
+/**
+ * Implementation of ${@link Creator} for ${@link User}.
+ */
 public class UserCreator implements Creator<User> {
+    /**
+     * @param parameters Input data from user.
+     * @return Bean ${@link User}.
+     */
     @Override
-    public User create(Map<String, Object> parameters) {
+    public User create(final Map<String, Object> parameters) {
         String login = String.valueOf(parameters.get("login"));
         String password = String.valueOf(parameters.get("password"));
         SecurityHandler securityHandler = new SecurityHandlerImpl();

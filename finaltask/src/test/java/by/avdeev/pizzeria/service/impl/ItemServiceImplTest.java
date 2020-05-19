@@ -68,33 +68,12 @@ public class ItemServiceImplTest {
         connection.rollback();
     }
 
-    @Test
-    public void testFindAll() throws ServiceException {
-        List<Item> expectedItems = Arrays.asList(new Item(1, new Product(1), Dough.THIN, Size.SMALL),
-                new Item(2, new Product(2), Dough.THICK, Size.SMALL),
-                new Item(3, new Product(3), Dough.THICK, Size.MEDIUM));
-        List<Item> actualItems = itemService.findAll();
-        assertEquals(actualItems, expectedItems);
-    }
-
 
     @DataProvider(name = "positiveDataProviderForCreate")
     public Object[] createDataForCreate() {
         return new Object[]{
                 new Item(new Product(5), Dough.THICK, Size.SMALL), new Item(new Product(1), Dough.THIN, Size.SMALL)
         };
-    }
-
-    @Test(dependsOnMethods = "testFindAll", dataProvider = "positiveDataProviderForCreate")
-    public void testPositiveCreate(Item item) throws ServiceException {
-        int id = itemService.create(item);
-        assertTrue(id != -1);
-    }
-
-    @Test(dependsOnMethods = "testFindAll", expectedExceptions = ServiceException.class)
-    public void testNegativeCreate() throws ServiceException {
-        Item item = new Item(new Product(0), Dough.THICK, Size.MEDIUM);
-        itemService.create(item);
     }
 
     @Test

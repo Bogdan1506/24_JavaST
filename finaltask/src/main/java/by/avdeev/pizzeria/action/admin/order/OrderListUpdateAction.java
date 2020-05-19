@@ -8,21 +8,25 @@ import by.avdeev.pizzeria.service.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class OrderListUpdateAction extends AdminAction {
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.PROFILE;
 
+public class OrderListUpdateAction extends AdminAction {
     @Override
     public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/order/list");
         int id;
         try {
-            id = Integer.parseInt(request.getParameter("id"));
+            id = Integer.parseInt(request.getParameter(ID));
         } catch (IllegalArgumentException e) {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Incorrect id!");
+            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_ID);
             return forwardObjectEx;
         }
         ProfileService profileService = factory.getProfileService();
         Profile profile = profileService.findById(id);
-        request.setAttribute("profile", profile);
+        request.setAttribute(PROFILE, profile);
         return null;
     }
 }

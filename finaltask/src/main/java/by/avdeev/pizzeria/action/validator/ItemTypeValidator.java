@@ -5,20 +5,24 @@ import by.avdeev.pizzeria.entity.Size;
 
 import java.util.Map;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.DOUGH;
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.SIZE;
+
 public class ItemTypeValidator implements TypeValidator {
     @Override
-    public boolean validate(Map<String, Object> parameters) {
+    public boolean validate(final Map<String, Object> parameters) {
         try {
-            Integer id = Integer.parseInt((String) parameters.get("id"));
-            parameters.put("id", id);
-            if (!parameters.get("dough").equals("undefined")) {
-                Dough dough = Dough.valueOf(String.valueOf(parameters.get("dough")).toUpperCase());
-                parameters.put("dough", dough);
+            Integer id = Integer.parseInt((String) parameters.get(ID));
+            parameters.put(ID, id);
+            if (!parameters.get(DOUGH).equals("undefined")) {
+                Dough dough = Dough.valueOf(String.valueOf(parameters.get(DOUGH)).toUpperCase());
+                parameters.put(DOUGH, dough);
             } else {
-                parameters.put("dough", null);
+                parameters.put(DOUGH, null);
             }
-            Size size = Size.valueOf(String.valueOf(parameters.get("size")).toUpperCase());
-            parameters.put("size", size);
+            Size size = Size.valueOf(String.valueOf(parameters.get(SIZE)).toUpperCase());
+            parameters.put(SIZE, size);
             return true;
         } catch (IllegalArgumentException e) {
             return false;

@@ -123,12 +123,6 @@ public class ProductServiceImplTest {
         };
     }
 
-    @Test(dataProvider = "dataProviderForFindByName")
-    public void testFindByName(String name, Product expectedProduct) throws ServiceException {
-        Product actualProduct = productService.findByName(name);
-        assertEquals(actualProduct, expectedProduct);
-    }
-
     @DataProvider(name = "dataProviderForUpdate")
     public Object[][] createDataForUpdate() {
         Map<String, Object> parameters = new HashMap<>();

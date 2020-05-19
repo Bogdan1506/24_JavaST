@@ -17,11 +17,13 @@
     <c:url var="update" value="/delivery/list/update"/>
     <form action="${update}" class="was-validated" method="post">
         <input type="hidden" name="id" value="${requestScope.delivery.id}">
+
+        ${requestScope.minDate}
         <label for="date">Date:</label>
         <div class="form-group">
             <input type="datetime-local" id="date"
-                   name="date" value="${requestScope.delivery.date}"
-                   min="${requestScope.date}"/>
+                   name="date" value="${requestScope.date}"
+                   min="${requestScope.minDate}"/>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">
                 Cannot deliver on this date.

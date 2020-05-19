@@ -5,36 +5,35 @@ import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ABSENT;
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.ILLEGAL_PARAMETERS;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.POSITION_UPDATED;
+import static by.avdeev.pizzeria.action.ConstantRepository.ROLE;
+
 public class ChangeRoleAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) {
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) {
         ForwardObject forwardObject = new ForwardObject("/user/list");
-        int id = 0;
-        Role role = null;
+        int id;
+        Role role;
         try {
-            id = Integer.parseInt(request.getParameter("id"));
-            role = Role.valueOf(request.getParameter("role").toUpperCase());
-/*        Cookie cookie = new Cookie("role", role.name());
-        cookie.setPath("/");
-        Cookie[] cookies = request.getCookies();
-        for (Cookie tempCookie : cookies) {
-            if (tempCookie.equals(cookie)) {
-                cookie.setMaxAge(cookie.getMaxAge());
-                break;
-            }
-        }
-        response.addCookie(cookie);*/
+            id = Integer.parseInt(request.getParameter(ID));
+            role = Role.valueOf(request.getParameter(ROLE).toUpperCase());
             logger.debug("role={}", role);
             UserService userService = factory.getUserService();
-            userService.changeRole(role, id);
+            boolean isChanged = userService.changeRole(role, id);
+            if (!isChanged) {
+                forwardObject.getAttributes().putIfAbsent(MESSAGE, ABSENT);
+            }
         } catch (ServiceException | IllegalArgumentException e) {
-            forwardObject.getAttributes().put(MESSAGE, "Role is not changed!");
+            forwardObject.getAttributes().put(MESSAGE, ILLEGAL_PARAMETERS);
         }
-        forwardObject.getAttributes().putIfAbsent(MESSAGE, "Role is changed!");
+        forwardObject.getAttributes().putIfAbsent(MESSAGE, POSITION_UPDATED);
         return forwardObject;
     }
 }

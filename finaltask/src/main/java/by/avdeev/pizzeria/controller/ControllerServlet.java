@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ACTION;
+
 @MultipartConfig
 @WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
 public class ControllerServlet extends HttpServlet {
@@ -31,18 +33,20 @@ public class ControllerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        useCookie(request);
-        Action action = (Action) request.getAttribute("action");
+    private void process(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
+        Action action = (Action) request.getAttribute(ACTION);
         HttpSession session = request.getSession(true);
         if (session != null) {
             @SuppressWarnings("unchecked")

@@ -15,15 +15,23 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.FILL_FIELDS;
+import static by.avdeev.pizzeria.action.ConstantRepository.LOGIN;
+import static by.avdeev.pizzeria.action.ConstantRepository.PARAM;
+import static by.avdeev.pizzeria.action.ConstantRepository.PASS;
+import static by.avdeev.pizzeria.action.ConstantRepository.REP_PASS;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.USER;
+
 public class UserCreateAction extends UnauthorizedUserAction {
 
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList("login", "password", "repPassword"));
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(LOGIN, PASS, REP_PASS));
         ForwardObject forwardObjectEx = new ForwardObject("/user/sign-up");
-        forwardObjectEx.getAttributes().put("param", invalidParameters);
+        forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
         if (!TypeValidator.validateRequest(request, parameters, requiredParameters)) {
-            forwardObjectEx.getAttributes().put(MESSAGE, "Fill all fields!");
+            forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
         }
         UserService userService = factory.getUserService();
@@ -32,7 +40,7 @@ public class UserCreateAction extends UnauthorizedUserAction {
             ForwardObject forwardObject = new ForwardObject("/profile/create");
             User user = userService.findById(id);
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute(USER, user);
             return forwardObject;
         }
         return forwardObjectEx;

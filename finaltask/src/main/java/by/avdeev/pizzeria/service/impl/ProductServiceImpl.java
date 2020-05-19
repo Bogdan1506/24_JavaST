@@ -7,7 +7,7 @@ import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.creator.Creator;
-import by.avdeev.pizzeria.service.creator.ProductCreator;
+import by.avdeev.pizzeria.service.creator.CreatorFactory;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
@@ -16,21 +16,27 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
-public class ProductServiceImpl extends StandardServiceImpl<Product> implements ProductService {
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.NAME;
+
+public class ProductServiceImpl extends StandardServiceImpl<Product>
+        implements ProductService {
+    /**
+     * log4j2 is used for logging.
+     */
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * Finds all product beans of the type.
+     *
+     * @param type ${@link by.avdeev.pizzeria.entity.Product.Type} of product bean.
+     * @return List of product beans.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public int create(Product product) throws ServiceException {
-        Product checkProduct = findByName(product.getName());
-        if (checkProduct == null) {
-            return super.create(product);
-        }
-        return -1;
-    }
-
-    @Override
-    public List<Product> findByType(Product.Type type) throws ServiceException {
-        AbstractDAO<Product> abstractDAO = transaction.createDao(this.type);
+    public List<Product> findByType(final Product.Type type)
+            throws ServiceException {
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
         ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
         List<Product> products;
         try {
@@ -41,15 +47,27 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
         return products;
     }
 
+    /**
+     * Creates product bean.
+     *
+     * @param parameters        Gotten inputs from user.
+     * @param invalidParameters List of incorrect inputs from user.
+     * @return Id of the pushed product bean.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException {
-        AbstractDAO<Product> abstractDAO = transaction.createDao(type);
+    public int create(final Map<String, Object> parameters,
+                      final Map<String, String> invalidParameters)
+            throws ServiceException {
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
         ProductDAOImpl dao = (ProductDAOImpl) abstractDAO;
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator validator = validatorFactory.findValidator(type);
+        Validator validator = validatorFactory.findValidator(getType());
         boolean isParamValid = validator.validate(parameters, invalidParameters);
         if (isParamValid) {
-            Creator<Product> creator = new ProductCreator();
+            CreatorFactory creatorFactory = CreatorFactory.getInstance();
+            @SuppressWarnings("unchecked")
+            Creator<Product> creator = creatorFactory.findCreator(getType());
             Product product = creator.create(parameters);
             logger.debug("product={}", product);
             Product existProduct = findByName(product.getName());
@@ -61,15 +79,21 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
                     throw new ServiceException(e);
                 }
             } else {
-                invalidParameters.put("name", "Such name exists!");
+                invalidParameters.put(NAME, "Such name exists!");
             }
         }
         return -1;
     }
 
-    @Override
-    public Product findByName(String name) throws ServiceException {
-        AbstractDAO<Product> abstractDAO = transaction.createDao(type);
+    /**
+     * Finds product bean by its name.
+     *
+     * @param name Bean ${@link Product}.
+     * @return Bean ${@link Product}.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
+    private Product findByName(final String name) throws ServiceException {
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
         ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
         Product product;
         try {
@@ -80,15 +104,28 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
         return product;
     }
 
+    /**
+     * Updates product bean.
+     *
+     * @param parameters        Gotten inputs from user.
+     * @param invalidParameters List of incorrect inputs from user.
+     * @param id                Id of ${@link Product} bean.
+     * @return Id of the pushed product bean.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public int update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException {
-        AbstractDAO<Product> abstractDAO = transaction.createDao(type);
+    public int update(final Map<String, Object> parameters,
+                      final Map<String, String> invalidParameters, final int id)
+            throws ServiceException {
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
         ProductDAOImpl dao = (ProductDAOImpl) abstractDAO;
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator validator = validatorFactory.findValidator(type);
+        Validator validator = validatorFactory.findValidator(getType());
         boolean isParamValid = validator.validate(parameters, invalidParameters);
         if (isParamValid) {
-            Creator<Product> creator = new ProductCreator();
+            CreatorFactory creatorFactory = CreatorFactory.getInstance();
+            @SuppressWarnings("unchecked")
+            Creator<Product> creator = creatorFactory.findCreator(getType());
             Product product = creator.create(parameters);
             logger.debug("product={}", product);
             Product existProduct = findById(id);
@@ -102,15 +139,21 @@ public class ProductServiceImpl extends StandardServiceImpl<Product> implements 
                     throw new ServiceException(e);
                 }
             } else {
-                invalidParameters.put("id", "Such product doesn't exist!");
+                invalidParameters.put(ID, "Such product doesn't exist!");
             }
         }
         return -1;
     }
 
+    /**
+     * Counts total number of orders for each once ordered product position.
+     *
+     * @return Map with ${@link Product} name and its count of ${@link by.avdeev.pizzeria.entity.Order}.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
     public Map<String, Integer> findCount() throws ServiceException {
-        AbstractDAO<Product> abstractDAO = transaction.createDao(type);
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
         ProductDAOImpl productDAO = (ProductDAOImpl) abstractDAO;
         Map<String, Integer> products;
         try {

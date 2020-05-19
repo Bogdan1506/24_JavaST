@@ -9,16 +9,28 @@ import by.avdeev.pizzeria.service.impl.OrderServiceImpl;
 import by.avdeev.pizzeria.service.impl.ProductServiceImpl;
 import by.avdeev.pizzeria.service.impl.ProfileServiceImpl;
 import by.avdeev.pizzeria.service.impl.UserServiceImpl;
-import by.avdeev.pizzeria.transaction.Type;
 import by.avdeev.pizzeria.transaction.TransactionFactory;
+import by.avdeev.pizzeria.transaction.Type;
 
+/**
+ * Factory for getting services.
+ */
 public class ServiceFactory {
+    /**
+     * Instance of ${@link TransactionFactory}.
+     */
     private final TransactionFactory transactionFactory;
 
-    public ServiceFactory(TransactionFactory transactionFactory) {
+    /**
+     * @param transactionFactory Instance of ${@link TransactionFactory}.
+     */
+    public ServiceFactory(final TransactionFactory transactionFactory) {
         this.transactionFactory = transactionFactory;
     }
 
+    /**
+     * @return Instance of ${@link OrderService}.
+     */
     public OrderService getOrderService() {
         OrderService orderService = new OrderServiceImpl();
         orderService.setTransaction(transactionFactory.createTransaction());
@@ -26,6 +38,9 @@ public class ServiceFactory {
         return orderService;
     }
 
+    /**
+     * @return Instance of ${@link OrderPositionService}.
+     */
     public OrderPositionService getOrderPositionService() {
         OrderPositionService orderPositionService = new OrderPositionServiceImpl();
         orderPositionService.setTransaction(transactionFactory.createTransaction());
@@ -33,6 +48,9 @@ public class ServiceFactory {
         return orderPositionService;
     }
 
+    /**
+     * @return Instance of ${@link DeliveryService}.
+     */
     public DeliveryService getDeliveryService() {
         DeliveryService deliveryService = new DeliveryServiceImpl();
         deliveryService.setTransaction(transactionFactory.createTransaction());
@@ -40,6 +58,9 @@ public class ServiceFactory {
         return deliveryService;
     }
 
+    /**
+     * @return Instance of ${@link ItemService}.
+     */
     public ItemService getItemService() {
         ItemService itemService = new ItemServiceImpl();
         itemService.setTransaction(transactionFactory.createTransaction());
@@ -47,6 +68,9 @@ public class ServiceFactory {
         return itemService;
     }
 
+    /**
+     * @return @return Instance of ${@link UserService}.
+     */
     public UserService getUserService() {
         UserService userService = new UserServiceImpl();
         userService.setTransaction(transactionFactory.createTransaction());
@@ -54,6 +78,9 @@ public class ServiceFactory {
         return userService;
     }
 
+    /**
+     * @return @return Instance of ${@link ProfileService}.
+     */
     public ProfileService getProfileService() {
         ProfileService profileService = new ProfileServiceImpl();
         profileService.setTransaction(transactionFactory.createTransaction());
@@ -61,6 +88,9 @@ public class ServiceFactory {
         return profileService;
     }
 
+    /**
+     * @return @return Instance of ${@link ProductService}.
+     */
     public ProductService getProductService() {
         ProductService productService = new ProductServiceImpl();
         productService.setTransaction(transactionFactory.createTransaction());
@@ -68,14 +98,18 @@ public class ServiceFactory {
         return productService;
     }
 
-    public TransactionFactory getTransactionFactory() {
-        return transactionFactory;
-    }
-
+    /**
+     * Closes ${@link TransactionFactory}.
+     *
+     * @throws ServiceException If method is failed.
+     */
     public void close() throws ServiceException {
         transactionFactory.close();
     }
 
+    /**
+     * Calling ${@link ConnectionPool} close method.
+     */
     public static void closeConnection() {
         ConnectionPool connectionPool = ConnectionPoolImpl.getConnectionPoolImpl();
         connectionPool.closeConnection();

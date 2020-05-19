@@ -4,15 +4,18 @@ import by.avdeev.pizzeria.entity.Product;
 
 import java.util.Map;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.PRICE;
+import static by.avdeev.pizzeria.action.ConstantRepository.TYPE;
+
 public class ProductTypeValidator implements TypeValidator {
 
     @Override
-    public boolean validate(Map<String, Object> parameters) {
+    public boolean validate(final Map<String, Object> parameters) {
         try {
-            double price = Double.parseDouble((String) parameters.get("price"));
-            parameters.put("price", price);
-            Product.Type type = Product.Type.valueOf(String.valueOf(parameters.get("type")).toUpperCase());
-            parameters.put("type", type);
+            double price = Double.parseDouble((String) parameters.get(PRICE));
+            parameters.put(PRICE, price);
+            Product.Type type = Product.Type.valueOf(String.valueOf(parameters.get(TYPE)).toUpperCase());
+            parameters.put(TYPE, type);
         } catch (IllegalArgumentException e) {
             return false;
         }

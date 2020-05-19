@@ -29,7 +29,7 @@
         <url-pattern>/orderposition/*</url-pattern>
         <url-pattern>/local/*</url-pattern>
     </filter-mapping>
-    <filter-mapping>
+<!--    <filter-mapping>
         <filter-name>security</filter-name>
         <url-pattern>/index.html</url-pattern>
         <url-pattern>/product/*</url-pattern>
@@ -39,7 +39,7 @@
         <url-pattern>/delivery/*</url-pattern>
         <url-pattern>/order/*</url-pattern>
         <url-pattern>/orderposition/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

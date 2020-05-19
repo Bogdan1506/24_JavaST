@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.PRODUCTS;
+
 public class DrinkShowListAction extends UnauthorizedUserAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
         ProductService productService = factory.getProductService();
         List<Product> products = productService.findByType(Product.Type.DRINK);
         ForwardObject forwardObject = new ForwardObject("/product/menu");
-        forwardObject.getAttributes().put("products", products);
+        forwardObject.getAttributes().put(PRODUCTS, products);
         return forwardObject;
     }
 }

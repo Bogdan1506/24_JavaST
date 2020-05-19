@@ -80,22 +80,4 @@ public class OrderPositionServiceImplTest {
         List<OrderPosition> actualOrderPositions = orderPositionService.findAll(0, 2);
         assertEquals(actualOrderPositions, expectedOrderPositions);
     }
-
-    @Test
-    public void testFindByItem() throws ServiceException {
-        OrderPosition expectedOrderPosition = new OrderPosition(1, new Item(1), new Order(1), 10.0);
-        Item item = new Item(1);
-        OrderPosition actualOrderPosition = orderPositionService.findByItem(item);
-        assertEquals(actualOrderPosition, expectedOrderPosition);
-    }
-
-    @Test
-    public void testFindByOrder() throws ServiceException {
-        List<OrderPosition> expectedOrderPosition = new ArrayList<>();
-        OrderPosition orderPosition = new OrderPosition(1, new Item(1), new Order(1), 10.0);
-        expectedOrderPosition.add(orderPosition);
-        Order order = new Order(1);
-        List<OrderPosition> actualOrderPosition = orderPositionService.findByOrder(order);
-        assertEquals(actualOrderPosition, expectedOrderPosition);
-    }
 }

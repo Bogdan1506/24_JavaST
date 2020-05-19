@@ -13,28 +13,42 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ADDRESS;
+import static by.avdeev.pizzeria.action.ConstantRepository.FILL_FIELDS;
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.INCORRECT_ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.PARAM;
+import static by.avdeev.pizzeria.action.ConstantRepository.PHONE;
+import static by.avdeev.pizzeria.action.ConstantRepository.POSITION_UPDATED;
+import static by.avdeev.pizzeria.action.ConstantRepository.SURNAME;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+
 public class OrderProfileUpdateAction extends AdminAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList("name", "surname", "phone", "address"));
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS));
         ForwardObject forwardObject = new ForwardObject("/order/list");
-        int id = 0;
+        int id;
         try {
-            id = Integer.parseInt(request.getParameter("id"));
+            id = Integer.parseInt(request.getParameter(ID));
         } catch (IllegalArgumentException e) {
-            forwardObject.getAttributes().put(MESSAGE, "Incorrect id!");
+            forwardObject.getAttributes().put(MESSAGE, INCORRECT_ID);
             return forwardObject;
         }
-        forwardObject.getAttributes().put("param", invalidParameters);
+        ForwardObject forwardObjectEx = new ForwardObject("/order/list/update-form?id=" + id);
+        forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
         boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (!isValid) {
-            forwardObject.getAttributes().put(MESSAGE, "Fill all fields!");
-            return forwardObject;
+            forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
+            return forwardObjectEx;
         }
         ProfileService profileService = factory.getProfileService();
         boolean isUpdated = profileService.update(parameters, invalidParameters, id);
         if (isUpdated) {
-            forwardObject.getAttributes().put("message", "Profile is updated!");
+            forwardObject.getAttributes().put(MESSAGE, POSITION_UPDATED);
+        } else {
+            return forwardObjectEx;
         }
         return forwardObject;
     }

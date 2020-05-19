@@ -32,6 +32,7 @@ public class ActionURIFilter implements Filter {
             logger.debug("filter={}", filterChain);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (NullPointerException e) {
+//            logger.error(e);
             logger.debug("ex={}", e);
             httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(servletRequest, servletResponse);
         }

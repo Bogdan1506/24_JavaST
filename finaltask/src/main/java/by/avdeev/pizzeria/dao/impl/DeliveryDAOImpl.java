@@ -146,6 +146,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         return delivery;
     }
 
+    @Override
     public int countAll() throws DAOException {
         int count = 0;
         try (Statement statement = connection.createStatement()) {

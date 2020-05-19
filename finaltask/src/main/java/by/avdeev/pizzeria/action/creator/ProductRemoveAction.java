@@ -8,14 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ID;
+import static by.avdeev.pizzeria.action.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.action.ConstantRepository.POSITION_DELETED;
+
 public class ProductRemoveAction extends CreatorAction {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
+    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter(ID));
         ProductService productService = factory.getProductService();
         productService.delete(id);
         ForwardObject forwardObject = new ForwardObject("/product/menu");
-        forwardObject.getAttributes().put("message", "Product is deleted!");
+        forwardObject.getAttributes().put(MESSAGE, POSITION_DELETED);
         return forwardObject;
     }
 }

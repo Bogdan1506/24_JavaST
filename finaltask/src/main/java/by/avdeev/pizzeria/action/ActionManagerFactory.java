@@ -6,7 +6,7 @@ public class ActionManagerFactory {
     private ActionManagerFactory() {
     }
 
-    public static ActionManager getManager(ServiceFactory factory) {
+    public static ActionManager getManager(final ServiceFactory factory) {
         return new ActionManagerImpl(factory);
     }
 }

@@ -1,0 +1,74 @@
+package by.avdeev.pizzeria.action;
+
+public class ConstantRepository {
+    private ConstantRepository() {
+    }
+
+    public static final String MESSAGE = "message";
+    public static final String ID = "id";
+    public static final String INCORRECT_ID = "Incorrect id";
+    public static final String ILLEGAL_PARAMETERS = "Illegal parameters";
+    public static final String INCORRECT_TYPES = "Incorrect types";
+    public static final String INCORRECT_NUMBER_FORMAT = "Incorrect number format";
+    public static final String FILL_FIELDS = "Fill all fields";
+    public static final String PARAM = "param";
+    public static final String ABSENT = "Such position is absent";
+    public static final String ROLE = "role";
+    public static final String LANGUAGE = "lang";
+    public static final String LOCALIZATION = "local";
+    public static final String URI = "uri";
+    public static final String ORDERED = "Ordered";
+    public static final String POSITION_DELETED = "Position is deleted";
+    public static final String POSITION_UPDATED = "Position is updated";
+    public static final String POSITION_NOT_UPDATED = "Position is not updated";
+    public static final String SIGNED_UP = "Signed up";
+    public static final String AUTHORIZED = "Authorized";
+    public static final String AUTHORIZED_FAILED = "Incorrect login or password";
+    public static final String CREATED = "Created";
+    public static final String NAME_EXISTS = "Such name exists";
+    public static final String CONTENT_DISPOSITION = "content-disposition";
+    public static final String FILENAME = "filename";
+    public static final String PAGE_SIZE = "pageSize";
+    public static final int DEFAULT_PAGE_SIZE = 20;
+    public static final int DEFAULT_PAGE = 1;
+    public static final String PAGE = "page";
+    public static final String MAX_PAGE = "maxPage";
+    public static final String INCORRECT_PAGE_SIZE = "Incorrect page size";
+    public static final String COUNT_TOTAL = "countTotal";
+    public static final String DELIVERIES = "deliveries";
+    public static final String PROFILE = "profile";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String PHONE = "surname";
+    public static final String EMAIL = "email";
+    public static final String ADDRESS = "address";
+    public static final String DESCRIPTION = "description";
+    public static final String TYPE = "type";
+    public static final String PRICE = "price";
+    public static final String PICTURE = "picture";
+    public static final String DOUGH = "dough";
+    public static final String SIZE = "size";
+    public static final String CART = "cart";
+    public static final String ALL = "all";
+    public static final String LOGIN = "login";
+    public static final String ORDERS = "orders";
+    public static final String USERS = "users";
+    public static final String USER = "user";
+    public static final String ORDER_POSITIONS = "orderPositions";
+    public static final String PRODUCT = "product";
+    public static final String PRODUCTS = "products";
+    public static final String COUNT = "count";
+    public static final String DELIVERY = "delivery";
+    public static final String MIN_DATE = "minDate";
+    public static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm";
+    public static final String DATE = "date";
+    public static final String PAYMENT = "payment";
+    public static final String NEW_PASS = "newPassword";
+    public static final String OLD_PASS = "oldPassword";
+    public static final String PASS = "password";
+    public static final String REP_PASS = "repPassword";
+    public static final String ACTION_DENIED = "actionDenied";
+    public static final String ACTION = "action";
+    public static final int HOUR = 3600000;
+    public static final String FILE_UPLOAD_PATH = "E:\\24_JavaST\\finaltask\\web\\img";
+}

@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.avdeev.pizzeria.action.ConstantRepository.ACTION;
+import static by.avdeev.pizzeria.action.ConstantRepository.ACTION_DENIED;
+import static by.avdeev.pizzeria.action.ConstantRepository.USER;
+
 @WebFilter(filterName = "security")
 public class SecurityFilter implements Filter {
     private static Logger logger = LogManager.getLogger();
@@ -25,13 +29,13 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
-        Action action = (Action) httpServletRequest.getAttribute("action");
+        Action action = (Action) httpServletRequest.getAttribute(ACTION);
         logger.debug("action={}", action);
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(USER);
         if (user != null && action.getRoles().contains(user.getRole()) || action.getRoles().contains(Role.UNAUTHORIZED)) {
             filterChain.doFilter(httpServletRequest, servletResponse);
         } else {
-            session.setAttribute("actionDenied", action);
+            session.setAttribute(ACTION_DENIED, action);
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect("/user/sign-in");
         }

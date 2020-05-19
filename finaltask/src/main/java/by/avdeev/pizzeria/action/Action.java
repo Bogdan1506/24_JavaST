@@ -17,7 +17,6 @@ import java.util.Set;
 
 abstract public class Action {
     protected final static Logger logger = LogManager.getLogger();
-    protected static final String MESSAGE = "message";
     protected Map<String, Object> parameters = new HashMap<>();
     protected Map<String, String> invalidParameters = new HashMap<>();
     private Set<Role> roles = new HashSet<>();

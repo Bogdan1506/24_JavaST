@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ActionManager {
-    Action.ForwardObject execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException;
+    Action.ForwardObject execute(final Action action, HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException;
 
     void close() throws ServiceException;
 }

@@ -5,28 +5,48 @@ import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.impl.UserDAOImpl;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
+import by.avdeev.pizzeria.service.creator.CreatorFactory;
 import by.avdeev.pizzeria.service.security.SecurityHandler;
 import by.avdeev.pizzeria.service.security.SecurityHandlerImpl;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.UserService;
 import by.avdeev.pizzeria.service.creator.Creator;
-import by.avdeev.pizzeria.service.creator.UserCreator;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 
 import java.util.Map;
 
-public class UserServiceImpl extends StandardServiceImpl<User> implements UserService {
+import static by.avdeev.pizzeria.action.ConstantRepository.LOGIN;
+import static by.avdeev.pizzeria.action.ConstantRepository.NEW_PASS;
+import static by.avdeev.pizzeria.action.ConstantRepository.OLD_PASS;
+import static by.avdeev.pizzeria.action.ConstantRepository.PASS;
+import static by.avdeev.pizzeria.action.ConstantRepository.REP_PASS;
+
+public class UserServiceImpl extends StandardServiceImpl<User>
+        implements UserService {
+    /**
+     * Identifies user with help of ${@link SecurityHandler}.
+     *
+     * @param parameters        List including password and repPassword.
+     * @param invalidParameters Incorrect data from user.
+     * @param login             Login of user bean.
+     * @return true if ${@link User} beans's password was changed.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public boolean changePassword(Map<String, Object> parameters, Map<String, String> invalidParameters, String login) throws ServiceException {
-        AbstractDAO<User> dao = transaction.createDao(type);
+    public boolean changePassword(final Map<String, Object> parameters,
+                                  final Map<String, String> invalidParameters,
+                                  final String login) throws ServiceException {
+        AbstractDAO<User> dao = getTransaction().createDao(getType());
         User user = findByLogin(login);
         SecurityHandler securityHandler = new SecurityHandlerImpl();
-        if (user != null && securityHandler.verifyPassword((String) parameters.get("oldPassword"), user.getPassword())) {
+        if (user != null
+                && securityHandler.verifyPassword((String) parameters.get(OLD_PASS), user.getPassword())) {
             ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-            Validator validator = validatorFactory.findValidator(type);
+            Validator validator = validatorFactory.findValidator(getType());
             if (validator.validate(parameters, invalidParameters)) {
-                user.setPassword(securityHandler.generatePassword((String) parameters.get("newPassword")));
+                user.setPassword(
+                        securityHandler.generatePassword((String) parameters.get(NEW_PASS)));
                 try {
                     dao.update(user);
                     return true;
@@ -38,51 +58,54 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
         return false;
     }
 
+    /**
+     * Creates ${@link User} bean.
+     *
+     * @param parameters        Gotten data from user.
+     * @param invalidParameters List of incorrect data.
+     * @return Id of the pushed ${@link User}.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public int create(User user) throws ServiceException {
-        AbstractDAO<User> dao = transaction.createDao(type);
-        User checkUser = findByLogin(user.getLogin());
-        if (checkUser == null) {
-            int id;
-            try {
-                id = dao.create(user);
-            } catch (DAOException e) {
-                throw new ServiceException(e);
-            }
-            return id;
-        }
-        return -1;
-    }
-
-    @Override
-    public int create(Map<String, Object> parameters, Map<String, String> invalidParameters) throws ServiceException {
-        AbstractDAO<User> abstractDAO = transaction.createDao(type);
+    public int create(final Map<String, Object> parameters,
+                      final Map<String, String> invalidParameters)
+            throws ServiceException {
+        AbstractDAO<User> dao = getTransaction().createDao(getType());
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator validator = validatorFactory.findValidator(type);
+        Validator validator = validatorFactory.findValidator(getType());
         if (validator.validate(parameters, invalidParameters)) {
-            Creator<User> creator = new UserCreator();
+            CreatorFactory creatorFactory = CreatorFactory.getInstance();
+            @SuppressWarnings("unchecked")
+            Creator<User> creator = creatorFactory.findCreator(getType());
             User user = creator.create(parameters);
             User checkUser = findByLogin(user.getLogin());
             if (checkUser == null) {
-                if (parameters.get("password").equals(parameters.get("repPassword"))) {
+                if (parameters.get(PASS).equals(parameters.get(REP_PASS))) {
                     try {
-                        return abstractDAO.create(user);
+                        return dao.create(user);
                     } catch (DAOException e) {
                         throw new ServiceException(e);
                     }
                 } else {
-                    invalidParameters.putIfAbsent("password", "Passwords don't match");
+                    invalidParameters.putIfAbsent(PASS, "Passwords don't match");
                 }
             } else {
-                invalidParameters.put("login", "Such login exists!");
+                invalidParameters.put(LOGIN, "Such login exists!");
             }
         }
         return -1;
     }
 
+    /**
+     * Finds user bean by its login.
+     *
+     * @param login Login of the ${@link User} bean.
+     * @return bean ${@link User}.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public User findByLogin(String login) throws ServiceException {
-        AbstractDAO<User> abstractDAO = transaction.createDao(type);
+    public User findByLogin(final String login) throws ServiceException {
+        AbstractDAO<User> abstractDAO = getTransaction().createDao(getType());
         UserDAOImpl userDAO = (UserDAOImpl) abstractDAO;
         User user;
         try {
@@ -93,20 +116,37 @@ public class UserServiceImpl extends StandardServiceImpl<User> implements UserSe
         return user;
     }
 
+    /**
+     * Changes password of the user bean.
+     *
+     * @param role of the ${@link User} bean.
+     * @param id   of the ${@link User} bean.
+     * @return true if password was changed.
+     * @throws ServiceException it there was an exception in DAO layer.
+     */
     @Override
-    public void changeRole(Role role, int id) throws ServiceException {
-        AbstractDAO<User> abstractDAO = transaction.createDao(type);
+    public boolean changeRole(final Role role,
+                              final int id) throws ServiceException {
+        AbstractDAO<User> abstractDAO = getTransaction().createDao(getType());
         UserDAOImpl userDAO = (UserDAOImpl) abstractDAO;
         try {
-            userDAO.changeRole(role, id);
+            return userDAO.changeRole(role, id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
+    /**
+     * identify user bean with help of ${@link SecurityHandler}.
+     *
+     * @param user          ${@link User}  bean.
+     * @param plainPassword Gotten password from user.
+     * @return true if user was identified.
+     */
     @Override
-    public boolean userLogin(User user, String plainPassword) {
+    public boolean userLogin(final User user, final String plainPassword) {
         SecurityHandler securityHandler = new SecurityHandlerImpl();
-        return user != null && securityHandler.verifyPassword(plainPassword, user.getPassword());
+        return user != null
+                && securityHandler.verifyPassword(plainPassword, user.getPassword());
     }
 }

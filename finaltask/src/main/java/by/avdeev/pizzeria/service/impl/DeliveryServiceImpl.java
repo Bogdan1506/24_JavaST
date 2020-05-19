@@ -9,16 +9,25 @@ import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.ValidatorFactory;
-import by.avdeev.pizzeria.transaction.Type;
 
 import java.util.Date;
 import java.util.Map;
 
-public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implements DeliveryService {
+import static by.avdeev.pizzeria.action.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.action.ConstantRepository.PAYMENT;
 
+public class DeliveryServiceImpl extends StandardServiceImpl<Delivery>
+        implements DeliveryService {
+
+    /**
+     * @param orderPosition Bean ${@link OrderPosition}.
+     * @return Bean ${@link Delivery}.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = transaction.createDao(type);
+    public Delivery findByOrderPosition(final OrderPosition orderPosition)
+            throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = getTransaction().createDao(getType());
         DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
         Delivery delivery;
         try {
@@ -29,15 +38,26 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery> implement
         return delivery;
     }
 
+    /**
+     * @param parameters        Gotten inputs from user.
+     * @param invalidParameters List of incorrect inputs from user.
+     * @param id                ${@link Delivery} bean id.
+     * @return true if the bean was updated.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     @Override
-    public boolean update(Map<String, Object> parameters, Map<String, String> invalidParameters, int id) throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = transaction.createDao(type);
+    public boolean update(final Map<String, Object> parameters,
+                          final Map<String, String> invalidParameters,
+                          final int id) throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = getTransaction().createDao(getType());
         ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-        Validator validator = validatorFactory.findValidator(type);
+        Validator validator = validatorFactory.findValidator(getType());
         if (validator.validate(parameters, invalidParameters)) {
             Delivery delivery = new Delivery();
-            delivery.setDate((Date) parameters.get("date"));
-            delivery.setPayment((Delivery.Payment) parameters.get("payment"));
+            Date date = (Date) parameters.get(DATE);
+            delivery.setDate(date);
+            delivery.setPayment((Delivery.Payment) parameters.get(PAYMENT));
+            delivery.setId(id);
             try {
                 return abstractDAO.update(delivery);
             } catch (DAOException e) {

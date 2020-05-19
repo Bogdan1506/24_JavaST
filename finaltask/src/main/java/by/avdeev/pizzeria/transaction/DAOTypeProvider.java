@@ -13,10 +13,22 @@ import by.avdeev.pizzeria.entity.Entity;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DAOTypeProvider {
+/**
+ * Provides implementations of ${@link AbstractDAO} using singleton.
+ */
+public final class DAOTypeProvider {
+    /**
+     * Class instance.
+     */
     private static DAOTypeProvider daoTypeProvider;
+    /**
+     * Consists of all implementations of ${@link AbstractDAO}.
+     */
     private final Map<Type, AbstractDAO<? extends Entity>> repository = new ConcurrentHashMap<>();
 
+    /**
+     * Private constructor putting data in ${@link #repository}.
+     */
     private DAOTypeProvider() {
         repository.put(Type.USER, new UserDAOImpl());
         repository.put(Type.PROFILE, new ProfileDAOImpl());
@@ -27,10 +39,21 @@ public class DAOTypeProvider {
         repository.put(Type.DELIVERY, new DeliveryDAOImpl());
     }
 
-    public AbstractDAO<? extends Entity> findDAO(Type type) {
+    /**
+     * Finds needed dao.
+     *
+     * @param type ${@link Type}.
+     * @return Specified ${@link AbstractDAO}.
+     */
+    public AbstractDAO<? extends Entity> findDAO(final Type type) {
         return repository.get(type);
     }
 
+    /**
+     * Getting class instance.
+     *
+     * @return Instance ${@link DAOTypeProvider}
+     */
     public static DAOTypeProvider getDaoTypeProvider() {
         if (daoTypeProvider == null) {
             daoTypeProvider = new DAOTypeProvider();

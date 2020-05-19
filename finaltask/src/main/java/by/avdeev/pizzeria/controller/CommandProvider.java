@@ -102,7 +102,7 @@ public class CommandProvider {
         repository.put("/delivery/list/update", new DeliveryUpdateAction());
     }
 
-    public Action receiveCommand(String name) {
+    public Action receiveCommand(final String name) {
         Action action;
         action = repository.get(name);
         return action;
