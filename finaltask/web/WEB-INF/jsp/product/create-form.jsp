@@ -1,5 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,65 +14,64 @@
 <c:import url="../element/navbar.jsp"/>
 <c:import url="menu-bar.jsp"/>
 <div class="container">
-    <p style="text-align: center" class="display-4">Product form</p>
+    <p style="text-align: center" class="display-4"><fmt:message key="productCreateForm" bundle="${rb}"/></p>
     <c:url var="order" value="/product/create"/>
     <form action="${order}" class="was-validated" name="order" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter name (only letters and digits)"
+            <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="name"
+                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>"
                    name="name" pattern="\w+" required>
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.name}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.name}
+                        <fmt:message key="${requestScope.param.name}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="description">Description:</label>
+            <label for="description"><fmt:message key="desc" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="description"
-                   placeholder="Enter description" name="description" required>
-            <div class="valid-feedback">Valid.</div>
+                   placeholder="<fmt:message key="enterDesc" bundle="${rb}"/>" name="description" required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
-                Please fill out this field.
+                <fmt:message key="fillOut" bundle="${rb}"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
+            <label for="price"><fmt:message key="price" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="price"
+                   placeholder="<fmt:message key="enterPrice" bundle="${rb}"/>" name="price"
                    required>
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.price}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.price}
+                        <fmt:message key="${requestScope.param.price}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="picture">Picture:</label>
+            <label for="picture"><fmt:message key="picture" bundle="${rb}"/>:</label>
             <input type="file" id="picture" name="picture" size="50">
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">
-                Please fill out this field.
-            </div>
         </div>
-        <label for="type">Type:</label>
+        <label for="type"><fmt:message key="type" bundle="${rb}"/>:</label>
         <select id="type" name="type" class="custom-select">
-            <option value="pizza">Pizza</option>
-            <option value="sides">Sides</option>
-            <option value="drink">Drinks</option>
+            <option value="pizza"><fmt:message key="pizzas" bundle="${rb}"/></option>
+            <option value="sides"><fmt:message key="sides" bundle="${rb}"/></option>
+            <option value="drink"><fmt:message key="drinks" bundle="${rb}"/></option>
         </select>
-        <button type="submit" class="btn btn-primary float-right mt-3">Save</button>
+        <button type="submit" class="btn btn-primary float-right mt-3"><fmt:message key="create"
+                                                                                    bundle="${rb}"/></button>
     </form>
     <c:if test="${not empty message}">
         <c:import url="../element/footer.jsp"/>

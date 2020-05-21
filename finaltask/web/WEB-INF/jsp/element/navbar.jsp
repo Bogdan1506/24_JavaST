@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${cookie.local.value}"/>
 <fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
@@ -14,7 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
     <style>
         .font {
             font-size: 21px;
@@ -31,10 +32,6 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
-            <li>
-                <a class="nav-link" href="#"><fmt:message key="contacts" bundle="${rb}"/></a>
-<%--                TODO--%>
-            </li>
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
                     <c:url value="/profile/user" var="profileShow"/>
@@ -58,11 +55,20 @@
                 <c:url value="/user/list" var="users"/>
                 <a class="nav-link" href="${users}"><fmt:message key="abilities" bundle="${rb}"/></a>
             </c:if>
+            <c:url value="uri=${requestScope['javax.servlet.forward.request_uri']}" var="uri"/>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="contacts" data-toggle="dropdown">
+                    <fmt:message key="contacts" bundle="${rb}"/>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="mailto:mickeyspizza@gmail.com">mickeyspizza@gmail.com</a>
+                    <a class="dropdown-item" href="tel:123-456-7890">123-456-7890</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="l10n" data-toggle="dropdown">
                     <em class='fas fa-globe-americas'></em>
                 </a>
-                <c:url value="uri=${requestScope['javax.servlet.forward.request_uri']}" var="uri"/>
                 <div class="dropdown-menu">
                     <c:url value="/local?lang=en_US&${uri}" var="en"/>
                     <a class="dropdown-item" href="${en}">EN</a>
@@ -77,4 +83,3 @@
 </nav>
 </body>
 </html>
-

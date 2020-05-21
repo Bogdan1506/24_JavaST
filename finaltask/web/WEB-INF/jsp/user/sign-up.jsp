@@ -1,91 +1,77 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<%--    <title>Sign up</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
-    <title>Sign up</title>
+    <title><fmt:message key="signUpForm" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
 <div class="container">
-    <p class="display-4 mt-5">Sign up form</p>
+    <p class="display-4 mt-5"><fmt:message key="signUpForm" bundle="${rb}"/></p>
     <c:url value="/user/register" var="registerUser"/>
     <form action="${registerUser}" class="was-validated" name="register" method="post">
         <div class="form-group">
-            <label for="login">Login:</label>
-            <input type="text" class="form-control" id="login" placeholder="Enter login (only letters and digits)"
+            <label for="login"><fmt:message key="login" bundle="${rb}"/></label>
+            <input type="text" class="form-control" id="login"
+                   placeholder="<fmt:message key="registerLogin" bundle="${rb}"/>"
                    name="login" pattern="\w+" required>
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.login}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.login}
+                        <fmt:message key="${requestScope.param.login}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
 
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
+            <label for="pwd"><fmt:message key="password" bundle="${rb}"/></label>
             <input type="password" class="form-control" id="pwd"
-                   placeholder="Enter password (only letters and digits — minimum 5, max — 30)" name="password"
+                   placeholder="<fmt:message key="registerPassword" bundle="${rb}"/>" name="password"
                    pattern="\w{5,30}" required>
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.password}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.password}
+                        <fmt:message key="${requestScope.param.password}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="reppwd">Repeat Password:</label>
-            <input type="password" class="form-control" id="reppwd" placeholder="Repeat password" name="repPassword"
+            <label for="reppwd"><fmt:message key="repPassword" bundle="${rb}"/></label>
+            <input type="password" class="form-control" id="reppwd"
+                   placeholder="<fmt:message key="repPassword" bundle="${rb}"/>" name="repPassword"
                    required>
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/>.</div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.repPassword}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.repPassword}
+                        <fmt:message key="${requestScope.param.repPassword}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
-<%--        <div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember"> Save me.
-            </label>
-        </div>--%>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="submit" bundle="${rb}"/></button>
         <c:url value="/user/register" var="registerUser"/>
     </form>
     <c:url value="/user/sign-in" var="userSignIn"/>
-<%--    <form action="${userSignIn}">
-        <button type="submit" class="btn btn-warning float-right">Cancel</button>
-    </form>--%>
-    <jsp:useBean id="message" scope="request" class="java.lang.String"/>
-    <c:if test="${not empty message}">
-        <div class="alert alert-danger alert-dismissible mt-5">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>${message}</strong>
-        </div>
+    <c:if test="${not empty requestScope.message}">
+        <c:import url="../element/footer.jsp"/>
     </c:if>
 </div>
 </body>

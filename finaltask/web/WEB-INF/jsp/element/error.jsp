@@ -1,5 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +18,13 @@
 </head>
 <body>
 <div class="container">
-    <p class="display-3 justify-content-center">This page doesn't exist</p>
+    <p class="display-3 justify-content-center"><fmt:message key="pageNotExists" bundle="${rb}"/></p>
     <div class="row">
         <div class="col-6">
             <c:url value="/" var="menu"/>
             <form action="${menu}" method="get">
-                <button style="color: white" class="btn btn-lg bg-success">Jump to menu</button>
+                <button style="color: white" class="btn btn-lg bg-success"><fmt:message key="menu"
+                                                                                        bundle="${rb}"/></button>
             </form>
         </div>
         <div class="col-6">

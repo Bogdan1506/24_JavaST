@@ -1,53 +1,43 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sign in</title>
-  <%--  <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--%>
+    <title><fmt:message key="signInForm" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
 <div class="container">
-    <p class="display-4 mt-5">Sign in form</p>
+    <p class="display-4 mt-5"><fmt:message key="signInForm" bundle="${rb}"/></p>
     <c:url value="/user/login" var="signIn"/>
     <form action="${signIn}" class="was-validated" name="signIn" method="post">
         <div class="form-group">
-            <label for="login">Login:</label>
-            <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <label for="login"><fmt:message key="login" bundle="${rb}"/></label>
+            <input type="text" class="form-control" id="login"
+                   placeholder="<fmt:message key="enterLogin" bundle="${rb}"/>" name="login" autofocus autocomplete="on"
+                   required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
+            <div class="invalid-feedback"><fmt:message key="fillOut" bundle="${rb}"/></div>
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password"
+            <label for="pwd"><fmt:message key="password" bundle="${rb}"/></label>
+            <input type="password" class="form-control" id="pwd"
+                   placeholder="<fmt:message key="enterPassword" bundle="${rb}"/>" name="password"
                    required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
+            <div class="invalid-feedback"><fmt:message key="fillOut" bundle="${rb}"/></div>
         </div>
-        <%--<div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember"> Save me.
-            </label>
-        </div>--%>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="submit" bundle="${rb}"/></button>
     </form>
     <c:url value="/user/sign-up" var="signUp"/>
-    <a href="${signUp}">Sign up</a>
+    <a href="${signUp}"><fmt:message key="signUp" bundle="${rb}"/></a>
     <c:url value="/" var="menu"/>
-<%--    <form action="${menu}">
-        <button type="submit" class="btn btn-warning float-right">Cancel</button>
-    </form>--%>
-    <c:if test="${not empty requestScope.message}">
-    <div class="alert alert-danger alert-dismissible mt-5">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>${requestScope.message}</strong>
-    </div>
-    </c:if>
+</div>
+<c:if test="${not empty requestScope.message}">
+    <c:import url="../element/footer.jsp"/>
+</c:if>
 </body>
 </html>

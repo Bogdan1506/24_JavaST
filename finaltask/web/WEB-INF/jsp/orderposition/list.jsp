@@ -1,35 +1,37 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Order Position List</title>
+    <title><fmt:message key="orderPosList" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
 <c:import url="../element/admin-bar.jsp"/>
 <div class="container-fluid">
     <div class="row">
-
         <div class="col-3">
             <ctg:productCountTag rows="${requestScope.count.size}" head="orders">
                 ${requestScope.count.count}
             </ctg:productCountTag>
         </div>
         <div class="col-6">
-            <p style="text-align: center" class="display-4">Order Position list</p>
-            <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
+            <p style="text-align: center" class="display-4"><fmt:message key="orderPosList" bundle="${rb}"/></p>
+            <input class="form-control" id="searchInput" type="text"
+                   placeholder="<fmt:message key="search" bundle="${rb}"/>" aria-label="Search">
             <br/>
             <table class="table table-bordered" id="orderPosTable">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="row">id</th>
-                    <th scope="row">item</th>
-                    <th scope="row">order</th>
-                    <th scope="row">price</th>
-                    <th scope="row">delete</th>
+                    <th scope="row"><fmt:message key="id" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="item" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="order" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="price" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="delete" bundle="${rb}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,7 +48,7 @@
                             <c:url value="/orderposition/list/remove" var="orderPositionDelete"/>
                             <form action="${orderPositionDelete}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
-                                <input type="submit" value="Delete">
+                                <input type="submit" value="<fmt:message key="delete" bundle="${rb}"/>">
                             </form>
                         </td>
                     </tr>

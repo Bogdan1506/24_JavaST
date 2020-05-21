@@ -1,10 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Delivery List</title>
+    <title><fmt:message key="deliveryList" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
@@ -15,18 +18,19 @@
             <ctg:deliveryCount countTotal="${requestScope.countTotal}" countToday="${requestScope.countToday}"/>
         </div>
         <div class="col-6">
-            <p style="text-align: center" class="display-4">Delivery list</p>
-            <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
+            <p style="text-align: center" class="display-4"><fmt:message key="deliveryList" bundle="${rb}"/></p>
+            <input class="form-control" id="searchInput" type="text"
+                   placeholder="<fmt:message key="search" bundle="${rb}"/>" aria-label="Search">
             <br/>
             <table class="table table-bordered" id="deliveryTable">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="row">id</th>
-                    <th scope="row">orderPosition</th>
-                    <th scope="row">date</th>
-                    <th scope="row">payment</th>
-                    <th scope="row">delete</th>
-                    <th scope="row">update</th>
+                    <th scope="row"><fmt:message key="id" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="orderPos" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="date" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="payment" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="delete" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="update" bundle="${rb}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,14 +44,14 @@
                             <c:url value="/delivery/list/remove" var="deliveryDelete"/>
                             <form action="${deliveryDelete}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
-                                <input type="submit" value="Delete">
+                                <input type="submit" value="<fmt:message key="delete" bundle="${rb}"/>">
                             </form>
                         </td>
                         <td>
                             <c:url value="/delivery/list/update-form" var="deliveryUpdate"/>
                             <form action="${deliveryUpdate}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
-                                <input type="submit" value="Update">
+                                <input type="submit" value="<fmt:message key="update" bundle="${rb}"/>">
                             </form>
                         </td>
                     </tr>

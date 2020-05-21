@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Menu</title>
-    <script src="../../../static/js/remove.js"></script>
-    <script src="../../../static/js/add-to-cart.js"></script>
+    <script src="../../../js/remove.js"></script>
+    <script src="../../../js/add-to-cart.js"></script>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
@@ -27,7 +27,7 @@
                         <p>
                             <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="right"
                                     title="${temp.description}">
-                                ingredients
+                                <fmt:message key="ingredients" bundle="${rb}"/>
                             </button>
                         </p>
                         <c:url value="/item/cart" var="addToCart"/>
@@ -39,11 +39,12 @@
                                                value="Thick"
                                                autocomplete="off"
                                                checked>
-                                        Thick
+                                        <fmt:message key="thick" bundle="${rb}"/>
                                     </label>
                                     <label class="btn btn-success">
                                         <input class="dough_param" type="radio" name="dough" id="thin" value="Thin"
-                                               autocomplete="off"> Thin
+                                               autocomplete="off">
+                                        <fmt:message key="thin" bundle="${rb}"/>
                                     </label>
                                 </div>
                             </c:if>
@@ -68,7 +69,8 @@
                                     <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
                                 </label>
                             </div>
-                            <input type="submit" class="btn btn-light" value="Add to cart"
+                            <input type="submit" class="btn btn-light"
+                                   value="<fmt:message key="addToCart" bundle="${rb}"/>"
                                    onclick="addToCart(${temp.id})">
                         </c:if>
                         <c:if test="${sessionScope.user.role eq 'CREATOR'}">
@@ -77,11 +79,11 @@
                             <div class="btn-group">
                                 <form action="${removePosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
-                                    <button type="submit" class="btn btn-danger btn-lg">Remove</button>
+                                    <button type="submit" class="btn btn-danger btn-lg"><fmt:message key="remove" bundle="${rb}"/></button>
                                 </form>
                                 <form action="${editPosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
-                                    <button type="submit" class="btn btn-primary btn-lg">Edit</button>
+                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="edit" bundle="${rb}"/></button>
                                 </form>
                             </div>
                         </c:if>
@@ -93,7 +95,7 @@
             <c:if test="${sessionScope.user.role eq 'CREATOR'}">
                 <c:url var="addPosition" value="/product/create-form"/>
                 <form action="${addPosition}">
-                    <button class="btn btn-warning btn-lg">Add +</button>
+                    <button class="btn btn-warning btn-lg"><fmt:message key="add" bundle="${rb}"/></button>
                 </form>
             </c:if>
             <c:import url="../item/cart.jsp"/>

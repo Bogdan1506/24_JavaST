@@ -1,5 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,89 +15,100 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
-    <p class="display-4 mt-5">Profile</p>
+    <p class="display-4 mt-5"><fmt:message key="profileCreateForm" bundle="${rb}"/></p>
     <c:url value="/profile/register" var="profileCreate"/>
     <form action="${profileCreate}" class="was-validated" method="post">
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" pattern="[a-zA-z]+" required>
-            <div class="valid-feedback">Valid.</div>
+            <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="name"
+                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>" name="name" pattern="[a-zA-z]+"
+                   required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.name}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.name}
+                        <fmt:message key="${requestScope.param.name}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="surname">Surname:</label>
-            <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname" pattern="[a-zA-z]+" required>
-            <div class="valid-feedback">Valid.</div>
+            <label for="surname"><fmt:message key="surname" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="surname"
+                   placeholder="<fmt:message key="enterSurname" bundle="${rb}"/>" name="surname"
+                   pattern="[a-zA-z]+" required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.surname}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.surname}
+                        <fmt:message key="${requestScope.param.surname}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="Enter email (example@gmail.com)"
+            <label for="email"><fmt:message key="email" bundle="${rb}"/>:</label>
+            <input type="email" class="form-control" id="email"
+                   placeholder="<fmt:message key="enterEmail" bundle="${rb}"/>"
                    name="email" pattern="\w+@\w+\.\w+">
-            <div class="valid-feedback">Valid.</div>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.email}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.email}
+                        <fmt:message key="${requestScope.param.email}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="phone">Phone:</label>
-            <input type="text" class="form-control" id="phone" placeholder="Enter phone (+1234567)" name="phone" pattern="\+\d+" required>
-            <div class="valid-feedback">Valid.</div>
+            <label for="phone"><fmt:message key="phone" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="phone" placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
+                   name="phone"
+                   pattern="\+\d+" required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.phone}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.phone}
+                        <fmt:message key="${requestScope.param.phone}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" pattern="\w+" required>
-            <div class="valid-feedback">Valid.</div>
+            <label for="address"><fmt:message key="address" bundle="${rb}"/>:</label>
+            <input type="text" class="form-control" id="address"
+                   placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address"
+                   pattern="\w+" required>
+            <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
                     <c:when test="${empty requestScope.param.phone}">
-                        Please fill out this field.
+                        <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        ${requestScope.param.phone}
+                        <fmt:message key="${requestScope.param.phone}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success"><fmt:message key="submit" bundle="${rb}"/></button>
     </form>
+    <c:if test="${not empty requestScope.message}">
+        <c:import url="../element/footer.jsp"/>
+    </c:if>
 </div>
 </body>
 </html>

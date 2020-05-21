@@ -1,10 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>User List</title>
+    <title><fmt:message key="userList" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
@@ -15,18 +18,19 @@
             <ctg:totalUsers totalUsers="${requestScope.countTotal}"/>
         </div>
         <div class="col-8">
-            <p style="text-align: center" class="display-4">User list</p>
-            <input class="form-control" id="searchInput" type="text" placeholder="Search" aria-label="Search">
+            <p style="text-align: center" class="display-4"><fmt:message key="userList" bundle="${rb}"/></p>
+            <input class="form-control" id="searchInput" type="text"
+                   placeholder="<fmt:message key="search" bundle="${rb}"/>" aria-label="Search">
             <br/>
             <table class="table table-bordered" id="userTable">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="row">id</th>
-                    <th scope="row">login</th>
-                    <th scope="row">password</th>
-                    <th scope="row">role</th>
-                    <th scope="row">update</th>
-                    <th scope="row">delete</th>
+                    <th scope="row"><fmt:message key="id" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="login" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="password" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="role" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="update" bundle="${rb}"/></th>
+                    <th scope="row"><fmt:message key="delete" bundle="${rb}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,17 +44,15 @@
                             <c:url value="/user/list/update" var="updateRole"/>
                             <form action="${updateRole}" method="post">
                                 <input type="hidden" name="id" value="${temp.id}"/>
-                                <input type="submit" value="Update">
+                                <input type="submit" value="<fmt:message key="update" bundle="${rb}"/>">
                             </form>
                         </td>
                         <td>
-                            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-                                <c:url value="/user/delete" var="userDelete"/>
-                                <form action="${userDelete}" method="post">
-                                    <input type="hidden" name="id" value="${temp.id}"/>
-                                    <input type="submit" value="Delete">
-                                </form>
-                            </c:if>
+                            <c:url value="/user/delete" var="userDelete"/>
+                            <form action="${userDelete}" method="post">
+                                <input type="hidden" name="id" value="${temp.id}"/>
+                                <input type="submit" value="<fmt:message key="delete" bundle="${rb}"/>">
+                            </form>
                         </td>
                     </tr>
                 </c:forEach>
