@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.local.value}"/>
+<fmt:setBundle basename="content" var="rb" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +13,7 @@
 <body>
 <c:import url="../element/navbar.jsp"/>
 <c:import url="menu-bar.jsp"/>
-<div class="container mt-6">
+<div class="container mb-5">
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
@@ -79,11 +81,13 @@
                             <div class="btn-group">
                                 <form action="${removePosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
-                                    <button type="submit" class="btn btn-danger btn-lg"><fmt:message key="remove" bundle="${rb}"/></button>
+                                    <button type="submit" class="btn btn-danger btn-lg"><fmt:message key="remove"
+                                                                                                     bundle="${rb}"/></button>
                                 </form>
                                 <form action="${editPosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
-                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="edit" bundle="${rb}"/></button>
+                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="edit"
+                                                                                                      bundle="${rb}"/></button>
                                 </form>
                             </div>
                         </c:if>

@@ -74,7 +74,7 @@
             <label for="phone"><fmt:message key="phone" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="phone" placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
                    name="phone"
-                   pattern="\+\d+" required>
+                   pattern="\d+" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>

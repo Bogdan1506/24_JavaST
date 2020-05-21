@@ -16,7 +16,7 @@
 <c:import url="../element/navbar.jsp"/>
 <c:import url="../product/menu-bar.jsp"/>
 <p style="text-align: center" class="display-4"><fmt:message key="deliveryForm" bundle="${rb}"/></p>
-<div class="container">
+<div class="container mb-5">
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 1200px; max-height: 300px;">
         <c:forEach var="temp" items="${sessionScope.cart}">
             <p>
@@ -84,9 +84,10 @@
         </div>
         <div class="form-group">
             <label for="phone"><fmt:message key="phone" bundle="${rb}"/>:</label>
-            <input type="text" class="form-control" id="phone" placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
+            <input type="text" class="form-control" id="phone"
+                   placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
                    name="phone" value="${requestScope.profile.phone}"
-                   pattern="\+\d+" required>
+                   pattern="\d+" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -132,7 +133,7 @@
             <input type="radio" name="payment" id="cash" value="Cash" autocomplete="on" checked="checked">
             <label for="cash"><fmt:message key="cash" bundle="${rb}"/></label>
             <input type="radio" name="payment" id="card" value="Card">
-            <label for="card"><fmt:message key="cart" bundle="${rb}"/></label>
+            <label for="card"><fmt:message key="card" bundle="${rb}"/></label>
         </label>
         <button type="submit" class="btn btn-warning float-right mt-3"><fmt:message key="order"
                                                                                     bundle="${rb}"/></button>
