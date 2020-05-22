@@ -14,15 +14,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT;
+import static by.avdeev.pizzeria.command.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE_ID;
+
 public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
     public List<Order> findAll(int begin, int end) throws DAOException {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, profile_id, date FROM `order` ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, profile_id, date FROM `order` ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
-            fill(orders, rs);
+            while (rs.next()) {
+                orders.add(fill(rs));
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -30,23 +38,16 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
         return orders;
     }
 
-    private void fill(List<Order> orders, ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            Profile profile = new Profile();
-            int profileId = rs.getInt("profile_id");
-            profile.setId(profileId);
-            Date date = new Date(rs.getTimestamp("date").getTime());
-            orders.add(new Order(id, profile, date));
-        }
-    }
 
     @Override
     public List<Order> findAll() throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, profile_id, date FROM `order`");
-            fill(orders, rs);
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id, profile_id, date FROM `order`");
+            while (rs.next()) {
+                orders.add(fill(rs));
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -62,11 +63,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                Profile profile = new Profile();
-                int profileId = rs.getInt("profile_id");
-                profile.setId(profileId);
-                Date date = rs.getDate("date");
-                order = new Order(id, profile, date);
+                order = fill(rs);
             }
         } catch (SQLException e) {
             rollback();
@@ -98,7 +95,8 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     public int create(Order order) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())", Statement.RETURN_GENERATED_KEYS)) {
+                "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())",
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getProfile().getId());
             statement.executeUpdate();
             id = findLastId(statement);
@@ -131,12 +129,19 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
             String sql = "SELECT COUNT(*) as count FROM `order`";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
-                total = rs.getInt("count");
+                total = rs.getInt(COUNT);
             }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
         return total;
+    }
+
+    private Order fill(ResultSet rs) throws SQLException {
+        Date date = new Date(rs.getTimestamp(DATE).getTime());
+        return new Order(rs.getInt(ID),
+                new Profile(rs.getInt(PROFILE_ID)),
+                date);
     }
 }

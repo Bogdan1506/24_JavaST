@@ -14,6 +14,10 @@ public class User implements Entity, Serializable {
     public User() {
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(String login, String password) {
         this.login = login;
         this.password = password;

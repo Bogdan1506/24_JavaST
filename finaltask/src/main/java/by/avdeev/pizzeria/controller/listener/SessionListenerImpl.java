@@ -9,16 +9,16 @@ import javax.servlet.http.HttpSessionListener;
 
 @WebListener
 public class SessionListenerImpl implements HttpSessionListener {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(SessionListenerImpl.class);
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        logger.debug("session created, id={}", se.getSession().getId());
+        logger.info("session created, id={}", se.getSession().getId());
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        logger.debug("session destroyed, id={}", se.getSession().getId());
+        logger.info("session destroyed, id={}", se.getSession().getId());
     }
 
 }

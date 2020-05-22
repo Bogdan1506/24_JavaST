@@ -14,13 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT;
+import static by.avdeev.pizzeria.command.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.PAYMENT;
+
 public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     @Override
     public List<Delivery> findAll() throws DAOException {
         List<Delivery> deliveries = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, order_position_id, date, payment FROM `delivery`");
-            fill(deliveries, rs);
+            while (rs.next()) {
+                fill(rs);
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -31,28 +38,19 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     @Override
     public List<Delivery> findAll(int begin, int end) throws DAOException {
         List<Delivery> deliveries = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, order_position_id, date, payment FROM `delivery` ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, order_position_id, date, payment FROM `delivery` ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
-            fill(deliveries, rs);
+            while (rs.next()) {
+                deliveries.add(fill(rs));
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
         return deliveries;
-    }
-
-    private void fill(List<Delivery> deliveries, ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            OrderPosition orderPosition = new OrderPosition();
-            int orderPositionId = rs.getInt("order_position_id");
-            orderPosition.setId(orderPositionId);
-            Date date = new Date(rs.getTimestamp("date").getTime());
-            Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-            deliveries.add(new Delivery(id, orderPosition, date, payment));
-        }
     }
 
     @Override
@@ -63,12 +61,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                OrderPosition orderPosition = new OrderPosition();
-                int orderPositionId = rs.getInt("order_position_id");
-                orderPosition.setId(orderPositionId);
-                Date date = new Date(rs.getTimestamp("date").getTime());
-                Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-                delivery = new Delivery(id, orderPosition, date, payment);
+                delivery = fill(rs);
             }
         } catch (SQLException e) {
             rollback();
@@ -100,7 +93,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public int create(Delivery delivery) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)",
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, delivery.getOrderPosition().getId());
             statement.setTimestamp(2, new Timestamp(delivery.getDate().getTime()));
             statement.setString(3, String.valueOf(delivery.getPayment()));
@@ -130,14 +124,12 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
 
     public Delivery findByOrderPosition(OrderPosition orderPosition) throws DAOException {
         Delivery delivery = null;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT id, date, payment FROM `delivery` WHERE order_position_id=?")) {
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT id, date, payment FROM `delivery` WHERE order_position_id=?")) {
             statement.setInt(1, orderPosition.getId());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                int id = rs.getInt("id");
-                Date date = new Date(rs.getTimestamp("date").getTime());
-                Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString("payment").toUpperCase());
-                delivery = new Delivery(id, orderPosition, date, payment);
+                delivery = fill(rs);
             }
         } catch (SQLException e) {
             rollback();
@@ -152,12 +144,20 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) as count FROM delivery");
             if (rs.next()) {
-                count = rs.getInt("count");
+                count = rs.getInt(COUNT);
             }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
         }
         return count;
+    }
+
+    private Delivery fill(ResultSet rs) throws SQLException {
+        Date date = new Date(rs.getTimestamp(DATE).getTime());
+        Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString(PAYMENT).toUpperCase());
+        return new Delivery(rs.getInt(ID),
+                new OrderPosition(rs.getInt(ID)),
+                date, payment);
     }
 }

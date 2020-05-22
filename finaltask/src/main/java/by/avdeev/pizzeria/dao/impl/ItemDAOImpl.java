@@ -16,18 +16,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT;
+import static by.avdeev.pizzeria.command.ConstantRepository.DOUGH_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.PRODUCT_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.SIZE_ID;
+
 public class ItemDAOImpl extends AbstractDAO<Item> {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ItemDAOImpl.class);
 
     @Override
     public List<Item> findAll(int begin, int end) throws DAOException {
         logger.debug("begin={}, end={}", begin, end);
         List<Item> items = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, product_id, size_id, dough_id FROM item ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, product_id, size_id, dough_id FROM item ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
-            fill(items, rs);
+            while (rs.next()) {
+                fill(rs);
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -35,23 +44,14 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
         return items;
     }
 
-    private void fill(List<Item> items, ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            Product product = new Product();
-            product.setId(rs.getInt("product_id"));
-            Size size = Size.getById(rs.getInt("size_id"));
-            Dough dough = Dough.getById(rs.getInt("dough_id"));
-            items.add(new Item(id, product, dough, size));
-        }
-    }
-
     @Override
     public List<Item> findAll() throws DAOException {
         List<Item> items = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, product_id, size_id, dough_id FROM item");
-            fill(items, rs);
+            while (rs.next()) {
+                fill(rs);
+            }
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -63,15 +63,11 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     public Item findById(int id) throws DAOException {
         Item item = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT product_id, size_id, dough_id FROM item WHERE id=?")) {
+                "SELECT id, product_id, size_id, dough_id FROM item WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt("product_id"));
-                Size size = Size.getById(rs.getInt("size_id"));
-                Dough dough = Dough.getById(rs.getInt("dough_id"));
-                item = new Item(id, product, dough, size);
+                item = fill(rs);
             }
         } catch (SQLException e) {
             rollback();
@@ -104,7 +100,8 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
         int id;
         if (item.getProduct().getType() == Product.Type.PIZZA) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                    "INSERT INTO item (product_id, size_id, dough_id) VALUES (?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS)) {
                 statement.setInt(1, item.getProduct().getId());
                 statement.setInt(2, item.getSize().getId());
                 statement.setInt(3, item.getDough().getId());
@@ -146,6 +143,26 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
 
     @Override
     public int countAll() throws DAOException {
-        return 0;
+        int total = 0;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT COUNT(*) as count FROM `item`";
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt(COUNT);
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return total;
+    }
+
+    private Item fill(ResultSet rs) throws SQLException {
+        Size size = Size.getById(rs.getInt(SIZE_ID));
+        Dough dough = Dough.getById(rs.getInt(DOUGH_ID));
+        return new Item(rs.getInt(ID),
+                new Product(rs.getInt(PRODUCT_ID)),
+                dough, size);
     }
 }

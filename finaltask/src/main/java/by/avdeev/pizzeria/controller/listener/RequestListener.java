@@ -10,18 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 @WebListener
 public class RequestListener implements ServletRequestListener {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(RequestListener.class);
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
-        logger.debug("request initialized, uri={}", httpServletRequest.getRequestURI());
+        logger.info("request initialized, uri={}", httpServletRequest.getRequestURI());
 
     }
 
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) sre.getServletRequest();
-        logger.debug("request destroyed, uri={}", httpServletRequest.getRequestURI());
+        logger.info("request destroyed, uri={}", httpServletRequest.getRequestURI());
     }
 }

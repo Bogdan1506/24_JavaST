@@ -22,7 +22,7 @@
         <div class="form-group">
             <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="name"
-                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>" name="name" pattern="[a-zA-z]+"
+                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>" name="name" autofocus pattern="[a-zA-z]+"
                    required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">

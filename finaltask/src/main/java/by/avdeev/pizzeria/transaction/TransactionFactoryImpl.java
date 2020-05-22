@@ -19,16 +19,14 @@ public class TransactionFactoryImpl implements TransactionFactory {
     /**
      * Public constructor that gets ${@link Connection}
      * from ${@link ConnectionPool}.
-     *
-     * @throws ServiceException If ${@link SQLException} occurs.
      */
     public TransactionFactoryImpl() throws ServiceException {
-        ConnectionPool conPool = ConnectionPoolImpl.getConnectionPoolImpl();
-        connection = conPool.getConnection();
+        this.connection = ConnectionPoolImpl.getInstance().getConnection();
         try {
             connection.setAutoCommit(false);
+
         } catch (SQLException e) {
-            throw new ServiceException(e);
+            throw new ServiceException();
         }
     }
 
@@ -48,13 +46,14 @@ public class TransactionFactoryImpl implements TransactionFactory {
      * @throws ServiceException If ${@link SQLException} occurs.
      */
     @Override
-    public void close() throws ServiceException {
-        ConnectionPool conPool = ConnectionPoolImpl.getConnectionPoolImpl();
+    public void close() throws Exception {
+//        ConnectionPool conPool = ConnectionPoolImpl.getInstance();
         try {
             connection.commit();
+            connection.close();
         } catch (SQLException e) {
             throw new ServiceException(e);
         }
-        conPool.releaseConnection(connection);
+//        conPool.releaseConnection(connection);
     }
 }

@@ -1,6 +1,6 @@
 package by.avdeev.pizzeria.controller.filter;
 
-import by.avdeev.pizzeria.action.Action;
+import by.avdeev.pizzeria.command.Command;
 import by.avdeev.pizzeria.entity.Role;
 import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.avdeev.pizzeria.action.ConstantRepository.ACTION;
-import static by.avdeev.pizzeria.action.ConstantRepository.ACTION_DENIED;
-import static by.avdeev.pizzeria.action.ConstantRepository.USER;
+import static by.avdeev.pizzeria.command.ConstantRepository.ACTION;
+import static by.avdeev.pizzeria.command.ConstantRepository.ACTION_DENIED;
+import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 @WebFilter(filterName = "security")
 public class SecurityFilter implements Filter {
@@ -29,13 +29,13 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
-        Action action = (Action) httpServletRequest.getAttribute(ACTION);
-        logger.debug("action={}", action);
+        Command command = (Command) httpServletRequest.getAttribute(ACTION);
+        logger.debug("action={}", command);
         User user = (User) session.getAttribute(USER);
-        if (user != null && action.getRoles().contains(user.getRole()) || action.getRoles().contains(Role.UNAUTHORIZED)) {
+        if (user != null && command.getRoles().contains(user.getRole()) || command.getRoles().contains(Role.UNAUTHORIZED)) {
             filterChain.doFilter(httpServletRequest, servletResponse);
         } else {
-            session.setAttribute(ACTION_DENIED, action);
+            session.setAttribute(ACTION_DENIED, command);
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect("/user/sign-in");
         }

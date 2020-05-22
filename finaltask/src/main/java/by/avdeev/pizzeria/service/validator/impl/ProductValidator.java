@@ -4,20 +4,23 @@ import by.avdeev.pizzeria.service.validator.Validator;
 
 import java.util.Map;
 
-public class ProductValidator implements Validator {
-    private static final String DESCRIPTION = "description";
-    private static final String PRICE = "price";
+import static by.avdeev.pizzeria.command.ConstantRepository.DESCRIPTION;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PRICE;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_SYMBOLS;
+import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.command.ConstantRepository.PRICE;
 
+public class ProductValidator implements Validator {
     @Override
     public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
         boolean isValid = true;
         for (Map.Entry<String, Object> pair : parameters.entrySet()) {
             switch (pair.getKey()) {
-                case "name":
-                    String name = (String) parameters.get("name");
+                case NAME:
+                    String name = (String) parameters.get(NAME);
                     if (!name.matches("\\w+")) {
                         isValid = false;
-                        invalidParameters.put("name", "Name consists incorrect symbols");
+                        invalidParameters.put(NAME, INCORRECT_SYMBOLS);
                     }
                     break;
                 case DESCRIPTION:
@@ -31,7 +34,7 @@ public class ProductValidator implements Validator {
                     double price = (double) parameters.get(PRICE);
                     if (price < 0) {
                         isValid = false;
-                        invalidParameters.put(PRICE, "Price lower than 0");
+                        invalidParameters.put(PRICE, INCORRECT_PRICE);
                     }
                     break;
             }

@@ -16,11 +16,13 @@ import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 
 import java.util.Map;
 
-import static by.avdeev.pizzeria.action.ConstantRepository.LOGIN;
-import static by.avdeev.pizzeria.action.ConstantRepository.NEW_PASS;
-import static by.avdeev.pizzeria.action.ConstantRepository.OLD_PASS;
-import static by.avdeev.pizzeria.action.ConstantRepository.PASS;
-import static by.avdeev.pizzeria.action.ConstantRepository.REP_PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.LOGIN;
+import static by.avdeev.pizzeria.command.ConstantRepository.LOGIN_EXISTS;
+import static by.avdeev.pizzeria.command.ConstantRepository.NEW_PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.OLD_PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.PASS_DONT_MATCH;
+import static by.avdeev.pizzeria.command.ConstantRepository.REP_PASS;
 
 public class UserServiceImpl extends StandardServiceImpl<User>
         implements UserService {
@@ -87,10 +89,10 @@ public class UserServiceImpl extends StandardServiceImpl<User>
                         throw new ServiceException(e);
                     }
                 } else {
-                    invalidParameters.putIfAbsent(PASS, "Passwords don't match");
+                    invalidParameters.put(REP_PASS, PASS_DONT_MATCH);
                 }
             } else {
-                invalidParameters.put(LOGIN, "Such login exists!");
+                invalidParameters.put(LOGIN, LOGIN_EXISTS);
             }
         }
         return -1;

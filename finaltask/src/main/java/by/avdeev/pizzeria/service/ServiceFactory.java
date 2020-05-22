@@ -1,7 +1,5 @@
 package by.avdeev.pizzeria.service;
 
-import by.avdeev.pizzeria.dao.pool.ConnectionPool;
-import by.avdeev.pizzeria.dao.pool.ConnectionPoolImpl;
 import by.avdeev.pizzeria.service.impl.DeliveryServiceImpl;
 import by.avdeev.pizzeria.service.impl.ItemServiceImpl;
 import by.avdeev.pizzeria.service.impl.OrderPositionServiceImpl;
@@ -96,22 +94,5 @@ public class ServiceFactory {
         productService.setTransaction(transactionFactory.createTransaction());
         productService.setDAOType(Type.PRODUCT);
         return productService;
-    }
-
-    /**
-     * Closes ${@link TransactionFactory}.
-     *
-     * @throws ServiceException If method is failed.
-     */
-    public void close() throws ServiceException {
-        transactionFactory.close();
-    }
-
-    /**
-     * Calling ${@link ConnectionPool} close method.
-     */
-    public static void closeConnection() {
-        ConnectionPool connectionPool = ConnectionPoolImpl.getConnectionPoolImpl();
-        connectionPool.closeConnection();
     }
 }

@@ -1,110 +1,110 @@
 package by.avdeev.pizzeria.controller;
 
-import by.avdeev.pizzeria.action.Action;
-import by.avdeev.pizzeria.action.admin.delivery.DeliveryUpdateAction;
-import by.avdeev.pizzeria.action.admin.delivery.DeliveryUpdateForm;
-import by.avdeev.pizzeria.action.admin.order.OrderListUpdateAction;
-import by.avdeev.pizzeria.action.admin.order.OrderProfileUpdateAction;
-import by.avdeev.pizzeria.action.admin.user.ChangeRoleAction;
-import by.avdeev.pizzeria.action.admin.user.ChangeRoleFormAction;
-import by.avdeev.pizzeria.action.admin.delivery.DeliveryListRemoveAction;
-import by.avdeev.pizzeria.action.admin.delivery.DeliveryListShowAction;
-import by.avdeev.pizzeria.action.admin.order.OrderListRemoveAction;
-import by.avdeev.pizzeria.action.admin.order.OrderListShowAction;
-import by.avdeev.pizzeria.action.admin.orderposition.OrderPositionListRemoveAction;
-import by.avdeev.pizzeria.action.admin.orderposition.OrderPositionListShowAction;
-import by.avdeev.pizzeria.action.client.profile.ProfileCreateAction;
-import by.avdeev.pizzeria.action.client.profile.ProfileUpdateAction;
-import by.avdeev.pizzeria.action.client.user.UserUpdateAction;
-import by.avdeev.pizzeria.action.creator.ProductCreateAction;
-import by.avdeev.pizzeria.action.creator.ProductCreateFormAction;
-import by.avdeev.pizzeria.action.creator.ProductEditAction;
-import by.avdeev.pizzeria.action.creator.ProductEditFormAction;
-import by.avdeev.pizzeria.action.creator.ProductRemoveAction;
-import by.avdeev.pizzeria.action.unauthorized.DeliveryFormAction;
-import by.avdeev.pizzeria.action.unauthorized.LocalizationAction;
-import by.avdeev.pizzeria.action.unauthorized.OrderAction;
-import by.avdeev.pizzeria.action.unauthorized.item.ItemCreateSessionAction;
-import by.avdeev.pizzeria.action.unauthorized.item.ItemFormAction;
-import by.avdeev.pizzeria.action.unauthorized.item.ItemRemoveAction;
-import by.avdeev.pizzeria.action.unauthorized.product.DrinkShowListAction;
-import by.avdeev.pizzeria.action.unauthorized.product.MenuShowListAction;
-import by.avdeev.pizzeria.action.unauthorized.product.PizzaShowListAction;
-import by.avdeev.pizzeria.action.client.profile.ProfileCreateFormAction;
-import by.avdeev.pizzeria.action.admin.ProfileDeleteAction;
-import by.avdeev.pizzeria.action.client.profile.ProfileShowListAction;
-import by.avdeev.pizzeria.action.client.profile.ProfileUserShowAction;
-import by.avdeev.pizzeria.action.unauthorized.product.SidesShowListAction;
-import by.avdeev.pizzeria.action.unauthorized.user.UserCreateAction;
-import by.avdeev.pizzeria.action.admin.user.UserDeleteAction;
-import by.avdeev.pizzeria.action.unauthorized.user.UserLoginAction;
-import by.avdeev.pizzeria.action.admin.user.UserShowListAction;
-import by.avdeev.pizzeria.action.unauthorized.user.UserSignInAction;
-import by.avdeev.pizzeria.action.client.user.UserSignOutAction;
-import by.avdeev.pizzeria.action.unauthorized.user.UserSignUpAction;
+import by.avdeev.pizzeria.command.Command;
+import by.avdeev.pizzeria.command.admin.delivery.DeliveryUpdateCommand;
+import by.avdeev.pizzeria.command.admin.delivery.DeliveryUpdateFormCommand;
+import by.avdeev.pizzeria.command.admin.order.OrderListUpdateCommand;
+import by.avdeev.pizzeria.command.admin.order.OrderProfileUpdateCommand;
+import by.avdeev.pizzeria.command.admin.user.ChangeRoleCommand;
+import by.avdeev.pizzeria.command.admin.user.ChangeRoleFormCommand;
+import by.avdeev.pizzeria.command.admin.delivery.DeliveryListRemoveCommand;
+import by.avdeev.pizzeria.command.admin.delivery.DeliveryListShowCommand;
+import by.avdeev.pizzeria.command.admin.order.OrderListRemoveCommand;
+import by.avdeev.pizzeria.command.admin.order.OrderListShowCommand;
+import by.avdeev.pizzeria.command.admin.orderposition.OrderPositionListRemoveCommand;
+import by.avdeev.pizzeria.command.admin.orderposition.OrderPositionListShowCommand;
+import by.avdeev.pizzeria.command.client.profile.ProfileCreateCommand;
+import by.avdeev.pizzeria.command.client.profile.ProfileUpdateCommand;
+import by.avdeev.pizzeria.command.client.user.UserUpdateCommand;
+import by.avdeev.pizzeria.command.creator.ProductCreateCommand;
+import by.avdeev.pizzeria.command.creator.ProductCreateFormCommand;
+import by.avdeev.pizzeria.command.creator.ProductEditCommand;
+import by.avdeev.pizzeria.command.creator.ProductEditFormCommand;
+import by.avdeev.pizzeria.command.creator.ProductRemoveCommand;
+import by.avdeev.pizzeria.command.unauthorized.DeliveryFormCommand;
+import by.avdeev.pizzeria.command.unauthorized.LocalizationCommand;
+import by.avdeev.pizzeria.command.unauthorized.OrderCommand;
+import by.avdeev.pizzeria.command.unauthorized.item.ItemCreateSessionCommand;
+import by.avdeev.pizzeria.command.unauthorized.item.ItemFormCommand;
+import by.avdeev.pizzeria.command.unauthorized.item.ItemRemoveCommand;
+import by.avdeev.pizzeria.command.unauthorized.product.DrinkShowListCommand;
+import by.avdeev.pizzeria.command.unauthorized.product.MenuShowListCommand;
+import by.avdeev.pizzeria.command.unauthorized.product.PizzaShowListCommand;
+import by.avdeev.pizzeria.command.client.profile.ProfileCreateFormCommand;
+import by.avdeev.pizzeria.command.admin.ProfileDeleteCommand;
+import by.avdeev.pizzeria.command.client.profile.ProfileShowListCommand;
+import by.avdeev.pizzeria.command.client.profile.ProfileUserShowCommand;
+import by.avdeev.pizzeria.command.unauthorized.product.SidesShowListCommand;
+import by.avdeev.pizzeria.command.unauthorized.user.UserCreateCommand;
+import by.avdeev.pizzeria.command.admin.user.UserDeleteCommand;
+import by.avdeev.pizzeria.command.unauthorized.user.UserLoginCommand;
+import by.avdeev.pizzeria.command.admin.user.UserShowListCommand;
+import by.avdeev.pizzeria.command.unauthorized.user.UserSignInCommand;
+import by.avdeev.pizzeria.command.client.user.UserSignOutCommand;
+import by.avdeev.pizzeria.command.unauthorized.user.UserSignUpCommand;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CommandProvider {
-    private final Map<String, Action> repository = new ConcurrentHashMap<>();
+    private final Map<String, Command> repository = new ConcurrentHashMap<>();
 
     public CommandProvider() {
-        repository.put("/", new PizzaShowListAction());
+        repository.put("/", new PizzaShowListCommand());
 
-        repository.put("/local", new LocalizationAction());
+        repository.put("/local", new LocalizationCommand());
 
-        repository.put("/user/delete", new UserDeleteAction());
-        repository.put("/user/sign-up", new UserSignUpAction());
-        repository.put("/user/register", new UserCreateAction());
-        repository.put("/user/update", new UserUpdateAction());
-        repository.put("/user/login", new UserLoginAction());
-        repository.put("/user/sign-in", new UserSignInAction());
-        repository.put("/user/sign-out", new UserSignOutAction());
-        repository.put("/user/list", new UserShowListAction());
-        repository.put("/user/list/update", new ChangeRoleFormAction());
-        repository.put("/user/list/role", new ChangeRoleAction());
+        repository.put("/user/delete", new UserDeleteCommand());
+        repository.put("/user/sign-up", new UserSignUpCommand());
+        repository.put("/user/register", new UserCreateCommand());
+        repository.put("/user/update", new UserUpdateCommand());
+        repository.put("/user/login", new UserLoginCommand());
+        repository.put("/user/sign-in", new UserSignInCommand());
+        repository.put("/user/sign-out", new UserSignOutCommand());
+        repository.put("/user/list", new UserShowListCommand());
+        repository.put("/user/list/update", new ChangeRoleFormCommand());
+        repository.put("/user/list/role", new ChangeRoleCommand());
 
-        repository.put("/profile/list", new ProfileShowListAction());
-        repository.put("/profile/user", new ProfileUserShowAction());
-        repository.put("/profile/register", new ProfileCreateAction());
-        repository.put("/profile/create", new ProfileCreateFormAction());
-        repository.put("/profile/update", new ProfileUpdateAction());
-        repository.put("/profile/delete", new ProfileDeleteAction());
+        repository.put("/profile/list", new ProfileShowListCommand());
+        repository.put("/profile/user", new ProfileUserShowCommand());
+        repository.put("/profile/register", new ProfileCreateCommand());
+        repository.put("/profile/create", new ProfileCreateFormCommand());
+        repository.put("/profile/update", new ProfileUpdateCommand());
+        repository.put("/profile/delete", new ProfileDeleteCommand());
 
-        repository.put("/product/menu", new MenuShowListAction());
-        repository.put("/product/pizzas", new PizzaShowListAction());
-        repository.put("/product/drinks", new DrinkShowListAction());
-        repository.put("/product/sides", new SidesShowListAction());
-        repository.put("/product/edit-form", new ProductEditFormAction());
-        repository.put("/product/create-form", new ProductCreateFormAction());
-        repository.put("/product/edit", new ProductEditAction());
-        repository.put("/product/create", new ProductCreateAction());
-        repository.put("/product/remove", new ProductRemoveAction());
+        repository.put("/product/menu", new MenuShowListCommand());
+        repository.put("/product/pizzas", new PizzaShowListCommand());
+        repository.put("/product/drinks", new DrinkShowListCommand());
+        repository.put("/product/sides", new SidesShowListCommand());
+        repository.put("/product/edit-form", new ProductEditFormCommand());
+        repository.put("/product/create-form", new ProductCreateFormCommand());
+        repository.put("/product/edit", new ProductEditCommand());
+        repository.put("/product/create", new ProductCreateCommand());
+        repository.put("/product/remove", new ProductRemoveCommand());
 
-        repository.put("/item/cart", new ItemFormAction());
-        repository.put("/item/cart/create", new ItemCreateSessionAction());
-        repository.put("/item/cart/remove", new ItemRemoveAction());
+        repository.put("/item/cart", new ItemFormCommand());
+        repository.put("/item/cart/create", new ItemCreateSessionCommand());
+        repository.put("/item/cart/remove", new ItemRemoveCommand());
 
-        repository.put("/order/list", new OrderListShowAction());
-        repository.put("/order/list/remove", new OrderListRemoveAction());
-        repository.put("/order/list/update-form", new OrderListUpdateAction());
-        repository.put("/order/list/update", new OrderProfileUpdateAction());
+        repository.put("/order/list", new OrderListShowCommand());
+        repository.put("/order/list/remove", new OrderListRemoveCommand());
+        repository.put("/order/list/update-form", new OrderListUpdateCommand());
+        repository.put("/order/list/update", new OrderProfileUpdateCommand());
 
-        repository.put("/orderposition/list", new OrderPositionListShowAction());
-        repository.put("/orderposition/list/remove", new OrderPositionListRemoveAction());
+        repository.put("/orderposition/list", new OrderPositionListShowCommand());
+        repository.put("/orderposition/list/remove", new OrderPositionListRemoveCommand());
 
-        repository.put("/delivery/form", new DeliveryFormAction());
-        repository.put("/delivery/order", new OrderAction());
-        repository.put("/delivery/list", new DeliveryListShowAction());
-        repository.put("/delivery/list/remove", new DeliveryListRemoveAction());
-        repository.put("/delivery/list/update-form", new DeliveryUpdateForm());
-        repository.put("/delivery/list/update", new DeliveryUpdateAction());
+        repository.put("/delivery/form", new DeliveryFormCommand());
+        repository.put("/delivery/order", new OrderCommand());
+        repository.put("/delivery/list", new DeliveryListShowCommand());
+        repository.put("/delivery/list/remove", new DeliveryListRemoveCommand());
+        repository.put("/delivery/list/update-form", new DeliveryUpdateFormCommand());
+        repository.put("/delivery/list/update", new DeliveryUpdateCommand());
     }
 
-    public Action receiveCommand(final String name) {
-        Action action;
-        action = repository.get(name);
-        return action;
+    public Command receiveCommand(final String name) {
+        Command command;
+        command = repository.get(name);
+        return command;
     }
 }

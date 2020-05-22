@@ -10,17 +10,6 @@ public class Product implements Entity {
     private double price;
     private String picture;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", type=" + type +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", picture='" + picture + '\'' +
-                '}';
-    }
 
     public enum Type {
         PIZZA, SIDES, DRINK
@@ -131,6 +120,18 @@ public class Product implements Entity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", picture='" + picture + '\'' +
+                '}';
     }
 
 }

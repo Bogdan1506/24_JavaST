@@ -13,8 +13,8 @@ import by.avdeev.pizzeria.service.validator.ValidatorFactory;
 import java.util.Date;
 import java.util.Map;
 
-import static by.avdeev.pizzeria.action.ConstantRepository.DATE;
-import static by.avdeev.pizzeria.action.ConstantRepository.PAYMENT;
+import static by.avdeev.pizzeria.command.ConstantRepository.DATE;
+import static by.avdeev.pizzeria.command.ConstantRepository.PAYMENT;
 
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery>
         implements DeliveryService {

@@ -16,8 +16,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
-import static by.avdeev.pizzeria.action.ConstantRepository.ID;
-import static by.avdeev.pizzeria.action.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
 
 public class ProductServiceImpl extends StandardServiceImpl<Product>
         implements ProductService {

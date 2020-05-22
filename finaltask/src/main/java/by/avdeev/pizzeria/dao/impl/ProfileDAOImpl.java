@@ -3,7 +3,6 @@ package by.avdeev.pizzeria.dao.impl;
 import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.entity.Profile;
-import by.avdeev.pizzeria.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,19 +13,39 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.ADDRESS;
+import static by.avdeev.pizzeria.command.ConstantRepository.EMAIL;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.command.ConstantRepository.PHONE;
+import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
+
 public class ProfileDAOImpl extends AbstractDAO<Profile> {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ProfileDAOImpl.class);
 
     @Override
     public List<Profile> findAll(int begin, int end) throws DAOException {
-        return null;
+        List<Profile> profiles = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, name, surname, email, phone, address FROM profile LIMIT ?, ?")) {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Profile profile = fill(rs);
+                profiles.add(profile);
+            }
+        } catch (SQLException e) {
+            rollback();
+            throw new DAOException(e);
+        }
+        return profiles;
     }
 
     @Override
     public List<Profile> findAll() throws DAOException {
         List<Profile> profiles = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, name, surname, email, phone, address FROM profile");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id, name, surname, email, phone, address FROM profile");
             while (rs.next()) {
                 Profile profile = fill(rs);
                 profiles.add(profile);
@@ -77,9 +96,9 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     @Override
     public int create(Profile profile) throws DAOException {
         int id;
-        logger.debug("profile={}", profile);
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO profile (name, surname, email, phone, address) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                "INSERT INTO profile (name, surname, email, phone, address)" +
+                        "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             fill(profile, statement);
             id = findLastId(statement);
         } catch (SQLException e) {
@@ -89,33 +108,17 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
         return id;
     }
 
-    private void fill(Profile profile, PreparedStatement statement) throws SQLException {
-        statement.setString(1, profile.getName());
-        statement.setString(2, profile.getSurname());
-        statement.setString(3, profile.getEmail());
-        statement.setString(4, profile.getPhone());
-        statement.setString(5, profile.getAddress());
-        statement.executeUpdate();
-    }
-
     @Override
     public boolean update(Profile profile) throws DAOException {
-        logger.debug("profile={}", profile);
-        int id = profile.getId();
-        String name = profile.getName();
-        String surname = profile.getSurname();
-        String email = profile.getEmail();
-        String phone = profile.getPhone();
-        String address = profile.getAddress();
-        logger.debug(String.format("Connection=%s", connection));
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE profile SET name=?, surname=?, email=?, phone=?, address=? WHERE id=?")) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, surname);
-            preparedStatement.setString(3, email);
-            preparedStatement.setString(4, phone);
-            preparedStatement.setString(5, address);
-            preparedStatement.setInt(6, id);
+            preparedStatement.setString(1, profile.getName());
+            preparedStatement.setString(2, profile.getSurname());
+            preparedStatement.setString(3, profile.getEmail());
+            preparedStatement.setString(4, profile.getPhone());
+            preparedStatement.setString(5, profile.getAddress());
+//            fill(profile, preparedStatement);
+            preparedStatement.setInt(6, profile.getId());
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -132,7 +135,7 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
     public Profile findByUserLogin(String login) throws DAOException {
         Profile profile = null;
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT profile.id, name, surname, phone, email, address from profile JOIN `user` ON user.id = profile.id WHERE user.login=?")) {
+                "SELECT profile.id, name, surname, phone, email, address from profile JOIN `user` ON user.profile_id = profile.id WHERE user.login=?")) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -142,37 +145,28 @@ public class ProfileDAOImpl extends AbstractDAO<Profile> {
             rollback();
             throw new DAOException(e);
         }
-        logger.debug("dao profile={}", profile);
+        logger.debug("profile={}", profile);
         return profile;
     }
 
-/*    public Profile findByUserId(int userId) throws DAOException {
-        Profile profile = null;
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT id, name, surname, email, phone, address FROM profile WHERE user_id=?")) {
-            statement.setInt(1, userId);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                profile = fill(rs);
-                User user = new User();
-                user.setId(userId);
-                profile.setUser(user);
-            }
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
-        }
-        logger.debug("dao profile={}", profile);
-        return profile;
-    }*/
-
     private Profile fill(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String surname = rs.getString("surname");
-        String email = rs.getString("email");
-        String phone = rs.getString("phone");
-        String address = rs.getString("address");
+        int id = rs.getInt(ID);
+        String name = rs.getString(NAME);
+        String surname = rs.getString(SURNAME);
+        String email = rs.getString(EMAIL);
+        String phone = rs.getString(PHONE);
+        String address = rs.getString(ADDRESS);
         return new Profile(id, name, surname, email, phone, address);
+    }
+
+
+    private void fill(Profile profile, PreparedStatement statement)
+            throws SQLException {
+        statement.setString(1, profile.getName());
+        statement.setString(2, profile.getSurname());
+        statement.setString(3, profile.getEmail());
+        statement.setString(4, profile.getPhone());
+        statement.setString(5, profile.getAddress());
+        statement.executeUpdate();
     }
 }

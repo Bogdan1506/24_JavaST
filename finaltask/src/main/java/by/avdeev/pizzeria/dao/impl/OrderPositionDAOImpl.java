@@ -15,13 +15,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.ITEM_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.ORDER_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.PRICE;
+
 public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
-    private final static Logger logger = LogManager.getLogger();
+    private final static Logger logger = LogManager.getLogger(OrderPositionDAOImpl.class);
 
     @Override
     public List<OrderPosition> findAll(int begin, int end) throws DAOException {
         List<OrderPosition> orderPositions = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, item_id, order_id, price FROM `order_position` ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, item_id, order_id, price FROM `order_position`" +
+                        "ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
@@ -39,7 +46,8 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     public List<OrderPosition> findAll() throws DAOException {
         List<OrderPosition> orderPositions = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, item_id, order_id, price FROM `order_position`");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id, item_id, order_id, price FROM `order_position`");
             while (rs.next()) {
                 orderPositions.add(fill(rs));
             }
@@ -50,17 +58,6 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         return orderPositions;
     }
 
-    private OrderPosition fill(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        Item item = new Item();
-        int itemId = rs.getInt("item_id");
-        item.setId(itemId);
-        Order order = new Order();
-        int orderId = rs.getInt("order_id");
-        order.setId(orderId);
-        double price = rs.getDouble("price");
-        return new OrderPosition(id, item, order, price);
-    }
 
     @Override
     public OrderPosition findById(int id) throws DAOException {
@@ -101,13 +98,12 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     @Override
     public int create(OrderPosition orderPosition) throws DAOException {
         int id;
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO `order_position` (item_id, order_id, price) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, orderPosition.getItem().getId());
-            statement.setInt(2, orderPosition.getOrder().getId());
-            statement.setDouble(3, orderPosition.getPrice());
-            statement.executeUpdate();
-            id = findLastId(statement);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "INSERT INTO `order_position` (item_id, order_id, price) VALUES (?,?,?)",
+                Statement.RETURN_GENERATED_KEYS)) {
+            fill(preparedStatement, orderPosition);
+            preparedStatement.executeUpdate();
+            id = findLastId(preparedStatement);
         } catch (SQLException e) {
             rollback();
             throw new DAOException(e);
@@ -119,9 +115,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     public boolean update(OrderPosition orderPosition) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE `order_position` SET item_id=?, order_id=?, price=? WHERE id=?")) {
-            preparedStatement.setInt(1, orderPosition.getItem().getId());
-            preparedStatement.setInt(2, orderPosition.getOrder().getId());
-            preparedStatement.setDouble(3, orderPosition.getPrice());
+            fill(preparedStatement, orderPosition);
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -148,17 +142,13 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     }
 
     public OrderPosition findByItem(Item item) throws DAOException {
-        OrderPosition orderPosition = new OrderPosition();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT id, order_id, price FROM `order_position` WHERE item_id=?")) {
+        OrderPosition orderPosition = null;
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT id, order_id, price FROM `order_position` WHERE item_id=?")) {
             statement.setInt(1, item.getId());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                int id = rs.getInt("id");
-                Order order = new Order();
-                int orderId = rs.getInt("order_id");
-                order.setId(orderId);
-                double price = rs.getDouble("price");
-                orderPosition = new OrderPosition(id, item, order, price);
+                orderPosition = fill(rs);
             }
         } catch (SQLException e) {
             rollback();
@@ -170,16 +160,12 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
     public List<OrderPosition> findByOrderPosition(Order order) throws DAOException {
         logger.debug("order={}", order);
         List<OrderPosition> orderPositions = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT id, item_id, price FROM `order_position` WHERE order_id=?")) {
-            statement.setInt(1, order.getId());
-            ResultSet rs = statement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, item_id, price FROM `order_position` WHERE order_id=?")) {
+            preparedStatement.setInt(1, order.getId());
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                Item item = new Item();
-                int itemId = rs.getInt("item_id");
-                item.setId(itemId);
-                double price = rs.getDouble("price");
-                orderPositions.add(new OrderPosition(id, item, order, price));
+                orderPositions.add(fill(rs));
             }
         } catch (SQLException e) {
             rollback();
@@ -187,5 +173,20 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         }
         logger.debug("orderPos={}", orderPositions);
         return orderPositions;
+    }
+
+    private void fill(PreparedStatement preparedStatement,
+                      OrderPosition orderPosition) throws SQLException {
+        preparedStatement.setInt(1, orderPosition.getItem().getId());
+        preparedStatement.setInt(2, orderPosition.getOrder().getId());
+        preparedStatement.setDouble(3, orderPosition.getPrice());
+    }
+
+
+    private OrderPosition fill(ResultSet rs) throws SQLException {
+        return new OrderPosition(rs.getInt(ID),
+                new Item(rs.getInt(ITEM_ID)),
+                new Order(rs.getInt(ORDER_ID)),
+                rs.getDouble(PRICE));
     }
 }

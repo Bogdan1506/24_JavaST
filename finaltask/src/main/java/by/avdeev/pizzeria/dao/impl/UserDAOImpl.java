@@ -15,17 +15,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl extends AbstractDAO<User> {
-    private static Logger logger = LogManager.getLogger();
-    private static final String LOGIN = "login";
-    private static final String PASSWORD = "password";
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.LOGIN;
+import static by.avdeev.pizzeria.command.ConstantRepository.PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.ROLE;
 
+public class UserDAOImpl extends AbstractDAO<User> {
+    private static Logger logger = LogManager.getLogger(UserDAOImpl.class);
 
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
         try {
-            logger.debug("Connection={}", connection);
             Statement statement = connection.createStatement();
             String sql = "SELECT id, login, password, profile_id, role FROM user";
             ResultSet rs = statement.executeQuery(sql);
@@ -42,7 +44,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
     public List<User> findAll(int begin, int end) throws DAOException {
         logger.debug("begin={}, end={}", begin, end);
         List<User> users = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, login, password, profile_id, role FROM user ORDER BY id LIMIT ?, ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT id, login, password, profile_id, role FROM user ORDER BY id LIMIT ?, ?")) {
             preparedStatement.setInt(1, begin);
             preparedStatement.setInt(2, end);
             ResultSet rs = preparedStatement.executeQuery();
@@ -54,20 +57,6 @@ public class UserDAOImpl extends AbstractDAO<User> {
         return users;
     }
 
-    private void fill(List<User> users, ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String login = rs.getString(LOGIN);
-            String password = rs.getString(PASSWORD);
-            int roleInt = rs.getInt("role");
-            Role role = Role.getByIdentity(roleInt);
-            Profile profile = new Profile();
-            profile.setId(rs.getInt("profile_id"));
-            User user = new User(id, login, password, profile, role);
-            users.add(user);
-        }
-    }
-
     @Override
     public User findById(int id) throws DAOException {
         User user = null;
@@ -76,16 +65,11 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                user = new User();
-                user.setId(id);
+                user = new User(id);
                 user.setLogin(rs.getString(LOGIN));
-                user.setPassword(rs.getString(PASSWORD));
-                Profile profile = new Profile();
-                profile.setId(rs.getInt("profile_id"));
-                user.setProfile(profile);
-                int roleInt = rs.getInt("role");
-                Role role = Role.getByIdentity(roleInt);
-                user.setRole(role);
+                user.setPassword(rs.getString(PASS));
+                user.setProfile(new Profile(rs.getInt(PROFILE_ID)));
+                user.setRole(Role.getByIdentity(rs.getInt(ROLE)));
             }
         } catch (SQLException e) {
             rollback();
@@ -153,16 +137,11 @@ public class UserDAOImpl extends AbstractDAO<User> {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                user = new User();
+                user = new User(rs.getInt(ID));
                 user.setLogin(login);
-                user.setId(rs.getInt("id"));
-                user.setPassword(rs.getString(PASSWORD));
-                int roleInt = rs.getInt("role");
-                Role role = Role.getByIdentity(roleInt);
-                Profile profile = new Profile();
-                profile.setId(rs.getInt("profile_id"));
-                user.setProfile(profile);
-                user.setRole(role);
+                user.setPassword(rs.getString(PASS));
+                user.setProfile(new Profile(rs.getInt(PROFILE_ID)));
+                user.setRole(Role.getByIdentity(rs.getInt(ROLE)));
             }
         } catch (SQLException e) {
             rollback();
@@ -199,5 +178,16 @@ public class UserDAOImpl extends AbstractDAO<User> {
             throw new DAOException(e);
         }
         return total;
+    }
+
+    private void fill(List<User> users, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt(ID);
+            String login = rs.getString(LOGIN);
+            String password = rs.getString(PASS);
+            Role role = Role.getByIdentity(rs.getInt(ROLE));
+            User user = new User(id, login, password, new Profile(rs.getInt(PROFILE_ID)), role);
+            users.add(user);
+        }
     }
 }
