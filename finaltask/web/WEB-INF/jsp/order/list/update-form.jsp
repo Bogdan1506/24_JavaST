@@ -16,6 +16,7 @@
     <p class="display-4"><fmt:message key="profileUpdateForm" bundle="${rb}"/></p>
     <c:url value="/order/list/update" var="profileUpdate"/>
     <form action="${profileUpdate}" class="was-validated" method="get">
+        <input type="hidden" value="${requestScope.profile.id}" name="id">
         <div class="form-group">
             <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="name"

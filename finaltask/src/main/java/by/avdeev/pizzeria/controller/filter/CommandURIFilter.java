@@ -20,19 +20,21 @@ public class CommandURIFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        CommandProvider commandProvider = new CommandProvider();
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String uri = httpServletRequest.getRequestURI();
-        logger.debug("uri={}", uri);
+        CommandProvider commandProvider = new CommandProvider();
         Command command = commandProvider.receiveCommand(uri);
-        if (command != null) {
-            logger.debug("action={}", command);
-            command.setName(uri);
-            httpServletRequest.setAttribute("action", command);
-            logger.debug("filter={}", filterChain);
+        logger.debug("uri={}", uri);
+        if (command != null || uri.startsWith("/img/")) {
+            if (command != null) {
+                logger.debug("action={}", command);
+                command.setName(uri);
+                httpServletRequest.setAttribute("action", command);
+            }
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/element/error.jsp").forward(servletRequest, servletResponse);
         }
     }
+
 }

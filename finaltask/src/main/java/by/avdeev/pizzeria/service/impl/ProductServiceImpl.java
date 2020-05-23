@@ -163,4 +163,21 @@ public class ProductServiceImpl extends StandardServiceImpl<Product>
         }
         return products;
     }
+
+    /**
+     * Delelets the product.
+     *
+     * @param product Bean ${@link Product}.
+     * @return True if it was deleted else false.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
+    @Override
+    public boolean delete(Product product) throws ServiceException {
+        AbstractDAO<Product> abstractDAO = getTransaction().createDao(getType());
+        try {
+            return abstractDAO.delete(product);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

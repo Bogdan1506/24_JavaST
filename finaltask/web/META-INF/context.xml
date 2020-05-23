@@ -7,8 +7,7 @@
               password="root"
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/pizzeria?characterEncoding=UTF-8&amp;useConfigs=maxPerformance&amp;serverTimezone=Europe/Minsk&amp;autoReconnect=true"
-              maxActive="10"
               maxTotal="40"
-              maxWait="10000"
+              maxWaitMillis="20000"
               maxIdle="5"/>
 </Context>

@@ -1,5 +1,6 @@
 package by.avdeev.pizzeria.command.creator;
 
+import by.avdeev.pizzeria.command.ImageHandler;
 import by.avdeev.pizzeria.command.validator.ProductTypeValidator;
 import by.avdeev.pizzeria.command.validator.TypeValidator;
 import by.avdeev.pizzeria.service.ProductService;
@@ -11,16 +12,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static by.avdeev.pizzeria.command.ConstantRepository.CONTENT_DISPOSITION;
 import static by.avdeev.pizzeria.command.ConstantRepository.CREATED;
 import static by.avdeev.pizzeria.command.ConstantRepository.DESCRIPTION;
-import static by.avdeev.pizzeria.command.ConstantRepository.FILENAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.FILE_UPLOAD_PATH;
 import static by.avdeev.pizzeria.command.ConstantRepository.FILL_FIELDS;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_TYPES;
@@ -51,22 +49,21 @@ public class ProductCreateCommand extends CreatorCommand {
         logger.debug("param={}", parameters);
         logger.debug("isProductValid={}", isProductValid);
         if (isProductValid) {
+            ImageHandler imageHandler = new ImageHandler();
             Part part = request.getPart(PICTURE);
-            if (part.getSize() > 0) {
-                File fileSaveDir = new File(FILE_UPLOAD_PATH);
-                if (!fileSaveDir.exists()) {
-                    fileSaveDir.mkdirs();
-                }
-                String fileName = null;
-                String contentDisposition = part.getHeader(CONTENT_DISPOSITION);
-                String[] tokens = contentDisposition.split(";");
-                for (String token : tokens) {
-                    if (token.trim().startsWith(FILENAME)) {
-                        fileName = token.substring(token.indexOf('=') + 2, token.length() - 1);
+            String fileName = imageHandler.receiveImageName(part);
+            if (fileName != null) {
+                String srcPath = request.getServletContext().getRealPath("") + "img";
+                boolean isUploaded = imageHandler.upload(part,
+                        srcPath,
+                        fileName);
+                if (isUploaded) {
+                    boolean isCopied = imageHandler.copy(srcPath,
+                            FILE_UPLOAD_PATH, fileName);
+                    if (isCopied) {
+                        parameters.put(PICTURE, fileName);
                     }
                 }
-                part.write(FILE_UPLOAD_PATH + File.separator + fileName);
-                parameters.put(PICTURE, fileName);
             }
             ProductService productService = factory.getProductService();
             int id = productService.create(parameters, invalidParameters);
@@ -83,3 +80,4 @@ public class ProductCreateCommand extends CreatorCommand {
         return forwardObjectEx;
     }
 }
+

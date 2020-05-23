@@ -189,9 +189,8 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         Map<String, Integer> countProducts = new HashMap<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(
-                    "SELECT name, count_item FROM(SELECT `item_id`, COUNT(`item_id`) as `count_item`, `product_id`" +
-                            "FROM `item` JOIN `order_position` ON order_position.item_id = item.id group by `item_id`) " +
-                            "as ds JOIN product ON product_id = product.id group by `name`");
+                    "SELECT `name`, COUNT(`name`) AS count_item FROM" +
+                            "(SELECT product_id FROM item INNER JOIN `order_position` ON item.id = item_id) AS p_id JOIN product ON product.id = product_id group by (`name`) ORDER BY name");
             while (rs.next()) {
                 String name = rs.getString(NAME);
                 int count = rs.getInt(COUNT_ITEM);

@@ -50,7 +50,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, product_id, size_id, dough_id FROM item");
             while (rs.next()) {
-                fill(rs);
+                items.add(fill(rs));
             }
         } catch (SQLException e) {
             rollback();

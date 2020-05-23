@@ -57,7 +57,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public Delivery findById(int id) throws DAOException {
         Delivery delivery = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT order_position_id, date, payment FROM `delivery` WHERE id=?")) {
+                "SELECT id, order_position_id, date, payment FROM `delivery` WHERE id=?")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -122,7 +122,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         }
     }
 
-    public Delivery findByOrderPosition(OrderPosition orderPosition) throws DAOException {
+    public Delivery findByOrderPosition(OrderPosition orderPosition) throws DAOException { //todo delete
         Delivery delivery = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, date, payment FROM `delivery` WHERE order_position_id=?")) {
@@ -142,12 +142,30 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public int countAll() throws DAOException {
         int count = 0;
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT COUNT(*) as count FROM delivery");
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS count FROM delivery");
             if (rs.next()) {
                 count = rs.getInt(COUNT);
             }
         } catch (SQLException e) {
             rollback();
+            throw new DAOException(e);
+        }
+        return count;
+    }
+
+    public int findCountByDate(java.sql.Date firstDate,
+                               java.sql.Date secondDate)
+            throws DAOException {
+        int count = 0;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT COUNT(*) AS count FROM delivery WHERE date >= ? AND date < ?")) {
+            preparedStatement.setDate(1, firstDate);
+            preparedStatement.setDate(2, secondDate);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(COUNT);
+            }
+        } catch (SQLException e) {
             throw new DAOException(e);
         }
         return count;

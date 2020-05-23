@@ -27,6 +27,7 @@ public abstract class ConstantRepository {
     public static final String EMPTY_CART = "emptyCart";
     public static final String UNDEFINED = "undefined";
     public static final String POSITION_DELETED = "posDeleted";
+    public static final String POSITION_NOT_DELETED = "posNotDeleted";
     public static final String POSITION_UPDATED = "posUpdated";
     public static final String POSITION_NOT_UPDATED = "posNotUpdated";
     public static final String SIGNED_UP = "signedUp";
@@ -44,6 +45,7 @@ public abstract class ConstantRepository {
     public static final String MAX_PAGE = "maxPage";
     public static final String INCORRECT_PAGE_SIZE = "incorrectPageSize";
     public static final String COUNT_TOTAL = "countTotal";
+    public static final String COUNT_TODAY = "countToday";
     public static final String DELIVERIES = "deliveries";
     public static final String PROFILE = "profile";
     public static final String NAME = "name";

@@ -66,4 +66,26 @@ public class DeliveryServiceImpl extends StandardServiceImpl<Delivery>
         }
         return false;
     }
+
+    /**
+     * Counts all deliveries on determined dates.
+     *
+     * @param firstDate  Start of searching.
+     * @param secondDate End of searching.
+     * @return Count of found dates.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
+    @Override
+    public int findCountByDate(java.sql.Date firstDate, java.sql.Date secondDate)
+            throws ServiceException {
+        AbstractDAO<Delivery> abstractDAO = getTransaction().createDao(getType());
+        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
+        int count;
+        try {
+            count = deliveryDAO.findCountByDate(firstDate, secondDate);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return count;
+    }
 }

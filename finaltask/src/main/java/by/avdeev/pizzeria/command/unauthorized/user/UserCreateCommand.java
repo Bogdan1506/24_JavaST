@@ -46,6 +46,7 @@ public class UserCreateCommand extends UnauthorizedCommand {
             User user = userService.findById(id);
             logger.debug("user={}", user);
             HttpSession session = request.getSession();
+            user.setPassword(null);
             session.setAttribute(USER, user);
             return forwardObject;
         }

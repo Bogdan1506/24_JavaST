@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 import static by.avdeev.pizzeria.command.ConstantRepository.ALL;
@@ -30,7 +29,7 @@ public class ItemRemoveCommand extends UnauthorizedCommand {
         List<Item> cart = (List<Item>) session.getAttribute(CART);
         String param = request.getParameter(ID);
         if (param.equals(ALL)) {
-            cart = new ArrayList<>();
+            cart.clear();
             session.setAttribute(CART, cart);
         } else {
             int id;

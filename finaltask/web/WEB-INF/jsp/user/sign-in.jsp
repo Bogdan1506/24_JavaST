@@ -13,7 +13,7 @@
 <div class="container">
     <p class="display-4 mt-5"><fmt:message key="signInForm" bundle="${rb}"/></p>
     <c:url value="/user/login" var="signIn"/>
-    <form action="${signIn}" class="was-validated" name="signIn" method="post">
+    <form action="${signIn}" name="signIn" method="post">
         <div class="form-group">
             <label for="login"><fmt:message key="login" bundle="${rb}"/></label>
             <input type="text" class="form-control" id="login"

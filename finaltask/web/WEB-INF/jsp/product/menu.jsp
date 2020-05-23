@@ -6,9 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Menu</title>
-    <script src="../../../js/remove.js"></script>
-    <script src="../../../js/add-to-cart.js"></script>
+    <title><fmt:message key="menu" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="../element/navbar.jsp"/>
@@ -20,7 +18,7 @@
                 <c:forEach var="temp" items="${requestScope.products}">
                     <div class="col-sm-4 mt-5">
                         <p>
-                            <img alt="Pizza image" src="../../../img/${temp.picture}" width="280"
+                            <img alt="Pizza image" src="/img/${temp.picture}" width="280"
                                  height="280">
                         </p>
                         <h3>
@@ -55,19 +53,19 @@
                                     <input class="size_param" type="radio" name="size" id="size1" value="Small"
                                            autocomplete="off"
                                            checked>
-                                    S ${temp.price}
+                                    <fmt:message key="S" bundle="${rb}"/> ${temp.price}
                                 </label>
                                 <label class="btn btn-primary">
                                     <c:set var="amountM" value="${temp.price * 2}"/>
                                     <input class="size_param" type="radio" name="size" id="size2" value="Medium"
-                                           autocomplete="off"> M
+                                           autocomplete="off"> <fmt:message key="M" bundle="${rb}"/>
                                     <fmt:formatNumber type="number" pattern="##.#" value="${amountM}"/>
                                 </label>
                                 <c:set var="amountL" value="${temp.price * 3}"/>
                                 <label class="btn btn-primary">
                                     <input class="size_param" type="radio" name="size" id="size3" value="Large"
                                            autocomplete="off">
-                                    L
+                                    <fmt:message key="L" bundle="${rb}"/>
                                     <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
                                 </label>
                             </div>
@@ -86,7 +84,7 @@
                                 </form>
                                 <form action="${editPosition}" method="post">
                                     <input type="hidden" name="id" value="${temp.id}">
-                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="edit"
+                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="change"
                                                                                                       bundle="${rb}"/></button>
                                 </form>
                             </div>
@@ -111,3 +109,18 @@
 </div>
 </body>
 </html>
+<script>
+    function addToCart(id) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("cart").innerHTML = this.responseText;
+            }
+        };
+        const dough_param = $(".dough_param:checked").val();
+        const size_param = $(".size_param:checked").val();
+        xhttp.open("GET", "/item/cart/create?id=" + id + "&dough=" +
+            dough_param + "&size=" + size_param, true);
+        xhttp.send();
+    }
+</script>

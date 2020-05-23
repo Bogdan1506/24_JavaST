@@ -49,7 +49,7 @@
             <label for="price"><fmt:message key="price" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="price"
                    placeholder="<fmt:message key="enterPrice" bundle="${rb}"/>" name="price"
-                   value="${requestScope.product.price}"
+                   value="${requestScope.product.price}" pattern="\d+\.\d+"
                    required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">

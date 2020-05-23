@@ -3,7 +3,6 @@ package by.avdeev.pizzeria.controller;
 import by.avdeev.pizzeria.command.Command;
 import by.avdeev.pizzeria.command.CommandManager;
 import by.avdeev.pizzeria.command.CommandManagerFactory;
-import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.ServiceFactory;
 import by.avdeev.pizzeria.transaction.TransactionFactory;
 import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
@@ -23,7 +22,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.ACTION;
 import static by.avdeev.pizzeria.command.ConstantRepository.REDIRECTED_DATA;
 
 @MultipartConfig
-@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
+@WebServlet(urlPatterns = {"/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
+//@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger(ControllerServlet.class);
 
@@ -69,12 +69,8 @@ public class ControllerServlet extends HttpServlet {
         try (TransactionFactory transactionFactory = new TransactionFactoryImpl()) {
             serviceFactory = new ServiceFactory(transactionFactory);
             CommandManager commandManager = CommandManagerFactory.getManager(serviceFactory);
-            Command.ForwardObject forwardObject = null;
-            try {
-                forwardObject = commandManager.execute(command, request, response);
-            } catch (ServiceException e) {
-                logger.error(e);
-            }
+            Command.ForwardObject forwardObject;
+            forwardObject = commandManager.execute(command, request, response);
             if (session != null && forwardObject != null && !forwardObject.getAttributes().isEmpty()) {
                 session.setAttribute(REDIRECTED_DATA, forwardObject.getAttributes());
             }
@@ -95,6 +91,7 @@ public class ControllerServlet extends HttpServlet {
             }
         } catch (Exception e) {
             logger.error(e);
+            e.printStackTrace();
         }
     }
 }

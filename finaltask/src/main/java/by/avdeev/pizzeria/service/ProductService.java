@@ -69,4 +69,6 @@ public interface ProductService extends UtilityService {
      * @throws ServiceException If there was an exception in DAO layer.
      */
     Map<String, Integer> findCount() throws ServiceException;
+
+    boolean delete(Product product) throws ServiceException;
 }

@@ -8,9 +8,12 @@ import by.avdeev.pizzeria.service.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT_TODAY;
 import static by.avdeev.pizzeria.command.ConstantRepository.COUNT_TOTAL;
+import static by.avdeev.pizzeria.command.ConstantRepository.DAY;
 import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE_SIZE;
 import static by.avdeev.pizzeria.command.ConstantRepository.DELIVERIES;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_NUMBER_FORMAT;
@@ -28,6 +31,9 @@ public class DeliveryListShowCommand extends AdminCommand {
         HttpSession session = request.getSession();
         DeliveryService deliveryService = factory.getDeliveryService();
         int countTotal = deliveryService.countAll();
+        int countToday = deliveryService.findCountByDate(
+                new Date(System.currentTimeMillis()),
+                new Date(System.currentTimeMillis() + DAY));
         String pageSizeStr = request.getParameter(PAGE_SIZE);
         int pageSize = DEFAULT_PAGE_SIZE;
         if (pageSizeStr != null) {
@@ -61,6 +67,7 @@ public class DeliveryListShowCommand extends AdminCommand {
             request.setAttribute(DELIVERIES, deliveries);
             request.setAttribute(PAGE, page);
             request.setAttribute(COUNT_TOTAL, countTotal);
+            request.setAttribute(COUNT_TODAY, countToday);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE_SIZE);
             return forwardObjectEx;

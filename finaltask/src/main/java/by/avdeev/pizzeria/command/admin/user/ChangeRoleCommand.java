@@ -27,7 +27,7 @@ public class ChangeRoleCommand extends AdminCommand {
         Role role;
         try {
             id = Integer.parseInt(request.getParameter(ID));
-            role = Role.valueOf(request.getParameter(ROLE).toUpperCase());
+            role = Role.getByIdentity(Integer.valueOf(request.getParameter(ROLE)));
             logger.debug("role={}", role);
             UserService userService = factory.getUserService();
             boolean isChanged = userService.changeRole(role, id);

@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT;
 import static by.avdeev.pizzeria.command.ConstantRepository.ID;
 import static by.avdeev.pizzeria.command.ConstantRepository.ITEM_ID;
 import static by.avdeev.pizzeria.command.ConstantRepository.ORDER_ID;
@@ -129,10 +130,10 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         int total = 0;
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT COUNT(*) as count FROM order_position";
+            String sql = "SELECT COUNT(*) AS count FROM order_position";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
-                total = rs.getInt("count");
+                total = rs.getInt(COUNT);
             }
         } catch (SQLException e) {
             rollback();
@@ -141,7 +142,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         return total;
     }
 
-    public OrderPosition findByItem(Item item) throws DAOException {
+    public OrderPosition findByItem(Item item) throws DAOException { //todo delete
         OrderPosition orderPosition = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, order_id, price FROM `order_position` WHERE item_id=?")) {
@@ -157,7 +158,7 @@ public class OrderPositionDAOImpl extends AbstractDAO<OrderPosition> {
         return orderPosition;
     }
 
-    public List<OrderPosition> findByOrderPosition(Order order) throws DAOException {
+    public List<OrderPosition> findByOrderPosition(Order order) throws DAOException { //todo delete
         logger.debug("order={}", order);
         List<OrderPosition> orderPositions = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(

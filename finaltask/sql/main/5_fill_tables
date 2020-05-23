@@ -1,5 +1,5 @@
 INSERT INTO `profile` (name, surname, email, phone, address)
-VALUES ('creator', 'creator', 'creator@mail.ru', '+375291234567', 'creator');
+VALUES ('creator', 'creator', 'creator@mail.ru', '375291234567', 'creator');
 
 INSERT INTO `user` (`login`,
                     `password`,
@@ -11,7 +11,7 @@ VALUES ('creator',
         1);
 
 INSERT INTO `profile` (name, surname, email, phone, address)
-VALUES ('client', 'client', 'client@mail.ru', '+375291234567', 'client');
+VALUES ('client', 'client', 'client@mail.ru', '375291234567', 'client');
 
 INSERT INTO `user` (`login`,
                     `password`,

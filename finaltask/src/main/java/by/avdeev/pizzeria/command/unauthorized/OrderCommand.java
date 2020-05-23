@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -74,6 +73,7 @@ public class OrderCommand extends UnauthorizedCommand {
                         if (!isUpdated) {
                             return forwardObjectEx;
                         }
+                        profile.setId(profileChecked.getId());
                     } else {
                         int id = profileService.create(parameters, invalidParameters);
                         profile.setId(id);
@@ -111,7 +111,7 @@ public class OrderCommand extends UnauthorizedCommand {
                 }
                 ForwardObject forwardObject = new ForwardObject("/product/pizzas");
                 forwardObject.getAttributes().put(MESSAGE, ORDERED);
-                cart = new ArrayList<>();
+                cart.clear();
                 session.setAttribute(CART, cart);
                 return forwardObject;
             }

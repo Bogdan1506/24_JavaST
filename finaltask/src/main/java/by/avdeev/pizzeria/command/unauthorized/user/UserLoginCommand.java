@@ -45,6 +45,7 @@ public class UserLoginCommand extends UnauthorizedCommand {
                     forwardObject = new ForwardObject(command.getName());
                 }
                 forwardObject.getAttributes().put(MESSAGE, AUTHORIZED);
+                user.setPassword(null);
                 session.setAttribute(USER, user);
                 return forwardObject;
             } else {
