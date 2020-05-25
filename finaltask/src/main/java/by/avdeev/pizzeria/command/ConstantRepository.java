@@ -6,6 +6,7 @@ public abstract class ConstantRepository {
 
     public static final String REDIRECTED_DATA = "redirectedData";
     public static final String MESSAGE = "message";
+    public static final String INVALID_IMAGE = "invalidImage";
     public static final String ID = "id";
     public static final String INCORRECT_ID = "invalidId";
     public static final String ILLEGAL_PARAMETERS = "invalidParams";
@@ -18,12 +19,13 @@ public abstract class ConstantRepository {
     public static final String LANGUAGE = "lang";
     public static final String LOCALIZATION = "local";
     public static final String URI = "uri";
-    public static final String ORDERED = "Ordered";
+    public static final String ORDERED = "ordered";
     public static final String INCORRECT_SYMBOLS = "incorrectSymbols";
     public static final String INCORRECT_SIZE = "incorrectSize";
     public static final String INVALID_DELIVER = "invalidDeliver";
     public static final String INCORRECT_PRICE = "incorrectPrice";
     public static final String PASS_DONT_MATCH = "passDontMatch";
+    public static final String TOTAL_PRICE = "totalPrice";
     public static final String EMPTY_CART = "emptyCart";
     public static final String UNDEFINED = "undefined";
     public static final String POSITION_DELETED = "posDeleted";

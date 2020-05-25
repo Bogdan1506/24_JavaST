@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.PRODUCT;
 
 public class ProductEditFormCommand extends CreatorCommand {
@@ -19,7 +21,12 @@ public class ProductEditFormCommand extends CreatorCommand {
     public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
         if (request.getAttribute(PRODUCT) == null) {
             ProductService productService = factory.getProductService();
-            int id = Integer.parseInt(request.getParameter(ID));
+            int id = 0;
+            try {
+                id = Integer.parseInt(request.getParameter(ID));
+            } catch (NumberFormatException e) {
+                request.setAttribute(MESSAGE, INCORRECT_ID);
+            }
             logger.debug("id={}", id);
             Product product = productService.findById(id);
             logger.debug("product={}", product);

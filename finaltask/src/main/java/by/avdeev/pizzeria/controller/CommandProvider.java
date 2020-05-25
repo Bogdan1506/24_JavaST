@@ -27,14 +27,11 @@ import by.avdeev.pizzeria.command.unauthorized.OrderCommand;
 import by.avdeev.pizzeria.command.unauthorized.item.ItemCreateSessionCommand;
 import by.avdeev.pizzeria.command.unauthorized.item.ItemFormCommand;
 import by.avdeev.pizzeria.command.unauthorized.item.ItemRemoveCommand;
-import by.avdeev.pizzeria.command.unauthorized.product.DrinkShowListCommand;
 import by.avdeev.pizzeria.command.unauthorized.product.MenuShowListCommand;
-import by.avdeev.pizzeria.command.unauthorized.product.PizzaShowListCommand;
 import by.avdeev.pizzeria.command.client.profile.ProfileCreateFormCommand;
 import by.avdeev.pizzeria.command.admin.ProfileDeleteCommand;
 import by.avdeev.pizzeria.command.client.profile.ProfileShowListCommand;
 import by.avdeev.pizzeria.command.client.profile.ProfileUserShowCommand;
-import by.avdeev.pizzeria.command.unauthorized.product.SidesShowListCommand;
 import by.avdeev.pizzeria.command.unauthorized.user.UserCreateCommand;
 import by.avdeev.pizzeria.command.admin.user.UserDeleteCommand;
 import by.avdeev.pizzeria.command.unauthorized.user.UserLoginCommand;
@@ -50,7 +47,7 @@ public class CommandProvider {
     private final Map<String, Command> repository = new ConcurrentHashMap<>();
 
     public CommandProvider() {
-        repository.put("/", new PizzaShowListCommand());
+        repository.put("/", new MenuShowListCommand());
 
         repository.put("/local", new LocalizationCommand());
 
@@ -73,9 +70,9 @@ public class CommandProvider {
         repository.put("/profile/delete", new ProfileDeleteCommand());
 
         repository.put("/product/menu", new MenuShowListCommand());
-        repository.put("/product/pizzas", new PizzaShowListCommand());
-        repository.put("/product/drinks", new DrinkShowListCommand());
-        repository.put("/product/sides", new SidesShowListCommand());
+//        repository.put("/product/pizzas", new PizzaShowListCommand());
+//        repository.put("/product/drinks", new DrinkShowListCommand());
+//        repository.put("/product/sides", new SidesShowListCommand());
         repository.put("/product/edit-form", new ProductEditFormCommand());
         repository.put("/product/create-form", new ProductCreateFormCommand());
         repository.put("/product/edit", new ProductEditCommand());

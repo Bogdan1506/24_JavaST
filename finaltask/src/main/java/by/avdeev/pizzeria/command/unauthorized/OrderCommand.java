@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,6 +35,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.ADDRESS;
 import static by.avdeev.pizzeria.command.ConstantRepository.CART;
 import static by.avdeev.pizzeria.command.ConstantRepository.DATE;
 import static by.avdeev.pizzeria.command.ConstantRepository.EMPTY_CART;
+import static by.avdeev.pizzeria.command.ConstantRepository.FILL_FIELDS;
 import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.ORDERED;
@@ -43,12 +46,13 @@ import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class OrderCommand extends UnauthorizedCommand {
-    private final static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(OrderCommand.class);
 
     @Override
     public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
+        forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
         List<Item> cart = (List<Item>) session.getAttribute(CART);
@@ -80,6 +84,9 @@ public class OrderCommand extends UnauthorizedCommand {
                     }
                 } else {
                     int id = profileService.create(parameters, invalidParameters);
+                    if (id == -1) {
+                        return forwardObjectEx;
+                    }
                     profile.setId(id);
                 }
                 Order order = new Order(profile);
@@ -97,6 +104,9 @@ public class OrderCommand extends UnauthorizedCommand {
                 Validator deliveryValidator = new DeliveryValidator();
                 for (Item item : cart) {
                     double price = item.getProduct().getPrice() * item.getSize().getCoefficient();
+                    BigDecimal bd = BigDecimal.valueOf(price);
+                    bd = bd.round(new MathContext(4));
+                    price = bd.doubleValue();
                     logger.debug("order={}", order);
                     OrderPosition orderPosition = new OrderPosition(item, order, price);
                     logger.debug("orderPosition={}", orderPosition);
@@ -109,12 +119,14 @@ public class OrderCommand extends UnauthorizedCommand {
                         return forwardObjectEx;
                     }
                 }
-                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+                ForwardObject forwardObject = new ForwardObject("/product/menu");
                 forwardObject.getAttributes().put(MESSAGE, ORDERED);
                 cart.clear();
                 session.setAttribute(CART, cart);
                 return forwardObject;
             }
+        } else {
+            forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
         }
         return forwardObjectEx;
     }

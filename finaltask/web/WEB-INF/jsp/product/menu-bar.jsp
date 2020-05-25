@@ -19,18 +19,32 @@
 <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top font">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <c:url value="/product/pizzas" var="pizzas"/>
+            <c:url value="/product/menu?name=pizza" var="pizzas"/>
             <a class="nav-link" href="${pizzas}"><fmt:message key="pizzas" bundle="${rb}"/></a>
         </li>
         <li class="nav-item">
-            <c:url value="/product/sides" var="sides"/>
+            <c:url value="/product/menu?name=sides" var="sides"/>
             <a class="nav-link" href="${sides}"><fmt:message key="sides" bundle="${rb}"/></a>
         </li>
         <li class="nav-item">
-            <c:url value="/product/drinks" var="drinks"/>
+            <c:url value="/product/menu?name=drink" var="drinks"/>
             <a class="nav-link" href="${drinks}"><fmt:message key="drinks" bundle="${rb}"/></a>
         </li>
     </ul>
+    <%--    <ul class="navbar-nav">
+            <li class="nav-item">
+                <c:url value="/product/pizzas" var="pizzas"/>
+                <a class="nav-link" href="${pizzas}"><fmt:message key="pizzas" bundle="${rb}"/></a>
+            </li>
+            <li class="nav-item">
+                <c:url value="/product/sides" var="sides"/>
+                <a class="nav-link" href="${sides}"><fmt:message key="sides" bundle="${rb}"/></a>
+            </li>
+            <li class="nav-item">
+                <c:url value="/product/drinks" var="drinks"/>
+                <a class="nav-link" href="${drinks}"><fmt:message key="drinks" bundle="${rb}"/></a>
+            </li>
+        </ul>--%>
 </nav>
 </body>
 </html>

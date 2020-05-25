@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.command.creator;
 
-import by.avdeev.pizzeria.command.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandlerImpl;
 import by.avdeev.pizzeria.command.validator.ProductTypeValidator;
 import by.avdeev.pizzeria.command.validator.TypeValidator;
 import by.avdeev.pizzeria.entity.Product;
@@ -21,6 +22,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.FILE_UPLOAD_PATH;
 import static by.avdeev.pizzeria.command.ConstantRepository.FILL_FIELDS;
 import static by.avdeev.pizzeria.command.ConstantRepository.ID;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.INVALID_IMAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.PARAM;
 import static by.avdeev.pizzeria.command.ConstantRepository.PICTURE;
@@ -35,8 +37,8 @@ public class ProductEditCommand extends CreatorCommand {
     @Override
     public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
+        ForwardObject forwardObject = new ForwardObject("/product/edit-form?id=" + request.getParameter(ID));
         Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, DESCRIPTION, TYPE, PRICE));
-        ForwardObject forwardObject = new ForwardObject("/product/edit-form");
         forwardObject.getAttributes().put(PARAM, invalidParameters);
         boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
         if (!isValid) {
@@ -49,30 +51,37 @@ public class ProductEditCommand extends CreatorCommand {
             ProductService productService = factory.getProductService();
             int id;
             try {
-                id = productService.update(parameters, invalidParameters, Integer.parseInt((String) parameters.get(ID)));
+                id = Integer.parseInt((String) parameters.get(ID));
             } catch (NumberFormatException e) {
                 forwardObject.getAttributes().put(MESSAGE, INCORRECT_ID);
                 return forwardObject;
             }
+            id = productService.update(parameters, invalidParameters, id);
             Product product = productService.findById(id);
-            String picture = product.getPicture();
-            ImageHandler imageHandler = new ImageHandler();
-            imageHandler.delete(picture,
-                    request.getServletContext().getRealPath("") + "img");
-            imageHandler.delete(picture,
-                    FILE_UPLOAD_PATH);
             Part part = request.getPart(PICTURE);
-            String fileName = imageHandler.receiveImageName(part);
-            if (fileName != null) {
-                String srcPath = request.getServletContext().getRealPath("") + "img";
-                boolean isUploaded = imageHandler.upload(part,
-                        srcPath,
-                        fileName);
-                if (isUploaded) {
-                    boolean isCopied = imageHandler.copy(srcPath,
-                            FILE_UPLOAD_PATH, fileName);
-                    if (isCopied) {
-                        parameters.put(PICTURE, fileName);
+            if (part.getSize() > 0) {
+                String picture = product.getPicture();
+                ImageHandler imageHandler = new ImageHandlerImpl();
+                imageHandler.delete(picture,
+                        request.getServletContext().getRealPath("") + "img");
+                imageHandler.delete(picture,
+                        FILE_UPLOAD_PATH);
+                String fileName = imageHandler.receiveImageName(part);
+                if (!imageHandler.validate(fileName)) {
+                    forwardObject.getAttributes().put(MESSAGE, INVALID_IMAGE);
+                    return forwardObject;
+                }
+                if (fileName != null) {
+                    String srcPath = request.getServletContext().getRealPath("") + "img";
+                    boolean isUploaded = imageHandler.upload(part,
+                            srcPath,
+                            fileName);
+                    if (isUploaded) {
+                        boolean isCopied = imageHandler.copy(srcPath,
+                                FILE_UPLOAD_PATH, fileName);
+                        if (isCopied) {
+                            parameters.put(PICTURE, fileName);
+                        }
                     }
                 }
             }

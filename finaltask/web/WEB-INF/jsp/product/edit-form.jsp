@@ -13,7 +13,7 @@
 <body>
 <c:import url="../element/navbar.jsp"/>
 <c:import url="menu-bar.jsp"/>
-<div class="container">
+<div class="container mb-5">
     <p style="text-align: center" class="display-4"><fmt:message key="productEditForm" bundle="${rb}"/></p>
     <c:url var="order" value="/product/edit"/>
     <form action="${order}" method="post" enctype="multipart/form-data">
@@ -49,7 +49,7 @@
             <label for="price"><fmt:message key="price" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="price"
                    placeholder="<fmt:message key="enterPrice" bundle="${rb}"/>" name="price"
-                   value="${requestScope.product.price}" pattern="\d+\.\d+"
+                   value="${requestScope.product.price}" pattern="\d+\.?\d{1,2}"
                    required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
@@ -64,8 +64,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="picture"><fmt:message key="picture" bundle="${rb}"/>:</label>
-            <input type="file" id="picture" name="picture" size="50">
+            <label>
+                <label for="picture"><fmt:message key="picture" bundle="${rb}"/>(.png, .jpg):
+                    <input type="file" id="picture" name="picture" size="50">
         </div>
         <label for="type">Type:</label>
         <select id="type" name="type" class="custom-select">
@@ -73,12 +74,12 @@
                 <c:when test="${requestScope.product.type eq 'PIZZA'}">
                     <option value="pizza"><fmt:message key="pizzas" bundle="${rb}"/></option>
                     <option value="sides"><fmt:message key="sides" bundle="${rb}"/></option>
-                    <option value="drinks"><fmt:message key="drinks" bundle="${rb}"/></option>
+                    <option value="drink"><fmt:message key="drinks" bundle="${rb}"/></option>
                 </c:when>
                 <c:when test="${requestScope.product.type eq 'SIDES'}">
                     <option value="sides"><fmt:message key="sides" bundle="${rb}"/></option>
                     <option value="pizza"><fmt:message key="pizzas" bundle="${rb}"/></option>
-                    <option value="drinks"><fmt:message key="drinks" bundle="${rb}"/></option>
+                    <option value="drink"><fmt:message key="drinks" bundle="${rb}"/></option>
                 </c:when>
                 <c:otherwise>
                     <option value="drink"><fmt:message key="drinks" bundle="${rb}"/></option>
@@ -87,7 +88,7 @@
                 </c:otherwise>
             </c:choose>
         </select>
-        <button type="submit" class="btn btn-primary float-right mt-3"><fmt:message key="edit" bundle="${rb}"/></button>
+        <button type="submit" class="btn btn-primary float-right m-3"><fmt:message key="edit" bundle="${rb}"/></button>
     </form>
 </div>
 <c:out value="${param.id}"/>

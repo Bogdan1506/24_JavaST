@@ -40,10 +40,7 @@
                         <td><c:out value="${temp.id}"/></td>
                         <td><c:out value="${temp.item.id}"/></td>
                         <td><c:out value="${temp.order.id}"/></td>
-                        <td>
-                            <c:set var="price" value="${temp.price}"/>
-                            <fmt:formatNumber type="number" pattern="##.#" value="${price}"/>
-                        </td>
+                        <td><c:out value="${temp.price}"/></td>
                         <td>
                             <c:url value="/orderposition/list/remove" var="orderPositionDelete"/>
                             <form action="${orderPositionDelete}" method="post">

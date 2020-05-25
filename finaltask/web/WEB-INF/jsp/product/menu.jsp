@@ -53,20 +53,21 @@
                                     <input class="size_param" type="radio" name="size" id="size1" value="Small"
                                            autocomplete="off"
                                            checked>
-                                    <fmt:message key="S" bundle="${rb}"/> ${temp.price}
+                                    <fmt:message key="S" bundle="${rb}"/>
+                                    <fmt:formatNumber type="number" pattern="##.##" value="${temp.price}"/>
                                 </label>
                                 <label class="btn btn-primary">
                                     <c:set var="amountM" value="${temp.price * 2}"/>
                                     <input class="size_param" type="radio" name="size" id="size2" value="Medium"
                                            autocomplete="off"> <fmt:message key="M" bundle="${rb}"/>
-                                    <fmt:formatNumber type="number" pattern="##.#" value="${amountM}"/>
+                                    <fmt:formatNumber type="number" pattern="##.##" value="${amountM}"/>
                                 </label>
                                 <c:set var="amountL" value="${temp.price * 3}"/>
                                 <label class="btn btn-primary">
                                     <input class="size_param" type="radio" name="size" id="size3" value="Large"
                                            autocomplete="off">
                                     <fmt:message key="L" bundle="${rb}"/>
-                                    <fmt:formatNumber type="number" pattern="##.#" value="${amountL}"/>
+                                    <fmt:formatNumber type="number" pattern="##.##" value="${amountL}"/>
                                 </label>
                             </div>
                             <input type="submit" class="btn btn-light"

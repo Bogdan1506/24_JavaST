@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="cart" class="sticky-top">
-    <p style="text-align: center;" class="display-4 pt-5"><fmt:message key="cart" bundle="${rb}"/></p>
+    <p style="text-align: center;" class="display-4 pt-5 mt-5"><fmt:message key="cart" bundle="${rb}"/></p>
     <c:choose>
     <c:when test="${empty sessionScope.cart}">
         <p style="color: red; text-align: right"><fmt:message key="emptyCart" bundle="${rb}"/></p>
@@ -18,7 +18,8 @@
     <c:otherwise>
     <p>
         <strong>
-            <a style="color: red;" onclick="remove('all')"><fmt:message key="reset" bundle="${rb}"/></a>
+            <button class="btn btn-outline-danger" onclick="remove(`all`)"><fmt:message key="reset" bundle="${rb}"/>
+                <span class="badge">${sessionScope.cart.size()}</span></button>
         </strong>
     </p>
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3"
@@ -29,16 +30,22 @@
             <ul style="list-style-type:none;padding: 0;
   width: 200px;
   margin: 0 auto;">
-                <li><img alt="" src="../../../img/${temp.product.picture}" width="60" height="60"></li>
+                <li><img alt="" src="/img/${temp.product.picture}" width="60" height="60"></li>
                 <li>
                     <strong>
                         <c:out value="${temp.product.name}"/>
                     </strong>
-                <li><c:out value="${temp.dough}"/></li>
-                <li><c:out value="${temp.size}"/></li>
+                    <c:if test="${not empty temp.dough}">
+                <li><fmt:message key="${temp.dough}" bundle="${rb}"/></li>
+                </c:if>
+
+                <li><fmt:message key="${temp.size}" bundle="${rb}"/></li>
+                <li><strong><em><fmt:formatNumber type="number" pattern="##.##"
+                                                  value="${temp.product.price * temp.size.coefficient}"/>
+                    BYN</em></strong></li>
                 <li>
                     <label>
-                        <input class="btn btn-sm btn-danger" onclick="remove(${temp.id})" value="x">
+                        <input class="btn btn-sm btn-outline-danger" onclick="remove(${temp.id})" value="x">
                     </label>
                 </li>
             </ul>
@@ -48,6 +55,7 @@
         <c:url value="/delivery/form" var="createItems"/>
         <form action="${createItems}">
             <input class="btn btn-lg btn-warning" type="submit" value="<fmt:message key="order" bundle="${rb}"/>">
+            <strong><fmt:formatNumber type="number" pattern="##.##" value="${sessionScope.totalPrice}"/> BYN</strong>
         </form>
     </c:if>
 </div>

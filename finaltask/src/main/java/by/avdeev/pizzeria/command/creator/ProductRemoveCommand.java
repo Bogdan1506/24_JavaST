@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.command.creator;
 
-import by.avdeev.pizzeria.command.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandlerImpl;
 import by.avdeev.pizzeria.entity.Product;
 import by.avdeev.pizzeria.service.ProductService;
 import by.avdeev.pizzeria.service.ServiceException;
@@ -18,6 +19,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_DELETED;
 import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_NOT_DELETED;
 
 public class ProductRemoveCommand extends CreatorCommand {
+
     @Override
     public ForwardObject exec(final HttpServletRequest request,
                               final HttpServletResponse response)
@@ -31,19 +33,17 @@ public class ProductRemoveCommand extends CreatorCommand {
         }
         ProductService productService = factory.getProductService();
         Product product = productService.findById(id);
-        boolean isDeleted = productService.delete(product);
-        boolean isFirstDeleted = false;
-        boolean isSecDeleted = false;
-        if (isDeleted) {
-            forwardObject.getAttributes().put(MESSAGE, POSITION_NOT_DELETED);
-            String picture = product.getPicture();
-            ImageHandler imageHandler = new ImageHandler();
-            isFirstDeleted = imageHandler.delete(picture,
-                    request.getServletContext().getRealPath("") + "img");
-            isSecDeleted = imageHandler.delete(picture,
-                    FILE_UPLOAD_PATH);
+        if (product == null) {
+            forwardObject.getAttributes().put(MESSAGE, INCORRECT_ID);
+            return forwardObject;
         }
-        if (isFirstDeleted || isSecDeleted) {
+        if (productService.delete(product)) {
+            String picture = product.getPicture();
+            ImageHandler imageHandler = new ImageHandlerImpl();
+            imageHandler.delete(picture,
+                    request.getServletContext().getRealPath("") + "img");
+            imageHandler.delete(picture,
+                    FILE_UPLOAD_PATH);
             forwardObject.getAttributes().put(MESSAGE, POSITION_DELETED);
         } else {
             forwardObject.getAttributes().put(MESSAGE, POSITION_NOT_DELETED);

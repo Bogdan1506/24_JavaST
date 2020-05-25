@@ -25,6 +25,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.ID;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_TYPES;
 import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.SIZE;
+import static by.avdeev.pizzeria.command.ConstantRepository.TOTAL_PRICE;
 
 public class ItemCreateSessionCommand extends UnauthorizedCommand {
     private final static Logger logger = LogManager.getLogger(ItemCreateSessionCommand.class);
@@ -46,6 +47,11 @@ public class ItemCreateSessionCommand extends UnauthorizedCommand {
                 itemService.create(parameters, cart);
                 session.setAttribute(CART, cart);
                 logger.debug("session cart={}", cart);
+                double totalPrice = 0;
+                for (Item item : cart) {
+                    totalPrice += item.getProduct().getPrice() * item.getSize().getCoefficient();
+                }
+                session.setAttribute(TOTAL_PRICE, totalPrice);
                 return new ForwardObject("/item/cart");
             } else {
                 forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_TYPES);

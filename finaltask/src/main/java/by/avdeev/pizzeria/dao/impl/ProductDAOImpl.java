@@ -190,7 +190,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(
                     "SELECT `name`, COUNT(`name`) AS count_item FROM" +
-                            "(SELECT product_id FROM item INNER JOIN `order_position` ON item.id = item_id) AS p_id JOIN product ON product.id = product_id group by (`name`) ORDER BY name");
+                            "(SELECT product_id FROM item INNER JOIN `order_position` ON item.id = item_id) AS p_id JOIN product ON product.id = product_id group by (`name`) ORDER BY name asc");
             while (rs.next()) {
                 String name = rs.getString(NAME);
                 int count = rs.getInt(COUNT_ITEM);

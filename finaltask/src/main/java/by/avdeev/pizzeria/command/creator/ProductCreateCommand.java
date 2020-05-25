@@ -1,6 +1,7 @@
 package by.avdeev.pizzeria.command.creator;
 
-import by.avdeev.pizzeria.command.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandler;
+import by.avdeev.pizzeria.service.image.ImageHandlerImpl;
 import by.avdeev.pizzeria.command.validator.ProductTypeValidator;
 import by.avdeev.pizzeria.command.validator.TypeValidator;
 import by.avdeev.pizzeria.service.ProductService;
@@ -29,6 +30,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PICTURE;
 import static by.avdeev.pizzeria.command.ConstantRepository.PRICE;
 import static by.avdeev.pizzeria.command.ConstantRepository.TYPE;
 import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.command.ConstantRepository.INVALID_IMAGE;
 
 public class ProductCreateCommand extends CreatorCommand {
     private final static Logger logger = LogManager.getLogger(ProductCreateCommand.class);
@@ -48,11 +50,21 @@ public class ProductCreateCommand extends CreatorCommand {
         boolean isProductValid = typeValidator.validate(parameters);
         logger.debug("param={}", parameters);
         logger.debug("isProductValid={}", isProductValid);
+        ImageHandler imageHandler = new ImageHandlerImpl();
         if (isProductValid) {
-            ImageHandler imageHandler = new ImageHandler();
-            Part part = request.getPart(PICTURE);
-            String fileName = imageHandler.receiveImageName(part);
-            if (fileName != null) {
+            Part part;
+            try {
+                part = request.getPart(PICTURE);
+            } catch (Exception e) {
+                forwardObjectEx.getAttributes().put(MESSAGE, INVALID_IMAGE);
+                return forwardObjectEx;
+            }
+            if (part.getSize() > 0) {
+                String fileName = imageHandler.receiveImageName(part);
+                if (!imageHandler.validate(fileName)) {
+                    forwardObjectEx.getAttributes().put(MESSAGE, INVALID_IMAGE);
+                    return forwardObjectEx;
+                }
                 String srcPath = request.getServletContext().getRealPath("") + "img";
                 boolean isUploaded = imageHandler.upload(part,
                         srcPath,
@@ -68,7 +80,7 @@ public class ProductCreateCommand extends CreatorCommand {
             ProductService productService = factory.getProductService();
             int id = productService.create(parameters, invalidParameters);
             if (id != -1) {
-                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
+                ForwardObject forwardObject = new ForwardObject("/product/menu");
                 forwardObject.getAttributes().put(MESSAGE, CREATED);
                 return forwardObject;
             } else {

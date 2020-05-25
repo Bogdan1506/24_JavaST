@@ -17,16 +17,6 @@
 <c:import url="../product/menu-bar.jsp"/>
 <p style="text-align: center" class="display-4"><fmt:message key="deliveryForm" bundle="${rb}"/></p>
 <div class="container mb-5">
-    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 1200px; max-height: 300px;">
-        <c:forEach var="temp" items="${sessionScope.cart}">
-            <p>
-                <img alt="" src="../../../img/${temp.product.picture}" width="60" height="60">
-                <c:out value="${temp.product.name}"/>
-                <c:out value="${temp.dough}"/>
-                <c:out value="${temp.size}"/>
-            </p>
-        </c:forEach>
-    </div>
     <c:url var="order" value="/delivery/order"/>
     <form action="${order}" class="was-validated" method="post">
         <div class="form-group">

@@ -67,9 +67,15 @@ CREATE TABLE `item`
     `dough_id`   INT,
     CONSTRAINT PRIMARY KEY `PK_item` (`id`),
     FOREIGN KEY `FK_item_product` (`product_id`)
-        REFERENCES `product` (`id`),
+        REFERENCES `product` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     FOREIGN KEY `FK_item_dough` (`dough_id`)
         REFERENCES `dough` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY `FK_item_size` (`size_id`)
+        REFERENCES `size` (`id`)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
