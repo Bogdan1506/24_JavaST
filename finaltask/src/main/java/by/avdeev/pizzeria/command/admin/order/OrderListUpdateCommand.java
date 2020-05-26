@@ -15,7 +15,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
 
 public class OrderListUpdateCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/order/list");
         int id;
         try {

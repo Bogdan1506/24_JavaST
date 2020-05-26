@@ -6,12 +6,12 @@ import java.util.Map;
 public class CountMap {
     private Map<String, Integer> map;
 
-    public CountMap(Map<String, Integer> map) {
+    public CountMap(final Map<String, Integer> map) {
         this.map = map;
         iterator = map.entrySet().iterator();
     }
 
-    public void setMap(Map<String, Integer> map) {
+    public void setMap(final Map<String, Integer> map) {
         this.map = map;
     }
 

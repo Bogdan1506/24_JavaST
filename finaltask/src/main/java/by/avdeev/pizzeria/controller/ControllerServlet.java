@@ -18,12 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-import static by.avdeev.pizzeria.command.ConstantRepository.ACTION;
+import static by.avdeev.pizzeria.command.ConstantRepository.COMMAND;
 import static by.avdeev.pizzeria.command.ConstantRepository.REDIRECTED_DATA;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {"/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
-//@WebServlet(urlPatterns = {"/index.html", "/product/*", "/user/*", "/profile/*", "/item/*", "/delivery/*", "/order/*", "/orderposition/*", "/local"})
 public class ControllerServlet extends HttpServlet {
     private static Logger logger = LogManager.getLogger(ControllerServlet.class);
 
@@ -40,17 +39,20 @@ public class ControllerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) {
+    protected void doGet(final HttpServletRequest req,
+                         final HttpServletResponse resp) {
         process(req, resp);
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) {
+    protected void doPost(final HttpServletRequest req,
+                          final HttpServletResponse resp) {
         process(req, resp);
     }
 
-    private void process(final HttpServletRequest request, final HttpServletResponse response) {
-        Command command = (Command) request.getAttribute(ACTION);
+    private void process(final HttpServletRequest request,
+                         final HttpServletResponse response) {
+        Command command = (Command) request.getAttribute(COMMAND);
         HttpSession session = request.getSession(true);
         if (session != null) {
             @SuppressWarnings("unchecked")
@@ -91,7 +93,6 @@ public class ControllerServlet extends HttpServlet {
             }
         } catch (Exception e) {
             logger.error(e);
-            e.printStackTrace();
         }
     }
 }

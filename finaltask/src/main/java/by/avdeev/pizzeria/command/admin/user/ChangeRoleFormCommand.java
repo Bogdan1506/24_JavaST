@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ChangeRoleFormCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         return null;
     }
 }

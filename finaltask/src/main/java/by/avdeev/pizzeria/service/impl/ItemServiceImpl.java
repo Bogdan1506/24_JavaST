@@ -45,6 +45,9 @@ public class ItemServiceImpl extends StandardServiceImpl<Item>
     @Override
     public void create(final Map<String, Object> parameters,
                        final List<Item> cart) throws ServiceException {
+        if(parameters == null) {
+            return;
+        }
         CreatorFactory creatorFactory = CreatorFactory.getInstance();
         @SuppressWarnings("unchecked")
         Creator<Item> creator = creatorFactory.findCreator(getType());

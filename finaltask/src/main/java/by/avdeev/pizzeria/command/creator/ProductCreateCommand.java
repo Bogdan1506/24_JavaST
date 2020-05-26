@@ -33,15 +33,19 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.INVALID_IMAGE;
 
 public class ProductCreateCommand extends CreatorCommand {
-    private final static Logger logger = LogManager.getLogger(ProductCreateCommand.class);
+    private final Logger logger = LogManager.getLogger(ProductCreateCommand.class);
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, DESCRIPTION, TYPE, PRICE));
-        ForwardObject forwardObjectEx = new ForwardObject("/product/create-form");
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NAME, DESCRIPTION, TYPE, PRICE));
+        ForwardObject forwardObjectEx = new ForwardObject(
+                "/product/create-form");
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
@@ -80,7 +84,8 @@ public class ProductCreateCommand extends CreatorCommand {
             ProductService productService = factory.getProductService();
             int id = productService.create(parameters, invalidParameters);
             if (id != -1) {
-                ForwardObject forwardObject = new ForwardObject("/product/menu");
+                ForwardObject forwardObject = new ForwardObject(
+                        "/product/pizzas");
                 forwardObject.getAttributes().put(MESSAGE, CREATED);
                 return forwardObject;
             } else {

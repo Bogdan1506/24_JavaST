@@ -41,7 +41,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public List<User> findAll(int begin, int end) throws DAOException {
+    public List<User> findAll(final int begin,
+                              final int end) throws DAOException {
         logger.debug("begin={}, end={}", begin, end);
         List<User> users = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -58,7 +59,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public User findById(int id) throws DAOException {
+    public User findById(final int id) throws DAOException {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT login, password, profile_id, role FROM user WHERE id=?")) {
@@ -79,8 +80,9 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(int id) throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
+    public boolean delete(final int id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "DELETE FROM user WHERE id=?")) {
             preparedStatement.setInt(1, id);
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
@@ -91,18 +93,19 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(User user) throws DAOException {
+    public boolean delete(final User user) throws DAOException {
         delete(user.getId());
         return true;
     }
 
     @Override
-    public int create(User user) throws DAOException {
+    public int create(final User user) throws DAOException {
         int id;
         String login = user.getLogin();
         String password = user.getPassword();
         try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO user (login, password) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
+                "INSERT INTO user (login, password) VALUES (?,?)",
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, login);
             statement.setString(2, password);
             statement.executeUpdate();
@@ -115,9 +118,10 @@ public class UserDAOImpl extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean update(User user) throws DAOException {
+    public boolean update(final User user) throws DAOException {
         logger.debug("user={}", user);
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET password=?, role=?, profile_id=? WHERE id=?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE user SET password=?, role=?, profile_id=? WHERE id=?")) {
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setInt(2, user.getRole().getId());
             preparedStatement.setInt(3, user.getProfile().getId());
@@ -130,7 +134,7 @@ public class UserDAOImpl extends AbstractDAO<User> {
         }
     }
 
-    public User findByLogin(String login) throws DAOException {
+    public User findByLogin(final String login) throws DAOException {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, password, profile_id, role FROM user WHERE login=?")) {
@@ -150,7 +154,8 @@ public class UserDAOImpl extends AbstractDAO<User> {
         return user;
     }
 
-    public boolean changeRole(Role role, int id) throws DAOException {
+    public boolean changeRole(final Role role,
+                              final int id) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(
                 "UPDATE user SET role = ? WHERE id=?")) {
             statement.setInt(1, role.getId());
@@ -180,13 +185,15 @@ public class UserDAOImpl extends AbstractDAO<User> {
         return total;
     }
 
-    private void fill(List<User> users, ResultSet rs) throws SQLException {
+    private void fill(final List<User> users,
+                      final ResultSet rs) throws SQLException {
         while (rs.next()) {
             int id = rs.getInt(ID);
             String login = rs.getString(LOGIN);
             String password = rs.getString(PASS);
             Role role = Role.getByIdentity(rs.getInt(ROLE));
-            User user = new User(id, login, password, new Profile(rs.getInt(PROFILE_ID)), role);
+            User user = new User(id, login, password,
+                    new Profile(rs.getInt(PROFILE_ID)), role);
             users.add(user);
         }
     }

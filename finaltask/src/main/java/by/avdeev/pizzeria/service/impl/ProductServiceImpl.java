@@ -24,7 +24,7 @@ public class ProductServiceImpl extends StandardServiceImpl<Product>
     /**
      * log4j2 is used for logging.
      */
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
     /**
      * Finds all product beans of the type.
@@ -165,7 +165,7 @@ public class ProductServiceImpl extends StandardServiceImpl<Product>
     }
 
     /**
-     * Delelets the product.
+     * Deletes the product.
      *
      * @param product Bean ${@link Product}.
      * @return True if it was deleted else false.

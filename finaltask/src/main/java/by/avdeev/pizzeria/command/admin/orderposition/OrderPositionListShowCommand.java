@@ -27,8 +27,11 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PAGE_SIZE;
 
 public class OrderPositionListShowCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
-        ForwardObject forwardObjectEx = new ForwardObject("/orderposition/list");
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
+        ForwardObject forwardObjectEx = new ForwardObject(
+                "/orderposition/list");
         HttpSession session = request.getSession();
         OrderPositionService orderPositionService = factory.getOrderPositionService();
         String pageSizeStr = request.getParameter(PAGE_SIZE);
@@ -38,7 +41,8 @@ public class OrderPositionListShowCommand extends AdminCommand {
                 pageSize = Integer.parseInt(pageSizeStr);
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         } else {
@@ -54,13 +58,15 @@ public class OrderPositionListShowCommand extends AdminCommand {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage || maxPage == 0 && page > 0) {
-            List<OrderPosition> orders = orderPositionService.findAll((page - 1) * pageSize, page * pageSize);
+            List<OrderPosition> orders = orderPositionService.findAll(
+                    (page - 1) * pageSize, page * pageSize);
             request.setAttribute(ORDER_POSITIONS, orders);
             request.setAttribute(PAGE, page);
             ProductService productService = factory.getProductService();

@@ -12,7 +12,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PRICE;
 
 public class ProductValidator implements Validator {
     @Override
-    public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
+    public boolean validate(final Map<String, Object> parameters,
+                            final Map<String, String> invalidParameters) {
         boolean isValid = true;
         for (Map.Entry<String, Object> pair : parameters.entrySet()) {
             switch (pair.getKey()) {
@@ -26,8 +27,9 @@ public class ProductValidator implements Validator {
                 case DESCRIPTION:
                     String description = (String) parameters.get(DESCRIPTION);
                     if (description.matches("[<>]")) {
-                        description = description.replace("<", "&lt;").replace(">", "&gt;");
-                        invalidParameters.put(DESCRIPTION, description);
+                        description = description.replace("<", "&lt;").
+                                replace(">", "&gt;");
+                        parameters.put(DESCRIPTION, description);
                     }
                     break;
                 case PRICE:

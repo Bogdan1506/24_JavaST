@@ -21,7 +21,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE_ID;
 
 public class OrderDAOImpl extends AbstractDAO<Order> {
     @Override
-    public List<Order> findAll(int begin, int end) throws DAOException {
+    public List<Order> findAll(final int begin,
+                               final int end) throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, profile_id, date FROM `order` ORDER BY id LIMIT ?, ?")) {
@@ -56,7 +57,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public Order findById(int id) throws DAOException {
+    public Order findById(final int id) throws DAOException {
         Order order = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT profile_id, date FROM `order` WHERE id=?")) {
@@ -73,7 +74,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public boolean delete(int id) throws DAOException {
+    public boolean delete(final int id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM `order` WHERE id=?")) {
             preparedStatement.setInt(1, id);
@@ -86,13 +87,13 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public boolean delete(Order order) throws DAOException {
+    public boolean delete(final Order order) throws DAOException {
         delete(order.getId());
         return true;
     }
 
     @Override
-    public int create(Order order) throws DAOException {
+    public int create(final Order order) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO `order` (profile_id, date) VALUES (?,NOW())",
@@ -108,11 +109,12 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
     }
 
     @Override
-    public boolean update(Order order) throws DAOException {
+    public boolean update(final Order order) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE `order` SET profile_id=?, date=? WHERE id=?")) {
             preparedStatement.setInt(1, order.getProfile().getId());
-            preparedStatement.setTimestamp(2, new Timestamp(order.getDate().getTime()));
+            preparedStatement.setTimestamp(2,
+                    new Timestamp(order.getDate().getTime()));
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -138,7 +140,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> {
         return total;
     }
 
-    private Order fill(ResultSet rs) throws SQLException {
+    private Order fill(final ResultSet rs) throws SQLException {
         Date date = new Date(rs.getTimestamp(DATE).getTime());
         return new Order(rs.getInt(ID),
                 new Profile(rs.getInt(PROFILE_ID)),

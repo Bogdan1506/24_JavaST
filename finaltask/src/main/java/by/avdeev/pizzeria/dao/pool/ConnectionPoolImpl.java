@@ -30,7 +30,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
         Connection connection = null;
         try {
             ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/pizzeriaPool");
+            DataSource ds = (DataSource) ctx.lookup(
+                    "java:comp/env/jdbc/pizzeriaPool");
             connection = ds.getConnection();
         } catch (NamingException | SQLException e) {
             logger.error(e);

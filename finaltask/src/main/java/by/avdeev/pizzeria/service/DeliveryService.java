@@ -1,7 +1,6 @@
 package by.avdeev.pizzeria.service;
 
 import by.avdeev.pizzeria.entity.Delivery;
-import by.avdeev.pizzeria.entity.OrderPosition;
 
 import java.sql.Date;
 import java.util.List;
@@ -38,15 +37,6 @@ public interface DeliveryService extends UtilityService {
      * @throws ServiceException If there was an exception in DAO layer.
      */
     int countAll() throws ServiceException;
-
-    /**
-     * finds ${@link Delivery} bean by ${@link OrderPosition}.
-     *
-     * @param orderPosition Bean ${@link OrderPosition}.
-     * @return Bean ${@link Delivery}.
-     * @throws ServiceException If there was an exception in DAO layer.
-     */
-    Delivery findByOrderPosition(OrderPosition orderPosition) throws ServiceException;
 
     /**
      * Updates existing ${@link Delivery} bean.
@@ -89,7 +79,7 @@ public interface DeliveryService extends UtilityService {
     /**
      * Counts all deliveries on determined dates.
      *
-     * @param firstDate Start of searching.
+     * @param firstDate  Start of searching.
      * @param secondDate End of searching.
      * @return Count of found dates.
      * @throws ServiceException If there was an exception in DAO layer.

@@ -22,12 +22,14 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.TOTAL_PRICE;
 
 public class ItemRemoveCommand extends UnauthorizedCommand {
-    private final static Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/item/cart");
-        ForwardObject forwardObjectEx = new ForwardObject("/product/menu");
+        ForwardObject forwardObjectEx = new ForwardObject("/product/pizzas");
         forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_ID);
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")

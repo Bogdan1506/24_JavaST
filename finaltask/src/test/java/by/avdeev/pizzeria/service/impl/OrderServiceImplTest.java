@@ -10,6 +10,7 @@ import by.avdeev.pizzeria.transaction.Type;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
@@ -93,5 +94,26 @@ public class OrderServiceImplTest {
         );
         List<Order> actualOrders = orderService.findAll(0, 2);
         assertEquals(actualOrders, expectedOrders);
+    }
+
+    @DataProvider
+    public Object[][] createDataForDelete() {
+        return new Object[][]{
+                {2, true},
+                {0, false}
+        };
+    }
+
+    @Test(dataProvider = "createDataForDelete")
+    public void testDeleteById(int id, boolean expected) throws ServiceException {
+        boolean actual = orderService.delete(id);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testCountAll() throws ServiceException {
+        int expectedCountTotal = 3;
+        int actualCountTotal = orderService.countAll();
+        assertEquals(actualCountTotal, expectedCountTotal);
     }
 }

@@ -26,7 +26,8 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     private static Logger logger = LogManager.getLogger(ItemDAOImpl.class);
 
     @Override
-    public List<Item> findAll(int begin, int end) throws DAOException {
+    public List<Item> findAll(final int begin,final int end)
+            throws DAOException {
         logger.debug("begin={}, end={}", begin, end);
         List<Item> items = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -48,7 +49,8 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     public List<Item> findAll() throws DAOException {
         List<Item> items = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, product_id, size_id, dough_id FROM item");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id, product_id, size_id, dough_id FROM item");
             while (rs.next()) {
                 items.add(fill(rs));
             }
@@ -60,7 +62,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public Item findById(int id) throws DAOException {
+    public Item findById(final int id) throws DAOException {
         Item item = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, product_id, size_id, dough_id FROM item WHERE id=?")) {
@@ -77,7 +79,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public boolean delete(int id) throws DAOException {
+    public boolean delete(final int id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM item WHERE id=?")) {
             preparedStatement.setInt(1, id);
@@ -90,13 +92,13 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public boolean delete(Item item) throws DAOException {
+    public boolean delete(final Item item) throws DAOException {
         delete(item.getId());
         return true;
     }
 
     @Override
-    public int create(Item item) throws DAOException {
+    public int create(final Item item) throws DAOException {
         int id;
         if (item.getProduct().getType() == Product.Type.PIZZA) {
             try (PreparedStatement statement = connection.prepareStatement(
@@ -127,7 +129,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
     }
 
     @Override
-    public boolean update(Item item) throws DAOException {
+    public boolean update(final Item item) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE item SET size_id=?, dough_id=? WHERE id=?")) {
             preparedStatement.setInt(1, item.getSize().getId());
@@ -158,7 +160,7 @@ public class ItemDAOImpl extends AbstractDAO<Item> {
         return total;
     }
 
-    private Item fill(ResultSet rs) throws SQLException {
+    private Item fill(final ResultSet rs) throws SQLException {
         Size size = Size.getById(rs.getInt(SIZE_ID));
         Dough dough = Dough.getById(rs.getInt(DOUGH_ID));
         return new Item(rs.getInt(ID),

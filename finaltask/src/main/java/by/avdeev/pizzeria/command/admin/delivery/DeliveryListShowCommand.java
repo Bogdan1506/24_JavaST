@@ -26,7 +26,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MAX_PAGE;
 
 public class DeliveryListShowCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/list");
         HttpSession session = request.getSession();
         DeliveryService deliveryService = factory.getDeliveryService();
@@ -41,7 +43,8 @@ public class DeliveryListShowCommand extends AdminCommand {
                 pageSize = Integer.parseInt(pageSizeStr);
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(MESSAGE,
+                        INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         } else {
@@ -56,7 +59,8 @@ public class DeliveryListShowCommand extends AdminCommand {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(MESSAGE,
+                        INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         }
@@ -69,7 +73,8 @@ public class DeliveryListShowCommand extends AdminCommand {
             request.setAttribute(COUNT_TOTAL, countTotal);
             request.setAttribute(COUNT_TODAY, countToday);
         } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE_SIZE);
+            forwardObjectEx.getAttributes().put(MESSAGE,
+                    INCORRECT_PAGE_SIZE);
             return forwardObjectEx;
         }
         return null;

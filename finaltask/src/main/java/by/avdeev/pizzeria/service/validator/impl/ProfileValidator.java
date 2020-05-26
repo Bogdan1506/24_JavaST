@@ -14,7 +14,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 public class ProfileValidator implements Validator {
 
     @Override
-    public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
+    public boolean validate(final Map<String, Object> parameters,
+                            final Map<String, String> invalidParameters) {
         boolean isValid = true;
         for (Map.Entry<String, Object> pair : parameters.entrySet()) {
             switch (pair.getKey()) {
@@ -48,9 +49,10 @@ public class ProfileValidator implements Validator {
                     break;
                 case ADDRESS:
                     String address = (String) parameters.get(ADDRESS);
-                    if (!address.matches("\\w+")) {
-                        isValid = false;
-                        invalidParameters.put(ADDRESS, INCORRECT_SYMBOLS);
+                    if (address.matches("[<>]")) {
+                        address = address.replace("<", "&lt;").
+                                replace(">", "&gt;");
+                        parameters.put(ADDRESS, address);
                     }
                     break;
             }

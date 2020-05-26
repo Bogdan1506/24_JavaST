@@ -27,19 +27,25 @@ import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class ProfileCreateCommand extends ClientCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS));
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NAME, SURNAME, PHONE, ADDRESS));
         ForwardObject forwardObject = new ForwardObject("/");
         UserService userService = factory.getUserService();
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(USER);
+        User userSession = (User) session.getAttribute(USER);
+        User user = userService.findById(userSession.getId());
         ForwardObject forwardObjectEx = new ForwardObject("/profile/create");
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
         }
-        boolean isProfileValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isProfileValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (isProfileValid) {
             ProfileService profileService = factory.getProfileService();
             int id = profileService.create(parameters, invalidParameters);

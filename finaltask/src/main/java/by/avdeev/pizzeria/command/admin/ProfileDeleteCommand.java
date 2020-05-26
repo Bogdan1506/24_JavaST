@@ -11,7 +11,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.ID;
 
 public class ProfileDeleteCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/profile/delete");
         int userId = Integer.parseInt(request.getParameter(ID));
         ProfileService profileService = new ProfileServiceImpl();

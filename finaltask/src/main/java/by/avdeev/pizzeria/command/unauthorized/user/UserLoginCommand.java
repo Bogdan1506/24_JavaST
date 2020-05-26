@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static by.avdeev.pizzeria.command.ConstantRepository.ACTION_DENIED;
+import static by.avdeev.pizzeria.command.ConstantRepository.COMMAND_DENIED;
 import static by.avdeev.pizzeria.command.ConstantRepository.AUTHORIZED;
 import static by.avdeev.pizzeria.command.ConstantRepository.AUTHORIZED_FAILED;
 import static by.avdeev.pizzeria.command.ConstantRepository.FILL_FIELDS;
@@ -27,7 +27,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class UserLoginCommand extends UnauthorizedCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
             throws ServiceException, ServletException, IOException {
         Set<String> requiredParameters = new HashSet<>(Arrays.asList(LOGIN, PASS));
         ForwardObject forwardObjectEx = new ForwardObject("/user/sign-in");
@@ -37,7 +38,7 @@ public class UserLoginCommand extends UnauthorizedCommand {
             User user = userService.findByLogin(request.getParameter(LOGIN));
             boolean isValid = userService.userLogin(user, request.getParameter(PASS));
             if (isValid) {
-                Command command = (Command) session.getAttribute(ACTION_DENIED);
+                Command command = (Command) session.getAttribute(COMMAND_DENIED);
                 ForwardObject forwardObject;
                 if (command == null) {
                     forwardObject = new ForwardObject("/");

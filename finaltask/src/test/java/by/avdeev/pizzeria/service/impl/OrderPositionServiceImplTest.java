@@ -11,6 +11,7 @@ import by.avdeev.pizzeria.transaction.Type;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
@@ -79,5 +80,26 @@ public class OrderPositionServiceImplTest {
         );
         List<OrderPosition> actualOrderPositions = orderPositionService.findAll(0, 2);
         assertEquals(actualOrderPositions, expectedOrderPositions);
+    }
+
+    @DataProvider
+    public Object[][] createDataForDelete() {
+        return new Object[][]{
+                {2, true},
+                {0, false}
+        };
+    }
+
+    @Test(dataProvider = "createDataForDelete")
+    public void testDeleteById(int id, boolean expected) throws ServiceException {
+        boolean actual = orderPositionService.delete(id);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testCountAll() throws ServiceException {
+        int expectedCountTotal = 3;
+        int actualCountTotal = orderPositionService.countAll();
+        assertEquals(actualCountTotal, expectedCountTotal);
     }
 }

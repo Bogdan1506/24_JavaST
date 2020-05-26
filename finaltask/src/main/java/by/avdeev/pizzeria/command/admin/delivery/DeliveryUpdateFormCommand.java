@@ -24,7 +24,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MIN_DATE;
 
 public class DeliveryUpdateFormCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/list");
         int id;
         try {

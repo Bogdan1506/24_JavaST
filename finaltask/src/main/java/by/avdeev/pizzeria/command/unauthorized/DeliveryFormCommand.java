@@ -17,19 +17,23 @@ import java.util.Date;
 import static by.avdeev.pizzeria.command.ConstantRepository.DATE;
 import static by.avdeev.pizzeria.command.ConstantRepository.DATE_PATTERN;
 import static by.avdeev.pizzeria.command.ConstantRepository.HOUR;
+import static by.avdeev.pizzeria.command.ConstantRepository.PARAM;
 import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class DeliveryFormCommand extends UnauthorizedCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
-        ProfileService profileService = factory.getProfileService();
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(USER);
-        if (user != null) {
-            Profile profile = profileService.findByUserLogin(user.getLogin());
-            request.setAttribute(PROFILE, profile);
+        if (request.getAttribute(PROFILE) == null) {
+            ProfileService profileService = factory.getProfileService();
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute(USER);
+            if (user != null) {
+                Profile profile = profileService.findByUserLogin(user.getLogin());
+                request.setAttribute(PROFILE, profile);
+            }
         }
         long timeOrder = System.currentTimeMillis() + HOUR;
         Date date = new Date(timeOrder);

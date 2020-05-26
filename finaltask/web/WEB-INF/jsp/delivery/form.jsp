@@ -28,11 +28,11 @@
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
-                    <c:when test="${empty param.name}">
+                    <c:when test="${empty requestScope.param.name}">
                         <fmt:message key="fillOut" bundle="${rb}"/>
                     </c:when>
                     <c:otherwise>
-                        <fmt:message key="${param.name}" bundle="${rb}"/>
+                        <fmt:message key="${requestScope.param.name}" bundle="${rb}"/>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -94,8 +94,7 @@
             <label for="address"><fmt:message key="address" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="address"
                    placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address"
-                   value="${requestScope.profile.address}"
-                   pattern="\w+" required>
+                   value="${requestScope.profile.address}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>

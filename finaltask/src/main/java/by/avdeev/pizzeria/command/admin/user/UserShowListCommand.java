@@ -10,11 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static by.avdeev.pizzeria.command.ConstantRepository.*;
+import static by.avdeev.pizzeria.command.ConstantRepository.COUNT_TOTAL;
+import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE;
+import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE_SIZE;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_NUMBER_FORMAT;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PAGE_SIZE;
+import static by.avdeev.pizzeria.command.ConstantRepository.MAX_PAGE;
+import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
+import static by.avdeev.pizzeria.command.ConstantRepository.PAGE;
+import static by.avdeev.pizzeria.command.ConstantRepository.USERS;
+import static by.avdeev.pizzeria.command.ConstantRepository.PAGE_SIZE;
 
 public class UserShowListCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/user/list");
         HttpSession session = request.getSession();
         UserService userService = factory.getUserService();
@@ -25,7 +36,8 @@ public class UserShowListCommand extends AdminCommand {
                 pageSize = Integer.parseInt(pageSizeStr);
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         } else {
@@ -41,13 +53,15 @@ public class UserShowListCommand extends AdminCommand {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
         if (pageSize > 0 && page <= maxPage && page > 0) {
-            List<User> users = userService.findAll((page - 1) * pageSize, page * pageSize);
+            List<User> users = userService.findAll(
+                    (page - 1) * pageSize, page * pageSize);
             request.setAttribute(USERS, users);
             request.setAttribute(PAGE, page);
             request.setAttribute(COUNT_TOTAL, countTotal);

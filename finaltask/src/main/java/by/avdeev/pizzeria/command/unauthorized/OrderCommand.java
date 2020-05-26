@@ -13,8 +13,11 @@ import by.avdeev.pizzeria.service.OrderPositionService;
 import by.avdeev.pizzeria.service.OrderService;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.CreatorFactory;
 import by.avdeev.pizzeria.service.validator.Validator;
 import by.avdeev.pizzeria.service.validator.impl.DeliveryValidator;
+import by.avdeev.pizzeria.transaction.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +45,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.ORDERED;
 import static by.avdeev.pizzeria.command.ConstantRepository.PARAM;
 import static by.avdeev.pizzeria.command.ConstantRepository.PAYMENT;
 import static by.avdeev.pizzeria.command.ConstantRepository.PHONE;
+import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
+import static by.avdeev.pizzeria.command.ConstantRepository.SIGNS_DOUBLE;
 import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
@@ -49,7 +54,8 @@ public class OrderCommand extends UnauthorizedCommand {
     private static Logger logger = LogManager.getLogger(OrderCommand.class);
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
         ForwardObject forwardObjectEx = new ForwardObject("/delivery/form");
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
@@ -60,12 +66,18 @@ public class OrderCommand extends UnauthorizedCommand {
             forwardObjectEx.getAttributes().put(MESSAGE, EMPTY_CART);
             return forwardObjectEx;
         }
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS, DATE));
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NAME, SURNAME, PHONE, ADDRESS, DATE));
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
-        boolean isParamCountValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isParamCountValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (isParamCountValid) {
             TypeValidator orderTypeValidator = new DeliveryTypeValidator();
             boolean isDeliveryValid = orderTypeValidator.validate(parameters);
+            CreatorFactory creatorFactory = CreatorFactory.getInstance();
+            @SuppressWarnings("unchecked")
+            Creator<Profile> creator = creatorFactory.findCreator(Type.PROFILE);
+            Profile inputProfile = creator.create(parameters);
             if (isDeliveryValid) {
                 User user = (User) session.getAttribute(USER);
                 ProfileService profileService = factory.getProfileService();
@@ -73,8 +85,10 @@ public class OrderCommand extends UnauthorizedCommand {
                 if (user != null) {
                     Profile profileChecked = profileService.findByUserLogin(user.getLogin());
                     if (profileChecked != null) {
-                        boolean isUpdated = profileService.update(parameters, invalidParameters, profileChecked.getId());
+                        boolean isUpdated = profileService.update(
+                                parameters, invalidParameters, profileChecked.getId());
                         if (!isUpdated) {
+                            forwardObjectEx.getAttributes().put(PROFILE, inputProfile);
                             return forwardObjectEx;
                         }
                         profile.setId(profileChecked.getId());
@@ -85,6 +99,7 @@ public class OrderCommand extends UnauthorizedCommand {
                 } else {
                     int id = profileService.create(parameters, invalidParameters);
                     if (id == -1) {
+                        forwardObjectEx.getAttributes().put(PROFILE, inputProfile);
                         return forwardObjectEx;
                     }
                     profile.setId(id);
@@ -105,7 +120,7 @@ public class OrderCommand extends UnauthorizedCommand {
                 for (Item item : cart) {
                     double price = item.getProduct().getPrice() * item.getSize().getCoefficient();
                     BigDecimal bd = BigDecimal.valueOf(price);
-                    bd = bd.round(new MathContext(4));
+                    bd = bd.round(new MathContext(SIGNS_DOUBLE));
                     price = bd.doubleValue();
                     logger.debug("order={}", order);
                     OrderPosition orderPosition = new OrderPosition(item, order, price);
@@ -116,14 +131,17 @@ public class OrderCommand extends UnauthorizedCommand {
                     if (deliveryValidator.validate(parameters, invalidParameters)) {
                         deliveryService.create(delivery);
                     } else {
+                        forwardObjectEx.getAttributes().put(PROFILE, inputProfile);
                         return forwardObjectEx;
                     }
                 }
-                ForwardObject forwardObject = new ForwardObject("/product/menu");
+                ForwardObject forwardObject = new ForwardObject("/product/pizzas");
                 forwardObject.getAttributes().put(MESSAGE, ORDERED);
                 cart.clear();
                 session.setAttribute(CART, cart);
                 return forwardObject;
+            } else {
+                forwardObjectEx.getAttributes().put(PROFILE, inputProfile);
             }
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);

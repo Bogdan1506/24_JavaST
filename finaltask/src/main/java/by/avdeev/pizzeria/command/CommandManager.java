@@ -8,5 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface CommandManager {
-    Command.ForwardObject execute(final Command command, HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException;
+    Command.ForwardObject execute(final Command command, HttpServletRequest request,
+                                  final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException;
 }

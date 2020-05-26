@@ -6,6 +6,10 @@ import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.entity.User;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.UserService;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.CreatorFactory;
+import by.avdeev.pizzeria.transaction.Type;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,12 +25,15 @@ import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.PARAM;
 import static by.avdeev.pizzeria.command.ConstantRepository.PHONE;
 import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_UPDATED;
+import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
 import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class ProfileUpdateCommand extends ClientCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         ProfileService profileService = factory.getProfileService();
@@ -34,17 +41,26 @@ public class ProfileUpdateCommand extends ClientCommand {
         if (profile == null) {
             return new ForwardObject("/profile/create");
         }
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS));
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NAME, SURNAME, PHONE, ADDRESS));
         ForwardObject forwardObject = new ForwardObject("/profile/user");
         forwardObject.getAttributes().put(PARAM, invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObject.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObject;
         }
-        boolean isUpdated = profileService.update(parameters, invalidParameters, user.getProfile().getId());
+        boolean isUpdated = profileService.update(
+                parameters, invalidParameters, profile.getId());
         if (isUpdated) {
             forwardObject.getAttributes().put(MESSAGE, POSITION_UPDATED);
+        } else {
+            CreatorFactory creatorFactory = CreatorFactory.getInstance();
+            @SuppressWarnings("unchecked")
+            Creator<Profile> creator = creatorFactory.findCreator(Type.PROFILE);
+            Profile inputProfile = creator.create(parameters);
+            forwardObject.getAttributes().put(PROFILE, inputProfile);
         }
         return forwardObject;
     }

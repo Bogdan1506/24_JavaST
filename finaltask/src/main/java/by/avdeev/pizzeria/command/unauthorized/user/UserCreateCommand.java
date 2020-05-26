@@ -26,23 +26,27 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class UserCreateCommand extends UnauthorizedCommand {
-    private final static Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger(UserCreateCommand.class);
 
     @Override
     public ForwardObject exec(final HttpServletRequest request,
                               final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(LOGIN, PASS, REP_PASS));
-        ForwardObject forwardObjectEx = new ForwardObject("/user/sign-up");
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                LOGIN, PASS, REP_PASS));
+        ForwardObject forwardObjectEx = new ForwardObject(
+                "/user/sign-up");
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
-        if (!TypeValidator.validateRequest(request, parameters, requiredParameters)) {
+        if (!TypeValidator.validateRequest(
+                request, parameters, requiredParameters)) {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
         }
         UserService userService = factory.getUserService();
         int id = userService.create(parameters, invalidParameters);
         if (id != -1) {
-            ForwardObject forwardObject = new ForwardObject("/profile/create");
+            ForwardObject forwardObject = new ForwardObject(
+                    "/profile/create");
             User user = userService.findById(id);
             logger.debug("user={}", user);
             HttpSession session = request.getSession();

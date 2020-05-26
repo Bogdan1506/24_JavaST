@@ -26,6 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.LOGIN;
+import static by.avdeev.pizzeria.command.ConstantRepository.NEW_PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.OLD_PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.PASS;
+import static by.avdeev.pizzeria.command.ConstantRepository.REP_PASS;
 import static org.testng.Assert.*;
 
 public class UserServiceImplTest {
@@ -70,13 +75,13 @@ public class UserServiceImplTest {
     @DataProvider(name = "positiveDataUserProviderForCreate")
     public Object[][] createPositiveUserData() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("login", "user1");
-        parameters.put("password", "pass1234");
-        parameters.put("repPassword", "pass1234");
+        parameters.put(LOGIN, "user1");
+        parameters.put(PASS, "pass1234");
+        parameters.put(REP_PASS, "pass1234");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("login", "user2");
-        parameters2.put("password", "pass12345");
-        parameters2.put("repPassword", "pass12345");
+        parameters2.put(LOGIN, "user2");
+        parameters2.put(PASS, "pass12345");
+        parameters2.put(REP_PASS, "pass12345");
         Map<String, String> invalidParameters = new HashMap<>();
         Map<String, String> invalidParameters2 = new HashMap<>();
         return new Object[][]{{parameters, invalidParameters}, {parameters2, invalidParameters2}};
@@ -92,13 +97,13 @@ public class UserServiceImplTest {
     @DataProvider(name = "negativeDataUserProviderForCreate")
     public Object[][] createNegativeUserData() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("login", "admin");
-        parameters.put("password", "pass1234");
-        parameters.put("repPassword", "pass1234");
+        parameters.put(LOGIN, "admin");
+        parameters.put(PASS, "pass1234");
+        parameters.put(REP_PASS, "pass1234");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("login", "user2");
-        parameters2.put("password", "pass");
-        parameters2.put("repPassword", "pass12345");
+        parameters2.put(LOGIN, "user2");
+        parameters2.put(PASS, "pass");
+        parameters2.put(REP_PASS, "pass12345");
         Map<String, String> invalidParameters = new HashMap<>();
         Map<String, String> invalidParameters2 = new HashMap<>();
         return new Object[][]{{parameters, invalidParameters}, {parameters2, invalidParameters2}};
@@ -170,11 +175,11 @@ public class UserServiceImplTest {
     @DataProvider(name = "positiveDataUserProviderForChangePassword")
     public Object[][] createPositiveDataForChangePassword() {
         Map<String, Object> parameters1 = new HashMap<>();
-        parameters1.put("oldPassword", "client");
-        parameters1.put("newPassword", "client1234567");
+        parameters1.put(OLD_PASS, "client");
+        parameters1.put(NEW_PASS, "client1234567");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("oldPassword", "admin");
-        parameters2.put("newPassword", "admin1234567");
+        parameters2.put(OLD_PASS, "admin");
+        parameters2.put(NEW_PASS, "admin1234567");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{{parameters1, invalidParameters, "client"}, {parameters2, invalidParameters, "admin"}};
     }
@@ -188,11 +193,11 @@ public class UserServiceImplTest {
     @DataProvider(name = "negativeDataUserProviderForChangePassword")
     public Object[][] createNegativeDataForChangePassword() {
         Map<String, Object> parameters1 = new HashMap<>();
-        parameters1.put("oldPassword", "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7");
-        parameters1.put("newPassword", "client1234567");
+        parameters1.put(OLD_PASS, "$2a$10$JS5VSr5D4/ij7N4DZR.PDOVAUYM14Lwc6ZDXOlUmgcg7uwPic7");
+        parameters1.put(NEW_PASS, "client1234567");
         Map<String, Object> parameters2 = new HashMap<>();
-        parameters2.put("oldPassword", "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm");
-        parameters2.put("newPassword", "admin12!34567");
+        parameters2.put(OLD_PASS, "$2a$10$mP5sKmL7IHHq8Q4whdRxku72ZnjkmB7UIkL1S6yH5.DJERMmXUQAm");
+        parameters2.put(NEW_PASS, "admin12!34567");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{{parameters1, invalidParameters, "client"}, {parameters2, invalidParameters, "admin"}};
     }

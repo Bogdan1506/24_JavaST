@@ -18,16 +18,18 @@ import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_UPDATED;
 import static by.avdeev.pizzeria.command.ConstantRepository.ROLE;
 
 public class ChangeRoleCommand extends AdminCommand {
-    private final static Logger logger = LogManager.getLogger(ChangeRoleCommand.class);
+    private final Logger logger = LogManager.getLogger(ChangeRoleCommand.class);
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response) {
         ForwardObject forwardObject = new ForwardObject("/user/list");
         int id;
         Role role;
         try {
             id = Integer.parseInt(request.getParameter(ID));
-            role = Role.getByIdentity(Integer.valueOf(request.getParameter(ROLE)));
+            role = Role.getByIdentity(Integer.valueOf(
+                    request.getParameter(ROLE)));
             logger.debug("role={}", role);
             UserService userService = factory.getUserService();
             boolean isChanged = userService.changeRole(role, id);

@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.DESCRIPTION;
+import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.command.ConstantRepository.PICTURE;
+import static by.avdeev.pizzeria.command.ConstantRepository.PRICE;
+import static by.avdeev.pizzeria.command.ConstantRepository.TYPE;
 import static org.testng.Assert.*;
 
 public class ProductServiceImplTest {
@@ -126,11 +131,11 @@ public class ProductServiceImplTest {
     @DataProvider(name = "dataProviderForUpdate")
     public Object[][] createDataForUpdate() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("type", Product.Type.PIZZA);
-        parameters.put("name", "Cheese");
-        parameters.put("description", "Tomato pizza sauce, mozzarella, tomatoes, oregano");
-        parameters.put("price", 7.0);
-        parameters.put("picture", "cheese.jpg");
+        parameters.put(TYPE, Product.Type.PIZZA);
+        parameters.put(NAME, "Cheese");
+        parameters.put(DESCRIPTION, "Tomato pizza sauce, mozzarella, tomatoes, oregano");
+        parameters.put(PRICE, 7.0);
+        parameters.put(PICTURE, "cheese.jpg");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{
                 {parameters, invalidParameters, 1}};

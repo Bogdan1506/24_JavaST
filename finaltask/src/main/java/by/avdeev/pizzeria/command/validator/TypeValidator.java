@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class TypeValidator {
-    public abstract boolean validate(Map<String, Object> parameters);
+public interface TypeValidator {
+    boolean validate(Map<String, Object> parameters);
 
-    public static boolean validateRequest(HttpServletRequest request, Map<String, Object> parameters, Set<String> requiredParameters) {
+    static boolean validateRequest(final HttpServletRequest request,
+                                   final Map<String, Object> parameters,
+                                   final Set<String> requiredParameters) {
         Logger logger = LogManager.getLogger();
         Map<String, String[]> requestMap = request.getParameterMap();
         Set<String> actualParameters = requestMap.keySet();

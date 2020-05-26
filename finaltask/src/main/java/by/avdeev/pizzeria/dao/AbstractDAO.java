@@ -14,7 +14,7 @@ public abstract class AbstractDAO<T extends Entity> {
     public AbstractDAO() {
     }
 
-    public void setConnection(Connection connection) {
+    public void setConnection(final Connection connection) {
         this.connection = connection;
     }
 
@@ -22,27 +22,27 @@ public abstract class AbstractDAO<T extends Entity> {
         return connection;
     }
 
-    public AbstractDAO(Connection connection) {
+    public AbstractDAO(final Connection connection) {
         this.connection = connection;
     }
 
     public abstract List<T> findAll() throws DAOException;
 
-    public abstract List<T> findAll(int begin, int end) throws DAOException;
+    public abstract List<T> findAll(final int begin, final int end) throws DAOException;
 
-    public abstract T findById(int id) throws DAOException;
+    public abstract T findById(final int id) throws DAOException;
 
-    public abstract boolean delete(int id) throws DAOException;
+    public abstract boolean delete(final int id) throws DAOException;
 
-    public abstract boolean delete(T entity) throws DAOException;
+    public abstract boolean delete(final T entity) throws DAOException;
 
-    public abstract int create(T entity) throws DAOException;
+    public abstract int create(final T entity) throws DAOException;
 
-    public abstract boolean update(T entity) throws DAOException;
+    public abstract boolean update(final T entity) throws DAOException;
 
     public abstract int countAll() throws DAOException;
 
-    public int findLastId(PreparedStatement ps) throws SQLException {
+    public int findLastId(final PreparedStatement ps) throws SQLException {
         int lastId = 0;
         ResultSet rs = ps.getGeneratedKeys();
         if (rs.next()) {

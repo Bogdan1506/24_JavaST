@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 
 public class UserSignOutCommand extends ClientCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/");
         HttpSession session = request.getSession();
         session.invalidate();

@@ -74,9 +74,8 @@ public class ImageHandlerImpl implements ImageHandler {
         if (!fileSaveDir.exists()) {
             fileSaveDir.mkdirs();
         }
-        try {
+        try (OutputStream os = new FileOutputStream(new File(destPath + File.separator + fileName))) {
             File file = new File(srcPath + File.separator + fileName);
-            OutputStream os = new FileOutputStream(new File(destPath + File.separator + fileName));
             Files.copy(file.toPath(), os);
         } catch (IOException e) {
             return false;
@@ -96,8 +95,8 @@ public class ImageHandlerImpl implements ImageHandler {
         boolean isDeleted = false;
         if (!imageName.equals("pizza_not_found.jpg")) {
             try {
-                File firstFile = new File(pathname + File.separator + imageName);
-                isDeleted = Files.deleteIfExists(firstFile.toPath());
+                File file = new File(pathname + File.separator + imageName);
+                isDeleted = Files.deleteIfExists(file.toPath());
             } catch (IOException e) {
                 return false;
             }

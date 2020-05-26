@@ -35,12 +35,16 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 
 public class ProductEditCommand extends CreatorCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response)
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
-        ForwardObject forwardObject = new ForwardObject("/product/edit-form?id=" + request.getParameter(ID));
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, DESCRIPTION, TYPE, PRICE));
+        ForwardObject forwardObject = new ForwardObject(
+                "/product/edit-form?id=" + request.getParameter(ID));
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NAME, DESCRIPTION, TYPE, PRICE));
         forwardObject.getAttributes().put(PARAM, invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObject.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObject;

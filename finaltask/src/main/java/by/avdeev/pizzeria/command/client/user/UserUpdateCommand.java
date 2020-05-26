@@ -24,10 +24,14 @@ import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class UserUpdateCommand extends ClientCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NEW_PASS, OLD_PASS));
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
+        Set<String> requiredParameters = new HashSet<>(Arrays.asList(
+                NEW_PASS, OLD_PASS));
         ForwardObject forwardObject = new ForwardObject("/profile/user");
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObject.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObject;
@@ -35,7 +39,8 @@ public class UserUpdateCommand extends ClientCommand {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         UserService userService = factory.getUserService();
-        boolean isChanged = userService.changePassword(parameters, invalidParameters, user.getLogin());
+        boolean isChanged = userService.changePassword(
+                parameters, invalidParameters, user.getLogin());
         if (isChanged) {
             forwardObject.getAttributes().put(MESSAGE, POSITION_UPDATED);
         } else {

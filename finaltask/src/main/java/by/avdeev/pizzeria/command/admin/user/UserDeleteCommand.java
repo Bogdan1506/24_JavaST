@@ -15,7 +15,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_DELETED;
 
 public class UserDeleteCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObject = new ForwardObject("/user/list");
         UserService userService = factory.getUserService();
         int id;

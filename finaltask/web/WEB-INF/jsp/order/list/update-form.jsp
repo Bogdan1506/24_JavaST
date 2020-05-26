@@ -91,8 +91,7 @@
             <label for="address"><fmt:message key="address" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="address"
                    placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address"
-                   value="${requestScope.profile.address}"
-                   pattern="\w+" required>
+                   value="${requestScope.profile.address}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>

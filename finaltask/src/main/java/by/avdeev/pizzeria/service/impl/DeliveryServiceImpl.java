@@ -4,7 +4,6 @@ import by.avdeev.pizzeria.dao.AbstractDAO;
 import by.avdeev.pizzeria.dao.DAOException;
 import by.avdeev.pizzeria.dao.impl.DeliveryDAOImpl;
 import by.avdeev.pizzeria.entity.Delivery;
-import by.avdeev.pizzeria.entity.OrderPosition;
 import by.avdeev.pizzeria.service.DeliveryService;
 import by.avdeev.pizzeria.service.ServiceException;
 import by.avdeev.pizzeria.service.validator.Validator;
@@ -18,25 +17,6 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PAYMENT;
 
 public class DeliveryServiceImpl extends StandardServiceImpl<Delivery>
         implements DeliveryService {
-
-    /**
-     * @param orderPosition Bean ${@link OrderPosition}.
-     * @return Bean ${@link Delivery}.
-     * @throws ServiceException If there was an exception in DAO layer.
-     */
-    @Override
-    public Delivery findByOrderPosition(final OrderPosition orderPosition)
-            throws ServiceException {
-        AbstractDAO<Delivery> abstractDAO = getTransaction().createDao(getType());
-        DeliveryDAOImpl deliveryDAO = (DeliveryDAOImpl) abstractDAO;
-        Delivery delivery;
-        try {
-            delivery = deliveryDAO.findByOrderPosition(orderPosition);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-        return delivery;
-    }
 
     /**
      * @param parameters        Gotten inputs from user.

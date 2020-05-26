@@ -22,6 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.ADDRESS;
+import static by.avdeev.pizzeria.command.ConstantRepository.EMAIL;
+import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
+import static by.avdeev.pizzeria.command.ConstantRepository.PHONE;
+import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 import static org.testng.Assert.*;
 
 public class ProfileServiceImplTest {
@@ -82,11 +87,11 @@ public class ProfileServiceImplTest {
     @DataProvider(name = "dataProviderForCreate")
     public Object[][] createDataForCreate() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", "Bogdan");
-        parameters.put("surname", "Avdeev");
-        parameters.put("phone", "+37529");
-        parameters.put("email", "email@mail.ru");
-        parameters.put("address", "Minsk");
+        parameters.put(NAME, "Bogdan");
+        parameters.put(SURNAME, "Avdeev");
+        parameters.put(PHONE, "37529");
+        parameters.put(EMAIL, "email@mail.ru");
+        parameters.put(ADDRESS, "Minsk");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{
                 {parameters, invalidParameters}};
@@ -102,11 +107,11 @@ public class ProfileServiceImplTest {
     @DataProvider(name = "dataProviderForUpdate")
     public Object[][] createDataForUpdate() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", "Bogdan");
-        parameters.put("surname", "Avdeev");
-        parameters.put("phone", "+37529");
-        parameters.put("email", "email@mail.ru");
-        parameters.put("address", "Minsk");
+        parameters.put(NAME, "Bogdan");
+        parameters.put(SURNAME, "Avdeev");
+        parameters.put(PHONE, "37529");
+        parameters.put(EMAIL, "email@mail.ru");
+        parameters.put(ADDRESS, "Minsk");
         Map<String, String> invalidParameters = new HashMap<>();
         return new Object[][]{
                 {parameters, invalidParameters, 1}};

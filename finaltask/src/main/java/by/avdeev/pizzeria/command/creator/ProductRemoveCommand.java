@@ -24,7 +24,8 @@ public class ProductRemoveCommand extends CreatorCommand {
     public ForwardObject exec(final HttpServletRequest request,
                               final HttpServletResponse response)
             throws ServiceException, IOException, ServletException {
-        ForwardObject forwardObject = new ForwardObject("/product/menu");
+        ForwardObject forwardObject = new ForwardObject(
+                "/product/pizzas");
         int id = 0;
         try {
             id = Integer.parseInt(request.getParameter(ID));

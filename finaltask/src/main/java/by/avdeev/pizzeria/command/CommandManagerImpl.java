@@ -15,7 +15,10 @@ public class CommandManagerImpl implements CommandManager {
         this.factory = factory;
     }
 
-    public Command.ForwardObject execute(Command command, HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException {
+    public Command.ForwardObject execute(final Command command,
+                                         final HttpServletRequest request,
+                                         final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
         command.setFactory(factory);
         return command.exec(request, response);
     }

@@ -10,6 +10,7 @@ import by.avdeev.pizzeria.transaction.Type;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
@@ -24,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import static by.avdeev.pizzeria.entity.Delivery.Payment.CARD;
+import static by.avdeev.pizzeria.entity.Delivery.Payment.CASH;
 import static org.testng.Assert.*;
 
 public class DeliveryServiceImplTest {
@@ -66,28 +69,58 @@ public class DeliveryServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws ParseException, ServiceException {
+    public void testPositiveCreate() throws ParseException, ServiceException {
         Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2020-01-01T01:00:00");
-        Delivery delivery = new Delivery(new OrderPosition(1), date, Delivery.Payment.CASH);
+        Delivery delivery = new Delivery(new OrderPosition(1), date, CASH);
         int id = deliveryService.create(delivery);
         assertNotEquals(id, -1);
+    }
+
+    @Test(expectedExceptions = ServiceException.class)
+    public void testNegativeCreate() throws ParseException, ServiceException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2020-01-01T01:00:00");
+        Delivery delivery = new Delivery(new OrderPosition(0), date, CASH);
+        deliveryService.create(delivery);
     }
 
     @Test
     public void testFindAll() throws ParseException, ServiceException {
         Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2020-01-01T01:00:00");
         List<Delivery> expectedDeliveries = Arrays.asList(
-                new Delivery(1, new OrderPosition(1), date, Delivery.Payment.CASH),
-                new Delivery(2, new OrderPosition(2), date, Delivery.Payment.CARD)
+                new Delivery(1, new OrderPosition(1), date, CASH),
+                new Delivery(2, new OrderPosition(2), date, CARD)
         );
         List<Delivery> actualDeliveries = deliveryService.findAll(0, 2);
         assertEquals(actualDeliveries, expectedDeliveries);
     }
 
-    @Test
-    public void testDelete() throws ServiceException {
-        boolean idDeleted = deliveryService.delete(1);
-        assertTrue(idDeleted);
+    @DataProvider
+    public Object[][] createDataForFindById() throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2020-01-01T01:00:00");
+        return new Object[][]{
+                {2, new Delivery(2, new OrderPosition(2), date, CARD)},
+                {0, null}
+        };
+    }
+
+    @Test(dataProvider = "createDataForFindById")
+    public void testFindById(int id, Delivery expectedDelivery) throws ServiceException {
+        Delivery actualDelivery = deliveryService.findById(id);
+        assertEquals(actualDelivery, expectedDelivery);
+    }
+
+    @DataProvider
+    public Object[][] createDataForDelete() {
+        return new Object[][]{
+                {2, true},
+                {0, false}
+        };
+    }
+
+    @Test(dataProvider = "createDataForDelete")
+    public void testDeleteById(int id, boolean expected) throws ServiceException {
+        boolean actual = deliveryService.delete(id);
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -97,11 +130,21 @@ public class DeliveryServiceImplTest {
         assertEquals(actualCountTotal, expectedCountTotal);
     }
 
+
     @Test
-    public void testFindByOrderPosition() throws ParseException, ServiceException {
+    public void testUpdate() throws ParseException, ServiceException {
         Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2020-01-01T01:00:00");
-        Delivery expectedDelivery = new Delivery(1, new OrderPosition(1), date, Delivery.Payment.CASH);
-        Delivery actualDelivery = deliveryService.findByOrderPosition(new OrderPosition(1));
-        assertEquals(actualDelivery, expectedDelivery);
+        Delivery delivery = new Delivery(1, new OrderPosition(1), date, CARD);
+        boolean isUpdated = deliveryService.update(delivery);
+        assertTrue(isUpdated);
+    }
+
+    @Test
+    public void testFindCountByDate() throws ServiceException {
+        java.sql.Date firstDate = java.sql.Date.valueOf("2020-01-01");
+        java.sql.Date secDate = java.sql.Date.valueOf("2020-01-02");
+        int expected = 3;
+        int actual = deliveryService.findCountByDate(firstDate, secDate);
+        assertEquals(actual, expected);
     }
 }

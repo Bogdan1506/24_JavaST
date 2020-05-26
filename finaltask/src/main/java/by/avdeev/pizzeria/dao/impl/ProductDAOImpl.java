@@ -23,7 +23,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.TYPE;
 
 public class ProductDAOImpl extends AbstractDAO<Product> {
     @Override
-    public List<Product> findAll(int begin, int end) throws DAOException {
+    public List<Product> findAll(final int begin,
+                                 final int end) throws DAOException {
         List<Product> products = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, type, name, description, price, picture FROM product LIMIT ?, ?")) {
@@ -56,7 +57,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
 
 
     @Override
-    public Product findById(int id) throws DAOException {
+    public Product findById(final int id) throws DAOException {
         Product product = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, name, type, description, price, picture FROM product WHERE id=?")) {
@@ -73,7 +74,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     }
 
     @Override
-    public boolean delete(int id) throws DAOException {
+    public boolean delete(final int id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM product WHERE id=?")) {
             preparedStatement.setInt(1, id);
@@ -86,13 +87,13 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
     }
 
     @Override
-    public boolean delete(Product product) throws DAOException {
+    public boolean delete(final Product product) throws DAOException {
         delete(product.getId());
         return true;
     }
 
     @Override
-    public int create(Product product) throws DAOException {
+    public int create(final Product product) throws DAOException {
         int id;
         if (product.getPicture() == null) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -121,7 +122,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return id;
     }
 
-    public boolean update(Product product) throws DAOException {
+    public boolean update(final Product product) throws DAOException {
         if (product.getPicture() == null) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE product SET type=?, name=?, description=?, price=? WHERE id=?")) {
@@ -153,7 +154,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return 0;
     }
 
-    public List<Product> findByType(Product.Type type) throws DAOException {
+    public List<Product> findByType(final Product.Type type) throws DAOException {
         List<Product> products = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, name, description, price, picture, type FROM product WHERE type=?")) {
@@ -169,7 +170,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return products;
     }
 
-    public Product findByName(String name) throws DAOException {
+    public Product findByName(final String name) throws DAOException {
         Product product = null;
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT id, name, type, description, price, picture FROM product WHERE name=?")) {
@@ -202,7 +203,7 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return countProducts;
     }
 
-    private Product fill(ResultSet rs) throws SQLException {
+    private Product fill(final ResultSet rs) throws SQLException {
         int id = rs.getInt(ID);
         Product.Type type = Product.Type.valueOf(rs.getString(TYPE).toUpperCase());
         String name = rs.getString(NAME);
@@ -212,8 +213,8 @@ public class ProductDAOImpl extends AbstractDAO<Product> {
         return new Product(id, type, name, description, price, picture);
     }
 
-    private void fill(PreparedStatement preparedStatement,
-                      Product product) throws SQLException {
+    private void fill(final PreparedStatement preparedStatement,
+                      final Product product) throws SQLException {
         preparedStatement.setString(1, String.valueOf(product.getType()).toLowerCase());
         preparedStatement.setString(2, product.getName());
         preparedStatement.setString(3, product.getDescription());

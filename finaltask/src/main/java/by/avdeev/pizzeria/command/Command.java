@@ -36,7 +36,9 @@ abstract public class Command {
         this.factory = factory;
     }
 
-    abstract public ForwardObject exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException, IOException, ServletException;
+    abstract public ForwardObject exec(final HttpServletRequest request,
+                                       final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException;
 
     public static class ForwardObject {
         private String redirectUri;

@@ -26,9 +26,13 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 
 public class OrderProfileUpdateCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
-        Set<String> requiredParameters = new HashSet<>(Arrays.asList(NAME, SURNAME, PHONE, ADDRESS));
-        ForwardObject forwardObject = new ForwardObject("/order/list");
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
+        Set<String> requiredParameters = new HashSet<>(
+                Arrays.asList(NAME, SURNAME, PHONE, ADDRESS));
+        ForwardObject forwardObject = new ForwardObject(
+                "/order/list");
         int id;
         try {
             id = Integer.parseInt(request.getParameter(ID));
@@ -36,15 +40,18 @@ public class OrderProfileUpdateCommand extends AdminCommand {
             forwardObject.getAttributes().put(MESSAGE, INCORRECT_ID);
             return forwardObject;
         }
-        ForwardObject forwardObjectEx = new ForwardObject("/order/list/update-form?id=" + id);
+        ForwardObject forwardObjectEx = new ForwardObject(
+                "/order/list/update-form?id=" + id);
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters, requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(request, parameters,
+                requiredParameters);
         if (!isValid) {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
         }
         ProfileService profileService = factory.getProfileService();
-        boolean isUpdated = profileService.update(parameters, invalidParameters, id);
+        boolean isUpdated = profileService.update(
+                parameters, invalidParameters, id);
         if (isUpdated) {
             forwardObject.getAttributes().put(MESSAGE, POSITION_UPDATED);
         } else {

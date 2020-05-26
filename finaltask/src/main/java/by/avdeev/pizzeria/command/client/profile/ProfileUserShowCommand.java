@@ -16,21 +16,25 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
 import static by.avdeev.pizzeria.command.ConstantRepository.USER;
 
 public class ProfileUserShowCommand extends ClientCommand {
-    private final static Logger logger = LogManager.getLogger(ProfileUserShowCommand.class);
+    private final Logger logger = LogManager.getLogger(ProfileUserShowCommand.class);
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
-        Profile profile;
-        ProfileService profileService = factory.getProfileService();
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(USER);
-        logger.debug("user={}", user);
-        profile = profileService.findByUserLogin(user.getLogin());
-        if (profile == null) {
-            return new ForwardObject("/profile/create");
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
+        if (request.getAttribute(PROFILE) == null) {
+            Profile profile;
+            ProfileService profileService = factory.getProfileService();
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute(USER);
+            logger.debug("user={}", user);
+            profile = profileService.findByUserLogin(user.getLogin());
+            if (profile == null) {
+                return new ForwardObject("/profile/create");
+            }
+            logger.debug("profile={}", profile);
+            request.setAttribute(PROFILE, profile);
         }
-        logger.debug("profile={}", profile);
-        request.setAttribute(PROFILE, profile);
         return null;
     }
 }

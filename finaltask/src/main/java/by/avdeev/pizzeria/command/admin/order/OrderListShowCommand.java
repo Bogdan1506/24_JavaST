@@ -23,7 +23,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PAGE_SIZE;
 
 public class OrderListShowCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         ForwardObject forwardObjectEx = new ForwardObject("/order/list");
         HttpSession session = request.getSession();
         OrderService orderService = factory.getOrderService();

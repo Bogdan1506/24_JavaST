@@ -24,7 +24,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     public List<Delivery> findAll() throws DAOException {
         List<Delivery> deliveries = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT id, order_position_id, date, payment FROM `delivery`");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id, order_position_id, date, payment FROM `delivery`");
             while (rs.next()) {
                 fill(rs);
             }
@@ -36,7 +37,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public List<Delivery> findAll(int begin, int end) throws DAOException {
+    public List<Delivery> findAll(final int begin,
+                                  final int end) throws DAOException {
         List<Delivery> deliveries = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, order_position_id, date, payment FROM `delivery` ORDER BY id LIMIT ?, ?")) {
@@ -54,7 +56,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public Delivery findById(int id) throws DAOException {
+    public Delivery findById(final int id) throws DAOException {
         Delivery delivery = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT id, order_position_id, date, payment FROM `delivery` WHERE id=?")) {
@@ -71,7 +73,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public boolean delete(int id) throws DAOException {
+    public boolean delete(final int id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM `delivery` WHERE id=?")) {
             preparedStatement.setInt(1, id);
@@ -84,13 +86,13 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public boolean delete(Delivery delivery) throws DAOException {
+    public boolean delete(final Delivery delivery) throws DAOException {
         delete(delivery.getId());
         return true;
     }
 
     @Override
-    public int create(Delivery delivery) throws DAOException {
+    public int create(final Delivery delivery) throws DAOException {
         int id;
         try (PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO `delivery` (order_position_id, date, payment) VALUES (?,?,?)",
@@ -108,7 +110,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
     }
 
     @Override
-    public boolean update(Delivery delivery) throws DAOException {
+    public boolean update(final Delivery delivery) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "UPDATE `delivery` SET date=?, payment=? WHERE id=?")) {
             preparedStatement.setTimestamp(1, new Timestamp(delivery.getDate().getTime()));
@@ -122,27 +124,12 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         }
     }
 
-    public Delivery findByOrderPosition(OrderPosition orderPosition) throws DAOException { //todo delete
-        Delivery delivery = null;
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT id, date, payment FROM `delivery` WHERE order_position_id=?")) {
-            statement.setInt(1, orderPosition.getId());
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                delivery = fill(rs);
-            }
-        } catch (SQLException e) {
-            rollback();
-            throw new DAOException(e);
-        }
-        return delivery;
-    }
-
     @Override
     public int countAll() throws DAOException {
         int count = 0;
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS count FROM delivery");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT COUNT(*) AS count FROM delivery");
             if (rs.next()) {
                 count = rs.getInt(COUNT);
             }
@@ -153,8 +140,8 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         return count;
     }
 
-    public int findCountByDate(java.sql.Date firstDate,
-                               java.sql.Date secondDate)
+    public int findCountByDate(final java.sql.Date firstDate,
+                               final java.sql.Date secondDate)
             throws DAOException {
         int count = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -171,7 +158,7 @@ public class DeliveryDAOImpl extends AbstractDAO<Delivery> {
         return count;
     }
 
-    private Delivery fill(ResultSet rs) throws SQLException {
+    private Delivery fill(final ResultSet rs) throws SQLException {
         Date date = new Date(rs.getTimestamp(DATE).getTime());
         Delivery.Payment payment = Delivery.Payment.valueOf(rs.getString(PAYMENT).toUpperCase());
         return new Delivery(rs.getInt(ID),

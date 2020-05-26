@@ -18,7 +18,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_DELETED;
 
 public class DeliveryListRemoveCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
         ForwardObject forwardObject = new ForwardObject("/delivery/list");
         int id = 0;
         try {
@@ -27,11 +29,11 @@ public class DeliveryListRemoveCommand extends AdminCommand {
             forwardObject.getAttributes().put(MESSAGE, INCORRECT_ID);
         }
         DeliveryService deliveryService = factory.getDeliveryService();
-        boolean isDeleted = deliveryService.delete(id);
-        if (isDeleted) {
+        if (deliveryService.delete(id)) {
             forwardObject.getAttributes().put(MESSAGE, POSITION_DELETED);
         } else {
-            forwardObject.getAttributes().putIfAbsent(MESSAGE, ILLEGAL_PARAMETERS);
+            forwardObject.getAttributes().putIfAbsent(MESSAGE,
+                    ILLEGAL_PARAMETERS);
         }
         return forwardObject;
     }

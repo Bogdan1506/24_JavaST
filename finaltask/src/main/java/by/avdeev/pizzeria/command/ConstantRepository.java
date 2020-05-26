@@ -87,9 +87,11 @@ public abstract class ConstantRepository {
     public static final String DOUGH_ID = "dough_id";
     public static final String COUNT_ITEM = "count_item";
     public static final String REP_PASS = "repPassword";
-    public static final String ACTION_DENIED = "actionDenied";
-    public static final String ACTION = "action";
+    public static final String COMMAND_DENIED = "commandDenied";
+    public static final String COMMAND = "command";
     public static final int HOUR = 3600000;
+    public static final int FORTY_FIVE_MIN = 2700000;
     public static final int DAY = 3600000 * 24;
+    public static final int SIGNS_DOUBLE = 4;
     public static final String FILE_UPLOAD_PATH = "E:\\24_JavaST\\finaltask\\web\\img";
 }

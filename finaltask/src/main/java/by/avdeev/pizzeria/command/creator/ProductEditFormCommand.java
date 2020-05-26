@@ -15,10 +15,12 @@ import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.PRODUCT;
 
 public class ProductEditFormCommand extends CreatorCommand {
-    private final static Logger logger = LogManager.getLogger(ProductEditFormCommand.class);
+    private final Logger logger = LogManager.getLogger(ProductEditFormCommand.class);
 
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException {
         if (request.getAttribute(PRODUCT) == null) {
             ProductService productService = factory.getProductService();
             int id = 0;

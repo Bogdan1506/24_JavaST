@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.DOUGH;
+import static by.avdeev.pizzeria.command.ConstantRepository.ID;
+import static by.avdeev.pizzeria.command.ConstantRepository.SIZE;
 import static org.testng.Assert.*;
 
 public class ItemServiceImplTest {
@@ -69,21 +72,37 @@ public class ItemServiceImplTest {
     }
 
 
-    @DataProvider(name = "positiveDataProviderForCreate")
-    public Object[] createDataForCreate() {
-        return new Object[]{
-                new Item(new Product(5), Dough.THICK, Size.SMALL), new Item(new Product(1), Dough.THIN, Size.SMALL)
+    @DataProvider(name = "dataForFindById")
+    public Object[] createDataForFindById() {
+        return new Object[][]{
+                {1, new Item(new Product(1), Dough.THIN, Size.SMALL)},
+                {2, new Item(new Product(2), Dough.THICK, Size.SMALL)},
+                {0, null}
         };
     }
 
-    @Test
-    public void testTestCreate() throws ServiceException {
+    @Test(dataProvider = "dataForFindById")
+    public void testForFindById(int id, Item expectedItem) throws ServiceException {
+        Item actualItem = itemService.findById(id);
+        assertEquals(actualItem, expectedItem);
+    }
+
+    @DataProvider(name = "dataForCreate")
+    public Object[] createDataForCreate() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", 1);
-        parameters.put("size", Size.SMALL);
-        parameters.put("dough", Dough.THICK);
+        parameters.put(ID, 1);
+        parameters.put(SIZE, Size.SMALL);
+        parameters.put(DOUGH, Dough.THICK);
+        return new Object[][]{
+                {parameters, false},
+                {null, true}
+        };
+    }
+
+    @Test(dataProvider = "dataForCreate")
+    public void testCreate(Map<String, Object> parameters, boolean expected) throws ServiceException {
         List<Item> cart = new ArrayList<>();
         itemService.create(parameters, cart);
-        assertFalse(cart.isEmpty());
+        assertEquals(cart.isEmpty(), expected);
     }
 }

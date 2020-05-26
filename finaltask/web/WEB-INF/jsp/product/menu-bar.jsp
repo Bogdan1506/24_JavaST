@@ -17,7 +17,7 @@
 <body>
 <img class="mx-auto d-block" src="/img/header.jpg" alt=""/>
 <nav class="navbar navbar-expand-sm bg-light justify-content-center sticky-top font">
-    <ul class="navbar-nav">
+<%--    <ul class="navbar-nav">
         <li class="nav-item">
             <c:url value="/product/menu?name=pizza" var="pizzas"/>
             <a class="nav-link" href="${pizzas}"><fmt:message key="pizzas" bundle="${rb}"/></a>
@@ -30,8 +30,8 @@
             <c:url value="/product/menu?name=drink" var="drinks"/>
             <a class="nav-link" href="${drinks}"><fmt:message key="drinks" bundle="${rb}"/></a>
         </li>
-    </ul>
-    <%--    <ul class="navbar-nav">
+    </ul>--%>
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <c:url value="/product/pizzas" var="pizzas"/>
                 <a class="nav-link" href="${pizzas}"><fmt:message key="pizzas" bundle="${rb}"/></a>
@@ -44,7 +44,7 @@
                 <c:url value="/product/drinks" var="drinks"/>
                 <a class="nav-link" href="${drinks}"><fmt:message key="drinks" bundle="${rb}"/></a>
             </li>
-        </ul>--%>
+        </ul>
 </nav>
 </body>
 </html>

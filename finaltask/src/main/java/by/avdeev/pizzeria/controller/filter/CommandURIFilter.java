@@ -14,12 +14,17 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static by.avdeev.pizzeria.command.ConstantRepository.COMMAND;
+
 @WebFilter(filterName = "commandURI")
 public class CommandURIFilter implements Filter {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(CommandURIFilter.class);
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(final ServletRequest servletRequest,
+                         final ServletResponse servletResponse,
+                         final FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String uri = httpServletRequest.getRequestURI();
         CommandProvider commandProvider = new CommandProvider();
@@ -29,7 +34,7 @@ public class CommandURIFilter implements Filter {
             if (command != null) {
                 logger.debug("action={}", command);
                 command.setName(uri);
-                httpServletRequest.setAttribute("action", command);
+                httpServletRequest.setAttribute(COMMAND, command);
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

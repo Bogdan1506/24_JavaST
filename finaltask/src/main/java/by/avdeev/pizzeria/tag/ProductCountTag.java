@@ -1,17 +1,10 @@
 package by.avdeev.pizzeria.tag;
 
-import by.avdeev.pizzeria.service.DeliveryService;
-import by.avdeev.pizzeria.service.ServiceException;
-import by.avdeev.pizzeria.service.ServiceFactory;
-import by.avdeev.pizzeria.transaction.TransactionFactory;
-import by.avdeev.pizzeria.transaction.TransactionFactoryImpl;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.sql.Date;
 
 public class ProductCountTag extends TagSupport {
     private String head;

@@ -70,5 +70,12 @@ public interface ProductService extends UtilityService {
      */
     Map<String, Integer> findCount() throws ServiceException;
 
+    /**
+     * Deletes the product.
+     *
+     * @param product Bean ${@link Product}.
+     * @return True if it was deleted else false.
+     * @throws ServiceException If there was an exception in DAO layer.
+     */
     boolean delete(Product product) throws ServiceException;
 }

@@ -13,7 +13,8 @@ import static by.avdeev.pizzeria.command.ConstantRepository.PASS;
 public class UserValidator implements Validator {
 
     @Override
-    public boolean validate(Map<String, Object> parameters, Map<String, String> invalidParameters) {
+    public boolean validate(final Map<String, Object> parameters,
+                            final Map<String, String> invalidParameters) {
         boolean isValid = true;
         for (Map.Entry<String, Object> pair : parameters.entrySet()) {
             switch (pair.getKey()) {

@@ -47,13 +47,11 @@ public class TransactionFactoryImpl implements TransactionFactory {
      */
     @Override
     public void close() throws Exception {
-//        ConnectionPool conPool = ConnectionPoolImpl.getInstance();
         try {
             connection.commit();
             connection.close();
         } catch (SQLException e) {
             throw new ServiceException(e);
         }
-//        conPool.releaseConnection(connection);
     }
 }

@@ -26,7 +26,9 @@ import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_UPDATED;
 
 public class DeliveryUpdateCommand extends AdminCommand {
     @Override
-    public ForwardObject exec(final HttpServletRequest request, final HttpServletResponse response) throws ServiceException, IOException, ServletException {
+    public ForwardObject exec(final HttpServletRequest request,
+                              final HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
         ForwardObject forwardObject = new ForwardObject("/delivery/list");
         Set<String> requiredParameters = new HashSet<>(Arrays.asList(DATE, PAYMENT));
         if (TypeValidator.validateRequest(request, parameters, requiredParameters)) {

@@ -1,21 +1,15 @@
 package by.avdeev.pizzeria.entity;
 
 public enum Role {
-    ADMIN("Администратор", 0),
-    CREATOR("Создатель", 1),
-    CLIENT("Клиент", 2),
-    UNAUTHORIZED("Неавторизованный", 3);
+    ADMIN(0),
+    CREATOR(1),
+    CLIENT(2),
+    UNAUTHORIZED(3);
 
-    private String name;
     private int id;
 
-    Role(String name, int id) {
-        this.name = name;
+    Role(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getId() {

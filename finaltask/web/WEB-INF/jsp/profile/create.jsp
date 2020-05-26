@@ -90,8 +90,7 @@
         <div class="form-group">
             <label for="address"><fmt:message key="address" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="address"
-                   placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address"
-                   pattern="\w+" required>
+                   placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
