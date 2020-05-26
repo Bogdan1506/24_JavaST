@@ -3,11 +3,11 @@ USE `pizzeria_test`;
 CREATE TABLE `profile`
 (
     `id`      INT         NOT NULL AUTO_INCREMENT,
-    `name`    VARCHAR(25) NOT NULL,
-    `surname` VARCHAR(25) NOT NULL,
-    `email`   VARCHAR(35),
+    `name`    VARCHAR(50) NOT NULL,
+    `surname` VARCHAR(50) NOT NULL,
+    `email`   VARCHAR(50),
     `phone`   VARCHAR(15) NOT NULL,
-    `address` VARCHAR(25) NOT NULL,
+    `address` VARCHAR(50) NOT NULL,
     CONSTRAINT PRIMARY KEY `PK_profile` (`id`)
 );
 

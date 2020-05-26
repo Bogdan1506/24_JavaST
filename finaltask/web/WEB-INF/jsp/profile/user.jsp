@@ -18,7 +18,7 @@
         <div class="form-group">
             <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="name"
-                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>" name="name" pattern="[a-zA-z]+"
+                   placeholder="<fmt:message key="enterName" bundle="${rb}"/>" name="name" pattern="[a-zA-z]{1,50}"
                    value="${requestScope.profile.name}"
                    required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
@@ -38,7 +38,7 @@
             <input type="text" class="form-control" id="surname"
                    placeholder="<fmt:message key="enterSurname" bundle="${rb}"/>" name="surname"
                    value="${requestScope.profile.surname}"
-                   pattern="[a-zA-z]+" required>
+                   pattern="[a-zA-z]{1,50}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -70,9 +70,10 @@
         </div>
         <div class="form-group">
             <label for="phone"><fmt:message key="phone" bundle="${rb}"/>:</label>
-            <input type="text" class="form-control" id="phone" placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
+            <input type="text" class="form-control" id="phone"
+                   placeholder="<fmt:message key="enterPhone" bundle="${rb}"/>"
                    name="phone" value="${requestScope.profile.phone}"
-                   pattern="\d+" required>
+                   pattern="\d{1,15}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -89,7 +90,7 @@
             <label for="address"><fmt:message key="address" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="address"
                    placeholder="<fmt:message key="enterAddress" bundle="${rb}"/>" name="address"
-                   value="${requestScope.profile.address}" required>
+                   value="${requestScope.profile.address}" pattern="\w{1,50}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -112,7 +113,7 @@
             <label for="oldPassword"><fmt:message key="currentPass" bundle="${rb}"/>:</label>
             <input type="password" class="form-control" id="oldPassword"
                    placeholder="<fmt:message key="registerPassword" bundle="${rb}"/>"
-                   name="oldPassword" pattern="\w{5,30}" required>
+                   name="oldPassword" pattern="\w{5,}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <fmt:message key="fillOut" bundle="${rb}"/>

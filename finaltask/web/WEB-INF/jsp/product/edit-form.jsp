@@ -22,7 +22,7 @@
             <label for="name"><fmt:message key="name" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="name"
                    placeholder="<fmt:message key="enterName" bundle="${rb}"/>"
-                   name="name" pattern="\w+" value="${requestScope.product.name}" required>
+                   name="name" pattern="\w{1,25}" value="${requestScope.product.name}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -39,7 +39,7 @@
             <label for="description"><fmt:message key="desc" bundle="${rb}"/>:</label>
             <input type="text" class="form-control" id="description"
                    placeholder="<fmt:message key="enterDesc" bundle="${rb}"/>" name="description"
-                   value="${requestScope.product.description}" required>
+                   value="${requestScope.product.description}" pattern="\w{1,255}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <fmt:message key="fillOut" bundle="${rb}"/>

@@ -39,7 +39,8 @@ public class OrderListShowCommand extends AdminCommand {
                 }
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         } else {
@@ -54,7 +55,8 @@ public class OrderListShowCommand extends AdminCommand {
             try {
                 page = Integer.parseInt(pageNum);
             } catch (IllegalArgumentException e) {
-                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_NUMBER_FORMAT);
+                forwardObjectEx.getAttributes().put(
+                        MESSAGE, INCORRECT_NUMBER_FORMAT);
                 return forwardObjectEx;
             }
         }
@@ -67,7 +69,8 @@ public class OrderListShowCommand extends AdminCommand {
             request.setAttribute(PAGE, page);
             request.setAttribute(COUNT_TOTAL, countTotal);
         } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE);
+            forwardObjectEx.getAttributes().put(
+                    MESSAGE, INCORRECT_PAGE);
             return forwardObjectEx;
         }
         return null;

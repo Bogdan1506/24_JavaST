@@ -18,7 +18,7 @@
             <label for="login"><fmt:message key="login" bundle="${rb}"/></label>
             <input type="text" class="form-control" id="login"
                    placeholder="<fmt:message key="registerLogin" bundle="${rb}"/>"
-                   name="login" pattern="\w+" required>
+                   name="login" pattern="\w{1,255}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>
@@ -36,7 +36,7 @@
             <label for="pwd"><fmt:message key="password" bundle="${rb}"/></label>
             <input type="password" class="form-control" id="pwd"
                    placeholder="<fmt:message key="registerPassword" bundle="${rb}"/>" name="password"
-                   pattern="\w{5,30}" required>
+                   pattern="\w{5,}" required>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <c:choose>

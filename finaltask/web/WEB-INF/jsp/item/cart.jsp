@@ -38,7 +38,6 @@
                     <c:if test="${not empty temp.dough}">
                 <li><fmt:message key="${temp.dough}" bundle="${rb}"/></li>
                 </c:if>
-
                 <li><fmt:message key="${temp.size}" bundle="${rb}"/></li>
                 <li><strong><em><fmt:formatNumber type="number" pattern="##.##"
                                                   value="${temp.product.price * temp.size.coefficient}"/>

@@ -10,8 +10,18 @@ import static by.avdeev.pizzeria.command.ConstantRepository.LOGIN;
 import static by.avdeev.pizzeria.command.ConstantRepository.NEW_PASS;
 import static by.avdeev.pizzeria.command.ConstantRepository.PASS;
 
+/**
+ * Validator for ${@link by.avdeev.pizzeria.entity.User}.
+ */
 public class UserValidator implements Validator {
 
+    /**
+     * Validates parameters for ${@link by.avdeev.pizzeria.entity.User}.
+     *
+     * @param parameters        Input from user.
+     * @param invalidParameters Incorrect input from user.
+     * @return True if it is correct else false.
+     */
     @Override
     public boolean validate(final Map<String, Object> parameters,
                             final Map<String, String> invalidParameters) {
@@ -20,31 +30,29 @@ public class UserValidator implements Validator {
             switch (pair.getKey()) {
                 case LOGIN:
                     String login = String.valueOf(parameters.get(LOGIN));
-                    if (!login.matches("\\w+")) {
+                    if (!login.matches("\\w{1,255}")) {
                         isValid = false;
                         invalidParameters.put(LOGIN, INCORRECT_SYMBOLS);
+                        if (login.length() < 1 || login.length() > 255) {
+                            invalidParameters.put(LOGIN, INCORRECT_SIZE);
+                        }
                     }
                     break;
                 case PASS:
                     String password = String.valueOf(parameters.get(PASS));
-                    if (!password.matches("\\w{5,30}")) {
+                    if (!password.matches("\\w{5,}")) {
                         isValid = false;
                         invalidParameters.put(PASS, INCORRECT_SYMBOLS);
-                    }
-                    if (password.length() > 30 || password.length() < 5) {
-                        isValid = false;
-                        invalidParameters.put(PASS, INCORRECT_SIZE);
                     }
                     break;
                 case NEW_PASS:
                     String newPassword = String.valueOf(parameters.get(NEW_PASS));
-                    if (!newPassword.matches("\\w{5,30}")) {
+                    if (!newPassword.matches("\\w{5,}")) {
                         isValid = false;
                         invalidParameters.put(NEW_PASS, INCORRECT_SYMBOLS);
-                    }
-                    if (newPassword.length() > 30 || newPassword.length() < 5) {
-                        isValid = false;
-                        invalidParameters.put(NEW_PASS, INCORRECT_SIZE);
+                        if (newPassword.length() < 5) {
+                            invalidParameters.put(NEW_PASS, INCORRECT_SIZE);
+                        }
                     }
                     break;
             }
