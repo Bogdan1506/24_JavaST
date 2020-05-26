@@ -92,6 +92,7 @@ public class ControllerServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
+//            e.printStackTrace();
             logger.error(e);
         }
     }

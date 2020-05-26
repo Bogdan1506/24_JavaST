@@ -64,8 +64,7 @@ public class ProfileServiceImpl
             Profile profile = creator.create(parameters);
             try {
                 profile.setId(id);
-                dao.update(profile);
-                return true;
+                return dao.update(profile);
             } catch (DAOException e) {
                 throw new ServiceException(e);
             }

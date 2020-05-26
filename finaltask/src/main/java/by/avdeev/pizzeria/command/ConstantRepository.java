@@ -45,7 +45,7 @@ public abstract class ConstantRepository {
     public static final int DEFAULT_PAGE = 1;
     public static final String PAGE = "page";
     public static final String MAX_PAGE = "maxPage";
-    public static final String INCORRECT_PAGE_SIZE = "incorrectPageSize";
+    public static final String INCORRECT_PAGE = "incorrectPage";
     public static final String COUNT_TOTAL = "countTotal";
     public static final String COUNT_TODAY = "countToday";
     public static final String DELIVERIES = "deliveries";

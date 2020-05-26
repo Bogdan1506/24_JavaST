@@ -91,7 +91,6 @@
         <button type="submit" class="btn btn-primary float-right m-3"><fmt:message key="edit" bundle="${rb}"/></button>
     </form>
 </div>
-<c:out value="${param.id}"/>
 <c:if test="${not empty message}">
     <c:import url="../element/footer.jsp"/>
 </c:if>

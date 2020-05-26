@@ -43,12 +43,14 @@ public class UserServiceImpl extends StandardServiceImpl<User>
         User user = findByLogin(login);
         SecurityHandler securityHandler = new SecurityHandlerImpl();
         if (user != null
-                && securityHandler.verifyPassword((String) parameters.get(OLD_PASS), user.getPassword())) {
+                && securityHandler.verifyPassword(
+                (String) parameters.get(OLD_PASS), user.getPassword())) {
             ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
             Validator validator = validatorFactory.findValidator(getType());
             if (validator.validate(parameters, invalidParameters)) {
                 user.setPassword(
-                        securityHandler.generatePassword((String) parameters.get(NEW_PASS)));
+                        securityHandler.generatePassword(
+                                (String) parameters.get(NEW_PASS)));
                 try {
                     dao.update(user);
                     return true;

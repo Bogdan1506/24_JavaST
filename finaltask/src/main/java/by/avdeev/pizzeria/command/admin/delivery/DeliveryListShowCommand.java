@@ -17,7 +17,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.DAY;
 import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE_SIZE;
 import static by.avdeev.pizzeria.command.ConstantRepository.DELIVERIES;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_NUMBER_FORMAT;
-import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PAGE_SIZE;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.PAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.PAGE_SIZE;
 import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE;
@@ -41,6 +41,9 @@ public class DeliveryListShowCommand extends AdminCommand {
         if (pageSizeStr != null) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
+                if (pageSize <= 0) {
+                    pageSize = 20;
+                }
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
                 forwardObjectEx.getAttributes().put(MESSAGE,
@@ -74,7 +77,7 @@ public class DeliveryListShowCommand extends AdminCommand {
             request.setAttribute(COUNT_TODAY, countToday);
         } else {
             forwardObjectEx.getAttributes().put(MESSAGE,
-                    INCORRECT_PAGE_SIZE);
+                    INCORRECT_PAGE);
             return forwardObjectEx;
         }
         return null;

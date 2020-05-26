@@ -51,8 +51,8 @@ public class ProfileCreateCommand extends ClientCommand {
             int id = profileService.create(parameters, invalidParameters);
             Profile profile = new Profile(id);
             user.setProfile(profile);
-            userService.update(user);
             if (id != -1) {
+                userService.update(user);
                 forwardObject.getAttributes().put(MESSAGE, SIGNED_UP);
                 return forwardObject;
             }

@@ -18,17 +18,19 @@ public class OrderListUpdateCommand extends AdminCommand {
     public ForwardObject exec(final HttpServletRequest request,
                               final HttpServletResponse response)
             throws ServiceException {
-        ForwardObject forwardObjectEx = new ForwardObject("/order/list");
-        int id;
-        try {
-            id = Integer.parseInt(request.getParameter(ID));
-        } catch (IllegalArgumentException e) {
-            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_ID);
-            return forwardObjectEx;
+        if (request.getAttribute(PROFILE) == null) {
+            ForwardObject forwardObjectEx = new ForwardObject("/order/list");
+            int id;
+            try {
+                id = Integer.parseInt(request.getParameter(ID));
+            } catch (IllegalArgumentException e) {
+                forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_ID);
+                return forwardObjectEx;
+            }
+            ProfileService profileService = factory.getProfileService();
+            Profile profile = profileService.findById(id);
+            request.setAttribute(PROFILE, profile);
         }
-        ProfileService profileService = factory.getProfileService();
-        Profile profile = profileService.findById(id);
-        request.setAttribute(PROFILE, profile);
         return null;
     }
 }

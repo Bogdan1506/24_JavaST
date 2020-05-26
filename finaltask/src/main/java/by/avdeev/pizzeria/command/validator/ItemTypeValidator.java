@@ -18,7 +18,8 @@ public class ItemTypeValidator implements TypeValidator {
         try {
             Integer id = Integer.parseInt((String) parameters.get(ID));
             parameters.put(ID, id);
-            if (!parameters.get(DOUGH).equals(UNDEFINED)
+            if (parameters.get(DOUGH) != null
+                    && !parameters.get(DOUGH).equals(UNDEFINED)
                     && parameters.get(TYPE) == PIZZA) {
                 Dough dough = Dough.valueOf(String.valueOf(
                         parameters.get(DOUGH)).toUpperCase());

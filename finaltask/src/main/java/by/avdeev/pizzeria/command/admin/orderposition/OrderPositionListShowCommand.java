@@ -18,7 +18,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.COUNT_TOTAL;
 import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.DEFAULT_PAGE_SIZE;
 import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_NUMBER_FORMAT;
-import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PAGE_SIZE;
+import static by.avdeev.pizzeria.command.ConstantRepository.INCORRECT_PAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.MAX_PAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 import static by.avdeev.pizzeria.command.ConstantRepository.ORDER_POSITIONS;
@@ -39,6 +39,9 @@ public class OrderPositionListShowCommand extends AdminCommand {
         if (pageSizeStr != null) {
             try {
                 pageSize = Integer.parseInt(pageSizeStr);
+                if (pageSize <= 0) {
+                    pageSize = 20;
+                }
                 session.setAttribute(PAGE_SIZE, pageSize);
             } catch (IllegalArgumentException e) {
                 forwardObjectEx.getAttributes().put(
@@ -77,7 +80,7 @@ public class OrderPositionListShowCommand extends AdminCommand {
             request.setAttribute(COUNT_TOTAL, count);
             request.setAttribute(MAX_PAGE, maxPage);
         } else {
-            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE_SIZE);
+            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_PAGE);
             return forwardObjectEx;
         }
         return null;

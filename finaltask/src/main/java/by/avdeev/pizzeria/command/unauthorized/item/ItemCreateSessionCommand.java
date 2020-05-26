@@ -40,7 +40,7 @@ public class ItemCreateSessionCommand extends UnauthorizedCommand {
                               final HttpServletResponse response)
             throws ServiceException {
         ForwardObject forwardObject = new ForwardObject(
-                "/product/menu");
+                "/product/pizzas");
         int id;
         try {
             id = Integer.parseInt(request.getParameter(ID));

@@ -62,7 +62,13 @@ public class ProductEditCommand extends CreatorCommand {
             }
             id = productService.update(parameters, invalidParameters, id);
             Product product = productService.findById(id);
-            Part part = request.getPart(PICTURE);
+            Part part;
+            try {
+                part = request.getPart(PICTURE);
+            } catch (Exception e) {
+                forwardObject.getAttributes().put(MESSAGE, INVALID_IMAGE);
+                return forwardObject;
+            }
             if (part.getSize() > 0) {
                 String picture = product.getPicture();
                 ImageHandler imageHandler = new ImageHandlerImpl();

@@ -2,8 +2,12 @@ package by.avdeev.pizzeria.command.admin.order;
 
 import by.avdeev.pizzeria.command.admin.AdminCommand;
 import by.avdeev.pizzeria.command.validator.TypeValidator;
+import by.avdeev.pizzeria.entity.Profile;
 import by.avdeev.pizzeria.service.ProfileService;
 import by.avdeev.pizzeria.service.ServiceException;
+import by.avdeev.pizzeria.service.creator.Creator;
+import by.avdeev.pizzeria.service.creator.CreatorFactory;
+import by.avdeev.pizzeria.transaction.Type;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +25,7 @@ import static by.avdeev.pizzeria.command.ConstantRepository.NAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.PARAM;
 import static by.avdeev.pizzeria.command.ConstantRepository.PHONE;
 import static by.avdeev.pizzeria.command.ConstantRepository.POSITION_UPDATED;
+import static by.avdeev.pizzeria.command.ConstantRepository.PROFILE;
 import static by.avdeev.pizzeria.command.ConstantRepository.SURNAME;
 import static by.avdeev.pizzeria.command.ConstantRepository.MESSAGE;
 
@@ -43,8 +48,8 @@ public class OrderProfileUpdateCommand extends AdminCommand {
         ForwardObject forwardObjectEx = new ForwardObject(
                 "/order/list/update-form?id=" + id);
         forwardObjectEx.getAttributes().put(PARAM, invalidParameters);
-        boolean isValid = TypeValidator.validateRequest(request, parameters,
-                requiredParameters);
+        boolean isValid = TypeValidator.validateRequest(
+                request, parameters, requiredParameters);
         if (!isValid) {
             forwardObjectEx.getAttributes().put(MESSAGE, FILL_FIELDS);
             return forwardObjectEx;
@@ -55,6 +60,12 @@ public class OrderProfileUpdateCommand extends AdminCommand {
         if (isUpdated) {
             forwardObject.getAttributes().put(MESSAGE, POSITION_UPDATED);
         } else {
+            @SuppressWarnings("unchecked")
+            Creator<Profile> creator = CreatorFactory.getInstance().findCreator(Type.PROFILE);
+            Profile profile = creator.create(parameters);
+            profile.setId(id);
+            forwardObjectEx.getAttributes().put(PROFILE, profile);
+            forwardObjectEx.getAttributes().put(MESSAGE, INCORRECT_ID);
             return forwardObjectEx;
         }
         return forwardObject;
