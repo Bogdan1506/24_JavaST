@@ -1,5 +1,7 @@
 package by.avdeev.pizzeria.service.validator;
 
+import by.avdeev.pizzeria.service.ServiceException;
+
 import java.util.Map;
 
 public interface Validator {
@@ -11,5 +13,5 @@ public interface Validator {
      * @return True if it is correct else false.
      */
     boolean validate(Map<String, Object> parameters,
-                     Map<String, String> invalidParameters);
+                     Map<String, String> invalidParameters) throws ServiceException;
 }

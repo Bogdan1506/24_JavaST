@@ -67,7 +67,7 @@ public class OrderPositionListShowCommand extends AdminCommand {
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
-        if (pageSize > 0 && page <= maxPage || maxPage == 0 && page > 0) {
+        if (pageSize > 0 && page <= maxPage && page > 0) {
             List<OrderPosition> orders = orderPositionService.findAll(
                     (page - 1) * pageSize, page * pageSize);
             request.setAttribute(ORDER_POSITIONS, orders);

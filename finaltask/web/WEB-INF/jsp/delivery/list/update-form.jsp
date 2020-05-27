@@ -24,7 +24,7 @@
         <div class="form-group">
             <input type="datetime-local" id="date"
                    name="date" value="${requestScope.date}"
-                   min="${requestScope.minDate}" autofocus/>
+                   min="${requestScope.minDate}" max="2038-01-01T00:00" autofocus/>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <fmt:message key="invalidDeliver" bundle="${rb}"/>

@@ -111,7 +111,7 @@
         <div class="form-group">
             <input type="datetime-local" id="date"
                    name="date" value="${requestScope.date}"
-                   min="${requestScope.date}"/>
+                   min="${requestScope.date}" max="2038-01-01T00:00"/>
             <div class="valid-feedback"><fmt:message key="valid" bundle="${rb}"/></div>
             <div class="invalid-feedback">
                 <fmt:message key="invalidDeliver" bundle="${rb}"/>

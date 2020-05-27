@@ -68,7 +68,7 @@ public class DeliveryListShowCommand extends AdminCommand {
             }
         }
         int maxPage = (int) Math.ceil((double) countTotal / pageSize);
-        if (pageSize > 0 && page <= maxPage || maxPage == 0 && page > 0) {
+        if (pageSize > 0 && page <= maxPage && page > 0) {
             List<Delivery> deliveries = deliveryService.findAll((page - 1) * pageSize, pageSize);
             request.setAttribute(MAX_PAGE, maxPage);
             request.setAttribute(DELIVERIES, deliveries);

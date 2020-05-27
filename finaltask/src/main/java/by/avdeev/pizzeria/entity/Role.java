@@ -20,7 +20,14 @@ public enum Role {
         return ordinal();
     }
 
-    public static Role getByIdentity(Integer identity) {
-        return Role.values()[identity];
+    public static Role getByIdentity(Integer identity)
+            throws IllegalArgumentException {
+        Role role;
+        try {
+        role = Role.values()[identity];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException();
+        }
+        return role;
     }
 }
